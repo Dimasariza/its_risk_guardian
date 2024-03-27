@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/Dimasariza/rbits.git/static/js/main.1737cde2.js",
+    "main.js": "/Dimasariza/rbits.git/static/js/main.376299cd.js",
     "static/media/home-decor-3.jpg": "/Dimasariza/rbits.git/static/media/home-decor-3.74d13fcbd3c631fc7908.jpg",
     "static/media/home-decor-2.jpg": "/Dimasariza/rbits.git/static/media/home-decor-2.b4e5397c9846645ba275.jpg",
     "static/media/home-decor-1.jpg": "/Dimasariza/rbits.git/static/media/home-decor-1.05e218fd495ccc65c99d.jpg",
@@ -34,6 +34,6 @@
     "index.html": "/Dimasariza/rbits.git/index.html"
   },
   "entrypoints": [
-    "static/js/main.1737cde2.js"
+    "static/js/main.376299cd.js"
   ]
 }
