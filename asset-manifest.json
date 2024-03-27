@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/rbits/static/js/main.f8e4fca9.js",
+    "main.js": "/rbits/static/js/main.54e3e466.js",
     "static/media/home-decor-3.jpg": "/rbits/static/media/home-decor-3.74d13fcbd3c631fc7908.jpg",
     "static/media/home-decor-2.jpg": "/rbits/static/media/home-decor-2.b4e5397c9846645ba275.jpg",
     "static/media/home-decor-1.jpg": "/rbits/static/media/home-decor-1.05e218fd495ccc65c99d.jpg",
@@ -34,6 +34,6 @@
     "index.html": "/rbits/index.html"
   },
   "entrypoints": [
-    "static/js/main.f8e4fca9.js"
+    "static/js/main.54e3e466.js"
   ]
 }
