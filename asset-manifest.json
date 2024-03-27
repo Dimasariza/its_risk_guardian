@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/rbits/static/js/main.54e3e466.js",
+    "main.js": "/rbits/static/js/main.b26167a9.js",
     "static/media/home-decor-3.jpg": "/rbits/static/media/home-decor-3.74d13fcbd3c631fc7908.jpg",
     "static/media/home-decor-2.jpg": "/rbits/static/media/home-decor-2.b4e5397c9846645ba275.jpg",
     "static/media/home-decor-1.jpg": "/rbits/static/media/home-decor-1.05e218fd495ccc65c99d.jpg",
@@ -11,6 +11,7 @@
     "static/media/marie.jpg": "/rbits/static/media/marie.1c6828424a074f143c2d.jpg",
     "static/media/rbi.jpg": "/rbits/static/media/rbi.f1c30c9c21296367d32b.jpg",
     "static/media/rocket-white.png": "/rbits/static/media/rocket-white.de5786399f850a27a362.png",
+    "static/media/rbi-2.jpg": "/rbits/static/media/rbi-2.123f75c9e1fa5d18dd9d.jpg",
     "static/media/curved1.jpg": "/rbits/static/media/curved1.af81cb53f1615f33b710.jpg",
     "static/media/icon-sun-cloud.png": "/rbits/static/media/icon-sun-cloud.3399b234b40032f90d9b.png",
     "static/media/ivancik.jpg": "/rbits/static/media/ivancik.442b474727c414bb3b85.jpg",
@@ -34,6 +35,6 @@
     "index.html": "/rbits/index.html"
   },
   "entrypoints": [
-    "static/js/main.54e3e466.js"
+    "static/js/main.b26167a9.js"
   ]
 }
