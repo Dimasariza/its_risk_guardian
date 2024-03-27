@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/rbits/static/js/main.c84f35d0.js",
+    "main.js": "/rbits/static/js/main.f8e4fca9.js",
     "static/media/home-decor-3.jpg": "/rbits/static/media/home-decor-3.74d13fcbd3c631fc7908.jpg",
     "static/media/home-decor-2.jpg": "/rbits/static/media/home-decor-2.b4e5397c9846645ba275.jpg",
     "static/media/home-decor-1.jpg": "/rbits/static/media/home-decor-1.05e218fd495ccc65c99d.jpg",
@@ -9,8 +9,8 @@
     "static/media/curved14.jpg": "/rbits/static/media/curved14.12c9ea54425c4f1bc1d7.jpg",
     "static/media/waves-white.svg": "/rbits/static/media/waves-white.56607573d7f27cc7c8eb151ea3d5bc67.svg",
     "static/media/marie.jpg": "/rbits/static/media/marie.1c6828424a074f143c2d.jpg",
+    "static/media/rbi.jpg": "/rbits/static/media/rbi.f1c30c9c21296367d32b.jpg",
     "static/media/rocket-white.png": "/rbits/static/media/rocket-white.de5786399f850a27a362.png",
-    "static/media/curved-6.jpg": "/rbits/static/media/curved-6.71ee1d1cc8196ed2126b.jpg",
     "static/media/curved1.jpg": "/rbits/static/media/curved1.af81cb53f1615f33b710.jpg",
     "static/media/icon-sun-cloud.png": "/rbits/static/media/icon-sun-cloud.3399b234b40032f90d9b.png",
     "static/media/ivancik.jpg": "/rbits/static/media/ivancik.442b474727c414bb3b85.jpg",
@@ -34,6 +34,6 @@
     "index.html": "/rbits/index.html"
   },
   "entrypoints": [
-    "static/js/main.c84f35d0.js"
+    "static/js/main.f8e4fca9.js"
   ]
 }
