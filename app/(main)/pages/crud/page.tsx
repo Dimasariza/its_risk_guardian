@@ -55,8 +55,8 @@ const Crud = () => {
 
     const openNew = () => {
         setProduct(emptyProduct);
-        setSubmitted(false);
         setProductDialog(true);
+        setSubmitted(false);
     };
 
     const hideDialog = () => {
