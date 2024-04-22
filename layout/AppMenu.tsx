@@ -19,7 +19,7 @@ const AppMenu = () => {
             label: 'Assets',
             items: [
                 { label: 'Facilities', icon: 'pi pi-fw pi-id-card', to: '/assets/facilities' },
-                { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
+                { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
                 { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
                 { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/uikit/invalidstate' },
                 { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/uikit/button', class: 'rotated-icon' },

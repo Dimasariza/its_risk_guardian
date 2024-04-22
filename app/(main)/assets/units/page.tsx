@@ -169,8 +169,8 @@ const FacilitiesTree = () => {
                         
             <div className="col-12">
                 <div className="card">
-                    <h5>Facilities</h5>
-                    <Button label="Add Facilities" raised severity="success" className='my-2'onClick={openNew}/>
+                    <h5>Units</h5>
+                    <Button label="Add Units" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Name" expander />
