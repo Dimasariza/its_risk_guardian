@@ -124,7 +124,7 @@ const EquipmentData = () => {
 
     return (
         <div className="grid">
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Facilities" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Equipment" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Company</label>
                     <InputText
@@ -171,7 +171,7 @@ const EquipmentData = () => {
             <div className="col-12">
                 <div className="card">
                     <h5>Facilities</h5>
-                    <Button label="Add Facilities" raised severity="success" className='my-2'onClick={openNew}/>
+                    <Button label="Add Equipment" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Name" expander />

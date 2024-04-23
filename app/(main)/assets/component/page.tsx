@@ -159,7 +159,7 @@ const ComponentTree = () => {
         <div className="grid">
             <Toast ref={toast} />
             <ConfirmDialog />
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Facilities" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Components" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Company</label>
                     <InputText
@@ -205,11 +205,11 @@ const ComponentTree = () => {
                         
             <div className="col-12">
                 <div className="card">
-                    <h5>Facilities</h5>
-                    <Button label="Add Facilities" raised severity="success" className='my-2'onClick={openNew}/>
+                    <h5>Components</h5>
+                    <Button label="Add Components" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
-                        <Column field="name" header="Name" expander />
+                        <Column field="name" header="Name" expander/>
                         <Column field="size" header="Size" />
                         <Column field="type" header="Type" />
                         <Column body={actionTemplate} headerClassName="w-10rem" />

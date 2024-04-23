@@ -137,13 +137,13 @@ const FacilitiesTree = () => {
 
     const [selectedCompanyType, setSelectedCompanyType] = useState(null);
     const companyType = [
-        { name: 'Chemical', code: 'NY' },
-        { name: 'LNG', code: 'RM' },
-        { name: 'LPG', code: 'LDN' },
-        { name: 'Petrochemical', code: 'IST' },
+        { name: 'Oil and gas production', code: 'NY' },
+        { name: 'Oil and gas processing and transportation ', code: 'RM' },
+        { name: 'Refineries', code: 'LDN' },
+        { name: 'Petrochemical and chemical plants', code: 'IST' },
         { name: 'Pipeline', code: 'PRS' },
-        { name: 'Platform', code: 'PRS' },
-        { name: 'Power', code: 'PRS' },
+        { name: 'Pipeline stations', code: 'PRS' },
+        { name: 'Liquefied natural gas plants', code: 'PRS' },
     ];
 
     const actionTemplate = () => {

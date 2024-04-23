@@ -36,6 +36,10 @@ const AppMenu = () => {
                 // { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
             ]
         },
+        {
+            label: 'Report',
+            items: [{ label: 'Risk Analysis', icon: 'pi pi-fw pi-book', to: '/' }]
+        },
         // {
         //     label: 'Prime Blocks',
         //     items: [
