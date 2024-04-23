@@ -2,7 +2,8 @@
 const nextConfig = {
     output: "export",
     // reactStrictMode: true,
-    basePath: "/rbits"
+    basePath: "/rbits",
+    assetPrefix: '/rbits/',
 }
 
 module.exports = nextConfig
