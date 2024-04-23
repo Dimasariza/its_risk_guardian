@@ -85,11 +85,11 @@ const FacilitiesTree = () => {
     const [product, setProduct] = useState<Demo.Product>(emptyProduct);
 
     const accept = () => {
-        toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+        // toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
     }
 
     const reject = () => {
-        toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        // toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
     }
 
     const confirmDelete = () => {
@@ -97,7 +97,7 @@ const FacilitiesTree = () => {
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
-            defaultFocus: 'reject',
+            // defaultFocus: 'reject',
             acceptClassName: 'p-button-danger',
             accept,
             reject
