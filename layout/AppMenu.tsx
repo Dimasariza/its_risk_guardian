@@ -20,9 +20,9 @@ const AppMenu = () => {
             items: [
                 { label: 'Facilities', icon: 'pi pi-fw pi-id-card', to: '/assets/facilities' },
                 { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
-                { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
-                { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/uikit/invalidstate' },
-                { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/uikit/button', class: 'rotated-icon' },
+                { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
+                { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },
+                { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/assets/component', class: 'rotated-icon' },
                 // { label: 'Table', icon: 'pi pi-fw pi-table', to: '/uikit/table' },
                 // { label: 'List', icon: 'pi pi-fw pi-list', to: '/uikit/list' },
                 // { label: 'Tree', icon: 'pi pi-fw pi-share-alt', to: '/uikit/tree' },

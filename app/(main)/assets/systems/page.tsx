@@ -15,7 +15,7 @@ import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
 
-const unitsData = 
+const systemsData = 
     [  
         {
             "key": "0",
@@ -109,7 +109,7 @@ const unitsData =
         },
     ]
 
-const UnitsTree = () => {
+const SystemsTree = () => {
     let emptyProduct: Demo.Product = {
         id: '',
         name: '',
@@ -134,7 +134,7 @@ const UnitsTree = () => {
     useEffect(() => {
         NodeService.getFiles().then((files) => setFiles(files));
         // NodeService.getFilesystem().then((files) => setFiles2(files));
-        setFiles2(unitsData)
+        setFiles2(systemsData)
     }, []);
 
     const openNew = () => {
@@ -183,7 +183,7 @@ const UnitsTree = () => {
 
     return (
         <div className="grid">
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Units" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Systems" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Facility</label>
                     <Dropdown value={selectedCompanyType} onChange={(e) => setSelectedCompanyType(e.value)} options={companyType} optionLabel="name" 
@@ -200,8 +200,8 @@ const UnitsTree = () => {
                         
             <div className="col-12">
                 <div className="card">
-                    <h5>Units</h5>
-                    <Button label="Add Units" raised severity="success" className='my-2'onClick={openNew}/>
+                    <h5>Systems</h5>
+                    <Button label="Add Systems" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Facility" expander />
@@ -214,4 +214,4 @@ const UnitsTree = () => {
     );
 };
 
-export default UnitsTree;
+export default SystemsTree;

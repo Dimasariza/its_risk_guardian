@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TreeCheckboxSelectionKeys, TreeMultipleSelectionKeys } from 'primereact/tree';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { Column } from 'primereact/column';
@@ -14,10 +14,8 @@ import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber
 import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
 
-const facilitiesData = 
+const equpimentData = 
     [  
         {
             "key": "0",
@@ -61,9 +59,7 @@ const facilitiesData =
         },
     ]
 
-const FacilitiesTree = () => {
-    const toast = useRef(null);
-
+const EquipmentData = () => {
     let emptyProduct: Demo.Product = {
         id: '',
         name: '',
@@ -84,34 +80,14 @@ const FacilitiesTree = () => {
     const [submitted, setSubmitted] = useState(false);
     const [product, setProduct] = useState<Demo.Product>(emptyProduct);
 
-    const accept = () => {
-        toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-    }
-
-    const reject = () => {
-        toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-    }
-
-    const confirmDelete = () => {
-        confirmDialog({
-            message: 'Do you want to delete this record?',
-            header: 'Delete Confirmation',
-            icon: 'pi pi-info-circle',
-            defaultFocus: 'reject',
-            acceptClassName: 'p-button-danger',
-            accept,
-            reject
-        });
-    };
 
     useEffect(() => {
         NodeService.getFiles().then((files) => setFiles(files));
         // NodeService.getFilesystem().then((files) => setFiles2(files));
-        setFiles2(facilitiesData)
+        setFiles2(equpimentData)
     }, []);
 
     const openNew = () => {
-        console.log("open new")
         setProductDialog(true);
     }
 
@@ -146,19 +122,8 @@ const FacilitiesTree = () => {
         { name: 'Power', code: 'PRS' },
     ];
 
-    const actionTemplate = () => {
-        return (
-            <div className="flex flex-wrap gap-2">
-                <Button type="button" text  icon="pi pi-trash" severity='danger' onClick={confirmDelete}></Button>
-                <Button type="button" text  icon="pi pi-pencil" severity="info" onClick={openNew}></Button>
-            </div>
-        );
-    };
-
     return (
         <div className="grid">
-            <Toast ref={toast} />
-            <ConfirmDialog />
             <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Facilities" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Company</label>
@@ -212,7 +177,6 @@ const FacilitiesTree = () => {
                         <Column field="name" header="Name" expander />
                         <Column field="size" header="Size" />
                         <Column field="type" header="Type" />
-                        <Column body={actionTemplate} headerClassName="w-10rem" />
                     </TreeTable>
                 </div>
             </div>
@@ -220,4 +184,4 @@ const FacilitiesTree = () => {
     );
 };
 
-export default FacilitiesTree;
+export default EquipmentData;

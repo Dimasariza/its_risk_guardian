@@ -44,7 +44,7 @@ const facilitiesData =
             "key": "0",
             "data":{  
                 "name":"Company A",
-                "size":"100kb",
+                "size":"Pressure Relieve Device",
                 "risk":"High"
             },
         },
@@ -52,7 +52,7 @@ const facilitiesData =
             "key": "1",
             "data":{  
                 "name":"Company B",
-                "size":"20kb",
+                "size":"Tank",
                 "risk":"Medium"
             },
         },
@@ -60,7 +60,7 @@ const facilitiesData =
             "key": "2",
             "data": {  
                 "name":"Company C",
-                "size":"150kb",
+                "size":"Pipe",
                 "risk":"Low"
             },
         },
@@ -68,7 +68,7 @@ const facilitiesData =
             "key": "3",
             "data":{  
                 "name":"Company D",
-                "size":"75kb",
+                "size":"Pressure Vessel",
                 "risk":"Low"
             },
         },
@@ -76,7 +76,7 @@ const facilitiesData =
             "key": "4",
             "data": {  
                 "name":"Company E",
-                "size":"25kb",
+                "size":"Pipe",
                 "risk":"High"
             },
         },
@@ -193,8 +193,8 @@ const Dashboard = () => {
                             <i className="pi pi-shopping-cart text-blue-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">24 new </span>
-                    <span className="text-500">since last visit</span>
+                    {/* <span className="text-green-500 font-medium">24 new </span>
+                    <span className="text-500">since last visit</span> */}
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
@@ -202,14 +202,14 @@ const Dashboard = () => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Units</span>
-                            <div className="text-900 font-medium text-xl">$2.100</div>
+                            <div className="text-900 font-medium text-xl">2.100</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                             <i className="pi pi-map-marker text-orange-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">%52+ </span>
-                    <span className="text-500">since last week</span>
+                    {/* <span className="text-green-500 font-medium">%52+ </span>
+                    <span className="text-500">since last week</span> */}
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
@@ -223,8 +223,8 @@ const Dashboard = () => {
                             <i className="pi pi-inbox text-cyan-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">520 </span>
-                    <span className="text-500">newly registered</span>
+                    {/* <span className="text-green-500 font-medium">520 </span>
+                    <span className="text-500">newly registered</span> */}
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
@@ -232,14 +232,14 @@ const Dashboard = () => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Equipment</span>
-                            <div className="text-900 font-medium text-xl">152 Unread</div>
+                            <div className="text-900 font-medium text-xl">152</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                             <i className="pi pi-comment text-purple-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">85 </span>
-                    <span className="text-500">responded</span>
+                    {/* <span className="text-green-500 font-medium">85 </span>
+                    <span className="text-500">responded</span> */}
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">
@@ -247,14 +247,14 @@ const Dashboard = () => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Component</span>
-                            <div className="text-900 font-medium text-xl">152 Unread</div>
+                            <div className="text-900 font-medium text-xl">15</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                             <i className="pi pi-comment text-purple-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">85 </span>
-                    <span className="text-500">responded</span>
+                    {/* <span className="text-green-500 font-medium">85 </span>
+                    <span className="text-500">responded</span> */}
                 </div>
             </div>
         </div>
@@ -300,7 +300,6 @@ const Dashboard = () => {
         <div className="col-12">
             <div className="card">
                 <h5>Summary</h5>
-                {/* <Button label="Add Facilities" raised severity="success" className='my-2'onClick={openNew}/> */}
 
                 <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                     <Column field="name" header="Number" expander />
