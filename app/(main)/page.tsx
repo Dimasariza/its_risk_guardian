@@ -284,8 +284,23 @@ const Dashboard = () => {
                         <div>
                             <span className="block text-500 font-medium mb-3">Component After Inspection Risk Matrix</span>
                             {/* <div className="text-900 font-medium text-xl">152 Unread</div> */}
-                            <img src={`./demo/images/component after risk matrix.png`} width={"500 px"} />
-
+                            <div className="grid grid-nogutter bg-secondary">
+                                <div className="col-2">
+                                    <div className="text-center p-3 bg-secondary font-bold">1</div>
+                                </div>
+                                <div className="col-2">
+                                    <div className="text-center p-3 bg-primary font-bold">1</div>
+                                </div>
+                                <div className="col-2">
+                                    <div className="text-center p-3 bg-primary font-bold">1</div>
+                                </div>
+                                <div className="col-2">
+                                    <div className="text-center p-3 bg-primary font-bold">1</div>
+                                </div>
+                                <div className="col-2">
+                                    <div className="text-center p-3 bg-primary font-bold">1</div>
+                                </div>
+                            </div>
                         </div>
                         {/* <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                             <i className="pi pi-comment text-purple-500 text-xl" />

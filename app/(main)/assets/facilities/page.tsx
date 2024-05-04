@@ -1,6 +1,6 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
-import { TreeCheckboxSelectionKeys, TreeMultipleSelectionKeys } from 'primereact/tree';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { NodeService } from '../../../../demo/service/NodeService';
@@ -8,63 +8,67 @@ import { TreeNode } from 'primereact/treenode';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
 import { classNames } from 'primereact/utils';
-import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 
+interface IFacilities {
+    company: string,
+    name: string,
+    location: string,
+    type?: any,
+    [key: string]: any
+}
+
 const facilitiesData = 
-    [  
-        {
-            "key": "0",
-            "data":{  
-                "name":"Company A",
-                "size":"100kb",
-                "type":"Folder"
-            },
+[  
+    {
+        "key": "0",
+        "data":{  
+            "name":"Company A",
+            "size":"100kb",
+            "type":"Folder"
         },
-        {  
-            "key": "1",
-            "data":{  
-                "name":"Company B",
-                "size":"20kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "1",
+        "data":{  
+            "name":"Company B",
+            "size":"20kb",
+            "type":"Folder"
         },
-        {  
-            "key": "2",
-            "data": {  
-                "name":"Company C",
-                "size":"150kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "2",
+        "data": {  
+            "name":"Company C",
+            "size":"150kb",
+            "type":"Folder"
         },
-        {  
-            "key": "3",
-            "data":{  
-                "name":"Company D",
-                "size":"75kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "3",
+        "data":{  
+            "name":"Company D",
+            "size":"75kb",
+            "type":"Folder"
         },
-        {  
-            "key": "4",
-            "data": {  
-                "name":"Company E",
-                "size":"25kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "4",
+        "data": {  
+            "name":"Company E",
+            "size":"25kb",
+            "type":"Folder"
         },
-    ]
+    },
+]
 
 const FacilitiesTree = () => {
-    const toast = useRef(null);
+    const toast = useRef<any>(null);
 
-    let emptyProduct: Demo.Product = {
+    let emptyProduct: any = {
         id: '',
         name: '',
         image: '',
@@ -73,23 +77,27 @@ const FacilitiesTree = () => {
         price: 0,
         quantity: 0,
         rating: 0,
-        inventoryStatus: 'INSTOCK'
+        inventoryStatus: 'INSTOCK',
+        company: "",
     };
     
     const [files, setFiles] = useState<TreeNode[]>([]);
     const [files2, setFiles2] = useState<TreeNode[]>([]);
-    const [selectedFileKeys, setSelectedFileKeys] = useState<string | TreeMultipleSelectionKeys | TreeCheckboxSelectionKeys | null>(null);
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
     const [productDialog, setProductDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const [product, setProduct] = useState<Demo.Product>(emptyProduct);
+    const [product, setProduct] = useState<IFacilities>(emptyProduct);
 
-    const accept = () => {
-        // toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+    const accept = ()  => {
+        toast.current.show({ 
+            severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 
+        });
     }
 
     const reject = () => {
-        // toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        toast.current.show({ 
+            severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 
+        });
     }
 
     const confirmDelete = () => {
@@ -97,7 +105,6 @@ const FacilitiesTree = () => {
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
-            // defaultFocus: 'reject',
             acceptClassName: 'p-button-danger',
             accept,
             reject
@@ -106,30 +113,32 @@ const FacilitiesTree = () => {
 
     useEffect(() => {
         NodeService.getFiles().then((files) => setFiles(files));
-        // NodeService.getFilesystem().then((files) => setFiles2(files));
         setFiles2(facilitiesData)
     }, []);
 
     const openNew = () => {
-        console.log("open new")
         setProductDialog(true);
-    }
+    };
 
     const hideDialog = () => {
         setSubmitted(false);
         setProductDialog(false);
     };
 
+    const saveDialog = () => {
+        setProductDialog(false);
+    };
+
     const productDialogFooter = (
         <>
             <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
-            <Button label="Save" icon="pi pi-check" text />
+            <Button label="Save" icon="pi pi-check" text onClick={saveDialog} />
         </>
     );
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
+        let _product: IFacilities = { ...product };
         _product[`${name}`] = val;
 
         setProduct(_product);
@@ -163,13 +172,13 @@ const FacilitiesTree = () => {
                 <div className="field">
                     <label htmlFor="name">Company</label>
                     <InputText
-                        id="name"
-                        value={product.name}
-                        onChange={(e) => onInputChange(e, 'name')}
+                        id="company"
+                        value={product.company}
+                        onChange={(e) => onInputChange(e, 'company')}
                         required
                         autoFocus
                         className={classNames({
-                            'p-invalid': submitted && !product.name
+                            'p-invalid': submitted && !product.company
                         })}
                     />
 
@@ -187,13 +196,13 @@ const FacilitiesTree = () => {
 
                     <label className="mb-3">Location</label>
                     <InputText
-                        id="name"
-                        value={product.name}
-                        onChange={(e) => onInputChange(e, 'name')}
+                        id="location"
+                        value={product.location}
+                        onChange={(e) => onInputChange(e, 'location')}
                         required
                         autoFocus
                         className={classNames({
-                            'p-invalid': submitted && !product.name
+                            'p-invalid': submitted && !product.location
                         })}
                     />
 
