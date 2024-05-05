@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV === "production";
 const nextConfig = {
     output: "export",
     reactStrictMode: true,
-    basePath: "/rbits",
-    assetPrefix: '/rbits/',
+    bashPath: isProd ? "/rbits" : "",
+    assetPrefix: isProd ? '/rbits/' : undefined,
+    distDir: 'build',
+    experimental: {
+        appDir: true,
+    },
 }
 
 module.exports = nextConfig

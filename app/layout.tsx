@@ -12,11 +12,14 @@ interface RootLayoutProps {
     children: React.ReactNode;
 }
 
+const isProd = process.env.NODE_ENV === "production"
+
 export default function RootLayout({ children }: RootLayoutProps) {
+    const theme = `${isProd ? "/rbits" : ""}/themes/lara-light-indigo/theme.css`
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <link id="theme-css" href={`/themes/lara-light-indigo/theme.css`} rel="stylesheet"></link>
+                <link id="theme-css" href={theme} rel="stylesheet"></link>
             </head>
             <body>
                 <PrimeReactProvider>
