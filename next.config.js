@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-const isProd = process.env.NODE_ENV === "production";
+// const isProd = process.env.NODE_ENV === "production";
 const nextConfig = {
     output: "export",
     reactStrictMode: true,
-    bashPath: isProd ? "/rbits" : "",
-    assetPrefix: isProd ? '/rbits/' : undefined,
+    bashPath: true ? "/rbits" : "",
+    assetPrefix: true ? '/rbits/' : undefined,
     distDir: 'build',
     experimental: {
         appDir: true,
