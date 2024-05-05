@@ -1,94 +1,150 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { Button } from 'primereact/button';
-import { Chart } from 'primereact/chart';
+
 import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
-import { Menu } from 'primereact/menu';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ProductService } from '../../demo/service/ProductService';
-import { LayoutContext } from '../../layout/context/layoutcontext';
-import Link from 'next/link';
-import { Demo } from '@/types';
-import { ChartData, ChartOptions } from 'chart.js';
+import React, { useEffect, useState } from 'react';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { TreeNode } from 'primereact/treenode';
 
-
-const lineData: ChartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            fill: false,
-            backgroundColor: '#2f4860',
-            borderColor: '#2f4860',
-            tension: 0.4
-        },
-        {
-            label: 'Second Dataset',
-            data: [28, 48, 40, 19, 86, 27, 90],
-            fill: false,
-            backgroundColor: '#00bb7e',
-            borderColor: '#00bb7e',
-            tension: 0.4
-        }
-    ]
-};
-
-
 const facilitiesData = 
-    [  
-        {
-            "key": "0",
-            "data":{  
-                "name":"Company A",
-                "size":"Pressure Relieve Device",
-                "risk":"High"
-            },
+[  
+    {
+        "key": "0",
+        "data":{  
+            "name":"Company A",
+            "size":"Pressure Relieve Device",
+            "risk":"High"
         },
-        {  
-            "key": "1",
-            "data":{  
-                "name":"Company B",
-                "size":"Tank",
-                "risk":"Medium"
-            },
+    },
+    {  
+        "key": "1",
+        "data":{  
+            "name":"Company B",
+            "size":"Tank",
+            "risk":"Medium"
         },
-        {  
-            "key": "2",
-            "data": {  
-                "name":"Company C",
-                "size":"Pipe",
-                "risk":"Low"
-            },
+    },
+    {  
+        "key": "2",
+        "data": {  
+            "name":"Company C",
+            "size":"Pipe",
+            "risk":"Low"
         },
-        {  
-            "key": "3",
-            "data":{  
-                "name":"Company D",
-                "size":"Pressure Vessel",
-                "risk":"Low"
-            },
+    },
+    {  
+        "key": "3",
+        "data":{  
+            "name":"Company D",
+            "size":"Pressure Vessel",
+            "risk":"Low"
         },
-        {  
-            "key": "4",
-            "data": {  
-                "name":"Company E",
-                "size":"Pipe",
-                "risk":"High"
-            },
+    },
+    {  
+        "key": "4",
+        "data": {  
+            "name":"Company E",
+            "size":"Pipe",
+            "risk":"High"
         },
-    ]
+    },
+]
 
+const riskMatrix: any = 
+[
+    { 
+        title: "Component Before Inspection Risk Matrix",
+        data: 
+        [
+            [
+                { value: 1, color: 'orange' },
+                { value: 2, color: 'orange' },
+                { value: 3, color: 'orange' },
+                { value: 4, color: 'red' },
+                { value: 5, color: 'red' },
+            ],
+            [
+                { value: 6, color: 'yellow' },
+                { value: 7, color: 'yellow' },
+                { value: 8, color: 'orange' },
+                { value: 9, color: 'orange' },
+                { value: 10, color: 'red' },
+            ],
+            [
+                { value: 11, color: 'yellowgreen' },
+                { value: 12, color: 'yellowgreen' },
+                { value: 13, color: 'yellow' },
+                { value: 14, color: 'orange' },
+                { value: 15, color: 'red' },
+            ],
+            [
+                { value: 16, color: 'yellowgreen' },
+                { value: 17, color: 'yellowgreen' },
+                { value: 18, color: 'yellow' },
+                { value: 19, color: 'yellow' },
+                { value: 20, color: 'orange' },
+            ],
+            [
+                { value: 21, color: 'yellowgreen' },
+                { value: 22, color: 'yellowgreen' },
+                { value: 23, color: 'yellow' },
+                { value: 24, color: 'yellow' },
+                { value: 25, color: 'orange' },
+            ],
+        ]
+    },
+    { 
+        title: "Component After Inspection Risk Matrix",
+        data: 
+        [
+            [
+                { value: 1, color: 'orange' },
+                { value: 2, color: 'orange' },
+                { value: 3, color: 'orange' },
+                { value: 4, color: 'red' },
+                { value: 5, color: 'red' },
+            ],
+            [
+                { value: 6, color: 'yellow' },
+                { value: 7, color: 'yellow' },
+                { value: 8, color: 'orange' },
+                { value: 9, color: 'orange' },
+                { value: 10, color: 'red' },
+            ],
+            [
+                { value: 11, color: 'yellowgreen' },
+                { value: 12, color: 'yellowgreen' },
+                { value: 13, color: 'yellow' },
+                { value: 14, color: 'orange' },
+                { value: 15, color: 'red' },
+            ],
+            [
+                { value: 16, color: 'yellowgreen' },
+                { value: 17, color: 'yellowgreen' },
+                { value: 18, color: 'yellow' },
+                { value: 19, color: 'yellow' },
+                { value: 20, color: 'orange' },
+            ],
+            [
+                { value: 21, color: 'yellowgreen' },
+                { value: 22, color: 'yellowgreen' },
+                { value: 23, color: 'yellow' },
+                { value: 24, color: 'yellow' },
+                { value: 25, color: 'orange' },
+            ],
+        ]
+    }
+]
+
+const cardInformation = [
+    { title: "Facilities", value: 152, icon: <i className="pi pi-shopping-cart text-blue-500 text-xl" />},
+    { title: "Units", value: 2100, icon: <i className="pi pi-map-marker text-orange-500 text-xl" />},
+    { title: "Systems", value: 28411, icon: <i className="pi pi-inbox text-cyan-500 text-xl" />},
+    { title: "Equipment", value: 152, icon: <i className="pi pi-comment text-purple-500 text-xl" />},
+    { title: "Component", value: 15, icon: <i className="pi pi-comment text-purple-500 text-xl" />},
+]
 
 const Dashboard = () => {
-    const [products, setProducts] = useState<Demo.Product[]>([]);
-    const menu1 = useRef<Menu>(null);
-    const menu2 = useRef<Menu>(null);
-    const [lineOptions, setLineOptions] = useState<ChartOptions>({});
-    const { layoutConfig } = useContext(LayoutContext);
     const [files2, setFiles2] = useState<TreeNode[]>([]);
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
     
@@ -96,187 +152,53 @@ const Dashboard = () => {
         setFiles2(facilitiesData)
     }, []);
 
-    const applyLightTheme = () => {
-        const lineOptions: ChartOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#495057'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: '#495057'
-                    },
-                    grid: {
-                        color: '#ebedef'
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: '#495057'
-                    },
-                    grid: {
-                        color: '#ebedef'
-                    }
-                }
-            }
-        };
-
-        setLineOptions(lineOptions);
-    };
-
-    const applyDarkTheme = () => {
-        const lineOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#ebedef'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: '#ebedef'
-                    },
-                    grid: {
-                        color: 'rgba(160, 167, 181, .3)'
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: '#ebedef'
-                    },
-                    grid: {
-                        color: 'rgba(160, 167, 181, .3)'
-                    }
-                }
-            }
-        };
-
-        setLineOptions(lineOptions);
-    };
-
-    useEffect(() => {
-        ProductService.getProductsSmall().then((data) => setProducts(data));
-    }, []);
-
-    useEffect(() => {
-        if (layoutConfig.colorScheme === 'light') {
-            applyLightTheme();
-        } else {
-            applyDarkTheme();
-        }
-    }, [layoutConfig.colorScheme]);
-
-    const formatCurrency = (value: number) => {
-        return value?.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        });
-    };
-
     return (
         <>
         <div className="grid">
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Facilities</span>
-                            <div className="text-900 font-medium text-xl">152</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-shopping-cart text-blue-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Units</span>
-                            <div className="text-900 font-medium text-xl">2.100</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-map-marker text-orange-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Systems</span>
-                            <div className="text-900 font-medium text-xl">28441</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-inbox text-cyan-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Equipment</span>
-                            <div className="text-900 font-medium text-xl">152</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-comment text-purple-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Component</span>
-                            <div className="text-900 font-medium text-xl">15</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-comment text-purple-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div className="grid">
-            <div className="col-6 lg:col-6 xl:col-6">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Component Before Inspection Risk Matrix</span>
-                            <img src={`./demo/images/component before risk matrix.png`} width={"500 px"} />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-6 lg:col-6 xl:col-6">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div className="w-full">
-                            <span className="block text-500 font-medium mb-3">Component After Inspection Risk Matrix</span>
-                            <div className="flex justify-content-center">
-                                <div className="flex align-items-center justify-content-center w-6rem h-6rem bg-primary font-bold border-1 border-600">1</div>
-                                <div className="flex align-items-center justify-content-center w-6rem h-6rem bg-primary font-bold border-1 border-600">2</div>
-                                <div className="flex align-items-center justify-content-center w-6rem h-6rem bg-primary font-bold border-1 border-600">3</div>
-                                <div className="flex align-items-center justify-content-center w-6rem h-6rem bg-primary font-bold border-1 border-600">4</div>
-                                <div className="flex align-items-center justify-content-center w-6rem h-6rem bg-primary font-bold border-1 border-600">5</div>
+            {
+                cardInformation.map(({title, value, icon}: any, cardKey:number) => (
+                    <div className="col-12 lg:col-6 xl:col-3" key={cardKey}>
+                        <div className="card mb-0">
+                            <div className="flex justify-content-between mb-3">
+                                <div>
+                                    <span className="block text-500 font-medium mb-3">{title}</span>
+                                    <div className="text-900 font-medium text-xl">{value}</div>
+                                </div>
+                                <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                                    {icon}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                ))
+            }
+        </div>
+
+        <div className="grid">
+            {
+                riskMatrix.map(({title, data} :any, matrixKey: number) => (
+                    <div className="col-6 sm:col-12 lg:col-12 xl:col-6" key={matrixKey}>
+                        <div className="card mb-0">
+                            <div className="flex justify-content-between mb-3">
+                                <div className="w-full">
+                                    <span className="flex text-500 font-medium mb-3 w-full justify-content-center">{title}</span>
+                                    {   
+                                        data.map((item:any, id_1:number) => (
+                                            <div className="flex justify-content-center" key={id_1}>
+                                                {
+                                                    item.map(({value, color}: any, id_2:number) => (
+                                                        <div key={id_2} className="flex align-items-center justify-content-center w-5rem h-5rem font-bold border-1 border-600" style={{ background : color }}>{value}</div>
+                                                    ))
+                                                }
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
         </div>
 
         <div className="col-12">
@@ -290,8 +212,6 @@ const Dashboard = () => {
                 </TreeTable>
             </div>
         </div>
-
-        
     </>
     );
 };

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { Column } from 'primereact/column';
-import { NodeService } from '../../../../demo/service/NodeService';
 import { TreeNode } from 'primereact/treenode';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
@@ -12,6 +11,72 @@ import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
+// import facilitiesData from './data';
+
+let facilitiesData: any[] = 
+[  
+    {
+        "key": 0,
+        "data":{  
+            "name":"Pertamina Surabaya",
+            "company":"Pertamina",
+            "location":"Surabaya",
+            "type": {
+                "name": "Oil and gas production"
+            },
+            "id": 1
+        },
+    },
+    {  
+        "key": 1,
+        "data":{  
+            "name":"Meratus Jakarta",
+            "company":"Meratus",
+            "location":"Jakarta",
+            "type": {
+                "name": 'Oil and gas processing and transportation '
+            },
+            "id": 2
+        },
+    },
+    {  
+        "key": 2,
+        "data": {  
+            "name":"SPIL Surabaya",
+            "company":"SPIL",
+            "location":"Surabaya",
+            "type": {
+                name: 'Refineries'
+            },
+            "id": 3
+        },
+    },
+    {  
+        "key": 3,
+        "data":{  
+            "name":"Dok Pantai Lamongan",
+            "company":"DPL",
+            "location":"Lamongan",
+            "type": {
+                name: 'Petrochemical and chemical plants'
+            },
+            "id": 4
+        },
+    },
+    {  
+        "key": 4,
+        "data": {  
+            "name":"DKB Jakarta",
+            "company":"DKB",
+            "location":"Jakarta",
+            "type": {
+                name: 'Pipeline'
+            },
+            "id": 5
+        },
+    },
+]
+
 
 interface IFacilities {
     company: string,
@@ -20,50 +85,6 @@ interface IFacilities {
     type?: any,
     [key: string]: any
 }
-
-const facilitiesData = 
-[  
-    {
-        "key": "0",
-        "data":{  
-            "name":"Company A",
-            "size":"100kb",
-            "type":"Folder"
-        },
-    },
-    {  
-        "key": "1",
-        "data":{  
-            "name":"Company B",
-            "size":"20kb",
-            "type":"Folder"
-        },
-    },
-    {  
-        "key": "2",
-        "data": {  
-            "name":"Company C",
-            "size":"150kb",
-            "type":"Folder"
-        },
-    },
-    {  
-        "key": "3",
-        "data":{  
-            "name":"Company D",
-            "size":"75kb",
-            "type":"Folder"
-        },
-    },
-    {  
-        "key": "4",
-        "data": {  
-            "name":"Company E",
-            "size":"25kb",
-            "type":"Folder"
-        },
-    },
-]
 
 const FacilitiesTree = () => {
     const toast = useRef<any>(null);
@@ -81,44 +102,68 @@ const FacilitiesTree = () => {
         company: "",
     };
     
-    const [files, setFiles] = useState<TreeNode[]>([]);
     const [files2, setFiles2] = useState<TreeNode[]>([]);
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
     const [productDialog, setProductDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [product, setProduct] = useState<IFacilities>(emptyProduct);
 
-    const accept = ()  => {
+    const acceptDelete = (value: any)  => {
+        const deletionData = facilitiesData.filter(item => item.data.id != value.id);
+
+        setFiles2(deletionData);
+        facilitiesData = deletionData;
+
         toast.current.show({ 
             severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 
         });
-    }
+    };
 
-    const reject = () => {
+    const rejectDelete = () => {
         toast.current.show({ 
             severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 
         });
-    }
+    };
 
-    const confirmDelete = () => {
+    const confirmDelete = ({data}: any) => {
         confirmDialog({
-            message: 'Do you want to delete this record?',
+            message: `Do you want to delete ${data.name}?`,
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             acceptClassName: 'p-button-danger',
-            accept,
-            reject
+            accept: () => acceptDelete(data),
+            reject: rejectDelete
         });
     };
 
     useEffect(() => {
-        NodeService.getFiles().then((files) => setFiles(files));
-        setFiles2(facilitiesData)
+        setFiles2(facilitiesData);
     }, []);
 
+    const companyType: any = [
+        { name: 'Oil and gas productiocn' },
+        { name: 'Oil and gas processing and transportation ' },
+        { name: 'Refineries' },
+        { name: 'Petrochemical and chemical plants' },
+        { name: 'Pipeline' },
+        { name: 'Pipeline stations' },
+        { name: 'Liquefied natural gas plants' },
+    ];
+
     const openNew = () => {
+        setProduct({
+            company: "",
+            name: "",
+            location: "",
+            type: "",
+        });
         setProductDialog(true);
     };
+
+    const openEdit = (value: any) => {
+        setProduct(value.data)
+        setProductDialog(true);
+    }
 
     const hideDialog = () => {
         setSubmitted(false);
@@ -126,6 +171,11 @@ const FacilitiesTree = () => {
     };
 
     const saveDialog = () => {
+        facilitiesData.push({
+            key: facilitiesData.length,
+            data: product
+        })
+        console.log(facilitiesData)
         setProductDialog(false);
     };
 
@@ -144,22 +194,11 @@ const FacilitiesTree = () => {
         setProduct(_product);
     };
 
-    const [selectedCompanyType, setSelectedCompanyType] = useState(null);
-    const companyType = [
-        { name: 'Oil and gas production', code: 'NY' },
-        { name: 'Oil and gas processing and transportation ', code: 'RM' },
-        { name: 'Refineries', code: 'LDN' },
-        { name: 'Petrochemical and chemical plants', code: 'IST' },
-        { name: 'Pipeline', code: 'PRS' },
-        { name: 'Pipeline stations', code: 'PRS' },
-        { name: 'Liquefied natural gas plants', code: 'PRS' },
-    ];
-
-    const actionTemplate = () => {
+    const actionTemplate = (data : any) => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button type="button" text  icon="pi pi-trash" severity='danger' onClick={confirmDelete}></Button>
-                <Button type="button" text  icon="pi pi-pencil" severity="info" onClick={openNew}></Button>
+                <Button type="button" text  icon="pi pi-trash" severity='danger' onClick={() => confirmDelete(data)}></Button>
+                <Button type="button" text  icon="pi pi-pencil" severity="info" onClick={() => openEdit(data)}></Button>
             </div>
         );
     };
@@ -188,7 +227,6 @@ const FacilitiesTree = () => {
                         value={product.name}
                         onChange={(e) => onInputChange(e, 'name')}
                         required
-                        autoFocus
                         className={classNames({
                             'p-invalid': submitted && !product.name
                         })}
@@ -200,14 +238,15 @@ const FacilitiesTree = () => {
                         value={product.location}
                         onChange={(e) => onInputChange(e, 'location')}
                         required
-                        autoFocus
                         className={classNames({
                             'p-invalid': submitted && !product.location
                         })}
                     />
 
                     <label className="mb-3">Type</label>
-                    <Dropdown value={selectedCompanyType} onChange={(e) => setSelectedCompanyType(e.value)} options={companyType} optionLabel="name" 
+                    <Dropdown value={product.type} onChange={(e) => setProduct(value => ({
+                        ...value, type: e.value
+                    }))} options={companyType} optionLabel="name" 
                     placeholder="Select Type" className="w-full md:w-14rem" />
                 </div>
             </Dialog>
@@ -219,8 +258,8 @@ const FacilitiesTree = () => {
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Name" expander />
-                        <Column field="size" header="Size" />
-                        <Column field="type" header="Type" />
+                        <Column field="company" header="Company" />
+                        <Column field="location" header="Location" />
                         <Column body={actionTemplate} headerClassName="w-10rem" />
                     </TreeTable>
                 </div>
