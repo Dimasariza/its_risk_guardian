@@ -4,9 +4,8 @@
 const nextConfig = {
     output: "export",
     reactStrictMode: true,
-    bashPath: true ? "/rbits" : "",
-    assetPrefix: true ? '/rbits/' : undefined,
-    distDir: 'build',
+    bashPath: "/rbits",
+    assetPrefix: '/rbits/',
     experimental: {
         appDir: true,
     },

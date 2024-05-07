@@ -12,10 +12,8 @@ interface RootLayoutProps {
     children: React.ReactNode;
 }
 
-// const isProd = process.env.NODE_ENV === "production"
-
 export default function RootLayout({ children }: RootLayoutProps) {
-    const theme = `${""}/themes/lara-light-indigo/theme.css`
+    const theme = `/themes/lara-light-indigo/theme.css`
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
