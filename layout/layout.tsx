@@ -18,7 +18,6 @@ import { Card } from 'primereact/card';
 
 const Layout = ({ children }: ChildContainerProps) => {
     const route = usePathname();
-    console.log(route)
     const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
     const { setRipple } = useContext(PrimeReactContext);
     const topbarRef = useRef<AppTopbarRef>(null);
@@ -212,16 +211,8 @@ const Layout = ({ children }: ChildContainerProps) => {
                 <div ref={sidebarRef} className="layout-sidebar">
                     <AppSidebar />
                 </div>
-                <div ref={sidebarRef} className="layout-sidebar">
-                    <AppSidebar />
-                </div>
                 <div className="layout-main-container">
-                    {/* <div className="flex">
-                        <Card title="Simple Card">
-                            <PanelMenu model={items} className="w-full md:w-20rem" />
-                        </Card> */}
-                        <div className="layout-main">{children}</div>
-                    {/* </div> */}
+                    <div className="layout-main">{children}</div>
                     <AppFooter />
                 </div>
                 <AppConfig />
