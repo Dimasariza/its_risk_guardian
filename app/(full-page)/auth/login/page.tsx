@@ -17,6 +17,10 @@ const LoginPage = () => {
     const router = useRouter();
     const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
+    const handleLogin = () => {
+        if(password == "admin") router.push('/home/dashboard')
+    }
+
     return (
         <div className={containerClassName}>
             <div className="flex flex-column align-items-center justify-content-center">
@@ -29,7 +33,7 @@ const LoginPage = () => {
                 >
                     <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}>
                         <div className="text-center mb-5">
-                            <img src={`/layout/images/ITS Risk Guardian - ${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg`} alt="Sakai logo" className="mb-5 w-6rem flex-shrink-0" />
+                            <img src={`/layout/images/ITS Risk Guardian - ${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg`} alt="ITS Risk Guardian logo" className="mb-5 w-6rem flex-shrink-0" />
                             <div className="text-900 text-3xl font-medium mb-3">Welcome to ITS Risk Guardian!</div>
                             <span className="text-600 font-medium">Sign in to continue</span>
                         </div>
@@ -54,7 +58,7 @@ const LoginPage = () => {
                                     Forgot password?
                                 </a>
                             </div>
-                            <Button label="Sign In" className="w-full p-3 text-xl" onClick={() => router.push('/home/dashboard')}></Button>
+                            <Button label="Sign In" className="w-full p-3 text-xl" onClick={handleLogin}></Button>
                         </div>
                     </div>
                 </div>
