@@ -5,7 +5,7 @@ const nextConfig = {
     reactStrictMode: true,
     bashPath: "/its_risk_guardian",
     env: {
-        BASE_URL: process.env.PUBLIC_URL,
+        PUBLIC_URL: process.env.PUBLIC_URL,
     },
     experimental: {
         appDir: true,
