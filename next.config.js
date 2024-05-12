@@ -3,7 +3,7 @@
 const nextConfig = {
     output: "export",
     reactStrictMode: true,
-    // bashPath: "/rbits",
+    bashPath: "/its_risk_guardian",
     // assetPrefix: '/rbits/',
     experimental: {
         appDir: true,
