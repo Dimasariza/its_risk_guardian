@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { useEventListener, useMountEffect, useUnmountEffect } from 'primereact/hooks';
 import React, { useContext, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
@@ -13,8 +13,12 @@ import { LayoutContext } from './context/layoutcontext';
 import { PrimeReactContext } from 'primereact/api';
 import { ChildContainerProps, LayoutState, AppTopbarRef } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { PanelMenu } from 'primereact/panelmenu';
+import { Card } from 'primereact/card';
 
 const Layout = ({ children }: ChildContainerProps) => {
+    const route = usePathname();
+    console.log(route)
     const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
     const { setRipple } = useContext(PrimeReactContext);
     const topbarRef = useRef<AppTopbarRef>(null);
@@ -122,6 +126,85 @@ const Layout = ({ children }: ChildContainerProps) => {
         'p-ripple-disabled': !layoutConfig.ripple
     });
 
+    const items = [     
+        {
+            label: 'Files',
+            icon: 'pi pi-file',
+            items: [
+                {
+                    label: 'Documents',
+                    icon: 'pi pi-file',
+                    items: [
+                        {
+                            label: 'Invoices',
+                            icon: 'pi pi-file-pdf',
+                            items: [
+                                {
+                                    label: 'Pending',
+                                    icon: 'pi pi-stop'
+                                },
+                                {
+                                    label: 'Paid',
+                                    icon: 'pi pi-check-circle'
+                                }
+                            ]
+                        },
+                        {
+                            label: 'Clients',
+                            icon: 'pi pi-users'
+                        }
+                    ]
+                },
+                {
+                    label: 'Images',
+                    icon: 'pi pi-image',
+                    items: [
+                        {
+                            label: 'Logos',
+                            icon: 'pi pi-image'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            label: 'Cloud',
+            icon: 'pi pi-cloud',
+            items: [
+                {
+                    label: 'Upload',
+                    icon: 'pi pi-cloud-upload'
+                },
+                {
+                    label: 'Download',
+                    icon: 'pi pi-cloud-download'
+                },
+                {
+                    label: 'Sync',
+                    icon: 'pi pi-refresh'
+                }
+            ]
+        },
+        {
+            label: 'Devices',
+            icon: 'pi pi-desktop',
+            items: [
+                {
+                    label: 'Phone',
+                    icon: 'pi pi-mobile'
+                },
+                {
+                    label: 'Desktop',
+                    icon: 'pi pi-desktop'
+                },
+                {
+                    label: 'Tablet',
+                    icon: 'pi pi-tablet'
+                }
+            ]
+        }
+    ];
+
     return (
         <React.Fragment>
             <div className={containerClass}>
@@ -129,8 +212,16 @@ const Layout = ({ children }: ChildContainerProps) => {
                 <div ref={sidebarRef} className="layout-sidebar">
                     <AppSidebar />
                 </div>
+                <div ref={sidebarRef} className="layout-sidebar">
+                    <AppSidebar />
+                </div>
                 <div className="layout-main-container">
-                    <div className="layout-main">{children}</div>
+                    {/* <div className="flex">
+                        <Card title="Simple Card">
+                            <PanelMenu model={items} className="w-full md:w-20rem" />
+                        </Card> */}
+                        <div className="layout-main">{children}</div>
+                    {/* </div> */}
                     <AppFooter />
                 </div>
                 <AppConfig />

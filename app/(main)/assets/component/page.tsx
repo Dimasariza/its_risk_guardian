@@ -8,61 +8,65 @@ import { TreeNode } from 'primereact/treenode';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
 import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
+import Link from 'next/link';
+
 
 const componentData = 
-    [  
-        {
-            "key": "0",
-            "data":{  
-                "name":"Company A",
-                "size":"100kb",
-                "type":"Folder"
-            },
+[  
+    {
+        "key": "0",
+        "data":{  
+            "name":"Company A",
+            "size":"100kb",
+            "type":"Folder",
+            "key": 0,
         },
-        {  
-            "key": "1",
-            "data":{  
-                "name":"Company B",
-                "size":"20kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "1",
+        "data":{  
+            "name":"Company B",
+            "size":"20kb",
+            "type":"Folder",
+            "key": 1
         },
-        {  
-            "key": "2",
-            "data": {  
-                "name":"Company C",
-                "size":"150kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "2",
+        "data": {  
+            "name":"Company C",
+            "size":"150kb",
+            "type":"Folder",
+            "key": 2
         },
-        {  
-            "key": "3",
-            "data":{  
-                "name":"Company D",
-                "size":"75kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "3",
+        "data":{  
+            "name":"Company D",
+            "size":"75kb",
+            "type":"Folder",
+            "key": 3
         },
-        {  
-            "key": "4",
-            "data": {  
-                "name":"Company E",
-                "size":"25kb",
-                "type":"Folder"
-            },
+    },
+    {  
+        "key": "4",
+        "data": {  
+            "name":"Company E",
+            "size":"25kb",
+            "type":"Folder",
+            "key": 4
         },
-    ]
+    },
+]
 
 const ComponentTree = () => {
-    const toast = useRef(null);
+    const toast = useRef<any>(null);
 
     let emptyProduct: Demo.Product = {
         id: '',
@@ -85,11 +89,11 @@ const ComponentTree = () => {
     const [product, setProduct] = useState<Demo.Product>(emptyProduct);
 
     const accept = () => {
-        // toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+        toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
     }
 
     const reject = () => {
-        // toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
     }
 
     const confirmDelete = () => {
@@ -97,7 +101,6 @@ const ComponentTree = () => {
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
-            // defaultFocus: 'reject',
             acceptClassName: 'p-button-danger',
             accept,
             reject
@@ -111,7 +114,6 @@ const ComponentTree = () => {
     }, []);
 
     const openNew = () => {
-        console.log("open new")
         setProductDialog(true);
     }
 
@@ -154,6 +156,15 @@ const ComponentTree = () => {
             </div>
         );
     };
+
+    const componentTemplate: any = ({data}: any) => {
+        const { name, key } = data;
+        return (
+            <Link href={{ pathname: "/assets/component-details", query: {key} }} className="flex align-items-center">
+                {name}
+            </Link>
+        )
+    }
 
     return (
         <div className="grid">
@@ -208,8 +219,9 @@ const ComponentTree = () => {
                     <h5>Components</h5>
                     <Button label="Add Components" raised severity="success" className='my-2'onClick={openNew}/>
 
-                    <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
-                        <Column field="name" header="Name" expander/>
+                    <TreeTable value={files2} selectionMode="checkbox" columnResizeMode="expand" resizableColumns={true} selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
+                        <Column field="" header="" expander style={{width : "50px"}} frozen/>
+                        <Column body={(e) => componentTemplate(e)} header="Name"/>
                         <Column field="size" header="Size" />
                         <Column field="type" header="Type" />
                         <Column body={actionTemplate} headerClassName="w-10rem" />
