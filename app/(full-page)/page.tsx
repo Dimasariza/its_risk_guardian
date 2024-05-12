@@ -39,8 +39,8 @@ const LandingPage = () => {
                                     { href: "features", name: "Features" },
                                     { href: "highlights", name: "Highlights" },
                                     { href: "pricing", name: "Pricing" },
-                                ].map(({href, name} : any) => (
-                                    <li>
+                                ].map(({href, name} : any, key) => (
+                                    <li key={key}>
                                         <a href={"#" + href} onClick={toggleMenuItemClick} className="p-ripple flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
                                             <span>{name}</span>
                                             <Ripple />
@@ -98,8 +98,8 @@ const LandingPage = () => {
                                 { name : "Dark Mode", desc: "Convallis tellus id interdum velit laoreet.", icon: <i className="pi pi-fw pi-moon text-2xl text-pink-700"></i>, color: "bg-cyan-200"},
                                 { name : "Ready to Use", desc: "Mauris sit amet massa vitae.", icon: <i className="pi pi-fw pi-shopping-cart text-2xl text-teal-700"></i>, color: "bg-pink-200"},
                                 { name : "Modern Practices", desc: "Elementum nibh tellus molestie nunc non.", icon: <i className="pi pi-fw pi-globe text-2xl text-blue-700"></i>, color: "bg-red-200"},
-                            ].map(({name, desc, icon, color} : any) => (
-                                <div className="col-12 md:col-12 lg:col-4 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0">
+                            ].map(({name, desc, icon, color} : any, key) => (
+                                <div className="col-12 md:col-12 lg:col-4 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" key={key}>
                                     <div
                                         style={{
                                             height: '160px',
