@@ -168,7 +168,7 @@ const LandingPage = () => {
                             ].map(({name, title, desc, imgSrc}, key) => (
                                 <div className="col-12 justify-content-center flex md:col-12 lg:col-6 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" key={key}>
                                     <Card title={name} subTitle={title} header={() => (
-                                        <img alt="Card" src={`${process.env.PUBLIC_URL || ""}/team/image/"${imgSrc}`} />
+                                        <img alt="Card" src={`${process.env.PUBLIC_URL || ""}/team/image/${imgSrc}`} />
                                     )} className="md:w-25rem">
                                         <p className="m-0">
                                             {desc}
