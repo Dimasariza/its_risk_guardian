@@ -4,7 +4,9 @@ const nextConfig = {
     output: "export",
     reactStrictMode: true,
     bashPath: "/its_risk_guardian",
-    // assetPrefix: '/rbits/',
+    env: {
+        BASE_URL: process.env.PUBLIC_URL,
+    },
     experimental: {
         appDir: true,
     },
