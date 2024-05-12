@@ -20,7 +20,7 @@ const unitsData =
         {
             "key": "0",
             "data":{  
-                "name":"Company A",
+                "name":"Unit 01",
                 "size":"Amine Treating",
                 "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             },
@@ -38,7 +38,7 @@ const unitsData =
         {  
             "key": "1",
             "data":{  
-                "name":"Company B",
+                "name":"Unit 02",
                 "size":"Crude",
                 "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
@@ -56,7 +56,7 @@ const unitsData =
         {  
             "key": "2",
             "data": {  
-                "name":"Company C",
+                "name":"Unit 03",
                 "size":"Vacum Units",
                 "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
@@ -74,7 +74,7 @@ const unitsData =
         {  
             "key": "3",
             "data":{  
-                "name":"Company D",
+                "name":"Unit 04",
                 "size":"Crude",
                 "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
@@ -92,7 +92,7 @@ const unitsData =
         {  
             "key": "4",
             "data": {  
-                "name":"Company E",
+                "name":"Unit 05",
                 "size":"Vacum Units",
                 "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
@@ -205,7 +205,7 @@ const UnitsTree = () => {
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Facility" expander />
-                        <Column field="size" header="Name" />
+                        <Column field="size" header="Units" />
                         <Column field="type" header="Description" />
                     </TreeTable>
                 </div>

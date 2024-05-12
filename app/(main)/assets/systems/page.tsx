@@ -205,7 +205,7 @@ const SystemsTree = () => {
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Facility" expander />
-                        <Column field="size" header="Name" />
+                        <Column field="size" header="System" />
                         <Column field="type" header="Description" />
                     </TreeTable>
                 </div>

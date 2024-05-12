@@ -20,42 +20,92 @@ const equpimentData =
         {
             "key": "0",
             "data":{  
-                "name":"Company A",
-                "size":"100kb",
-                "type":"Folder"
+                "name":"Equipment 01",
+                "size":"Amine Treating",
+                "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             },
+            "children" : [
+                {
+                    "key": "0",
+                    "data":{  
+                        "name":"Equipments A",
+                        "size":"Pipe",
+                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
+                    },
+                },
+            ]
         },
         {  
             "key": "1",
             "data":{  
-                "name":"Company B",
-                "size":"20kb",
-                "type":"Folder"
+                "name":"Equipment 02",
+                "size":"Crude",
+                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
+            "children" : [
+                {
+                    "key": "0",
+                    "data":{  
+                        "name":"Equipments A",
+                        "size":"Pipe",
+                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
+                    },
+                },
+            ]
         },
         {  
             "key": "2",
             "data": {  
-                "name":"Company C",
-                "size":"150kb",
-                "type":"Folder"
+                "name":"Equipment 03",
+                "size":"Vacum Equipments",
+                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
+            "children" : [
+                {
+                    "key": "0",
+                    "data":{  
+                        "name":"Equipments A",
+                        "size":"Pipe",
+                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
+                    },
+                },
+            ]
         },
         {  
             "key": "3",
             "data":{  
-                "name":"Company D",
-                "size":"75kb",
-                "type":"Folder"
+                "name":"Equipment 04",
+                "size":"Crude",
+                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
+            "children" : [
+                {
+                    "key": "0",
+                    "data":{  
+                        "name":"Equipments A",
+                        "size":"Pipe",
+                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
+                    },
+                },
+            ]
         },
         {  
             "key": "4",
             "data": {  
-                "name":"Company E",
-                "size":"25kb",
-                "type":"Folder"
+                "name":"Equipment 05",
+                "size":"Vacum Equipments",
+                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
             },
+            "children" : [
+                {
+                    "key": "0",
+                    "data":{  
+                        "name":"Equipments A",
+                        "size":"Pipe",
+                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
+                    },
+                },
+            ]
         },
     ]
 

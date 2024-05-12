@@ -21,45 +21,45 @@ const componentData =
     {
         "key": "0",
         "data":{  
-            "name":"Company A",
-            "size":"100kb",
-            "type":"Folder",
+            "name":"Pressure Relief Device",
+            "size":"Component A",
+            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             "key": 0,
         },
     },
     {  
         "key": "1",
         "data":{  
-            "name":"Company B",
-            "size":"20kb",
-            "type":"Folder",
+            "name":"Pressure Vessel",
+            "size":"Component B",
+            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             "key": 1
         },
     },
     {  
         "key": "2",
         "data": {  
-            "name":"Company C",
-            "size":"150kb",
-            "type":"Folder",
+            "name":"Tank",
+            "size":"Component C",
+            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             "key": 2
         },
     },
     {  
         "key": "3",
         "data":{  
-            "name":"Company D",
-            "size":"75kb",
-            "type":"Folder",
+            "name":"Pipe",
+            "size":"Component D",
+            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             "key": 3
         },
     },
     {  
         "key": "4",
         "data": {  
-            "name":"Company E",
-            "size":"25kb",
-            "type":"Folder",
+            "name":"Tank",
+            "size":"Component E",
+            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
             "key": 4
         },
     },
@@ -220,9 +220,9 @@ const ComponentTree = () => {
 
                     <TreeTable value={files2} selectionMode="checkbox" columnResizeMode="expand" resizableColumns={true} selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="" header="" expander style={{width : "50px"}} frozen/>
-                        <Column body={(e) => componentTemplate(e)} header="Name"/>
-                        <Column field="size" header="Size" />
-                        <Column field="type" header="Type" />
+                        <Column body={(e) => componentTemplate(e)} header="Component"/>
+                        <Column field="size" header="Name" />
+                        <Column field="type" header="Description" />
                         <Column body={actionTemplate} headerClassName="w-10rem" />
                     </TreeTable>
                 </div>
