@@ -10,6 +10,7 @@ import { Divider } from 'primereact/divider';
 import { LayoutContext } from '../../layout/context/layoutcontext';
 import { NodeRef } from '@/types';
 import { classNames } from 'primereact/utils';
+import { Card } from 'primereact/card';
 
 const LandingPage = () => {
     const [isHidden, setIsHidden] = useState(false);
@@ -38,7 +39,7 @@ const LandingPage = () => {
                                     { href: "home", name: "Home" },
                                     { href: "features", name: "Features" },
                                     { href: "highlights", name: "Highlights" },
-                                    { href: "pricing", name: "Pricing" },
+                                    { href: "team", name: "Our Team" },
                                 ].map(({href, name} : any, key) => (
                                     <li key={key}>
                                         <a href={"#" + href} onClick={toggleMenuItemClick} className="p-ripple flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
@@ -75,7 +76,7 @@ const LandingPage = () => {
                         <p className="font-normal text-2xl line-height-3 md:mt-3 text-gray-700 w-8">ITS Risk Guardian is a web-based application designed to assist organizations in conducting risk-based inspections (RBIs). <br></br>
                         ITS Risk Guardian can be used by organizations of all sizes and industries to improve their safety and risk management practices. </p>
                         <Link href="#features">
-                            <Button type="button" label="Get Started" rounded className="text-xl border-none mt-3 bg-blue-500 font-normal line-height-3 px-3 text-white"></Button>
+                            <Button type="button" label="Get Started" className="text-xl border-none mt-3 bg-blue-500 font-normal line-height-3 px-3 text-white"></Button>
                         </Link>
                     </div>
                     <div className="flex justify-content-center md:justify-content-end">
@@ -153,11 +154,31 @@ const LandingPage = () => {
 
                 <div id="highlights" className="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
                     <div className="text-center">
-                        <h2 className="text-900 font-normal mb-2">Powerful Everywhere</h2>
-                        <span className="text-600 text-2xl">Amet consectetur adipiscing elit...</span>
+                        <h2 className="text-900 font-normal mb-2">Our Team</h2>
+                        <span className="text-600 text-2xl">This application is built by technicians who are experts in their fields so that the quality is very feasible and tested</span>
                     </div>
 
-                    <div className="grid mt-8 pb-2 md:pb-8">
+                    <div className="grid justify-content-center mt-8 align-content-center">
+                        {
+                            [
+                                { name: "Ahmad Akbar Rivai", title: "Asset Integrity Engineer", desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!", imgSrc: "AAR.png" },
+                                { name: "Amirta Mega Prastiwi", title: "Digital Marine Operation and Maintenance", desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!", imgSrc: "Amirta Mega.png" },
+                                { name: "Hesti Rahmawati", title: "Marine Engineering Department FTK-ITS", desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!", imgSrc: "Hesti.png" },
+                            ].map(({name, title, desc, imgSrc}, key) => (
+                                <div className="col-12 justify-content-center flex md:col-12 lg:col-6 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" key={key}>
+                                    <Card title={name} subTitle={title} header={() => (
+                                        <img alt="Card" src={"/team/image/" + imgSrc} />
+                                    )} className="md:w-25rem">
+                                        <p className="m-0">
+                                            {desc}
+                                        </p>
+                                    </Card>
+                                </div>
+                            ))
+                        }
+                    </div>
+
+                    {/* <div className="grid mt-8 pb-2 md:pb-8">
                         <div className="flex justify-content-center col-12 lg:col-6 bg-purple-100 p-0 flex-order-1 lg:flex-order-0" style={{ borderRadius: '8px' }}>
                             <img src="/demo/images/landing/mockup.svg" className="w-11" alt="mockup mobile" />
                         </div>
@@ -201,10 +222,10 @@ const LandingPage = () => {
                         <div className="flex justify-content-end flex-order-1 sm:flex-order-2 col-12 lg:col-6 bg-yellow-100 p-0" style={{ borderRadius: '8px' }}>
                             <img src="/demo/images/landing/mockup-desktop.svg" className="w-11" alt="mockup" />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
-                <div id="pricing" className="py-4 px-4 lg:px-8 my-2 md:my-4">
+                {/* <div id="pricing" className="py-4 px-4 lg:px-8 my-2 md:my-4">
                     <div className="text-center">
                         <h2 className="text-900 font-normal mb-2">Matchless Pricing</h2>
                         <span className="text-600 text-2xl">Amet consectetur adipiscing elit...</span>
@@ -304,7 +325,7 @@ const LandingPage = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="py-4 px-4 mx-0 mt-8 lg:mx-8">
                     <div className="grid justify-content-between">
@@ -352,6 +373,8 @@ const LandingPage = () => {
                             </div>
                         </div>
                     </div>
+                    <span className="font-medium mt-4 w-full flex justify-content-center align-items-center"><i className="pi pi-fw pi-envelope text-2xl text-red-700 mr-2"></i>Guardian@ITS.com</span>
+
                 </div>
             </div>
         </div>
