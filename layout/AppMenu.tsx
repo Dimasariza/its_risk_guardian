@@ -23,6 +23,7 @@ const AppMenu = () => {
                 { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
                 { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },
                 { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/assets/component', class: 'rotated-icon' },
+                { label: 'PFD', icon: 'pi pi-fw pi-mobile', to: '/assets/pdf', class: 'document-icon' },
                 // { label: 'Table', icon: 'pi pi-fw pi-table', to: '/uikit/table' },
                 // { label: 'List', icon: 'pi pi-fw pi-list', to: '/uikit/list' },
                 // { label: 'Tree', icon: 'pi pi-fw pi-share-alt', to: '/uikit/tree' },

@@ -158,10 +158,9 @@ const ComponentTree = () => {
     };
 
     const componentTemplate: any = ({data}: any) => {
-        const { name, key } = data;
         return (
-            <Link href={{ pathname: "/assets/component-details", query: {key} }} className="flex align-items-center">
-                {name}
+            <Link href={{ pathname: "/assets/component-details", query: {...data} }} className="flex align-items-center">
+                {data.name}
             </Link>
         )
     }
