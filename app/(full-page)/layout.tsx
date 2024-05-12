@@ -7,7 +7,7 @@ interface SimpleLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: 'RBI ITS',
+    title: 'ITS Risk Guardian',
     description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.'
 };
 
@@ -15,7 +15,7 @@ export default function SimpleLayout({ children }: SimpleLayoutProps) {
     return (
         <React.Fragment>
             {children}
-            <AppConfig simple />
+            {/* <AppConfig  /> */}
         </React.Fragment>
     );
 }
