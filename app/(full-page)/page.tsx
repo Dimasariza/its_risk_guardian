@@ -80,7 +80,7 @@ const LandingPage = () => {
                         </Link>
                     </div>
                     <div className="flex justify-content-center md:justify-content-end">
-                        <img src="/demo/images/dashboard.png" alt="Dashboard Image" style={{height: "23em"}} className="h-1 md:w-auto" />
+                        <img src={`${process.env.PUBLIC_URL || ""}/demo/images/dashboard.png`} alt="Dashboard Image" style={{height: "23em"}} className="h-1 md:w-auto" />
                     </div>
                 </div>
 
@@ -130,6 +130,7 @@ const LandingPage = () => {
 
 
                         <div
+                            id="highlights"
                             className="col-12 mt-8 mb-8 p-2 md:p-8"
                             style={{
                                 borderRadius: '20px',
@@ -143,7 +144,7 @@ const LandingPage = () => {
                                     “Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
                                     laborum.”
                                 </p>
-                                <img src="/demo/images/dashboard.png" style={{height: "23rem"}} className="mt-4" alt="Company logo" />
+                                <img src={`${process.env.PUBLIC_URL || ""}/demo/images/dashboard.png`} style={{height: "23rem"}} className="mt-4" alt="Company logo" />
                                 <Link href="/" className='mt-5'>
                                     <Button label="Read More" text  className="border-none font-light line-height-2 bg-blue-500 text-white"></Button>
                                 </Link>
@@ -152,7 +153,7 @@ const LandingPage = () => {
                     </div>
                 </div>
 
-                <div id="highlights" className="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
+                <div id="team" className="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
                     <div className="text-center">
                         <h2 className="text-900 font-normal mb-2">Our Team</h2>
                         <span className="text-600 text-2xl">This application is built by technicians who are experts in their fields so that the quality is very feasible and tested</span>
@@ -167,7 +168,7 @@ const LandingPage = () => {
                             ].map(({name, title, desc, imgSrc}, key) => (
                                 <div className="col-12 justify-content-center flex md:col-12 lg:col-6 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" key={key}>
                                     <Card title={name} subTitle={title} header={() => (
-                                        <img alt="Card" src={"/team/image/" + imgSrc} />
+                                        <img alt="Card" src={`${process.env.PUBLIC_URL || ""}/team/image/"${imgSrc}`} />
                                     )} className="md:w-25rem">
                                         <p className="m-0">
                                             {desc}
@@ -358,7 +359,7 @@ const LandingPage = () => {
                                     <a className="line-height-3 text-xl block cursor-pointer mb-2 text-700">Discord</a>
                                     <a className="line-height-3 text-xl block cursor-pointer mb-2 text-700">
                                         Events
-                                        <img src="/demo/images/landing/new-badge.svg" className="ml-2" alt="badge" />
+                                        <img src={`${process.env.PUBLIC_URL || ""}/demo/images/landing/new-badge.svg`} className="ml-2" alt="badge" />
                                     </a>
                                     <a className="line-height-3 text-xl block cursor-pointer mb-2 text-700">FAQ</a>
                                     <a className="line-height-3 text-xl block cursor-pointer text-700">Blog</a>
@@ -374,7 +375,6 @@ const LandingPage = () => {
                         </div>
                     </div>
                     <span className="font-medium mt-4 w-full flex justify-content-center align-items-center"><i className="pi pi-fw pi-envelope text-2xl text-red-700 mr-2"></i>Guardian@ITS.com</span>
-
                 </div>
             </div>
         </div>
