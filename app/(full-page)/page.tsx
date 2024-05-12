@@ -145,7 +145,7 @@ const LandingPage = () => {
                                     laborum.”
                                 </p>
                                 <img src={`${process.env.PUBLIC_URL || ""}/demo/images/dashboard.png`} style={{height: "23rem"}} className="mt-4" alt="Company logo" />
-                                <Link href="/" className='mt-5'>
+                                <Link href="/rbi-software" className='mt-5'>
                                     <Button label="Read More" text  className="border-none font-light line-height-2 bg-blue-500 text-white"></Button>
                                 </Link>
                             </div>
