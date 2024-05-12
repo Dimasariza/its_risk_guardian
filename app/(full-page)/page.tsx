@@ -26,7 +26,7 @@ const LandingPage = () => {
             <div id="home" className="landing-wrapper overflow-hidden">
                 <div className="p-4 lg:px-8 flex w-full align-items-center justify-content-between fixed lg:fixed z-5">
                     <Link href="/" className="flex align-items-center">
-                        <img src={`${process.env.PUBLIC_URL || ""}/layout/images/ITS Risk Guardian - ${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg`} alt="ITS Risk Guardian Logo" height="80" className="mr-0 lg:mr-2" />
+                        <img src={`${process.env.PUBLIC_URL}/layout/images/ITS Risk Guardian - ${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg`} alt="ITS Risk Guardian Logo" height="80" className="mr-0 lg:mr-2" />
                         <span className="text-900 font-medium text-2xl line-height-3 mr-8 text-center">ITS RISK GUARDIAN</span>
                     </Link>
                     <StyleClass nodeRef={menuRef as NodeRef} selector="@next" enterClassName="hidden" leaveToClassName="hidden" hideOnOutsideClick>
