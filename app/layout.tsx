@@ -13,7 +13,7 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-    const theme = `/themes/lara-light-indigo/theme.css`
+    const theme = `${process.env.PUBLIC_URL}/themes/lara-light-indigo/theme.css`
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
