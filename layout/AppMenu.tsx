@@ -18,7 +18,7 @@ const AppMenu = () => {
         {
             label: 'Assets',
             items: [
-                { label: 'Facilities', icon: 'pi pi-fw pi-id-card', to: '/assets/facilities' },
+                { label: 'Company', icon: 'pi pi-fw pi-id-card', to: '/assets/company' },
                 { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
                 { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
                 { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },

@@ -11,9 +11,9 @@ import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-// import facilitiesData from './data';
+// import CompaniesData from './data';
 
-let facilitiesData: any[] = 
+let CompaniesData: any[] = 
 [  
     {
         "key": 0,
@@ -78,7 +78,7 @@ let facilitiesData: any[] =
 ]
 
 
-interface IFacilities {
+interface ICompanies {
     company: string,
     name: string,
     location: string,
@@ -86,7 +86,7 @@ interface IFacilities {
     [key: string]: any
 }
 
-const FacilitiesTree = () => {
+const CompanyPage = () => {
     const toast = useRef<any>(null);
 
     let emptyProduct: any = {
@@ -106,13 +106,13 @@ const FacilitiesTree = () => {
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
     const [productDialog, setProductDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const [product, setProduct] = useState<IFacilities>(emptyProduct);
+    const [product, setProduct] = useState<ICompanies>(emptyProduct);
 
     const acceptDelete = (value: any)  => {
-        const deletionData = facilitiesData.filter(item => item.data.id != value.id);
+        const deletionData = CompaniesData.filter(item => item.data.id != value.id);
 
         setFiles2(deletionData);
-        facilitiesData = deletionData;
+        CompaniesData = deletionData;
 
         toast.current.show({ 
             severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 
@@ -137,7 +137,7 @@ const FacilitiesTree = () => {
     };
 
     useEffect(() => {
-        setFiles2(facilitiesData);
+        setFiles2(CompaniesData);
     }, []);
 
     const companyType: any = [
@@ -171,11 +171,10 @@ const FacilitiesTree = () => {
     };
 
     const saveDialog = () => {
-        facilitiesData.push({
-            key: facilitiesData.length,
+        CompaniesData.push({
+            key: CompaniesData.length,
             data: product
         })
-        console.log(facilitiesData)
         setProductDialog(false);
     };
 
@@ -188,7 +187,7 @@ const FacilitiesTree = () => {
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
-        let _product: IFacilities = { ...product };
+        let _product: ICompanies = { ...product };
         _product[`${name}`] = val;
 
         setProduct(_product);
@@ -207,7 +206,7 @@ const FacilitiesTree = () => {
         <div className="grid">
             <Toast ref={toast} />
             <ConfirmDialog />
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Facilities" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Company" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Company</label>
                     <InputText
@@ -253,8 +252,8 @@ const FacilitiesTree = () => {
                         
             <div className="col-12">
                 <div className="card">
-                    <h5>Facilities</h5>
-                    <Button label="Add Facilities" raised severity="success" className='my-2'onClick={openNew}/>
+                    <h5>Company</h5>
+                    <Button label="Add Company" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Name" expander />
@@ -268,4 +267,4 @@ const FacilitiesTree = () => {
     );
 };
 
-export default FacilitiesTree;
+export default CompanyPage;

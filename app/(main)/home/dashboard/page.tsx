@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { TreeNode } from 'primereact/treenode';
 
-const facilitiesData = 
+const companiesData = 
 [  
     {
         "key": "0",
@@ -137,7 +137,7 @@ const riskMatrix: any =
 ]
 
 const cardInformation = [
-    { title: "Facilities", value: 152, icon: <i className="pi pi-shopping-cart text-blue-500 text-xl" />},
+    { title: "companies", value: 152, icon: <i className="pi pi-shopping-cart text-blue-500 text-xl" />},
     { title: "Units", value: 2100, icon: <i className="pi pi-map-marker text-orange-500 text-xl" />},
     { title: "Systems", value: 28411, icon: <i className="pi pi-inbox text-cyan-500 text-xl" />},
     { title: "Equipment", value: 152, icon: <i className="pi pi-comment text-purple-500 text-xl" />},
@@ -149,7 +149,7 @@ const Dashboard = () => {
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
     
     useEffect(() => {
-        setFiles2(facilitiesData)
+        setFiles2(companiesData)
     }, []);
 
     return (

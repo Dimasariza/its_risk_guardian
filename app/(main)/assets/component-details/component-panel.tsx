@@ -76,7 +76,7 @@ const ComponentPanel = () => {
     ];
 
     return (
-        <Card title="Component Navigation" className="border-round-xl min-h-full shadow-1">
+        <Card subTitle="Component Navigation" className="border-round-xl min-h-full shadow-1">
             <PanelMenu model={items} className="w-full md:w-20rem" />
         </Card>
     );

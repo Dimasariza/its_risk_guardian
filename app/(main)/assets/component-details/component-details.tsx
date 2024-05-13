@@ -11,14 +11,14 @@ const ComponentData = () => {
     // const toast = useRef<any>(null);
     const tabItems = [
         {
-            label: 'Design / Installation',
+            label: 'General',
             command: () => {
                 setTabMenu("design")
                 // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Dashboard', life: 3000 });
             }
         },
         {
-            label: 'Operating & Proccess',
+            label: 'Operating Conditions',
             command: () => {
                 setTabMenu("operating")
                 // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Transactions', life: 3000 });
@@ -129,7 +129,7 @@ const ComponentData = () => {
     }
 
     return (
-        <Card title="Data" className="col shadow-1 border-round-xl">
+        <Card subTitle="Data" className="col shadow-1 border-round-xl">
             {/* <Toast ref={toast} /> */}
             <TabMenu model={tabItems} />
             <div className="p-3">

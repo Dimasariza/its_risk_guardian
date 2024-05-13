@@ -1,12 +1,12 @@
 {
-  "name": "sakai-react",
+  "name": "ITS Risk Guardian",
   "version": "10.1.0",
   "private": true,
   "homepage": "https://dimasariza.github.io/its_risk_guardian/",
   "scripts": {
     "dev": "next dev",
+    "start": "NODE_ENV=production node server.js",
     "build": "next build && next export",
-    "start": "next start",
     "format": "prettier --write \"{app,demo,layout,types}/**/*.{js,ts,tsx,d.ts}\"",
     "lint": "next lint",
     "deploy": "echo 'true' > ./out/.nojekyll && gh-pages -d out -b main -r https://github.com/Dimasariza/rbits.git -f -t"

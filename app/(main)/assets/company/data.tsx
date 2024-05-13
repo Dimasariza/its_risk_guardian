@@ -1,4 +1,4 @@
-const facilitiesData = 
+const companiesData = 
 [  
     {
         "key": 0,
@@ -47,4 +47,4 @@ const facilitiesData =
     },
 ]
 
-export default facilitiesData;
+export default companiesData;

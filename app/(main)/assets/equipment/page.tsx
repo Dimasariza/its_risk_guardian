@@ -220,7 +220,7 @@ const EquipmentData = () => {
                         
             <div className="col-12">
                 <div className="card">
-                    <h5>Facilities</h5>
+                    <h5>Equipment</h5>
                     <Button label="Add Equipment" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
