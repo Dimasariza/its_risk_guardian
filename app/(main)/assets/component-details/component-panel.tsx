@@ -12,19 +12,11 @@ const ComponentPanel = () => {
                     label: 'MV Nusantara 01',
                     items: [
                         {
-                            label: 'Electric',
-                            items: [
-                                {
-                                    label: 'MSB',
-                                },
-                                {
-                                    label: 'Local Panel',
-                                }
-                            ]
-                        },
-                        {
                             label: 'Machinery',
                             items: [
+                                {
+                                    label: 'Pipe',
+                                },
                                 {
                                     label: 'Pressure Relieve Device',
                                 },
@@ -77,7 +69,7 @@ const ComponentPanel = () => {
 
     return (
         <Card subTitle="Component Navigation" className="border-round-xl min-h-full shadow-1">
-            <PanelMenu model={items} className="w-full md:w-20rem" />
+            <PanelMenu model={items} className="w-full " />
         </Card>
     );
 };

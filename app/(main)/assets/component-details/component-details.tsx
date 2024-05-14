@@ -39,16 +39,28 @@ const ComponentData = () => {
         ],
         "other_damages" : [
             {
-                label: 'Test1',
+                label: 'Damage Factor',
                 command: () => setTabMenu(prev => ({...prev, bottom: "general"}))
             },
             {
-                label: 'Test 2',
+                label: 'Damage Category',
                 command: () => setTabMenu(prev => ({...prev, bottom: "operating"}))
             },
+        ],
+        "probability" : [
             {
-                label: 'Test 3',
-                command: () => setTabMenu(prev => ({...prev, bottom: "inspection"}))
+                label: 'POF RBI Date',
+                command: () => setTabMenu(prev => ({...prev, bottom: "general"}))
+            },
+            {
+                label: 'POF Plan Date',
+                command: () => setTabMenu(prev => ({...prev, bottom: "operating"}))
+            },
+        ],
+        "consequence" : [
+            {
+                label: 'On Progress',
+                command: () => setTabMenu(prev => ({...prev, bottom: "general"}))
             },
         ],
     }
@@ -72,18 +84,24 @@ const ComponentData = () => {
         },
         {
             label: 'Probability',
-            command: () => setTabMenu(prev => ({...prev, top: "probability"}))
+            command: () => {
+                setTabMenu(prev => ({...prev, top: "probability"}))
+                setTabMenuBottom(tab.probability)
+            }
         },
         {
             label: 'Consequence',
+            disabled: true,
             command: () => setTabMenu(prev => ({...prev, top: "consequence"}))
         },
         {
             label: 'Risk',
+            disabled: true,
             command: () => setTabMenu(prev => ({...prev, top: "risk"}))
         },
         {
             label: 'Inspection',
+            disabled: true,
             command: () => setTabMenu(prev => ({...prev, top: "inspection"}))
         },
     ];

@@ -9,15 +9,15 @@ function DataGeneral() {
 
     return (
         <>
-            <div className="flex flex-column gap-2">
+            <div className="flex flex-column gap-2 field">
                 <label htmlFor="username">Tag Number</label>
-                <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
+                <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" value="BANG-T-050A"/>
                 {/* <small id="username-help">
                     Enter your username to reset your password.
                 </small> */}
-                <label htmlFor="username">Design Pressure</label>
-                <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                <label htmlFor="username">Design Temperature</label>
+                <label htmlFor="username">Design Pressure (Psig)</label>
+                <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" value="1"/>
+                <label htmlFor="username">Design Temperature (&deg;F)</label>
                 <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
                 <label htmlFor="username">Description</label>
                 <InputTextarea value={textareaValue} onChange={(e) => setTextareaValue(e.target.value)} rows={5} cols={30} />

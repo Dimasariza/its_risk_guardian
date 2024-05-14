@@ -137,7 +137,9 @@ const Layout = ({ children }: ChildContainerProps) => {
                     <AppSidebar />
                 </div>
                 <div className="layout-main-container">
-                    <BreadCrumb model={breadItems} home={home} />
+                    <div className="mb-2">
+                        <BreadCrumb model={breadItems} home={home} />
+                    </div>
                     <div className="layout-main">{children}</div>
                     <AppFooter />
                 </div>
