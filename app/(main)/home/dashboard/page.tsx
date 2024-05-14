@@ -205,11 +205,11 @@ const Dashboard = () => {
             <div className="card">
                 <h5>Summary</h5>
 
-                <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
+                {/* <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                     <Column field="name" header="Number" expander />
                     <Column field="size" header="Components" />
                     <Column field="risk" header="Risk" />
-                </TreeTable>
+                </TreeTable> */}
             </div>
         </div>
     </>
