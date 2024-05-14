@@ -1,113 +1,16 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { TreeCheckboxSelectionKeys, TreeMultipleSelectionKeys } from 'primereact/tree';
+import React, { useState, useEffect, useRef } from 'react';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { Column } from 'primereact/column';
-import { NodeService } from '../../../../demo/service/NodeService';
 import { TreeNode } from 'primereact/treenode';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
-import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
-
-const unitsData = 
-    [  
-        {
-            "key": "0",
-            "data":{  
-                "name":"Unit 01",
-                "size":"Amine Treating",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Units A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "1",
-            "data":{  
-                "name":"Unit 02",
-                "size":"Crude",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Units A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "2",
-            "data": {  
-                "name":"Unit 03",
-                "size":"Vacum Units",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Units A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "3",
-            "data":{  
-                "name":"Unit 04",
-                "size":"Crude",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Units A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "4",
-            "data": {  
-                "name":"Unit 05",
-                "size":"Vacum Units",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Units A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-    ]
+import { UnitsService } from '@/service/UnitsService';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
 
 const UnitsTree = () => {
     let emptyProduct: Demo.Product = {
@@ -123,30 +26,31 @@ const UnitsTree = () => {
     };
     
     const [files, setFiles] = useState<TreeNode[]>([]);
-    const [files2, setFiles2] = useState<TreeNode[]>([]);
-    const [selectedFileKeys, setSelectedFileKeys] = useState<string | TreeMultipleSelectionKeys | TreeCheckboxSelectionKeys | null>(null);
-    const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
-    const [productDialog, setProductDialog] = useState(false);
+    const [selectedFileKeys, setSelectedFileKeys] = useState<TreeTableSelectionKeysType | null>(null);
+    const [unitDialog, setUnitDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const [product, setProduct] = useState<Demo.Product>(emptyProduct);
+    const [unit, setUnit] = useState<Demo.Product>(emptyProduct);
 
 
     useEffect(() => {
-        NodeService.getFiles().then((files) => setFiles(files));
-        // NodeService.getFilesystem().then((files) => setFiles2(files));
-        setFiles2(unitsData)
+        UnitsService.getUnits().then((unitFile) => setFiles(unitFile));
     }, []);
 
     const openNew = () => {
-        setProductDialog(true);
+        setUnitDialog(true);
+    }
+
+    const openEdit = (value: any) => {
+        setUnit(value.data);
+        setUnitDialog(true);
     }
 
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setUnitDialog(false);
     };
 
-    const productDialogFooter = (
+    const producunitFooter = (
         <>
             <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
             <Button label="Save" icon="pi pi-check" text />
@@ -155,10 +59,10 @@ const UnitsTree = () => {
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
+        let _product = { ...unit };
         _product[`${name}`] = val;
 
-        setProduct(_product);
+        setUnit(_product);
     };
 
     const [selectedCompanyType, setSelectedCompanyType] = useState(null);
@@ -181,9 +85,47 @@ const UnitsTree = () => {
 
     const [description, setDescription] = useState('');
 
+    const toast = useRef<any>(null);
+    
+    const acceptDelete = (value: any)  => {
+        console.log(value)
+        setFiles(prev => prev.filter(item => item.data.id != value.id));
+        toast.current.show({ 
+            severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 
+        });
+    };
+
+    const rejectDelete = () => {
+        toast.current.show({ 
+            severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 
+        });
+    };
+
+    const confirmDelete = ({data}: any) => {
+        confirmDialog({
+            message: `Do you want to delete ${data.name}?`,
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-danger',
+            accept: () => acceptDelete(data),
+            reject: rejectDelete
+        });
+    };
+
+    const actionTemplate = (data : any) => {
+        return (
+            <div className="flex flex-wrap gap-2">
+                <Button type="button" text  icon="pi pi-trash" severity='danger' onClick={() => confirmDelete(data)}></Button>
+                <Button type="button" text  icon="pi pi-pencil" severity="info" onClick={() => openEdit(data)}></Button>
+            </div>
+        );
+    };
+
     return (
         <div className="grid">
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Units" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Toast ref={toast} />
+            <ConfirmDialog />
+            <Dialog visible={unitDialog} style={{ width: '450px' }} header="Add Units" modal className="p-fluid" footer={producunitFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Facility</label>
                     <Dropdown value={selectedCompanyType} onChange={(e) => setSelectedCompanyType(e.value)} options={companyType} optionLabel="name" 
@@ -203,10 +145,12 @@ const UnitsTree = () => {
                     <h5>Units</h5>
                     <Button label="Add Units" raised severity="success" className='my-2'onClick={openNew}/>
 
-                    <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
+                    <TreeTable value={files} selectionMode="checkbox" selectionKeys={selectedFileKeys} onSelectionChange={(e) => setSelectedFileKeys(e.value)}>
                         <Column field="name" header="Facility" expander />
-                        <Column field="size" header="Units" />
-                        <Column field="type" header="Description" />
+                        <Column field="company" header="Units" />
+                        <Column field="location" header="Description" />
+                        <Column body={actionTemplate} headerClassName="w-10rem" />
+
                     </TreeTable>
                 </div>
             </div>

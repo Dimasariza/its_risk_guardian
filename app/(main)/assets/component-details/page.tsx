@@ -6,9 +6,13 @@ import ComponentData from './component-details';
 
 const ComponentDetails = () => {
     return (
-        <div className="grid gap-4 min-h-screen py-2">
-            <ComponentPanel />
-            <ComponentData />
+        <div className="grid min-h-screen py-2">
+            <div className='col-4'>
+                <ComponentPanel />
+            </div>
+            <div className='col'>
+                <ComponentData />
+            </div>
         </div>
     );
 };

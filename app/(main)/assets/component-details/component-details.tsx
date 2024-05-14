@@ -6,155 +6,92 @@ import { Toast } from 'primereact/toast';
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from 'primereact/button';
+import DataGeneral from './tab-menu/data-general';
+import DataOperating from './tab-menu/data-operaing';
+import DataInspection from './tab-menu/data-inspection';
 
 const ComponentData = () => {
-    // const toast = useRef<any>(null);
-    const tabMenuBottom = [
-        {
-            label: 'General',
-            command: () => {
-                setTabMenu("design")
-                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Dashboard', life: 3000 });
-            }
-        },
-        {
-            label: 'Operating Conditions',
-            command: () => {
-                setTabMenu("operating")
-                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Transactions', life: 3000 });
-            }
-        },
-        {
-            label: 'Inspection',
-            command: () => {
-                setTabMenu("inspection")
-                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Products', life: 3000 });
-            }
-        },
-    ];
+    const [tabMenu, setTabMenu] = useState({top: "data", bottom: "general"})
+    const tabMenuTemplate = () => {
+        if(tabMenu.top == "data" && tabMenu.bottom == "general")
+        return <DataGeneral />
+        else if(tabMenu.top == "data" && tabMenu.bottom == "operating")
+        return <DataOperating />
+        else if(tabMenu.top == "data" && tabMenu.bottom == "inspection")
+        return <DataInspection />
+    }
+
+    const tab = 
+    {
+        "data" : [
+            {
+                label: 'General',
+                command: () => setTabMenu(prev => ({...prev, bottom: "general"}))
+            },
+            {
+                label: 'Operating Conditions',
+                command: () => setTabMenu(prev => ({...prev, bottom: "operating"}))
+            },
+            {
+                label: 'Inspection',
+                command: () => setTabMenu(prev => ({...prev, bottom: "inspection"}))
+            },
+        ],
+        "other_damages" : [
+            {
+                label: 'Test1',
+                command: () => setTabMenu(prev => ({...prev, bottom: "general"}))
+            },
+            {
+                label: 'Test 2',
+                command: () => setTabMenu(prev => ({...prev, bottom: "operating"}))
+            },
+            {
+                label: 'Test 3',
+                command: () => setTabMenu(prev => ({...prev, bottom: "inspection"}))
+            },
+        ],
+    }
+
+    const [tabMenuBottom, setTabMenuBottom] = useState(tab.data)
 
     const tabMenuTop = [
         {
-            label: 'General',
+            label: 'Data',
             command: () => {
-                setTabMenu("design")
-                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Dashboard', life: 3000 });
+                setTabMenu(prev => ({...prev, top: "data"}))
+                setTabMenuBottom(tab.data)
             }
         },
         {
-            label: 'Operating Conditions',
-            command: () => {
-                setTabMenu("operating")
-                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Transactions', life: 3000 });
+            label: 'Other Damages',
+            command: () => { 
+                setTabMenu(prev => ({...prev, top: "other_damages"}))
+                setTabMenuBottom(tab.other_damages)
             }
+        },
+        {
+            label: 'Probability',
+            command: () => setTabMenu(prev => ({...prev, top: "probability"}))
+        },
+        {
+            label: 'Consequence',
+            command: () => setTabMenu(prev => ({...prev, top: "consequence"}))
+        },
+        {
+            label: 'Risk',
+            command: () => setTabMenu(prev => ({...prev, top: "risk"}))
         },
         {
             label: 'Inspection',
-            command: () => {
-                setTabMenu("inspection")
-                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Products', life: 3000 });
-            }
+            command: () => setTabMenu(prev => ({...prev, top: "inspection"}))
         },
     ];
 
-    const [textareaValue, setTextareaValue] = useState('');
 
-    const [tabMenu, setTabMenu] = useState('design')
-    const tabMenuTemplate = () => {
-        if(tabMenu == "design")
-        return (
-            <>
-                <div className="flex flex-column gap-2">
-                    <label htmlFor="username">Tag Number</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    {/* <small id="username-help">
-                        Enter your username to reset your password.
-                    </small> */}
-                    <label htmlFor="username">Design Pressure</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Design Temperature</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Description</label>
-                    <InputTextarea value={textareaValue} onChange={(e) => setTextareaValue(e.target.value)} rows={5} cols={30} />
-                    <label htmlFor="username">PFD</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">P&Id</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Installation Date</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Join Efficiency</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Type of Equipment</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Yield Strength</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Tensil Strength</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Allowable Stress</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Min Design Metal Temp</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Material Construction</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Outside Diameter</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Inside Diameter</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Insulation</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                </div>
-                <div className='flex w-full justify-content-center'>
-                    <Button label="Save Data" raised severity="success" className='my-2'/>
-                </div>
-            </>
-        )
-        else if(tabMenu == "operating")
-        return (
-            <>
-                <div className="flex flex-column gap-2">
-                    <label htmlFor="username">Operating Temperature</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Operating Pressure</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Fluid</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Liquid Phase</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Inspection History</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Flow Velocity</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Fluid Name</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Fluid Description</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Operational Fluid Phase</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                </div>
-                <div className='flex w-full justify-content-center'>
-                    <Button label="Save Data" raised severity="success" className='my-2'/>
-                </div>
-            </>
-        )
-        else if(tabMenu == "inspection")
-        return (
-            <>
-                <div className="flex flex-column gap-2">
-                    <label htmlFor="username">No Inspection</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                    <label htmlFor="username">Inspection History</label>
-                    <InputText id="username" aria-describedby="username-help" className="p-inputtext-sm" />
-                </div>
-                <div className='flex w-full justify-content-center'>
-                    <Button label="Save Data" raised severity="success" className='my-2'/>
-                </div>
-            </>
-        )
-    }
 
     return (
-        <Card subTitle="Data" className="col shadow-1 border-round-xl">
-            {/* <Toast ref={toast} /> */}
+        <Card subTitle="Data" className="shadow-1 border-round-xl">
             <TabMenu model={tabMenuTop} />
             <TabMenu model={tabMenuBottom} />
             <div className="p-3">

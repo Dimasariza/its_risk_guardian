@@ -11,72 +11,8 @@ import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
+import { CompanyService } from '@/service/CompanyService';
 // import CompaniesData from './data';
-
-let CompaniesData: any[] = 
-[  
-    {
-        "key": 0,
-        "data":{  
-            "name":"Pertamina Surabaya",
-            "company":"Pertamina",
-            "location":"Surabaya",
-            "type": {
-                "name": "Oil and gas production"
-            },
-            "id": 1
-        },
-    },
-    {  
-        "key": 1,
-        "data":{  
-            "name":"Meratus Jakarta",
-            "company":"Meratus",
-            "location":"Jakarta",
-            "type": {
-                "name": 'Oil and gas processing and transportation '
-            },
-            "id": 2
-        },
-    },
-    {  
-        "key": 2,
-        "data": {  
-            "name":"SPIL Surabaya",
-            "company":"SPIL",
-            "location":"Surabaya",
-            "type": {
-                name: 'Refineries'
-            },
-            "id": 3
-        },
-    },
-    {  
-        "key": 3,
-        "data":{  
-            "name":"Dok Pantai Lamongan",
-            "company":"DPL",
-            "location":"Lamongan",
-            "type": {
-                name: 'Petrochemical and chemical plants'
-            },
-            "id": 4
-        },
-    },
-    {  
-        "key": 4,
-        "data": {  
-            "name":"DKB Jakarta",
-            "company":"DKB",
-            "location":"Jakarta",
-            "type": {
-                name: 'Pipeline'
-            },
-            "id": 5
-        },
-    },
-]
-
 
 interface ICompanies {
     company: string,
@@ -102,18 +38,15 @@ const CompanyPage = () => {
         company: "",
     };
     
-    const [files2, setFiles2] = useState<TreeNode[]>([]);
-    const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
-    const [productDialog, setProductDialog] = useState(false);
+    const [selectedFileKeys, setSelectedFileKeys] = useState<TreeTableSelectionKeysType | null>(null);
+    const [files, setFiles] = useState<TreeNode[]>([]);
+    const [companyDialog, setCompanyDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const [product, setProduct] = useState<ICompanies>(emptyProduct);
+    const [company, setCompany] = useState<ICompanies>(emptyProduct);
 
     const acceptDelete = (value: any)  => {
-        const deletionData = CompaniesData.filter(item => item.data.id != value.id);
-
-        setFiles2(deletionData);
-        CompaniesData = deletionData;
-
+        console.log(value)
+        setFiles(prev => prev.filter(item => item.data.id != value.id));
         toast.current.show({ 
             severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 
         });
@@ -137,7 +70,7 @@ const CompanyPage = () => {
     };
 
     useEffect(() => {
-        setFiles2(CompaniesData);
+        CompanyService.getCompanies().then((companiesFile) => setFiles(companiesFile))
     }, []);
 
     const companyType: any = [
@@ -151,34 +84,34 @@ const CompanyPage = () => {
     ];
 
     const openNew = () => {
-        setProduct({
+        setCompany({
             company: "",
             name: "",
             location: "",
             type: "",
         });
-        setProductDialog(true);
+        setCompanyDialog(true);
     };
 
     const openEdit = (value: any) => {
-        setProduct(value.data)
-        setProductDialog(true);
+        setCompany(value.data);
+        setCompanyDialog(true);
     }
 
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setCompanyDialog(false);
     };
 
     const saveDialog = () => {
-        CompaniesData.push({
-            key: CompaniesData.length,
-            data: product
-        })
-        setProductDialog(false);
+        setFiles(prev => ([
+            ...prev,
+            { key: files.length, data: company}
+        ]))
+        setCompanyDialog(false);
     };
 
-    const productDialogFooter = (
+    const companyFooter = (
         <>
             <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
             <Button label="Save" icon="pi pi-check" text onClick={saveDialog} />
@@ -187,10 +120,10 @@ const CompanyPage = () => {
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
         const val = (e.target && e.target.value) || '';
-        let _product: ICompanies = { ...product };
+        let _product: ICompanies = { ...company };
         _product[`${name}`] = val;
 
-        setProduct(_product);
+        setCompany(_product);
     };
 
     const actionTemplate = (data : any) => {
@@ -206,44 +139,44 @@ const CompanyPage = () => {
         <div className="grid">
             <Toast ref={toast} />
             <ConfirmDialog />
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Add Company" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={companyDialog} style={{ width: '450px' }} header="Add Company" modal className="p-fluid" footer={companyFooter} onHide={hideDialog}>
                 <div className="field">
                     <label htmlFor="name">Company</label>
                     <InputText
                         id="company"
-                        value={product.company}
+                        value={company.company}
                         onChange={(e) => onInputChange(e, 'company')}
                         required
                         autoFocus
                         className={classNames({
-                            'p-invalid': submitted && !product.company
+                            'p-invalid': submitted && !company.company
                         })}
                     />
 
                     <label className="mb-3">Name</label>
                     <InputText
                         id="name"
-                        value={product.name}
+                        value={company.name}
                         onChange={(e) => onInputChange(e, 'name')}
                         required
                         className={classNames({
-                            'p-invalid': submitted && !product.name
+                            'p-invalid': submitted && !company.name
                         })}
                     />
 
                     <label className="mb-3">Location</label>
                     <InputText
                         id="location"
-                        value={product.location}
+                        value={company.location}
                         onChange={(e) => onInputChange(e, 'location')}
                         required
                         className={classNames({
-                            'p-invalid': submitted && !product.location
+                            'p-invalid': submitted && !company.location
                         })}
                     />
 
                     <label className="mb-3">Type</label>
-                    <Dropdown value={product.type} onChange={(e) => setProduct(value => ({
+                    <Dropdown value={company.type} onChange={(e) => setCompany(value => ({
                         ...value, type: e.value
                     }))} options={companyType} optionLabel="name" 
                     placeholder="Select Type" className="w-full md:w-14rem" />
@@ -255,7 +188,7 @@ const CompanyPage = () => {
                     <h5>Company</h5>
                     <Button label="Add Company" raised severity="success" className='my-2'onClick={openNew}/>
 
-                    <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
+                    <TreeTable value={files} selectionMode="checkbox" selectionKeys={selectedFileKeys} onSelectionChange={(e) => setSelectedFileKeys(e.value)}>
                         <Column field="name" header="Name" expander />
                         <Column field="company" header="Company" />
                         <Column field="location" header="Location" />

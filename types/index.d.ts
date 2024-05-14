@@ -23,7 +23,18 @@ import {
     AppMenuItemProps,
     AppMenuItem
 } from './layout';
-import { Demo, LayoutType, SortOrderType, CustomEvent, ChartDataState, ChartOptionsState, AppMailSidebarItem, AppMailReplyProps, AppMailProps } from './demo';
+import { 
+    Demo, 
+    LayoutType, 
+    SortOrderType, 
+    CustomEvent, 
+    ChartDataState, 
+    ChartOptionsState, 
+    AppMailSidebarItem, 
+    AppMailReplyProps, 
+    AppMailProps,
+    DataDemo
+} from './demo';
 
 type ChildContainerProps = {
     children: ReactNode;
@@ -50,6 +61,7 @@ export type {
     AppMenuItemProps,
     ChildContainerProps,
     Demo,
+    DataDemo,
     LayoutType,
     SortOrderType,
     CustomEvent,

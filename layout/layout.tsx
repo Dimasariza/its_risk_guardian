@@ -15,6 +15,7 @@ import { ChildContainerProps, LayoutState, AppTopbarRef } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { PanelMenu } from 'primereact/panelmenu';
 import { Card } from 'primereact/card';
+import { BreadCrumb } from 'primereact/breadcrumb';
 
 const Layout = ({ children }: ChildContainerProps) => {
     const route = usePathname();
@@ -125,84 +126,8 @@ const Layout = ({ children }: ChildContainerProps) => {
         'p-ripple-disabled': !layoutConfig.ripple
     });
 
-    const items = [     
-        {
-            label: 'Files',
-            icon: 'pi pi-file',
-            items: [
-                {
-                    label: 'Documents',
-                    icon: 'pi pi-file',
-                    items: [
-                        {
-                            label: 'Invoices',
-                            icon: 'pi pi-file-pdf',
-                            items: [
-                                {
-                                    label: 'Pending',
-                                    icon: 'pi pi-stop'
-                                },
-                                {
-                                    label: 'Paid',
-                                    icon: 'pi pi-check-circle'
-                                }
-                            ]
-                        },
-                        {
-                            label: 'Clients',
-                            icon: 'pi pi-users'
-                        }
-                    ]
-                },
-                {
-                    label: 'Images',
-                    icon: 'pi pi-image',
-                    items: [
-                        {
-                            label: 'Logos',
-                            icon: 'pi pi-image'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            label: 'Cloud',
-            icon: 'pi pi-cloud',
-            items: [
-                {
-                    label: 'Upload',
-                    icon: 'pi pi-cloud-upload'
-                },
-                {
-                    label: 'Download',
-                    icon: 'pi pi-cloud-download'
-                },
-                {
-                    label: 'Sync',
-                    icon: 'pi pi-refresh'
-                }
-            ]
-        },
-        {
-            label: 'Devices',
-            icon: 'pi pi-desktop',
-            items: [
-                {
-                    label: 'Phone',
-                    icon: 'pi pi-mobile'
-                },
-                {
-                    label: 'Desktop',
-                    icon: 'pi pi-desktop'
-                },
-                {
-                    label: 'Tablet',
-                    icon: 'pi pi-tablet'
-                }
-            ]
-        }
-    ];
+    const breadItems = [{ label: 'Assets' }, { label: 'Component' }, { label: 'Component-Detail' }, { label: 'Data' }, { label: 'General' }];
+    const home = { icon: 'pi pi-home', url: 'https://primereact.org' }
 
     return (
         <React.Fragment>
@@ -212,6 +137,7 @@ const Layout = ({ children }: ChildContainerProps) => {
                     <AppSidebar />
                 </div>
                 <div className="layout-main-container">
+                    <BreadCrumb model={breadItems} home={home} />
                     <div className="layout-main">{children}</div>
                     <AppFooter />
                 </div>

@@ -1,54 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { Column } from 'primereact/column';
 import React, { useEffect, useState } from 'react';
+import { Column } from 'primereact/column';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { TreeNode } from 'primereact/treenode';
-
-const companiesData = 
-[  
-    {
-        "key": "0",
-        "data":{  
-            "name":"Company A",
-            "size":"Pressure Relieve Device",
-            "risk":"High"
-        },
-    },
-    {  
-        "key": "1",
-        "data":{  
-            "name":"Company B",
-            "size":"Tank",
-            "risk":"Medium"
-        },
-    },
-    {  
-        "key": "2",
-        "data": {  
-            "name":"Company C",
-            "size":"Pipe",
-            "risk":"Low"
-        },
-    },
-    {  
-        "key": "3",
-        "data":{  
-            "name":"Company D",
-            "size":"Pressure Vessel",
-            "risk":"Low"
-        },
-    },
-    {  
-        "key": "4",
-        "data": {  
-            "name":"Company E",
-            "size":"Pipe",
-            "risk":"High"
-        },
-    },
-]
+import { CompanyService } from '@/service/CompanyService';
 
 const riskMatrix: any = 
 [
@@ -145,11 +102,11 @@ const cardInformation = [
 ]
 
 const Dashboard = () => {
-    const [files2, setFiles2] = useState<TreeNode[]>([]);
-    const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
+    const [files, setFiles] = useState<TreeNode[]>([]);
+    const [selectedFileKeys, setSelectedFileKeys] = useState<TreeTableSelectionKeysType | null>(null);
     
     useEffect(() => {
-        setFiles2(companiesData)
+        CompanyService.getCompanies().then((files) => setFiles(files))
     }, []);
 
     return (
@@ -205,11 +162,11 @@ const Dashboard = () => {
             <div className="card">
                 <h5>Summary</h5>
 
-                {/* <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
-                    <Column field="name" header="Number" expander />
+                <TreeTable value={files} selectionMode="checkbox" selectionKeys={selectedFileKeys} onSelectionChange={(e) => setSelectedFileKeys(e.value)}>
+                    <Column field="name" header="Number" expander  />
                     <Column field="size" header="Components" />
                     <Column field="risk" header="Risk" />
-                </TreeTable> */}
+                </TreeTable>
             </div>
         </div>
     </>
