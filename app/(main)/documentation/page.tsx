@@ -101,12 +101,13 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const url = process.env.PUBLIC_URL  
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link
           id="theme-css"
-          href={\`/themes/lara-light-indigo/theme.css\`}
+          href={url + \`/themes/lara-light-indigo/theme.css\`}
           rel="stylesheet"
         ></link>
       </head>

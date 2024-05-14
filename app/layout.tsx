@@ -13,11 +13,10 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-    const theme = `${process.env.PUBLIC_URL}/themes/lara-light-indigo/theme.css`
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <link id="theme-css" href={theme} rel="stylesheet"></link>
+                <link id="theme-css" href={`${process.env.PUBLIC_URL}/themes/lara-light-indigo/theme.css`} rel="stylesheet"></link>
             </head>
             <body>
                 <PrimeReactProvider>

@@ -9,7 +9,31 @@ import { Button } from 'primereact/button';
 
 const ComponentData = () => {
     // const toast = useRef<any>(null);
-    const tabItems = [
+    const tabMenuBottom = [
+        {
+            label: 'General',
+            command: () => {
+                setTabMenu("design")
+                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Dashboard', life: 3000 });
+            }
+        },
+        {
+            label: 'Operating Conditions',
+            command: () => {
+                setTabMenu("operating")
+                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Transactions', life: 3000 });
+            }
+        },
+        {
+            label: 'Inspection',
+            command: () => {
+                setTabMenu("inspection")
+                // toast.current.show({ severity: 'success', summary: 'Selected', detail: 'Products', life: 3000 });
+            }
+        },
+    ];
+
+    const tabMenuTop = [
         {
             label: 'General',
             command: () => {
@@ -131,7 +155,8 @@ const ComponentData = () => {
     return (
         <Card subTitle="Data" className="col shadow-1 border-round-xl">
             {/* <Toast ref={toast} /> */}
-            <TabMenu model={tabItems} />
+            <TabMenu model={tabMenuTop} />
+            <TabMenu model={tabMenuBottom} />
             <div className="p-3">
                 {tabMenuTemplate()}
             </div>
