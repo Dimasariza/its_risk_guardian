@@ -20,7 +20,7 @@ const AppMenu = () => {
             items: [
                 { label: 'Company', icon: 'pi pi-fw pi-id-card', to: '/assets/company' },
                 { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
-                { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
+                // { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
                 { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },
                 { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/assets/component', class: 'rotated-icon' },
                 { label: 'PFD', icon: 'pi pi-fw pi-mobile', to: '/assets/pfd', class: 'document-icon' },

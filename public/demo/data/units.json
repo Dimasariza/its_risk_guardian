@@ -3,61 +3,79 @@
         {
             "key": 0,
             "data":{  
-                "name":"Pertamina Surabaya",
+                "name":"Unit A",
                 "company":"Pertamina",
                 "location":"Surabaya",
                 "type": {
                     "name": "Oil and gas production"
                 },
-                "id": 1
+                "id": 1,
+                "company_id": 1
+            }
+        },
+        {
+            "key": 0,
+            "data":{  
+                "name":"Unit A2",
+                "company":"Pertamina",
+                "location":"Surabaya",
+                "type": {
+                    "name": "Oil and gas production"
+                },
+                "id": 1,
+                "company_id": 1
             }
         },
         {  
             "key": 1,
             "data":{  
-                "name":"Meratus Jakarta",
+                "name":"Unit B",
                 "company":"Meratus",
                 "location":"Jakarta",
                 "type": {
                     "name": "Oil and gas processing and transportation"
                 },
-                "id": 2
+                "id": 2,
+                "company_id": 2
             }
         },
         {  
             "key": 2,
             "data": {  
-                "name":"SPIL Surabaya",
+                "name":"Unit C",
                 "company":"SPIL",
                 "location":"Surabaya",
                 "type": {
                     "name": "Refineries"
                 },
-                "id": 3
+                "id": 3,
+                "company_id":3
             }
         },
         {  
             "key": 3,
             "data":{  
-                "name":"Dok Pantai Lamongan",
+                "name":"Unit D",
                 "company":"DPL",
                 "location":"Lamongan",
                 "type": {
                     "name": "Petrochemical and chemical plants"
                 },
-                "id": 4
+                "id": 4,
+                "company_id": 4
             }
         },
         {  
             "key": 4,
             "data": {  
-                "name":"DKB Jakarta",
+                "name":"Unit E",
                 "company":"DKB",
                 "location":"Jakarta",
                 "type": {
                     "name": "Pipeline"
                 },
-                "id": 5
+                "id": 5,
+                "company_id": 5
             }
         }
     ]

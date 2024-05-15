@@ -14,6 +14,7 @@ import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber
 import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
+import { EquipmentService } from '@/service/EquipmentService';
 
 const equpimentData = 
     [  
@@ -134,6 +135,7 @@ const EquipmentData = () => {
     useEffect(() => {
         NodeService.getFiles().then((files) => setFiles(files));
         // NodeService.getFilesystem().then((files) => setFiles2(files));
+        EquipmentService.getEquipment().then(data => console.log(data))
         setFiles2(equpimentData)
     }, []);
 

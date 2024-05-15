@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Children } from 'react';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { TreeNode } from 'primereact/treenode';
@@ -11,6 +11,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { UnitsService } from '@/service/UnitsService';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
+import { CompanyService } from '@/service/CompanyService';
 
 const UnitsTree = () => {
     let emptyProduct: Demo.Product = {
@@ -25,15 +26,14 @@ const UnitsTree = () => {
         inventoryStatus: 'INSTOCK'
     };
     
-    const [files, setFiles] = useState<TreeNode[]>([]);
+    const [units, setUnits] = useState<TreeNode[]>([]);
     const [selectedFileKeys, setSelectedFileKeys] = useState<TreeTableSelectionKeysType | null>(null);
     const [unitDialog, setUnitDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [unit, setUnit] = useState<Demo.Product>(emptyProduct);
 
-
     useEffect(() => {
-        UnitsService.getUnits().then((unitFile) => setFiles(unitFile));
+        UnitsService.getCompaniesUnits().then((unitFiles:any) => setUnits(unitFiles));
     }, []);
 
     const openNew = () => {
@@ -89,7 +89,7 @@ const UnitsTree = () => {
     
     const acceptDelete = (value: any)  => {
         console.log(value)
-        setFiles(prev => prev.filter(item => item.data.id != value.id));
+        setUnits(prev => prev.filter(item => item.data.id != value.id));
         toast.current.show({ 
             severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 
         });
@@ -145,7 +145,7 @@ const UnitsTree = () => {
                     <h5>Units</h5>
                     <Button label="Add Units" raised severity="success" className='my-2'onClick={openNew}/>
 
-                    <TreeTable value={files} selectionMode="checkbox" selectionKeys={selectedFileKeys} onSelectionChange={(e) => setSelectedFileKeys(e.value)}>
+                    <TreeTable value={units} selectionMode="checkbox" selectionKeys={selectedFileKeys} onSelectionChange={(e) => setSelectedFileKeys(e.value)}>
                         <Column field="name" header="Facility" expander />
                         <Column field="company" header="Units" />
                         <Column field="location" header="Description" />

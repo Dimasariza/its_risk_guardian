@@ -45,7 +45,6 @@ const CompanyPage = () => {
     const [company, setCompany] = useState<ICompanies>(emptyProduct);
 
     const acceptDelete = (value: any)  => {
-        console.log(value)
         setFiles(prev => prev.filter(item => item.data.id != value.id));
         toast.current.show({ 
             severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 

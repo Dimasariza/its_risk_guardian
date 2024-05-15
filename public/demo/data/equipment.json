@@ -1,0 +1,64 @@
+{
+    "data" : [  
+        {
+            "key": 0,
+            "data":{  
+                "name":"Pertamina Surabaya",
+                "company":"Pertamina",
+                "location":"Surabaya",
+                "type": {
+                    "name": "Oil and gas production"
+                },
+                "id": 1
+            }
+        },
+        {  
+            "key": 1,
+            "data":{  
+                "name":"Meratus Jakarta",
+                "company":"Meratus",
+                "location":"Jakarta",
+                "type": {
+                    "name": "Oil and gas processing and transportation"
+                },
+                "id": 2
+            }
+        },
+        {  
+            "key": 2,
+            "data": {  
+                "name":"SPIL Surabaya",
+                "company":"SPIL",
+                "location":"Surabaya",
+                "type": {
+                    "name": "Refineries"
+                },
+                "id": 3
+            }
+        },
+        {  
+            "key": 3,
+            "data":{  
+                "name":"Dok Pantai Lamongan",
+                "company":"DPL",
+                "location":"Lamongan",
+                "type": {
+                    "name": "Petrochemical and chemical plants"
+                },
+                "id": 4
+            }
+        },
+        {  
+            "key": 4,
+            "data": {  
+                "name":"DKB Jakarta",
+                "company":"DKB",
+                "location":"Jakarta",
+                "type": {
+                    "name": "Pipeline"
+                },
+                "id": 5
+            }
+        }
+    ]
+}

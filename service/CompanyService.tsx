@@ -8,5 +8,4 @@ export const CompanyService = {
         .then((res) => res.json())
         .then((d) => d.data as TreeNode[]);
     }
-    
 }
