@@ -14,6 +14,7 @@ import POFRBIDate from './tab-menu/probability-rbi_date';
 
 const ComponentData = () => {
     const [tabMenu, setTabMenu] = useState({top: "data", bottom: "general"})
+
     const tabMenuTemplate = () => {
         if(tabMenu.top == "data") {
             if(tabMenu.bottom == "general")
@@ -82,26 +83,25 @@ const ComponentData = () => {
     }
 
     const [tabMenuBottom, setTabMenuBottom] = useState(tab.data)
-
     const tabMenuTop = [
         {
             label: 'Data',
             command: () => {
-                setTabMenu(prev => ({...prev, top: "data"}))
+                setTabMenu(prev => ({...prev, top: "data", bottom: "general"}))
                 setTabMenuBottom(tab.data)
             }
         },
         {
             label: 'Other Damages',
             command: () => { 
-                setTabMenu(prev => ({...prev, top: "other_damages"}))
+                setTabMenu(prev => ({...prev, top: "other_damages", bottom: "damage_factor"}))
                 setTabMenuBottom(tab.other_damages)
             }
         },
         {
             label: 'Probability',
             command: () => {
-                setTabMenu(prev => ({...prev, top: "probability"}))
+                setTabMenu(prev => ({...prev, top: "probability", bottom: "pof_rbi_date"}))
                 setTabMenuBottom(tab.probability)
             }
         },
