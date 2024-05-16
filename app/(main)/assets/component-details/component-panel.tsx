@@ -1,75 +1,25 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PanelMenu } from 'primereact/panelmenu';
 import { Card } from 'primereact/card';
+import { componentNavigation } from '@/function/common';
+import { AssetsService } from '@/service/AssetData';
 
 const ComponentPanel = () => {
-    const items = [     
-        {
-            label: 'Pertamina Jakarta',
-            items: [
-                {
-                    label: 'MV Nusantara 01',
-                    items: [
-                        {
-                            label: 'Machinery',
-                            items: [
-                                {
-                                    label: 'Pipe',
-                                },
-                                {
-                                    label: 'Pressure Relieve Device',
-                                },
-                                {
-                                    label: 'Pressure Vessel',
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    label: 'MV Nusantara 02',
-                    items: [
-                        {
-                            label: 'Logos',
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            label: 'SPIL Surabaya',
-            items: [
-                {
-                    label: 'Unit 01',
-                },
-                {
-                    label: 'Unit 02',
-                },
-                {
-                    label: 'Unit 03',
-                }
-            ]
-        },
-        {
-            label: 'Meratus Surabaya',
-            items: [
-                {
-                    label: 'Meratus Kelimutu',
-                },
-                {
-                    label: 'Meratus Borneo',
-                },
-                {
-                    label: 'Meratus Line',
-                }
-            ]
-        }
-    ];
+    const [assets, setAssets] = useState<any[]>([]);
+    
+    useEffect(() => {
+        AssetsService.getAllAssets().then(({companies, component, equipment, units}: any) => {
+            const filterEquipment =  componentNavigation(equipment, component, "equipment_id");
+            const filterUnit = componentNavigation(units, filterEquipment, "unit_id"); 
+            const filterCompanies = componentNavigation(companies, filterUnit, "company_id"); 
+            setAssets(filterCompanies);
+        })
+    }, [])
 
     return (
         <Card subTitle="Component Navigation" className="border-round-xl min-h-full shadow-1">
-            <PanelMenu model={items} className="w-full " />
+            <PanelMenu model={assets} className="w-full " />
         </Card>
     );
 };

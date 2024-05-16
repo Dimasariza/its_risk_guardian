@@ -1,7 +1,6 @@
 {
     "data" : [  
         {
-            "key": 0,
             "data":{  
                 "name":"Pertamina Surabaya",
                 "company":"Pertamina",
@@ -13,7 +12,6 @@
             }
         },
         {  
-            "key": 1,
             "data":{  
                 "name":"Meratus Jakarta",
                 "company":"Meratus",
@@ -25,7 +23,6 @@
             }
         },
         {  
-            "key": 2,
             "data": {  
                 "name":"SPIL Surabaya",
                 "company":"SPIL",
@@ -37,7 +34,6 @@
             }
         },
         {  
-            "key": 3,
             "data":{  
                 "name":"Dok Pantai Lamongan",
                 "company":"DPL",
@@ -49,7 +45,6 @@
             }
         },
         {  
-            "key": 4,
             "data": {  
                 "name":"DKB Jakarta",
                 "company":"DKB",

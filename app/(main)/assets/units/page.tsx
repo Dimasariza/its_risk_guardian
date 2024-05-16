@@ -13,8 +13,16 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { CompanyService } from '@/service/CompanyService';
 
+interface ICompanies {
+    company: string,
+    name: string,
+    location: string,
+    type?: any,
+    [key: string]: any
+}
+
 const UnitsTree = () => {
-    let emptyProduct: Demo.Product = {
+    let emptyProduct: any = {
         id: '',
         name: '',
         image: '',
@@ -23,17 +31,18 @@ const UnitsTree = () => {
         price: 0,
         quantity: 0,
         rating: 0,
-        inventoryStatus: 'INSTOCK'
+        inventoryStatus: 'INSTOCK',
+        company: "",
     };
     
     const [units, setUnits] = useState<TreeNode[]>([]);
     const [selectedFileKeys, setSelectedFileKeys] = useState<TreeTableSelectionKeysType | null>(null);
     const [unitDialog, setUnitDialog] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const [unit, setUnit] = useState<Demo.Product>(emptyProduct);
+    const [unit, setUnit] = useState<ICompanies>(emptyProduct);
 
     useEffect(() => {
-        UnitsService.getCompaniesUnits().then((unitFiles:any) => setUnits(unitFiles));
+        UnitsService.getUnits().then((unitFiles: any) => setUnits(unitFiles));
     }, []);
 
     const openNew = () => {
@@ -88,7 +97,6 @@ const UnitsTree = () => {
     const toast = useRef<any>(null);
     
     const acceptDelete = (value: any)  => {
-        console.log(value)
         setUnits(prev => prev.filter(item => item.data.id != value.id));
         toast.current.show({ 
             severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 

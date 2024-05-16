@@ -2,74 +2,62 @@
     "data" : [  
         {
             "data":{  
-                "name":"Unit A",
+                "name":"Component 1",
                 "company":"Pertamina",
                 "location":"Surabaya",
                 "type": {
                     "name": "Oil and gas production"
                 },
                 "id": 1,
-                "company_id": 1
-            }
-        },
-        {
-            "data":{  
-                "name":"Unit A2",
-                "company":"Pertamina",
-                "location":"Surabaya",
-                "type": {
-                    "name": "Oil and gas production"
-                },
-                "id": 2,
-                "company_id": 1
+                "equipment_id": 1
             }
         },
         {  
             "data":{  
-                "name":"Unit B",
+                "name":"Component 2",
                 "company":"Meratus",
                 "location":"Jakarta",
                 "type": {
                     "name": "Oil and gas processing and transportation"
                 },
-                "id": 3,
-                "company_id": 2
+                "id": 2,
+                "equipment_id": 1
             }
         },
         {  
             "data": {  
-                "name":"Unit C",
+                "name":"Component 3",
                 "company":"SPIL",
                 "location":"Surabaya",
                 "type": {
                     "name": "Refineries"
                 },
-                "id": 4,
-                "company_id":3
+                "id": 3,
+                "equipment_id": 2
             }
         },
         {  
             "data":{  
-                "name":"Unit D",
+                "name":"Component 4",
                 "company":"DPL",
                 "location":"Lamongan",
                 "type": {
                     "name": "Petrochemical and chemical plants"
                 },
-                "id": 5,
-                "company_id": 4
+                "id": 4,
+                "equipment_id": 2
             }
         },
         {  
             "data": {  
-                "name":"Unit E",
+                "name":"Component 5",
                 "company":"DKB",
                 "location":"Jakarta",
                 "type": {
                     "name": "Pipeline"
                 },
-                "id": 6,
-                "company_id": 5
+                "id": 5,
+                "equipment_id": 3
             }
         }
     ]

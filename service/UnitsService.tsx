@@ -1,27 +1,19 @@
+import { reconstructData } from "@/function/common";
+import { CompanyService } from "./CompanyService";
+
 export const UnitsService = {
-    async getUnits() {
-        const companyUrl = '/demo/data/companies.json';
-        const unitUrl = '/demo/data/units.json';
-        const [fetchCompanies, fetchUnits] = await Promise.all([
-          fetch(process.env.PUBLIC_URL + companyUrl), 
-          fetch(process.env.PUBLIC_URL + unitUrl)
-        ]);
-        const [{data: companies}, {data: units}] = await Promise.all([
-          fetchCompanies.json(), 
-          fetchUnits.json()
-        ]);
+  async getUnits() {
+    const unitsUrl = '/demo/data/units.json';
+    const res = await fetch(unitsUrl, {});
+    const companies: any = await CompanyService.getCompanies();
 
-        return { companies, units };
-    },
-    async getCompaniesUnits() {
-      const {companies, units}: any = await this.getUnits();
-
-      return companies.map((company: any) => {
-        const children = units.filter((u: any) => u.data.company_id == company.data.id)
-        return {
-            ...company,
-            children
-        }
-      })
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error('Failed to fetch Companies data')
     }
+
+    const { data } = await res.json();
+
+    return reconstructData(companies, data, "company_id", "asd") 
+  }
 }

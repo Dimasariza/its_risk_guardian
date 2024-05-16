@@ -3,112 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { TreeCheckboxSelectionKeys, TreeMultipleSelectionKeys } from 'primereact/tree';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { Column } from 'primereact/column';
-import { NodeService } from '../../../../demo/service/NodeService';
 import { TreeNode } from 'primereact/treenode';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
 import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
 import { EquipmentService } from '@/service/EquipmentService';
-
-const equpimentData = 
-    [  
-        {
-            "key": "0",
-            "data":{  
-                "name":"Equipment 01",
-                "size":"Amine Treating",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Equipments A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "1",
-            "data":{  
-                "name":"Equipment 02",
-                "size":"Crude",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Equipments A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "2",
-            "data": {  
-                "name":"Equipment 03",
-                "size":"Vacum Equipments",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Equipments A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "3",
-            "data":{  
-                "name":"Equipment 04",
-                "size":"Crude",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Equipments A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-        {  
-            "key": "4",
-            "data": {  
-                "name":"Equipment 05",
-                "size":"Vacum Equipments",
-                "type":"Lorem ipsum is placeholder text commonly used in the graphic"
-            },
-            "children" : [
-                {
-                    "key": "0",
-                    "data":{  
-                        "name":"Equipments A",
-                        "size":"Pipe",
-                        "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-                    },
-                },
-            ]
-        },
-    ]
 
 const EquipmentData = () => {
     let emptyProduct: Demo.Product = {
@@ -123,7 +25,6 @@ const EquipmentData = () => {
         inventoryStatus: 'INSTOCK'
     };
     
-    const [files, setFiles] = useState<TreeNode[]>([]);
     const [files2, setFiles2] = useState<TreeNode[]>([]);
     const [selectedFileKeys, setSelectedFileKeys] = useState<string | TreeMultipleSelectionKeys | TreeCheckboxSelectionKeys | null>(null);
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
@@ -131,12 +32,8 @@ const EquipmentData = () => {
     const [submitted, setSubmitted] = useState(false);
     const [product, setProduct] = useState<Demo.Product>(emptyProduct);
 
-
     useEffect(() => {
-        NodeService.getFiles().then((files) => setFiles(files));
-        // NodeService.getFilesystem().then((files) => setFiles2(files));
-        EquipmentService.getEquipment().then(data => console.log(data))
-        setFiles2(equpimentData)
+        EquipmentService.getEquipment().then(data => setFiles2(data))
     }, []);
 
     const openNew = () => {
@@ -227,8 +124,8 @@ const EquipmentData = () => {
 
                     <TreeTable value={files2} selectionMode="checkbox" selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
                         <Column field="name" header="Name" expander />
-                        <Column field="size" header="Size" />
-                        <Column field="type" header="Type" />
+                        <Column field="company" header="Size" />
+                        <Column field="location" header="Type" />
                     </TreeTable>
                 </div>
             </div>

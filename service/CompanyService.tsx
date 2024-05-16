@@ -1,11 +1,16 @@
 import { TreeNode } from 'primereact/treenode';
 
 export const CompanyService = {
-    getCompanies() {
-        return fetch(process.env.PUBLIC_URL + '/demo/data/companies.json', {
-            headers: { 'Cache-Control': 'no-cache' }
-        })
-        .then((res) => res.json())
-        .then((d) => d.data as TreeNode[]);
+    async getCompanies() {
+        const companiesUrl = '/demo/data/companies.json';
+        const res = await fetch(companiesUrl, {});
+
+        if (!res.ok) {
+            // This will activate the closest `error.js` Error Boundary
+            throw new Error('Failed to fetch Companies data')
+        }
+        
+        const { data } = await res.json();
+        return data.map((c: any, cKey: number) => ({...c, key: cKey})) as TreeNode[]
     }
 }

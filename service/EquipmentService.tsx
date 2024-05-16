@@ -1,15 +1,22 @@
+import { reconstructData } from "@/function/common";
+import { AssetsService } from "./AssetData";
+
 export const EquipmentService = {
     async getEquipment() {
         const equipmentUrl = '/demo/data/equipment.json';
-        const res = await fetch(equipmentUrl)
+        const res = await fetch(equipmentUrl);
 
         if (!res.ok) {
             // This will activate the closest `error.js` Error Boundary
             throw new Error('Failed to fetch Equipment data')
         }
+        
+        const { data: equipment } = await res.json();
+        const { companies, units } = await AssetsService.getAllAssets();
 
-        return res.json()
+        const filterUnit = reconstructData(units, equipment, "unit_id", "afs"); 
+        const filterCompanies = reconstructData(companies, filterUnit, "company_id", "cus"); 
 
-        // return { companies, units };
+        return filterCompanies;
     }
 }

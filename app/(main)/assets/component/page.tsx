@@ -14,56 +14,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import Link from 'next/link';
-
-
-const componentData = 
-[  
-    {
-        "key": "0",
-        "data":{  
-            "name":"Pressure Relief Device",
-            "size":"Component A",
-            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            "key": 0,
-        },
-    },
-    {  
-        "key": "1",
-        "data":{  
-            "name":"Pressure Vessel",
-            "size":"Component B",
-            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            "key": 1
-        },
-    },
-    {  
-        "key": "2",
-        "data": {  
-            "name":"Tank",
-            "size":"Component C",
-            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            "key": 2
-        },
-    },
-    {  
-        "key": "3",
-        "data":{  
-            "name":"Pipe",
-            "size":"Component D",
-            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            "key": 3
-        },
-    },
-    {  
-        "key": "4",
-        "data": {  
-            "name":"Tank",
-            "size":"Component E",
-            "type":"Lorem ipsum is placeholder text commonly used in the graphic",
-            "key": 4
-        },
-    },
-]
+import { ComponentService } from '@/service/ComponentService';
 
 const ComponentTree = () => {
     const toast = useRef<any>(null);
@@ -80,7 +31,6 @@ const ComponentTree = () => {
         inventoryStatus: 'INSTOCK'
     };
     
-    const [files, setFiles] = useState<TreeNode[]>([]);
     const [files2, setFiles2] = useState<TreeNode[]>([]);
     const [selectedFileKeys, setSelectedFileKeys] = useState<string | TreeMultipleSelectionKeys | TreeCheckboxSelectionKeys | null>(null);
     const [selectedFileKeys2, setSelectedFileKeys2] = useState<TreeTableSelectionKeysType | null>(null);
@@ -108,9 +58,8 @@ const ComponentTree = () => {
     };
 
     useEffect(() => {
-        NodeService.getFiles().then((files) => setFiles(files));
         // NodeService.getFilesystem().then((files) => setFiles2(files));
-        setFiles2(componentData)
+        ComponentService.getComponent().then((files: any) => setFiles2(files))
     }, []);
 
     const openNew = () => {
@@ -219,10 +168,10 @@ const ComponentTree = () => {
                     <Button label="Add Components" raised severity="success" className='my-2'onClick={openNew}/>
 
                     <TreeTable value={files2} selectionMode="checkbox" columnResizeMode="expand" resizableColumns={true} selectionKeys={selectedFileKeys2} onSelectionChange={(e) => setSelectedFileKeys2(e.value)}>
-                        <Column field="" header="" expander style={{width : "50px"}} frozen/>
+                        <Column field="" header="" expander style={{width : "150px"}} frozen/>
                         <Column body={(e) => componentTemplate(e)} header="Component"/>
-                        <Column field="size" header="Name" />
-                        <Column field="type" header="Description" />
+                        <Column field="name" header="Name" />
+                        <Column field="location" header="Description" />
                         <Column body={actionTemplate} headerClassName="w-10rem" />
                     </TreeTable>
                 </div>

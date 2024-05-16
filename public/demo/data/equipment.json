@@ -1,63 +1,87 @@
 {
     "data" : [  
         {
-            "key": 0,
             "data":{  
-                "name":"Pertamina Surabaya",
+                "name":"Equipment 01",
                 "company":"Pertamina",
                 "location":"Surabaya",
                 "type": {
                     "name": "Oil and gas production"
                 },
-                "id": 1
+                "id": 1,
+                "unit_id": 1
+            }
+        },
+        {
+            "data":{  
+                "name":"Equipment 02",
+                "company":"Pertamina",
+                "location":"Surabaya",
+                "type": {
+                    "name": "Oil and gas production"
+                },
+                "id": 2,
+                "unit_id": 1
+            }
+        },
+        {
+            "data":{  
+                "name":"Equipment 03",
+                "company":"Pertamina",
+                "location":"Surabaya",
+                "type": {
+                    "name": "Oil and gas production"
+                },
+                "id": 3,
+                "unit_id": 2
             }
         },
         {  
-            "key": 1,
             "data":{  
-                "name":"Meratus Jakarta",
+                "name":"Equipment 04",
                 "company":"Meratus",
                 "location":"Jakarta",
                 "type": {
                     "name": "Oil and gas processing and transportation"
                 },
-                "id": 2
+                "id": 4,
+                "unit_id": 3
             }
         },
         {  
-            "key": 2,
             "data": {  
-                "name":"SPIL Surabaya",
+                "name":"Equipment 05",
                 "company":"SPIL",
                 "location":"Surabaya",
                 "type": {
                     "name": "Refineries"
                 },
-                "id": 3
+                "id": 5,
+                "unit_id": 4
             }
         },
         {  
-            "key": 3,
             "data":{  
-                "name":"Dok Pantai Lamongan",
+                "name":"Equipment 06",
                 "company":"DPL",
                 "location":"Lamongan",
                 "type": {
                     "name": "Petrochemical and chemical plants"
                 },
-                "id": 4
+                "id": 6,
+                "unit_id": 4
             }
         },
         {  
-            "key": 4,
             "data": {  
-                "name":"DKB Jakarta",
+                "name":"Equipment 07",
                 "company":"DKB",
                 "location":"Jakarta",
                 "type": {
                     "name": "Pipeline"
                 },
-                "id": 5
+                "id": 7,
+                "unit_id": 5
             }
         }
     ]
