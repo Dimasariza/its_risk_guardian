@@ -16,7 +16,7 @@ const treeStyles = {
     // top: 40,
     // left: 40,
     // color: 'white',
-    fill: 'rgba(255,255,255, 0.5)',
+    fill: 'rgba(0, 0, 0, 0.5)',
     width: '100%',
 }
 

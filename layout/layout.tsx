@@ -132,8 +132,8 @@ const Layout = ({ children }: ChildContainerProps) => {
 
     const items = [
         {
-            label: 'Furniture',
-            icon: 'pi pi-box',
+            label: 'Home',
+            // icon: 'pi pi-box',
             items: [
                 [
                     {
@@ -166,8 +166,8 @@ const Layout = ({ children }: ChildContainerProps) => {
             ]
         },
         {
-            label: 'Electronics',
-            icon: 'pi pi-mobile',
+            label: 'Create',
+            // icon: 'pi pi-mobile',
             items: [
                 [
                     {
@@ -196,8 +196,8 @@ const Layout = ({ children }: ChildContainerProps) => {
             ]
         },
         {
-            label: 'Sports',
-            icon: 'pi pi-clock',
+            label: 'Tools',
+            // icon: 'pi pi-clock',
             items: [
                 [
                     {
@@ -231,14 +231,15 @@ const Layout = ({ children }: ChildContainerProps) => {
         <React.Fragment>
             <div className={containerClass}>
                 <AppTopbar ref={topbarRef} />
+                <div className="fixed w-full" style={{top: "5rem", zIndex: 999}}>
+                    <MegaMenu model={items} breakpoint="960px" />
+                </div>
                 <div ref={sidebarRef} className="layout-sidebar">
                     <AppSidebar />
                 </div>
                 <div className="layout-main-container">
-                    <div className="mb-2 gap-2 flex flex-column">
-                        {/* <BreadCrumb model={breadItems} home={home} /> */}
-                        <MegaMenu model={items} breakpoint="960px" />
-                    </div>
+                    {/* <div className="mb-2 gap-2 flex flex-column">
+                    </div> */}
                     <div className="layout-main">{children}</div>
                     <AppFooter />
                 </div>
