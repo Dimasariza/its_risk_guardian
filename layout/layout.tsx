@@ -235,10 +235,8 @@ const Layout = ({ children }: ChildContainerProps) => {
                     <AppSidebar />
                 </div>
                 <div className="layout-main-container">
-                    {/* <div className="card"> */}
-                    {/* </div> */}
                     <div className="mb-2 gap-2 flex flex-column">
-                        <BreadCrumb model={breadItems} home={home} />
+                        {/* <BreadCrumb model={breadItems} home={home} /> */}
                         <MegaMenu model={items} breakpoint="960px" />
                     </div>
                     <div className="layout-main">{children}</div>

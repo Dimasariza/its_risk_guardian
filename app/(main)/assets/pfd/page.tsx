@@ -33,7 +33,7 @@ const PFD = () => {
     <Card >
       <TreeMenu content={text("Main")} open style={treeStyles}>
         <TreeMenu content="Subtree With Children" >
-          <TreeMenu content="hello" />
+          <TreeMenu content="Child 1"></TreeMenu>
           <TreeMenu content="sub-subtree with children">
             <TreeMenu content="child 1" style={{ color: '#63b1de' }} />
             <TreeMenu content="child 2" style={{ color: '#63b1de' }} />

@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Ripple } from 'primereact/ripple';
 import { classNames } from 'primereact/utils';
@@ -8,6 +7,18 @@ import { CSSTransition } from 'react-transition-group';
 import { MenuContext } from './context/menucontext';
 import { AppMenuItemProps } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { TreeProps } from 'react-animated-tree';
+import Tree from 'react-animated-tree';
+import "./style.css";
+
+const treeStyles = {
+    // position: 'absolute',
+    // top: 40,
+    // left: 40,
+    // color: 'white',
+    fill: 'rgba(255,255,255, 0.5)',
+    width: '100%',
+}
 
 const AppMenuitem = (props: AppMenuItemProps) => {
     const pathname = usePathname();
@@ -47,39 +58,47 @@ const AppMenuitem = (props: AppMenuItemProps) => {
 
     const subMenu = item!.items && item!.visible !== false && (
         <CSSTransition timeout={{ enter: 1000, exit: 450 }} classNames="layout-submenu" in={props.root ? true : active} key={item!.label}>
-            <ul>
+            <>
                 {item!.items.map((child, i) => {
                     return <AppMenuitem item={child} index={i} className={child.badgeClass} parentKey={key} key={child.label} />;
                 })}
-            </ul>
+            </>
         </CSSTransition>
     );
 
+    const text = (text: string) => <a href="">{text}</a>
+    const TreeMenu: any = (props: TreeProps) => <Tree {...props}></Tree>
+
     return (
-        <li className={classNames({ 'layout-root-menuitem': props.root, 'active-menuitem': active })}>
-            {props.root && item!.visible !== false && <div className="layout-menuitem-root-text">{item!.label}</div>}
-            {(!item!.to || item!.items) && item!.visible !== false ? (
-                <a href={item!.url} onClick={(e) => itemClick(e)}  className={classNames(item!.class, 'p-ripple')} target={item!.target} tabIndex={0}>
-                    <i  className={classNames('layout-menuitem-icon', item!.icon)}></i>
-                    <span className="layout-menuitem-text">{item!.label}</span>
-                    {item!.items && <i  className="pi pi-fw pi-angle-down"></i>
-                    }
-                    <Ripple />
-                </a>
-            ) : null}
-
-            {item!.to && !item!.items && item!.visible !== false ? (
-                <Link href={item!.to} onClick={(e) => itemClick(e)} replace={item!.replaceUrl} target={item!.target} className={classNames(item!.class, 'p-ripple', { 'active-route': isActiveRoute })} tabIndex={0}>
-                    <i className={classNames('layout-menuitem-icon', item!.icon)}></i>
-                    <span className="layout-menuitem-text w-full">{item!.label}</span>
-                    {item!.items && <i className="pi pi-fw pi-angle-down"></i>
-                    }
-                    <Ripple />
-                </Link>
-            ) : null}
-
+        <TreeMenu content={text(item!.label)} style={treeStyles} className={classNames({'active-menuitem': active })}>
             {subMenu}
-        </li>
+        </TreeMenu>
+
+
+        // <li className={classNames({ 'layout-root-menuitem': props.root, 'active-menuitem': active })}>
+        //      {props.root && item!.visible !== false && <div className="layout-menuitem-root-text">{item!.label}</div>}
+        //      {(!item!.to || item!.items) && item!.visible !== false ? (
+        //         <a href={item!.url} onClick={(e) => itemClick(e)}  className={classNames(item!.class, 'p-ripple')} target={item!.target} tabIndex={0}>
+        //             <i  className={classNames('layout-menuitem-icon', item!.icon)}></i>
+        //             <span className="layout-menuitem-text">{item!.label}</span>
+        //             {item!.items && <i  className="pi pi-fw pi-angle-down"></i>}
+        //             <Ripple />
+        //         </a>
+        //     ) : null}
+
+        //     {item!.to && !item!.items && item!.visible !== false ? (
+        //         <Link href={item!.to} onClick={(e) => itemClick(e)} replace={item!.replaceUrl} target={item!.target} className={classNames(item!.class, 'p-ripple', { 'active-route': isActiveRoute })} tabIndex={0}>
+        //             <i className={classNames('layout-menuitem-icon', item!.icon)}></i>
+        //             <span className="layout-menuitem-text w-full">{item!.label}</span>
+        //             {item!.items && <i className="pi pi-fw pi-angle-down"></i>
+        //             }
+        //             <Ripple />
+        //         </Link>
+        //     ) : null}
+
+        //     {subMenu}
+        // </li> 
+
     );
 };
 

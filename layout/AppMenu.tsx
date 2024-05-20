@@ -18,7 +18,16 @@ const AppMenu = () => {
         {
             label: 'Assets',
             items: [
-                { label: 'Companyj;lkj;lkj;lkj;lkjlkjlkjlkjjkljhkjhkjhkjhkhkjhkjhkjhkh', icon: 'pi pi-fw pi-id-card', to: '/assets/company' },
+                { 
+                    label: 'Company', 
+                    icon: 'pi pi-fw pi-id-card', 
+                    to: '/assets/company',
+                    items: [
+                        { 
+                            label: 'Company', icon: 'pi pi-fw pi-id-card', to: '/assets/company' 
+                        },
+                    ] 
+                },
                 { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
                 // { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
                 { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },
@@ -55,66 +64,66 @@ const AppMenu = () => {
         //         { label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: 'https://primeflex.org/', target: '_blank' }
         //     ]
         // },
-        {
-            label: 'Pages',
-            icon: 'pi pi-fw pi-briefcase',
-            to: '/pages',
-            items: [
-                {
-                    label: 'Landing',
-                    icon: 'pi pi-fw pi-globe',
-                    to: '/landing'
-                },
-                {
-                    label: 'Auth',
-                    icon: 'pi pi-fw pi-user',
-                    items: [
-                        {
-                            label: 'Login',
-                            icon: 'pi pi-fw pi-sign-in',
-                            to: '/auth/login',
-                            items: [
-                                {
-                                    label: 'Login',
-                                    icon: 'pi pi-fw pi-sign-in',
-                                    to: '/auth/login'
-                                },
-                            ]
-                        },
-                        {
-                            label: 'Error',
-                            icon: 'pi pi-fw pi-times-circle',
-                            to: '/auth/error'
-                        },
-                        {
-                            label: 'Access Denied',
-                            icon: 'pi pi-fw pi-lock',
-                            to: '/auth/access'
-                        }
-                    ]
-                },
-                {
-                    label: 'Crud',
-                    icon: 'pi pi-fw pi-pencil',
-                    to: '/pages/crud'
-                },
-                {
-                    label: 'Timeline',
-                    icon: 'pi pi-fw pi-calendar',
-                    to: '/pages/timeline'
-                },
-                {
-                    label: 'Not Found',
-                    icon: 'pi pi-fw pi-exclamation-circle',
-                    to: '/pages/notfound'
-                },
-                {
-                    label: 'Empty',
-                    icon: 'pi pi-fw pi-circle-off',
-                    to: '/pages/empty'
-                }
-            ]
-        },
+        // {
+        //     label: 'Pages',
+        //     icon: 'pi pi-fw pi-briefcase',
+        //     to: '/pages',
+        //     items: [
+        //         {
+        //             label: 'Landing',
+        //             icon: 'pi pi-fw pi-globe',
+        //             to: '/landing'
+        //         },
+        //         {
+        //             label: 'Auth',
+        //             icon: 'pi pi-fw pi-user',
+        //             items: [
+        //                 {
+        //                     label: 'Login',
+        //                     icon: 'pi pi-fw pi-sign-in',
+        //                     to: '/auth/login',
+        //                     items: [
+        //                         {
+        //                             label: 'Login',
+        //                             icon: 'pi pi-fw pi-sign-in',
+        //                             to: '/auth/login'
+        //                         },
+        //                     ]
+        //                 },
+        //                 {
+        //                     label: 'Error',
+        //                     icon: 'pi pi-fw pi-times-circle',
+        //                     to: '/auth/error'
+        //                 },
+        //                 {
+        //                     label: 'Access Denied',
+        //                     icon: 'pi pi-fw pi-lock',
+        //                     to: '/auth/access'
+        //                 }
+        //             ]
+        //         },
+        //         {
+        //             label: 'Crud',
+        //             icon: 'pi pi-fw pi-pencil',
+        //             to: '/pages/crud'
+        //         },
+        //         {
+        //             label: 'Timeline',
+        //             icon: 'pi pi-fw pi-calendar',
+        //             to: '/pages/timeline'
+        //         },
+        //         {
+        //             label: 'Not Found',
+        //             icon: 'pi pi-fw pi-exclamation-circle',
+        //             to: '/pages/notfound'
+        //         },
+        //         {
+        //             label: 'Empty',
+        //             icon: 'pi pi-fw pi-circle-off',
+        //             to: '/pages/empty'
+        //         }
+        //     ]
+        // },
         // {
         //     label: 'Hierarchy',
         //     items: [
@@ -185,12 +194,12 @@ const AppMenu = () => {
 
     return (
         <MenuProvider>
-            <div></div>
-            {/* <ul className="layout-menu">
+            <h5 className='m-3'>Assets Register</h5>
+            {/* <ul className="layout-menu"> */}
                 {model.map((item, i) => {
                     return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label} /> : <li className="menu-separator"></li>;
                 })}
-            </ul> */}
+            {/* </ul> */}
         </MenuProvider>
     );
 };
