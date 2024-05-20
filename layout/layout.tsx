@@ -16,6 +16,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { PanelMenu } from 'primereact/panelmenu';
 import { Card } from 'primereact/card';
 import { BreadCrumb } from 'primereact/breadcrumb';
+import { MegaMenu } from 'primereact/megamenu';
 
 const Layout = ({ children }: ChildContainerProps) => {
     const route = usePathname();
@@ -129,6 +130,103 @@ const Layout = ({ children }: ChildContainerProps) => {
     const breadItems = [{ label: 'Assets' }, { label: 'Component' }, { label: 'Component-Detail' }, { label: 'Data' }, { label: 'General' }];
     const home = { icon: 'pi pi-home', url: 'https://primereact.org' }
 
+    const items = [
+        {
+            label: 'Furniture',
+            icon: 'pi pi-box',
+            items: [
+                [
+                    {
+                        label: 'Living Room',
+                        items: [{ label: 'Accessories' }, { label: 'Armchair' }, { label: 'Coffee Table' }, { label: 'Couch' }, { label: 'TV Stand' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Kitchen',
+                        items: [{ label: 'Bar stool' }, { label: 'Chair' }, { label: 'Table' }]
+                    },
+                    {
+                        label: 'Bathroom',
+                        items: [{ label: 'Accessories' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Bedroom',
+                        items: [{ label: 'Bed' }, { label: 'Chaise lounge' }, { label: 'Cupboard' }, { label: 'Dresser' }, { label: 'Wardrobe' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Office',
+                        items: [{ label: 'Bookcase' }, { label: 'Cabinet' }, { label: 'Chair' }, { label: 'Desk' }, { label: 'Executive Chair' }]
+                    }
+                ]
+            ]
+        },
+        {
+            label: 'Electronics',
+            icon: 'pi pi-mobile',
+            items: [
+                [
+                    {
+                        label: 'Computer',
+                        items: [{ label: 'Monitor' }, { label: 'Mouse' }, { label: 'Notebook' }, { label: 'Keyboard' }, { label: 'Printer' }, { label: 'Storage' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Home Theather',
+                        items: [{ label: 'Projector' }, { label: 'Speakers' }, { label: 'TVs' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Gaming',
+                        items: [{ label: 'Accessories' }, { label: 'Console' }, { label: 'PC' }, { label: 'Video Games' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Appliances',
+                        items: [{ label: 'Coffee Machine' }, { label: 'Fridge' }, { label: 'Oven' }, { label: 'Vaccum Cleaner' }, { label: 'Washing Machine' }]
+                    }
+                ]
+            ]
+        },
+        {
+            label: 'Sports',
+            icon: 'pi pi-clock',
+            items: [
+                [
+                    {
+                        label: 'Football',
+                        items: [{ label: 'Kits' }, { label: 'Shoes' }, { label: 'Shorts' }, { label: 'Training' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Running',
+                        items: [{ label: 'Accessories' }, { label: 'Shoes' }, { label: 'T-Shirts' }, { label: 'Shorts' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Swimming',
+                        items: [{ label: 'Kickboard' }, { label: 'Nose Clip' }, { label: 'Swimsuits' }, { label: 'Paddles' }]
+                    }
+                ],
+                [
+                    {
+                        label: 'Tennis',
+                        items: [{ label: 'Balls' }, { label: 'Rackets' }, { label: 'Shoes' }, { label: 'Training' }]
+                    }
+                ]
+            ]
+        }
+    ];
+    
     return (
         <React.Fragment>
             <div className={containerClass}>
@@ -137,8 +235,11 @@ const Layout = ({ children }: ChildContainerProps) => {
                     <AppSidebar />
                 </div>
                 <div className="layout-main-container">
-                    <div className="mb-2">
+                    {/* <div className="card"> */}
+                    {/* </div> */}
+                    <div className="mb-2 gap-2 flex flex-column">
                         <BreadCrumb model={breadItems} home={home} />
+                        <MegaMenu model={items} breakpoint="960px" />
                     </div>
                     <div className="layout-main">{children}</div>
                     <AppFooter />
