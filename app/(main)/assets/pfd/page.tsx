@@ -3,6 +3,13 @@
 import { Card } from 'primereact/card';
 import Tree from 'react-animated-tree';
 import "./style.css";
+import React, { ReactPropTypes } from 'react';
+import { TreeProps } from 'react-animated-tree';
+
+interface TreePropsMenu {
+  content: any
+}
+
 
 const treeStyles = {
   // position: 'absolute',
@@ -20,21 +27,23 @@ const typeStyles = {
 
 const PFD = () => {
   const text = (text: string) => <a href="">{text}</a>
+  const TreeMenu: any = (props: TreeProps) => <Tree {...props}></Tree>
+
   return (
     <Card >
-      <Tree content={text("Main")} open style={treeStyles}>
-        <Tree content="Subtree With Children" >
-          <Tree content="hello" />
-          <Tree content="sub-subtree with children">
-            <Tree content="child 1" style={{ color: '#63b1de' }} />
-            <Tree content="child 2" style={{ color: '#63b1de' }} />
-            <Tree content="child 3" style={{ color: '#63b1de' }} />
-          </Tree>
-          <Tree content="hello" />
-        </Tree>
-        <Tree content="hello"  />
-        <Tree content="hello"  />
-      </Tree>
+      <TreeMenu content={text("Main")} open style={treeStyles}>
+        <TreeMenu content="Subtree With Children" >
+          <TreeMenu content="hello" />
+          <TreeMenu content="sub-subtree with children">
+            <TreeMenu content="child 1" style={{ color: '#63b1de' }} />
+            <TreeMenu content="child 2" style={{ color: '#63b1de' }} />
+            <TreeMenu content="child 3" style={{ color: '#63b1de' }} />
+          </TreeMenu>
+          <TreeMenu content="hello" />
+        </TreeMenu>
+        <TreeMenu content="hello"  />
+        <TreeMenu content="hello"  />
+      </TreeMenu>
     </Card>
   )
 }
