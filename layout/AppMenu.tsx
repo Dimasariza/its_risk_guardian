@@ -12,27 +12,112 @@ const AppMenu = () => {
 
     const model: AppMenuItem[] = [
         {
-            label: 'Home',
-            items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/home/dashboard' }]
-        },
-        {
-            label: 'Assets',
+            label: 'PT Sanngar Sarana Baja',
             items: [
                 { 
-                    label: 'Company', 
-                    icon: 'pi pi-fw pi-id-card', 
-                    to: '/assets/company',
+                    label: 'Horizontal Vessel', 
+                    icon: 'pi pi-fw pi-home', 
+                    to: '/home/dashboard',
                     items: [
                         { 
-                            label: 'Company', icon: 'pi pi-fw pi-id-card', to: '/assets/company' 
+                            label: 'LP FROD Separator', 
+                            icon: 'pi pi-fw pi-home', 
+                            to: '/home/dashboard',
+                            items: [
+                                { 
+                                    label: 'JNE MBD 105', 
+                                    icon: 'pi pi-fw pi-home', 
+                                    to: '/home/dashboard' 
+                                },
+                            ]
                         },
                     ] 
                 },
-                { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
+                { 
+                    label: 'Vertical Vessel', 
+                    icon: 'pi pi-fw pi-home', 
+                    to: '/home/dashboard',
+                    items: [
+                        { 
+                            label: 'LP Gas Scrubber', 
+                            icon: 'pi pi-fw pi-home', 
+                            to: '/home/dashboard',
+                            items: [
+                                { 
+                                    label: 'JNE MBF 110', 
+                                    icon: 'pi pi-fw pi-home', 
+                                    to: '/home/dashboard' 
+                                },
+                            ] 
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            label: 'PT Gunanusa Utama Fabrication',
+            items: [
+                { 
+                    label: 'Horizontal Vessel', 
+                    icon: 'pi pi-fw pi-home', 
+                    to: '/home/dashboard',
+                    items: [
+                        { 
+                            label: 'JNE MBD 101', 
+                            icon: 'pi pi-fw pi-home', 
+                            to: '/home/dashboard' 
+                        },
+                        { 
+                            label: 'JNE MAM 107', 
+                            icon: 'pi pi-fw pi-home', 
+                            to: '/home/dashboard' 
+                        },
+                        { 
+                            label: 'JNE NEK 109', 
+                            icon: 'pi pi-fw pi-home', 
+                            to: '/home/dashboard' 
+                        },
+                    ] 
+                },
+            ]
+        },
+        {
+            label: 'PT Kokoh Semesta',
+            items: [
+                { 
+                    label: 'Vertical Vessel', icon: 'pi pi-fw pi-id-card', to: '/assets/company',
+                    items: [
+                        { 
+                            label: 'LP Sucction Scrubber', 
+                            icon: 'pi pi-fw pi-id-card', 
+                            to: '/assets/company',
+                            items: [
+                                { 
+                                    label: 'JNE MBF 142', 
+                                    icon: 'pi pi-fw pi-id-card', 
+                                    to: '/assets/company' 
+                                },
+                            ]   
+                        },
+                        { 
+                            label: 'HP Discharge Scrubber', 
+                            icon: 'pi pi-fw pi-id-card', 
+                            to: '/assets/company',
+                            items: [
+                                { 
+                                    label: 'JNE MBF 143', 
+                                    icon: 'pi pi-fw pi-id-card', 
+                                    to: '/assets/company' 
+                                },
+                            ]    
+                        },
+                    ]  
+                },
+                // { label: 'Units', icon: 'pi pi-fw pi-check-square', to: '/assets/units' },
                 // { label: 'Systems', icon: 'pi pi-fw pi-bookmark', to: '/assets/systems' },
-                { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },
-                { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/assets/component', class: 'rotated-icon' },
-                { label: 'PFD', icon: 'pi pi-fw pi-mobile', to: '/assets/pfd', class: 'document-icon' },
+                // { label: 'Equipment', icon: 'pi pi-fw pi-exclamation-circle', to: '/assets/equipment' },
+                // { label: 'Component', icon: 'pi pi-fw pi-mobile', to: '/assets/component', class: 'rotated-icon' },
+                // { label: 'PFD', icon: 'pi pi-fw pi-mobile', to: '/assets/pfd', class: 'document-icon' },
                 // { label: 'Table', icon: 'pi pi-fw pi-table', to: '/uikit/table' },
                 // { label: 'List', icon: 'pi pi-fw pi-list', to: '/uikit/list' },
                 // { label: 'Tree', icon: 'pi pi-fw pi-share-alt', to: '/uikit/tree' },
