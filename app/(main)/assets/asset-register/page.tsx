@@ -9,56 +9,56 @@ import FluidProperties from "./tab-menu/fluid-properties";
 import Documents from "./tab-menu/documents";
 
 function AssetRegister() {
-    const [tabActive, setTabActive] = useState<string>("asset_summary");
+  const [tabActive, setTabActive] = useState<string>("asset_summary");
 
-    const items = [
-        { 
-            label: 'Asset Summary', 
-            command: () => {
-                setTabActive("asset_summary");
-            }
-        },
-        { 
-            label: 'Installation', 
-            command: () => {
-                setTabActive("installation");
-            }
-        },
-        { 
-            label: 'Fluid Properties', 
-            command: () => {
-                setTabActive("fluid_properties");
-            }
-        },
-        { 
-            label: 'Documents', 
-            command: () => {
-                setTabActive("documents");
-            }
-        }
-    ];
-
-    const tabMenuView = () => {
-        switch(tabActive) {
-            case "asset_summary":
-            return <AssetSummary />
-            case "installation":
-            return <Installation />
-            case "fluid_properties":
-            return <FluidProperties />
-            case "documents":
-            return <Documents />
-        }
+  const items = [
+    { 
+      label: 'Asset Summary', 
+      command: () => {
+          setTabActive("asset_summary");
+      }
+    },
+    { 
+      label: 'Installation', 
+      command: () => {
+          setTabActive("installation");
+      }
+    },
+    { 
+      label: 'Fluid Properties', 
+      command: () => {
+          setTabActive("fluid_properties");
+      }
+    },
+    { 
+      label: 'Documents', 
+      command: () => {
+          setTabActive("documents");
+      }
     }
+  ];
+
+  const tabMenuView = () => {
+    switch(tabActive) {
+      case "asset_summary":
+      return <AssetSummary />
+      case "installation":
+      return <Installation />
+      case "fluid_properties":
+      return <FluidProperties />
+      case "documents":
+      return <Documents />
+    }
+  }
     
-    return (
-        <>
-            <Card>
-            <TabMenu model={items} />
-                {tabMenuView()}
-            </Card>
-        </>
-    )
+  return (
+    <>
+      <Card>
+      <TabMenu model={items} />
+        {tabMenuView()}
+      </Card>
+    </>
+  )
 }
 
 export default AssetRegister;
