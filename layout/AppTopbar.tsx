@@ -5,6 +5,9 @@ import { classNames } from 'primereact/utils';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { AppTopbarRef } from '@/types';
 import { LayoutContext } from './context/layoutcontext';
+import { Button } from 'primereact/button';
+import { Avatar } from 'primereact/avatar';
+import { Menu } from 'primereact/menu';
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
@@ -17,6 +20,23 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
         topbarmenu: topbarmenuRef.current,
         topbarmenubutton: topbarmenubuttonRef.current
     }));
+
+    const menuRight = useRef<any>(null);
+    const items = [
+        {
+            label: 'User',
+            items: [
+                {
+                    label: 'My Profile',
+                    icon: 'pi pi-user'
+                },
+                {
+                    label: 'Log Out',
+                    icon: 'pi pi-sign-out'
+                }
+            ]
+        }
+    ];
 
     return (
         <div className="layout-topbar">
@@ -34,20 +54,13 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
             </button>
 
             <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
-                <button type="button" className="p-link layout-topbar-button">
-                    <i className="pi pi-calendar"></i>
-                    <span>Calendar</span>
-                </button>
-                <button type="button" className="p-link layout-topbar-button">
-                    <i className="pi pi-user"></i>
-                    <span>Profile</span>
-                </button>
-                <Link href="/documentation">
-                    <button type="button" className="p-link layout-topbar-button">
-                        <i className="pi pi-cog"></i>
-                        <span>Settings</span>
-                    </button>
-                </Link>
+
+                <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+                    <Button label="Show Right" text className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup>
+                        <Avatar  image="/demo/images/avatar/profile.jpg" size="large" style={{ backgroundColor: '#9c27b0', color: '#ffffff' }} shape="circle" className='ml-2'/>
+                    </Button >    
+                {/* <Link href="/documentation">
+                </Link> */}
             </div>
         </div>
     );
