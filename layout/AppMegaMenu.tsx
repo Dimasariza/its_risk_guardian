@@ -8,6 +8,7 @@ import { LiaCutSolid } from "react-icons/lia";
 import { GrDocumentPdf } from "react-icons/gr";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { MdOutlineQrCode2 } from "react-icons/md";
+import { SiWebcomponentsdotorg } from "react-icons/si";
 
 function AppMegaMenu() {
   const router = useRouter();
@@ -19,7 +20,7 @@ function AppMegaMenu() {
     {
       label: "",
       icon: "pi pi-save",
-      className: "mr-8",
+      className: "mr-8  ",
     },
     {
       label: 'File',
@@ -128,7 +129,7 @@ function AppMegaMenu() {
               }, 
               { 
                 label: 'Component', 
-                icon: 'pi pi-th-large',
+                icon: (options: any) => <SiWebcomponentsdotorg {...options.iconProps} />,
                 command: () => {
                   setVisibleComponent(true);
                 }

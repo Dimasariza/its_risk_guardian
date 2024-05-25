@@ -2,6 +2,7 @@
 
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Message } from "primereact/message";
 import { useState } from "react";
@@ -16,10 +17,22 @@ function ComponentDialog({visible, setVisible}: any) {
     </div>
   );
 
+  const [selectedCity, setSelectedCity] = useState(null);
+  const cities = [
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+  ];
+
   return(
     <>
       <Dialog header="Component" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} footer={footerContent}>
         <section className="grid gap-2 m-2">
+          <label htmlFor="equipment" className="col-6">Equipment</label>
+          <Dropdown id="equipment" value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" 
+            placeholder="Select a City" className="w-50" />
           <label htmlFor="tagOfComponent" className="col-6">Tag of Component</label>
           <InputText id="tagOfComponent" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
           {/* <Message severity="error" /> */}
