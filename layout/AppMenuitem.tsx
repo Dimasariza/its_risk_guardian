@@ -66,7 +66,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
         </CSSTransition>
     );
 
-    const text = (text: string) => <a onClick={(e) => itemClick(e)}>{text}</a>
+    const text = (text: string) => <Link href="/" onClick={(e) => itemClick(e)}>{text}</Link>
     const TreeMenu: any = (props: TreeProps) => <Tree {...props}></Tree>
 
     return (

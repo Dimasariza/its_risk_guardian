@@ -5,6 +5,7 @@
   "homepage": "https://dimasariza.github.io/its_risk_guardian/",
   "scripts": {
     "dev": "next dev",
+    "start_db": "json-server --watch ./public/demo/database/db.json --port 3030",
     "start": "NODE_ENV=production node server.js",
     "build": "next build && next export",
     "format": "prettier --write \"{app,demo,layout,types}/**/*.{js,ts,tsx,d.ts}\"",
