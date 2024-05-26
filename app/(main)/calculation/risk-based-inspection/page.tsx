@@ -69,21 +69,23 @@ function RiskBasedInspection() {
   const tabMenuView = () => {
     switch(tabActive) {
       case "general_data":
-      return <GeneralData />
+        return <GeneralData />;
       case "damage_mechanism":
-      return <DamageMechanism />
+        return <DamageMechanism />;
       case "pof_rbi_date":
-      return <POFRBIDate />
+        return <POFRBIDate />;
       case "pof_plan_date":
-      return <POFPlanDate />
+        return <POFPlanDate />;
       case "cof":
-      return <COF />
+        return <COF />;
       case "risk_analysis":
-      return <RiskAnalysis />
+        return <RiskAnalysis />;
       case "inspection_planning":
-      return <InspectionPlanning />
+        return <InspectionPlanning />;
       case "summary":
-      return <Summary />
+        return <Summary />;
+      default:
+        return <GeneralData />;
     }
   }
     

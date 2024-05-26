@@ -113,23 +113,32 @@ function DamageMechanism() {
         },
     ].map((item: IDamageMechanism, id: number) => ({...item, number: id + 1}));
 
-    const damageFactorStatus = () => {
+    const damageFactorStatus = (text: any[] | string) => {
         return (
-            <Checkbox onChange={e => setChecked(e.checked)} checked={checked}></Checkbox>
+            <div className="flex justify-content-center">
+                <Checkbox readOnly={typeof(text) == "object"}  onChange={e => setChecked(e.checked)} checked={checked}></Checkbox>
+            </div>
         )
     }
 
-    const screeningCriteria = (text: any) => {
+    const screeningCriteria = (text: any[] | string) => {
         return (
             <>
                 {
                     typeof(text) == "string" 
                     ? text 
-                    : text.map((d: string, key: number) => (<div key={key} className="mb-1">{d}</div>))
+                    : text.map((d: string, key: number) => (<div key={key} className="mb-1 grid">
+                        <span className="col-10">{d}</span>  
+                        {
+                            key !== 0 &&
+                            <Checkbox className="col-2 justify-content-end flex  p-0 align-self-center"  onChange={e => setChecked(e.checked)} checked={checked}></Checkbox>
+                        }
+                        </div>))
                 }
             </>
         )
     }
+
 
     return (
         <div className="card">
@@ -137,7 +146,7 @@ function DamageMechanism() {
                 <Column field="number" header="No" style={{width : "50px"}}></Column>
                 <Column field="damageFactor" header="Damage Factor"></Column>
                 <Column field="screeningCriteria" header="Screening Criteria" body={(e)=> screeningCriteria(e.screeningCriteria)}></Column>
-                <Column field="status" header="Yes/No" body={damageFactorStatus} style={{width : "100px"}}></Column>
+                <Column field="status" header="Yes/No" body={(e) => damageFactorStatus(e.screeningCriteria)} style={{width : "70px"}} className="p-0 align-self-center"></Column>
             </DataTable>
         </div>
     );
