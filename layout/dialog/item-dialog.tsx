@@ -1,12 +1,21 @@
 "use client";
 
+import { IAssetItem } from "@/types/assetItem";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
+import { Message } from "primereact/message";
 import { useState } from "react";
 
 function ItemDialog({visible, setVisible}: any) {
-  const [value, setValue] = useState('');
+  let emptyItem: IAssetItem = {
+    tagOfItem: "",
+    nameOfItem: ""
+  }
+
+  const [value, setValue] = useState<IAssetItem>(emptyItem);
+  const [error, setError] = useState<IAssetItem>(emptyItem);
+  const [errorMsg, setErrorMsg] = useState<IAssetItem>(emptyItem);
 
   const footerContent = (
     <div>
@@ -17,14 +26,18 @@ function ItemDialog({visible, setVisible}: any) {
 
   return(
     <>
-      <Dialog header="Item" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} footer={footerContent}>
-        <section className="grid gap-2 m-2">
+      <Dialog header="Item" visible={visible} onHide={() => setVisible(false)} footer={footerContent}>
+        <section className="flex flex-column gap-2">
           <label htmlFor="tagOfItem" className="col-6">Tag of Item</label>
-          <InputText id="tagOfItem" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-          {/* <Message severity="error" /> */}
+          <InputText id="tagOfItem" name="tagOfItem" autoFocus required className="col" value={value.tagOfItem} onChange={(e) => setValue(prev => ({...prev, tagOfItem: e.target.value}))} />
+          {
+            error?.tagOfItem && <Message severity="error" text={errorMsg.tagOfItem} />
+          }
           <label htmlFor="nameOfItem" className="col-6">Name of Item</label>
-          <InputText id="nameOfItem" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-          {/* <Message severity="error" /> */}
+          <InputText id="nameOfItem" name="nameOfItem" className="col" required value={value.nameOfItem} onChange={(e) => setValue(prev => ({...prev, tagOfItem: e.target.value}))} />
+          {
+            error?.nameOfItem && <Message severity="error" text={errorMsg.nameOfItem}/>
+          }
         </section>
       </Dialog>
     </>
