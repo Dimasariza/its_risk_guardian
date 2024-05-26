@@ -66,8 +66,17 @@ const AppMenuitem = (props: AppMenuItemProps) => {
         </CSSTransition>
     );
 
-    const text = (text: string) => <Link href="/" onClick={(e) => itemClick(e)}>{text}</Link>
-    const TreeMenu: any = (props: TreeProps) => <Tree {...props}></Tree>
+    const text = (text: string) => {
+        return(
+            <Link href="/" onClick={(e) => itemClick(e)}>{text}</Link>
+        )
+    }
+    
+    const TreeMenu: any = (props: TreeProps) => {
+        return(
+            <Tree {...props}></Tree>
+        )
+    }
 
     return (
         <TreeMenu content={text(item!.label)} style={treeStyles} className={classNames({'layout-root-menuitem': props.root, 'active-menuitem': active })}>
