@@ -3,15 +3,14 @@
 import { Card } from "primereact/card";
 import { TabMenu } from "primereact/tabmenu";
 import { useState } from "react";
-import AssetSummary from "../../assets/asset-register/tab-menu/asset-summary";
-import DamageMechanism from "./tab-menu/damage-mechanism";
-import ScreeningFactor from "./tab-menu/screaning-factor";
-import POF from "./tab-menu/pof";
 import COF from "./tab-menu/cof";
 import RiskAnalysis from "./tab-menu/risk-analysis";
 import InspectionPlanning from "./tab-menu/inspection-planning";
 import Summary from "./tab-menu/summary";
 import GeneralData from "./tab-menu/general-data";
+import DamageMechanism from "./tab-menu/damage-mechanism";
+import POFPlanDate from "./tab-menu/pof-plan-date";
+import POFRBIDate from "./tab-menu/pof-rbi-date";
 
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>("general_data");
@@ -30,15 +29,15 @@ function RiskBasedInspection() {
       }
     },
     { 
-      label: 'Screening Factor', 
+      label: 'POF RBI Date', 
       command: () => {
-          setTabActive("screening_factor");
+          setTabActive("pof_rbi_date");
       }
     },
     { 
-      label: 'POF', 
+      label: 'POF Plan Date', 
       command: () => {
-          setTabActive("pof");
+          setTabActive("pof_plan_date");
       }
     },
     { 
@@ -73,10 +72,10 @@ function RiskBasedInspection() {
       return <GeneralData />
       case "damage_mechanism":
       return <DamageMechanism />
-      case "screening_factor":
-      return <ScreeningFactor />
-      case "pof":
-      return <POF />
+      case "pof_rbi_date":
+      return <POFRBIDate />
+      case "pof_plan_date":
+      return <POFPlanDate />
       case "cof":
       return <COF />
       case "risk_analysis":
