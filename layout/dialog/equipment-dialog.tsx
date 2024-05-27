@@ -1,13 +1,14 @@
 "use client";
 
 import InputTypeText from "@/fragments/input-type-text";
-import { ItemService } from "@/service/ItemService";
+import { AssetEquipmentService } from "@/service/AssetEquipmentService";
+import { AssetItemService } from "@/service/AssetItemService";
 import { IAssetEquipment } from "@/types/assetEquipment";
 import { IAssetItem } from "@/types/assetItem";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
 import { useEffect, useRef, useState } from "react";
 
 function EquipmentDialog({visible, setVisible} : any) {
@@ -50,16 +51,16 @@ function EquipmentDialog({visible, setVisible} : any) {
 
   const validate = (formValue: any) => {
     const errors: IAssetItem | any = {};
-    if(!formValue.nameOfItem) {
-      errors.nameOfItem = "Name of Item is required!";
-    } else if (formValue.nameOfItem.length < 4) {
-      errors.nameOfItem = "Name of Item must be more than 4 characters";
+    if(!formValue.nameOfEquipment) {
+      errors.nameOfEquipment = "Name of Equipment is required!";
+    } else if (formValue.nameOfEquipment.length < 4) {
+      errors.nameOfEquipment = "Name of Equipment must be more than 4 characters";
     }
 
-    if(!formValue.tagOfItem) {
-      errors.tagOfItem = "Tag of Item is required!";
-    } else if (formValue.tagOfItem.length < 4) {
-      errors.tagOfItem = "Tag of Item must be more than 4 characters";
+    if(!formValue.tagOfEquipment) {
+      errors.tagOfEquipment = "Tag of Equipment is required!";
+    } else if (formValue.tagOfEquipment.length < 4) {
+      errors.tagOfEquipment = "Tag of Equipment must be more than 4 characters";
     }
 
     return errors;
@@ -67,7 +68,7 @@ function EquipmentDialog({visible, setVisible} : any) {
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({...prev, equipment: false}))} severity="danger" />
       <Button label="Save" icon="pi pi-times" onClick={handleSubmit}  severity="success" />
     </div>
   );
@@ -75,36 +76,47 @@ function EquipmentDialog({visible, setVisible} : any) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState<IAssetItem | any>([]);
 
+  const handleSelectItem = (e: any) => {
+    setValue(prev => ({...prev, itemId: e.value.id}));
+    setSelectedItem(e.value);
+  }
+
   useEffect(() => {
-    ItemService.getItem()
-    .then(res => {
-      setItems(res);
-    })
-    .catch(err => console.log(err))
-  }, []);
+    AssetItemService.getItem()
+    .then(res => setItems(res))
+    .catch(err => console.log(err));
+  }, [visible]);
 
   useEffect(() => {
     if(Object.keys(error).length === 0 && isSubmit) {
-      ItemService.postItem(value)
+      AssetEquipmentService.postItem(value)
       .then(res => {
         toast.current.show({ 
           severity: 'success', 
           summary: 'Data has been added', 
-          detail: `You add item ${res.nameOfItem}`
+          detail: `You add Equipment ${res.nameOfItem}`
         });
       })
       .catch(err => console.log(err))
       setValue(emptyEquipment);
-      setVisible(false);
+      setVisible((prev: any) => ({...prev, equipment: false}))
     }
   }, [error]);
 
   return (
     <>
-      <Dialog header="Equipment" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} footer={footerContent}>
-        <section className="grid gap-2 m-2">
-          <label htmlFor="equipment" className="col-6">Item</label>
-          <Dropdown id="equipment" value={selectedItem} onChange={(e) => setSelectedItem(e.value)} options={items} optionLabel="nameOfItem" placeholder="Select an Item" className="w-50" />
+      <Toast ref={toast} />
+      <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} onHide={() =>       setVisible((prev: any) => ({...prev, equipment: false}))} footer={footerContent}>
+        <section className="flex flex-column gap-2">
+          <label htmlFor="equipment">Item</label>
+          <Dropdown 
+            id="equipment"  
+            value={selectedItem} 
+            onChange={handleSelectItem} 
+            options={items} 
+            optionLabel="nameOfItem" 
+            placeholder="Select an Item" 
+          />
 
           {
             inputs.map((props: any, key:number) => (

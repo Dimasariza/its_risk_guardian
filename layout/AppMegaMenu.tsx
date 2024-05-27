@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { MegaMenu } from "primereact/megamenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ItemDialog from "./dialog/item-dialog";
 import EquipmentDialog from "./dialog/equipment-dialog";
 import ComponentDialog from "./dialog/component-dialog";
@@ -12,9 +12,11 @@ import { SiWebcomponentsdotorg } from "react-icons/si";
 
 function AppMegaMenu() {
   const router = useRouter();
-  const [visibleItem, setVisibleItem] = useState(false);
-  const [visibleEquipment, setVisibleEquipment] = useState(false);
-  const [visibleComponent, setVisibleComponent] = useState(false);
+  const [visible, setVisible] = useState({
+    item: false,
+    equipment: false,
+    component: false
+  });
     
   const items = [
     {
@@ -117,21 +119,21 @@ function AppMegaMenu() {
                 label: 'Item',
                 icon: 'pi pi-box',
                 command: () => {
-                  setVisibleItem(true)
+                  setVisible(prev => ({...prev, item: true}));
                 }
               }, 
               { 
                 label: 'Equipment', 
                 icon: 'pi pi-wrench',
                 command: () => {
-                  setVisibleEquipment(true)
+                  setVisible(prev => ({...prev, equipment: true}));
                 }
               }, 
               { 
                 label: 'Component', 
                 icon: (options: any) => <SiWebcomponentsdotorg {...options.iconProps} />,
                 command: () => {
-                  setVisibleComponent(true);
+                  setVisible(prev => ({...prev, component: true}));
                 }
               },
             ]
@@ -156,13 +158,12 @@ function AppMegaMenu() {
       ]
     }
   ];
-    
+
   return (
     <>
-    
-      <ItemDialog visible={visibleItem} setVisible={setVisibleItem} />
-      <EquipmentDialog visible={visibleEquipment} setVisible={setVisibleEquipment} />
-      <ComponentDialog visible={visibleComponent} setVisible={setVisibleComponent} />
+      <ItemDialog visible={visible.item} setVisible={setVisible} />
+      <EquipmentDialog visible={visible.equipment} setVisible={setVisible} />
+      <ComponentDialog visible={visible.component} setVisible={setVisible} />
       <MegaMenu model={items} breakpoint="960px" />
     </>
   )

@@ -6,21 +6,18 @@ import React, { useEffect, useContext } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { MenuContext } from './context/menucontext';
 import { AppMenuItemProps } from '@/types';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { TreeProps } from 'react-animated-tree';
 import Tree from 'react-animated-tree';
 import "./style.css";
 
 const treeStyles = {
-    // position: 'absolute',
-    // top: 40,
-    // left: 40,
-    // color: 'white',
     fill: 'rgba(0, 0, 0, 0.5)',
     width: '100%',
 }
 
 const AppMenuitem = (props: AppMenuItemProps) => {
+    const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { activeMenu, setActiveMenu } = useContext(MenuContext);
@@ -35,7 +32,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     };
 
     useEffect(() => {
-        onRouteChange(pathname);
+        // onRouteChange(pathname);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname, searchParams]);
 
@@ -54,38 +51,46 @@ const AppMenuitem = (props: AppMenuItemProps) => {
         // toggle active state
         if (item!.items) setActiveMenu(active ? (props.parentKey as string) : key);
         else setActiveMenu(key);
+
     };
 
     const subMenu = item!.items && item!.visible !== false && (
         <CSSTransition timeout={{ enter: 1000, exit: 450 }} classNames="layout-submenu" in={props.root ? true : active} key={item!.label}>
+            {/* <ul> */}
             <>
                 {item!.items.map((child, i) => {
                     return <AppMenuitem item={child} index={i} className={child.badgeClass} parentKey={key} key={child.label} />;
                 })}
             </>
+            {/* </ul> */}
         </CSSTransition>
     );
 
-    const text = (text: string) => {
+    const text = (value: any) => {
         return(
-            <Link href="/" onClick={(e) => itemClick(e)}>{text}</Link>
+            <span 
+                style={{cursor: 'pointer'}}
+                onClick={(e) => console.log("cliecked", value)}
+            >
+                {value!.label}
+            </span>
         )
     }
     
     const TreeMenu: any = (props: TreeProps) => {
         return(
-            <Tree {...props}></Tree>
+            <Tree  {...props}></Tree>
         )
     }
 
     return (
-        <TreeMenu content={text(item!.label)} style={treeStyles} className={classNames({'layout-root-menuitem': props.root, 'active-menuitem': active })}>
+        <TreeMenu content={text(item)} style={treeStyles} >
             {subMenu}
         </TreeMenu>
 
 
-        // <li className={classNames({ 'layout-root-menuitem': props.root, 'active-menuitem': active })}>
-        //      {props.root && item!.visible !== false && <div className="layout-menuitem-root-text">{item!.label}</div>}
+        // <li className={classNames({'layout-root-menuitem': props.root, 'active-menuitem': active })}>
+        //      {/* {props.root && item!.visible !== false && <div className="layout-menuitem-root-text">{item!.label}</div>} */}
         //      {(!item!.to || item!.items) && item!.visible !== false ? (
         //         <a href={item!.url} onClick={(e) => itemClick(e)}  className={classNames(item!.class, 'p-ripple')} target={item!.target} tabIndex={0}>
         //             <i  className={classNames('layout-menuitem-icon', item!.icon)}></i>
@@ -96,11 +101,10 @@ const AppMenuitem = (props: AppMenuItemProps) => {
         //     ) : null}
 
         //     {item!.to && !item!.items && item!.visible !== false ? (
-        //         <Link href={item!.to} onClick={(e) => itemClick(e)} replace={item!.replaceUrl} target={item!.target} className={classNames(item!.class, 'p-ripple', { 'active-route': isActiveRoute })} tabIndex={0}>
+        //         <Link href={item!.to}  replace={item!.replaceUrl} target={item!.target} className={classNames(item!.class, 'p-ripple', { 'active-route': isActiveRoute })} tabIndex={0}>
         //             <i className={classNames('layout-menuitem-icon', item!.icon)}></i>
         //             <span className="layout-menuitem-text w-full">{item!.label}</span>
-        //             {item!.items && <i className="pi pi-fw pi-angle-down"></i>
-        //             }
+        //             {item!.items && <i className="pi pi-fw pi-angle-down"></i>}
         //             <Ripple />
         //         </Link>
         //     ) : null}

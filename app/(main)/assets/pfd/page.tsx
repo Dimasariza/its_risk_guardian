@@ -5,6 +5,7 @@ import Tree from 'react-animated-tree';
 import "./style.css";
 import React, { ReactPropTypes } from 'react';
 import { TreeProps } from 'react-animated-tree';
+import Link from 'next/link';
 
 interface TreePropsMenu {
   content: any
@@ -26,7 +27,7 @@ const typeStyles = {
 }
 
 const PFD = () => {
-  const text = (text: string) => <a href="">{text}</a>
+  const text = (text: string) => <Link href={{pathname: "/assets/pfd", query: {name: text}}} >{text}</Link>
   const TreeMenu: any = (props: TreeProps) => <Tree {...props}></Tree>
 
   return (
@@ -35,7 +36,7 @@ const PFD = () => {
         <TreeMenu content="Subtree With Children" >
           <TreeMenu content="Child 1"></TreeMenu>
           <TreeMenu content="sub-subtree with children">
-            <TreeMenu content="child 1" style={{ color: '#63b1de' }} />
+            <TreeMenu content={text("child 1")} style={{ color: '#63b1de' }} />
             <TreeMenu content="child 2" style={{ color: '#63b1de' }} />
             <TreeMenu content="child 3" style={{ color: '#63b1de' }} />
           </TreeMenu>

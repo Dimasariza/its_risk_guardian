@@ -97,7 +97,7 @@ function Documents() {
 
   return(
     <>
-      <h5>Documents</h5>
+      <h5>DOCUMENTS</h5>
       {/* <section className="grid gap-2 mx-2">
         <label htmlFor="pfd" className="col-6">PFD</label>
         <InputText id="pfd" className="col" value={value} onChange={(e) => setValue(e.target.value)} />

@@ -1,7 +1,7 @@
 "use client";
 
 import InputTypeText from "@/fragments/input-type-text";
-import { ItemService } from "@/service/ItemService";
+import { AssetItemService } from "@/service/AssetItemService";
 import { IAssetItem } from "@/types/assetItem";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
@@ -65,14 +65,14 @@ function ItemDialog({visible, setVisible}: any) {
   
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({...prev, item: false}))} severity="danger" />
       <Button label="Save" icon="pi pi-times" onClick={handleSubmit}  severity="success" />
     </div>
   );
   
   useEffect(() => {
     if(Object.keys(error).length === 0 && isSubmit) {
-      ItemService.postItem(value)
+      AssetItemService.postItem(value)
       .then(res => {
         toast.current.show({ 
           severity: 'success', 
@@ -82,14 +82,14 @@ function ItemDialog({visible, setVisible}: any) {
       })
       .catch(err => console.log(err))
       setValue(emptyItem);
-      setVisible(false);
+      setVisible((prev: any) => ({...prev, item: false}));
     }
   }, [error]);
 
   return(
     <>
       <Toast ref={toast} />
-      <Dialog header="Item" visible={visible} onHide={() => setVisible(false)} footer={footerContent}>
+      <Dialog header="Item" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({...prev, item: false}))} footer={footerContent}>
         <section className="flex flex-column gap-2">
           {
             inputs.map((props: any, key:number) => (

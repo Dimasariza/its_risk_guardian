@@ -2,13 +2,13 @@
   "items": [
     {
       "id": "dfec",
-      "tagOfItem": "Tag of item no 1",
-      "nameOfItem": "Name of item no 1"
+      "tagOfItem": "Tag of item no 1a",
+      "nameOfItem": "Name of item no 1a"
     },
     {
       "id": "5d38",
-      "tagOfItem": "Tag of item no 1",
-      "nameOfItem": "Name of item no 1"
+      "tagOfItem": "Tag of item no 1b",
+      "nameOfItem": "Name of item no 1b"
     },
     {
       "id": "a5b5",
@@ -21,29 +21,46 @@
       "nameOfItem": "Name of item no 3"
     },
     {
-      "id": "14a8",
+      "id": "5236",
       "tagOfItem": "Tag of Item no 4",
       "nameOfItem": "Name of Item no 4"
     },
     {
-      "id": "8de2",
+      "id": "94ce",
       "tagOfItem": "Tag of Item no 5",
       "nameOfItem": "Name of Item no 5"
     },
     {
-      "id": "d432",
+      "id": "bf6b",
       "tagOfItem": "Tag of Item no 6",
       "nameOfItem": "Name of Item no 6"
+    }
+  ],
+  "equipments": [
+    {
+      "id": "4d1a",
+      "tagOfEquipment": "Tag of Equipment no 1",
+      "nameOfEquipment": "Name of Equipment no 1",
+      "itemId": "a5b5"
     },
     {
-      "id": "f42e",
-      "tagOfItem": "Tag of Item no 7",
-      "nameOfItem": "Name of Item no 7"
+      "id": "49d6",
+      "tagOfEquipment": "Tag of Equipment no 2",
+      "nameOfEquipment": "Name of Equipment no 2",
+      "itemId": "a5b5"
     },
     {
-      "id": "abb7",
-      "tagOfItem": "Tag of Item no 8",
-      "nameOfItem": "Name of Item no 8"
+      "id": "a909",
+      "tagOfEquipment": "Tag of Equipment no 3",
+      "nameOfEquipment": "Name of Equipment no 3",
+      "itemId": "bf6b"
+    }
+  ],
+  "components": [
+    {
+      "id": "f061",
+      "tagOfComponent": "Tag of component 10",
+      "nameOfComponent": "Name of component 10"
     }
   ]
 }

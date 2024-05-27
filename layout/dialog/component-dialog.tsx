@@ -1,47 +1,139 @@
 "use client";
 
+import InputTypeText from "@/fragments/input-type-text";
+import { AssetComponentService } from "@/service/AssetComponentService";
+import { AssetEquipmentService } from "@/service/AssetEquipmentService";
+import { IAssetComponent } from "@/types/assetComponent";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { Message } from "primereact/message";
-import { useState } from "react";
+import { Toast } from "primereact/toast";
+import { useEffect, useRef, useState } from "react";
 
 function ComponentDialog({visible, setVisible}: any) {
-  const [value, setValue] = useState('');
+  const emptyComponent: IAssetComponent = {
+    tagOfComponent: "",
+    nameOfComponent: ""
+  }
+
+  const toast = useRef<any>(null);
+  const [value, setValue] = useState<IAssetComponent>(emptyComponent);
+  const [error, setError] = useState<IAssetComponent>(emptyComponent);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
+
+  const inputs = [
+    { 
+      name: "tagOfComponent",
+      type: "text",
+      placeholder: "Tag of Component",
+      label: "Tag of Component",
+      required: true,
+      autoFocus: true,
+      className: "col",
+    },
+    { 
+      name: "nameOfComponent",
+      type: "text",
+      placeholder: "Name Of Component",
+      label: "Name of Component",
+      required: true,
+      autoFocus: false,
+      className: "col",
+    }
+  ];
+  
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setError(validate(value));
+    setIsSubmit(true);
+  }
+
+  const validate = (formValue: any) => {
+    const errors: IAssetComponent | any = {};
+    if(!formValue.nameOfComponent) {
+      errors.nameOfComponent = "Name of Component is required!";
+    } else if (formValue.nameOfComponent.length < 4) {
+      errors.nameOfComponent = "Name of Component must be more than 4 characters";
+    }
+
+    if(!formValue.tagOfComponent) {
+      errors.tagOfComponent = "Tag of Component is required!";
+    } else if (formValue.tagOfComponent.length < 4) {
+      errors.tagOfComponent = "Tag of Component must be more than 4 characters";
+    }
+
+    return errors;
+  }
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
-      <Button label="Save" icon="pi pi-times" onClick={() => setVisible(false)}  severity="success" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({...prev, component: false}))} severity="danger" />
+      <Button label="Save" icon="pi pi-times" onClick={handleSubmit}  severity="success" />
     </div>
   );
 
-  const [selectedCity, setSelectedCity] = useState(null);
-  const cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-  ];
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [items, setItems] = useState<IAssetComponent | any>([]);
+
+  const handleSelectItem = (e: any) => {
+    setValue(prev => ({...prev, equipmentId: e.value.id}));
+    setSelectedItem(e.value);
+  }
+
+  useEffect(() => {
+    AssetEquipmentService.getItem()
+    .then(res => setItems(res))
+    .catch(err => {
+      toast.current.show({ 
+        severity: 'danger', 
+        summary: 'Error', 
+        detail: `Failed to get Data.`
+      });
+    });
+  }, [visible]);
+
+  useEffect(() => {
+    if(Object.keys(error).length === 0 && isSubmit) {
+      AssetComponentService.postItem(value)
+      .then(res => {
+        toast.current.show({ 
+          severity: 'success', 
+          summary: 'Data has been added', 
+          detail: `You add Component ${res.nameOfItem}`
+        });
+      })
+      .catch(err => console.log(err))
+      setValue(emptyComponent);
+      setVisible((prev: any) => ({...prev, component: false}));
+    }
+  }, [error]);
 
   return(
     <>
-      <Dialog header="Component" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} footer={footerContent}>
-        <section className="grid gap-2 m-2">
-          <label htmlFor="equipment" className="col-6">Equipment</label>
-          <Dropdown id="equipment" value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" 
-            placeholder="Select a City" className="w-50" />
-          <label htmlFor="tagOfComponent" className="col-6">Tag of Component</label>
-          <InputText id="tagOfComponent" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-          {/* <Message severity="error" /> */}
-          <label htmlFor="nameOfComponent" className="col-6">Name of Component</label>
-          <InputText id="nameOfComponent" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-          {/* <Message severity="error" /> */}
-          <label htmlFor="typeOfComponent" className="col-6">Type Of Component</label>
-          <InputText id="typeOfComponent" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-          {/* <Message severity="error" /> */}
+      <Toast ref={toast} />
+      <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({...prev, component: false}))} footer={footerContent}>
+        <section className="flex flex-column gap-2">
+          <label htmlFor="equipment">Equipment</label>
+          <Dropdown 
+            id="equipment"  
+            value={selectedItem} 
+            onChange={handleSelectItem} 
+            options={items} 
+            optionLabel="nameOfEquipment" 
+            placeholder="Select an Equipment" 
+          />
+
+          {
+            inputs.map((props: any, key:number) => (
+              <InputTypeText 
+                props={props} 
+                key={key} 
+                value={value} 
+                setValue={setValue} 
+                errorMessage={error[props.name]} 
+              />
+            ))
+          }
         </section>
       </Dialog>
     </>
