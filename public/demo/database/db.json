@@ -1,5 +1,49 @@
 {
-    "items" : [
-        { "data" : "Test"   }
-    ]   
+  "items": [
+    {
+      "id": "dfec",
+      "tagOfItem": "Tag of item no 1",
+      "nameOfItem": "Name of item no 1"
+    },
+    {
+      "id": "5d38",
+      "tagOfItem": "Tag of item no 1",
+      "nameOfItem": "Name of item no 1"
+    },
+    {
+      "id": "a5b5",
+      "tagOfItem": "Tag of Item no 2",
+      "nameOfItem": "Name of Item no 2"
+    },
+    {
+      "id": "445a",
+      "tagOfItem": "Tag of item no 3",
+      "nameOfItem": "Name of item no 3"
+    },
+    {
+      "id": "14a8",
+      "tagOfItem": "Tag of Item no 4",
+      "nameOfItem": "Name of Item no 4"
+    },
+    {
+      "id": "8de2",
+      "tagOfItem": "Tag of Item no 5",
+      "nameOfItem": "Name of Item no 5"
+    },
+    {
+      "id": "d432",
+      "tagOfItem": "Tag of Item no 6",
+      "nameOfItem": "Name of Item no 6"
+    },
+    {
+      "id": "f42e",
+      "tagOfItem": "Tag of Item no 7",
+      "nameOfItem": "Name of Item no 7"
+    },
+    {
+      "id": "abb7",
+      "tagOfItem": "Tag of Item no 8",
+      "nameOfItem": "Name of Item no 8"
+    }
+  ]
 }

@@ -1,10 +1,12 @@
 "use client";
 
 import InputTypeText from "@/fragments/input-type-text";
+import { ItemService } from "@/service/ItemService";
 import { IAssetItem } from "@/types/assetItem";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import React, { useEffect, useState } from "react";
+import { Toast } from "primereact/toast";
+import React, { useEffect, useRef, useState } from "react";
 
 function ItemDialog({visible, setVisible}: any) {
   const emptyItem: IAssetItem = {
@@ -12,6 +14,7 @@ function ItemDialog({visible, setVisible}: any) {
     nameOfItem: ""
   }
 
+  const toast = useRef<any>(null);
   const [value, setValue] = useState<IAssetItem>(emptyItem);
   const [error, setError] = useState<IAssetItem>(emptyItem);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -69,14 +72,23 @@ function ItemDialog({visible, setVisible}: any) {
   
   useEffect(() => {
     if(Object.keys(error).length === 0 && isSubmit) {
+      ItemService.postItem(value)
+      .then(res => {
+        toast.current.show({ 
+          severity: 'success', 
+          summary: 'Data has been added', 
+          detail: `You add item ${res.nameOfItem}`
+        });
+      })
+      .catch(err => console.log(err))
       setValue(emptyItem);
       setVisible(false);
-      console.log(value)
     }
   }, [error]);
 
   return(
     <>
+      <Toast ref={toast} />
       <Dialog header="Item" visible={visible} onHide={() => setVisible(false)} footer={footerContent}>
         <section className="flex flex-column gap-2">
           {
