@@ -1,14 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppMenuitem from './AppMenuitem';
 import { LayoutContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
 import Link from 'next/link';
 import { AppMenuItem } from '@/types';
+import { MenuItemService } from '@/service/MenuItemService';
 
 const AppMenu = () => {
     const { layoutConfig } = useContext(LayoutContext);
+    const [menuItems, setMenuItems] = useState<AppMenuItem[]>([]);
+
+    useEffect(() => {
+        MenuItemService.getAllAssets()
+        .then(res => console.log(res))
+    }, [])
 
     const model: AppMenuItem[] = [
         {
