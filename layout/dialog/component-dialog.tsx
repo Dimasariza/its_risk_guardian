@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import InputTypeText from "@/fragments/input-type-text";
-import { AssetComponentService } from "@/service/AssetComponentService";
-import { AssetEquipmentService } from "@/service/AssetEquipmentService";
-import { IAssetComponent } from "@/types/assetComponent";
-import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
-import { Dropdown } from "primereact/dropdown";
-import { Toast } from "primereact/toast";
-import { useEffect, useRef, useState } from "react";
+import InputTypeText from '@/fragments/input-type-text';
+import { AssetComponentService } from '@/service/AssetComponentService';
+import { AssetEquipmentService } from '@/service/AssetEquipmentService';
+import { IAssetComponent } from '@/types/assetComponent';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { Dropdown } from 'primereact/dropdown';
+import { Toast } from 'primereact/toast';
+import { useEffect, useRef, useState } from 'react';
 
-function ComponentDialog({visible, setVisible}: any) {
+function ComponentDialog({ visible, setVisible }: any) {
   const emptyComponent: IAssetComponent = {
-    tagOfComponent: "",
-    nameOfComponent: ""
-  }
+    tagOfComponent: '',
+    nameOfComponent: ''
+  };
 
   const toast = useRef<any>(null);
   const [value, setValue] = useState<IAssetComponent>(emptyComponent);
@@ -22,53 +22,53 @@ function ComponentDialog({visible, setVisible}: any) {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const inputs = [
-    { 
-      name: "tagOfComponent",
-      type: "text",
-      placeholder: "Tag of Component",
-      label: "Tag of Component",
+    {
+      name: 'tagOfComponent',
+      type: 'text',
+      placeholder: 'Tag of Component',
+      label: 'Tag of Component',
       required: true,
       autoFocus: true,
-      className: "col",
+      className: 'col'
     },
-    { 
-      name: "nameOfComponent",
-      type: "text",
-      placeholder: "Name Of Component",
-      label: "Name of Component",
+    {
+      name: 'nameOfComponent',
+      type: 'text',
+      placeholder: 'Name Of Component',
+      label: 'Name of Component',
       required: true,
       autoFocus: false,
-      className: "col",
+      className: 'col'
     }
   ];
-  
+
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(validate(value));
     setIsSubmit(true);
-  }
+  };
 
   const validate = (formValue: any) => {
     const errors: IAssetComponent | any = {};
-    if(!formValue.nameOfComponent) {
-      errors.nameOfComponent = "Name of Component is required!";
+    if (!formValue.nameOfComponent) {
+      errors.nameOfComponent = 'Name of Component is required!';
     } else if (formValue.nameOfComponent.length < 4) {
-      errors.nameOfComponent = "Name of Component must be more than 4 characters";
+      errors.nameOfComponent = 'Name of Component must be more than 4 characters';
     }
 
-    if(!formValue.tagOfComponent) {
-      errors.tagOfComponent = "Tag of Component is required!";
+    if (!formValue.tagOfComponent) {
+      errors.tagOfComponent = 'Tag of Component is required!';
     } else if (formValue.tagOfComponent.length < 4) {
-      errors.tagOfComponent = "Tag of Component must be more than 4 characters";
+      errors.tagOfComponent = 'Tag of Component must be more than 4 characters';
     }
 
     return errors;
-  }
+  };
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({...prev, component: false}))} severity="danger" />
-      <Button label="Save" icon="pi pi-times" onClick={handleSubmit}  severity="success" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({ ...prev, component: false }))} severity="danger" />
+      <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
     </div>
   );
 
@@ -76,68 +76,53 @@ function ComponentDialog({visible, setVisible}: any) {
   const [items, setItems] = useState<IAssetComponent | any>([]);
 
   const handleSelectItem = (e: any) => {
-    setValue(prev => ({...prev, equipmentId: e.value.id}));
+    setValue((prev) => ({ ...prev, equipmentId: e.value.id }));
     setSelectedItem(e.value);
-  }
+  };
 
   useEffect(() => {
     AssetEquipmentService.getItem()
-    .then(res => setItems(res))
-    .catch(err => {
-      toast.current.show({ 
-        severity: 'danger', 
-        summary: 'Error', 
-        detail: `Failed to get Data.`
+      .then((res) => setItems(res))
+      .catch((err) => {
+        toast.current.show({
+          severity: 'danger',
+          summary: 'Error',
+          detail: `Failed to get Data.`
+        });
       });
-    });
   }, [visible]);
 
   useEffect(() => {
-    if(Object.keys(error).length === 0 && isSubmit) {
+    if (Object.keys(error).length === 0 && isSubmit) {
       AssetComponentService.postItem(value)
-      .then(res => {
-        toast.current.show({ 
-          severity: 'success', 
-          summary: 'Data has been added', 
-          detail: `You add Component ${res.nameOfItem}`
-        });
-      })
-      .catch(err => console.log(err))
+        .then((res) => {
+          toast.current.show({
+            severity: 'success',
+            summary: 'Data has been added',
+            detail: `You add Component ${res.nameOfItem}`
+          });
+        })
+        .catch((err) => console.log(err));
       setValue(emptyComponent);
-      setVisible((prev: any) => ({...prev, component: false}));
+      setVisible((prev: any) => ({ ...prev, component: false }));
     }
   }, [error]);
 
-  return(
+  return (
     <>
       <Toast ref={toast} />
-      <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({...prev, component: false}))} footer={footerContent}>
+      <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, component: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <label htmlFor="equipment">Equipment</label>
-          <Dropdown 
-            id="equipment"  
-            value={selectedItem} 
-            onChange={handleSelectItem} 
-            options={items} 
-            optionLabel="nameOfEquipment" 
-            placeholder="Select an Equipment" 
-          />
+          <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfEquipment" placeholder="Select an Equipment" />
 
-          {
-            inputs.map((props: any, key:number) => (
-              <InputTypeText 
-                props={props} 
-                key={key} 
-                value={value} 
-                setValue={setValue} 
-                errorMessage={error[props.name]} 
-              />
-            ))
-          }
+          {inputs.map((props: any, key: number) => (
+            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+          ))}
         </section>
       </Dialog>
     </>
-  )
+  );
 }
 
 export default ComponentDialog;

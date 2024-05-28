@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import InputTypeText from "@/fragments/input-type-text";
-import { AssetItemService } from "@/service/AssetItemService";
-import { IAssetItem } from "@/types/assetItem";
-import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
-import { Toast } from "primereact/toast";
-import React, { useEffect, useRef, useState } from "react";
+import InputTypeText from '@/fragments/input-type-text';
+import { AssetItemService } from '@/service/AssetItemService';
+import { IAssetItem } from '@/types/assetItem';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { Toast } from 'primereact/toast';
+import React, { useEffect, useRef, useState } from 'react';
 
-function ItemDialog({visible, setVisible}: any) {
+function ItemDialog({ visible, setVisible }: any) {
   const emptyItem: IAssetItem = {
-    tagOfItem: "",
-    nameOfItem: ""
-  }
+    tagOfItem: '',
+    nameOfItem: ''
+  };
 
   const toast = useRef<any>(null);
   const [value, setValue] = useState<IAssetItem>(emptyItem);
@@ -20,23 +20,23 @@ function ItemDialog({visible, setVisible}: any) {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const inputs = [
-    { 
-      name: "tagOfItem",
-      type: "text",
-      placeholder: "Tag of Item",
-      label: "Tag of Item",
+    {
+      name: 'tagOfItem',
+      type: 'text',
+      placeholder: 'Tag of Item',
+      label: 'Tag of Item',
       required: true,
       autoFocus: true,
-      className: "col",
+      className: 'col'
     },
-    { 
-      name: "nameOfItem",
-      type: "text",
-      placeholder: "Name Of Item",
-      label: "Name of Item",
+    {
+      name: 'nameOfItem',
+      type: 'text',
+      placeholder: 'Name Of Item',
+      label: 'Name of Item',
       required: true,
       autoFocus: false,
-      className: "col",
+      className: 'col'
     }
   ];
 
@@ -44,68 +44,60 @@ function ItemDialog({visible, setVisible}: any) {
     e.preventDefault();
     setError(validate(value));
     setIsSubmit(true);
-  }
+  };
 
   const validate = (formValue: any) => {
     const errors: IAssetItem | any = {};
-    if(!formValue.nameOfItem) {
-      errors.nameOfItem = "Name of Item is required!";
+    if (!formValue.nameOfItem) {
+      errors.nameOfItem = 'Name of Item is required!';
     } else if (formValue.nameOfItem.length < 4) {
-      errors.nameOfItem = "Name of Item must be more than 4 characters";
+      errors.nameOfItem = 'Name of Item must be more than 4 characters';
     }
 
-    if(!formValue.tagOfItem) {
-      errors.tagOfItem = "Tag of Item is required!";
+    if (!formValue.tagOfItem) {
+      errors.tagOfItem = 'Tag of Item is required!';
     } else if (formValue.tagOfItem.length < 4) {
-      errors.tagOfItem = "Tag of Item must be more than 4 characters";
+      errors.tagOfItem = 'Tag of Item must be more than 4 characters';
     }
 
     return errors;
-  }
-  
+  };
+
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({...prev, item: false}))} severity="danger" />
-      <Button label="Save" icon="pi pi-times" onClick={handleSubmit}  severity="success" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({ ...prev, item: false }))} severity="danger" />
+      <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
     </div>
   );
-  
+
   useEffect(() => {
-    if(Object.keys(error).length === 0 && isSubmit) {
+    if (Object.keys(error).length === 0 && isSubmit) {
       AssetItemService.postItem(value)
-      .then(res => {
-        toast.current.show({ 
-          severity: 'success', 
-          summary: 'Data has been added', 
-          detail: `You add item ${res.nameOfItem}`
-        });
-      })
-      .catch(err => console.log(err))
+        .then((res) => {
+          toast.current.show({
+            severity: 'success',
+            summary: 'Data has been added',
+            detail: `You add item ${res.nameOfItem}`
+          });
+        })
+        .catch((err) => console.log(err));
       setValue(emptyItem);
-      setVisible((prev: any) => ({...prev, item: false}));
+      setVisible((prev: any) => ({ ...prev, item: false }));
     }
   }, [error]);
 
-  return(
+  return (
     <>
       <Toast ref={toast} />
-      <Dialog header="Item" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({...prev, item: false}))} footer={footerContent}>
+      <Dialog header="Item" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, item: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
-          {
-            inputs.map((props: any, key:number) => (
-              <InputTypeText 
-                props={props} 
-                key={key} 
-                value={value} 
-                setValue={setValue} 
-                errorMessage={error[props.name]} 
-              />
-            ))
-          }
+          {inputs.map((props: any, key: number) => (
+            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+          ))}
         </section>
       </Dialog>
     </>
-  )
+  );
 }
 
 export default ItemDialog;

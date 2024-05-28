@@ -1,6 +1,5 @@
 declare namespace DataDemo {
-    interface Company {
-        name: string
-    }
-
+  interface Company {
+    name: string;
+  }
 }

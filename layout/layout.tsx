@@ -20,138 +20,138 @@ import { MegaMenu } from 'primereact/megamenu';
 import AppMegaMenu from './AppMegaMenu';
 
 const Layout = ({ children }: ChildContainerProps) => {
-    const route = usePathname();
-    const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
-    const { setRipple } = useContext(PrimeReactContext);
-    const topbarRef = useRef<AppTopbarRef>(null);
-    const sidebarRef = useRef<HTMLDivElement>(null);
-    const [bindMenuOutsideClickListener, unbindMenuOutsideClickListener] = useEventListener({
-        type: 'click',
-        listener: (event) => {
-            const isOutsideClicked = !(
-                sidebarRef.current?.isSameNode(event.target as Node) ||
-                sidebarRef.current?.contains(event.target as Node) ||
-                topbarRef.current?.menubutton?.isSameNode(event.target as Node) ||
-                topbarRef.current?.menubutton?.contains(event.target as Node)
-            );
+  const route = usePathname();
+  const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
+  const { setRipple } = useContext(PrimeReactContext);
+  const topbarRef = useRef<AppTopbarRef>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const [bindMenuOutsideClickListener, unbindMenuOutsideClickListener] = useEventListener({
+    type: 'click',
+    listener: (event) => {
+      const isOutsideClicked = !(
+        sidebarRef.current?.isSameNode(event.target as Node) ||
+        sidebarRef.current?.contains(event.target as Node) ||
+        topbarRef.current?.menubutton?.isSameNode(event.target as Node) ||
+        topbarRef.current?.menubutton?.contains(event.target as Node)
+      );
 
-            if (isOutsideClicked) {
-                hideMenu();
-            }
-        }
-    });
-
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-    useEffect(() => {
+      if (isOutsideClicked) {
         hideMenu();
+      }
+    }
+  });
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    hideMenu();
+    hideProfileMenu();
+  }, [pathname, searchParams]);
+
+  const [bindProfileMenuOutsideClickListener, unbindProfileMenuOutsideClickListener] = useEventListener({
+    type: 'click',
+    listener: (event) => {
+      const isOutsideClicked = !(
+        topbarRef.current?.topbarmenu?.isSameNode(event.target as Node) ||
+        topbarRef.current?.topbarmenu?.contains(event.target as Node) ||
+        topbarRef.current?.topbarmenubutton?.isSameNode(event.target as Node) ||
+        topbarRef.current?.topbarmenubutton?.contains(event.target as Node)
+      );
+
+      if (isOutsideClicked) {
         hideProfileMenu();
-    }, [pathname, searchParams]);
+      }
+    }
+  });
 
-    const [bindProfileMenuOutsideClickListener, unbindProfileMenuOutsideClickListener] = useEventListener({
-        type: 'click',
-        listener: (event) => {
-            const isOutsideClicked = !(
-                topbarRef.current?.topbarmenu?.isSameNode(event.target as Node) ||
-                topbarRef.current?.topbarmenu?.contains(event.target as Node) ||
-                topbarRef.current?.topbarmenubutton?.isSameNode(event.target as Node) ||
-                topbarRef.current?.topbarmenubutton?.contains(event.target as Node)
-            );
+  const hideMenu = () => {
+    setLayoutState((prevLayoutState: LayoutState) => ({
+      ...prevLayoutState,
+      overlayMenuActive: false,
+      staticMenuMobileActive: false,
+      menuHoverActive: false
+    }));
+    unbindMenuOutsideClickListener();
+    unblockBodyScroll();
+  };
 
-            if (isOutsideClicked) {
-                hideProfileMenu();
-            }
-        }
-    });
+  const hideProfileMenu = () => {
+    setLayoutState((prevLayoutState: LayoutState) => ({
+      ...prevLayoutState,
+      profileSidebarVisible: false
+    }));
+    unbindProfileMenuOutsideClickListener();
+  };
 
-    const hideMenu = () => {
-        setLayoutState((prevLayoutState: LayoutState) => ({
-            ...prevLayoutState,
-            overlayMenuActive: false,
-            staticMenuMobileActive: false,
-            menuHoverActive: false
-        }));
-        unbindMenuOutsideClickListener();
-        unblockBodyScroll();
-    };
+  const blockBodyScroll = (): void => {
+    if (document.body.classList) {
+      document.body.classList.add('blocked-scroll');
+    } else {
+      document.body.className += ' blocked-scroll';
+    }
+  };
 
-    const hideProfileMenu = () => {
-        setLayoutState((prevLayoutState: LayoutState) => ({
-            ...prevLayoutState,
-            profileSidebarVisible: false
-        }));
-        unbindProfileMenuOutsideClickListener();
-    };
+  const unblockBodyScroll = (): void => {
+    if (document.body.classList) {
+      document.body.classList.remove('blocked-scroll');
+    } else {
+      document.body.className = document.body.className.replace(new RegExp('(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    }
+  };
 
-    const blockBodyScroll = (): void => {
-        if (document.body.classList) {
-            document.body.classList.add('blocked-scroll');
-        } else {
-            document.body.className += ' blocked-scroll';
-        }
-    };
+  useEffect(() => {
+    if (layoutState.overlayMenuActive || layoutState.staticMenuMobileActive) {
+      bindMenuOutsideClickListener();
+    }
 
-    const unblockBodyScroll = (): void => {
-        if (document.body.classList) {
-            document.body.classList.remove('blocked-scroll');
-        } else {
-            document.body.className = document.body.className.replace(new RegExp('(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
-        }
-    };
+    layoutState.staticMenuMobileActive && blockBodyScroll();
+  }, [layoutState.overlayMenuActive, layoutState.staticMenuMobileActive]);
 
-    useEffect(() => {
-        if (layoutState.overlayMenuActive || layoutState.staticMenuMobileActive) {
-            bindMenuOutsideClickListener();
-        }
+  useEffect(() => {
+    if (layoutState.profileSidebarVisible) {
+      bindProfileMenuOutsideClickListener();
+    }
+  }, [layoutState.profileSidebarVisible]);
 
-        layoutState.staticMenuMobileActive && blockBodyScroll();
-    }, [layoutState.overlayMenuActive, layoutState.staticMenuMobileActive]);
+  useUnmountEffect(() => {
+    unbindMenuOutsideClickListener();
+    unbindProfileMenuOutsideClickListener();
+  });
 
-    useEffect(() => {
-        if (layoutState.profileSidebarVisible) {
-            bindProfileMenuOutsideClickListener();
-        }
-    }, [layoutState.profileSidebarVisible]);
+  const containerClass = classNames('layout-wrapper', {
+    'layout-overlay': layoutConfig.menuMode === 'overlay',
+    'layout-static': layoutConfig.menuMode === 'static',
+    'layout-static-inactive': layoutState.staticMenuDesktopInactive && layoutConfig.menuMode === 'static',
+    'layout-overlay-active': layoutState.overlayMenuActive,
+    'layout-mobile-active': layoutState.staticMenuMobileActive,
+    'p-input-filled': layoutConfig.inputStyle === 'filled',
+    'p-ripple-disabled': !layoutConfig.ripple
+  });
 
-    useUnmountEffect(() => {
-        unbindMenuOutsideClickListener();
-        unbindProfileMenuOutsideClickListener();
-    });
+  const breadItems = [{ label: 'Assets' }, { label: 'Component' }, { label: 'Component-Detail' }, { label: 'Data' }, { label: 'General' }];
+  const home = { icon: 'pi pi-home', url: 'https://primereact.org' };
 
-    const containerClass = classNames('layout-wrapper', {
-        'layout-overlay': layoutConfig.menuMode === 'overlay',
-        'layout-static': layoutConfig.menuMode === 'static',
-        'layout-static-inactive': layoutState.staticMenuDesktopInactive && layoutConfig.menuMode === 'static',
-        'layout-overlay-active': layoutState.overlayMenuActive,
-        'layout-mobile-active': layoutState.staticMenuMobileActive,
-        'p-input-filled': layoutConfig.inputStyle === 'filled',
-        'p-ripple-disabled': !layoutConfig.ripple
-    });
-
-    const breadItems = [{ label: 'Assets' }, { label: 'Component' }, { label: 'Component-Detail' }, { label: 'Data' }, { label: 'General' }];
-    const home = { icon: 'pi pi-home', url: 'https://primereact.org' }
-
-    return (
-        <React.Fragment>
-            <div className={containerClass}>
-                <AppTopbar ref={topbarRef} />
-                <div className="fixed w-full" style={{top: "5rem", zIndex: 999}}>
-                    <AppMegaMenu />
-                </div>
-                <div ref={sidebarRef} className="layout-sidebar" style={{zIndex: 100}}>
-                    <AppSidebar />
-                </div>
-                <div className="layout-main-container">
-                    {/* <div className="mb-2 gap-2 flex flex-column">
+  return (
+    <React.Fragment>
+      <div className={containerClass}>
+        <AppTopbar ref={topbarRef} />
+        <div className="fixed w-full" style={{ top: '5rem', zIndex: 999 }}>
+          <AppMegaMenu />
+        </div>
+        <div ref={sidebarRef} className="layout-sidebar" style={{ zIndex: 100 }}>
+          <AppSidebar />
+        </div>
+        <div className="layout-main-container">
+          {/* <div className="mb-2 gap-2 flex flex-column">
                     </div> */}
-                    <div className="layout-main">{children}</div>
-                    <AppFooter />
-                </div>
-                <AppConfig />
-                <div className="layout-mask"></div>
-            </div>
-        </React.Fragment>
-    );
+          <div className="layout-main">{children}</div>
+          <AppFooter />
+        </div>
+        <AppConfig />
+        <div className="layout-mask"></div>
+      </div>
+    </React.Fragment>
+  );
 };
 
 export default Layout;

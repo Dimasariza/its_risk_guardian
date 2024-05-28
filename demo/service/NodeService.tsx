@@ -1,35 +1,35 @@
 import { TreeNode } from 'primereact/treenode';
 
 export const NodeService = {
-    getFiles() {
-        return fetch(process.env.PUBLIC_URL + '/demo/data/files.json', {
-            headers: { 'Cache-Control': 'no-cache' }
-        })
-            .then((res) => res.json())
-            .then((d) => d.data as TreeNode[]);
-    },
+  getFiles() {
+    return fetch(process.env.PUBLIC_URL + '/demo/data/files.json', {
+      headers: { 'Cache-Control': 'no-cache' }
+    })
+      .then((res) => res.json())
+      .then((d) => d.data as TreeNode[]);
+  },
 
-    getLazyFiles() {
-        return fetch(process.env.PUBLIC_URL +  '/demo/data/files-lazy.json', {
-            headers: { 'Cache-Control': 'no-cache' }
-        })
-            .then((res) => res.json())
-            .then((d) => d.data as TreeNode[]);
-    },
+  getLazyFiles() {
+    return fetch(process.env.PUBLIC_URL + '/demo/data/files-lazy.json', {
+      headers: { 'Cache-Control': 'no-cache' }
+    })
+      .then((res) => res.json())
+      .then((d) => d.data as TreeNode[]);
+  },
 
-    getFilesystem() {
-        return fetch(process.env.PUBLIC_URL + '/demo/data/filesystem.json', {
-            headers: { 'Cache-Control': 'no-cache' }
-        })
-            .then((res) => res.json())
-            .then((d) => d.data as TreeNode[]);
-    },
+  getFilesystem() {
+    return fetch(process.env.PUBLIC_URL + '/demo/data/filesystem.json', {
+      headers: { 'Cache-Control': 'no-cache' }
+    })
+      .then((res) => res.json())
+      .then((d) => d.data as TreeNode[]);
+  },
 
-    getLazyFilesystem() {
-        return fetch(process.env.PUBLIC_URL + '/demo/data/filesystem-lazy.json', {
-            headers: { 'Cache-Control': 'no-cache' }
-        })
-            .then((res) => res.json())
-            .then((d) => d.data as TreeNode[]);
-    }
+  getLazyFilesystem() {
+    return fetch(process.env.PUBLIC_URL + '/demo/data/filesystem-lazy.json', {
+      headers: { 'Cache-Control': 'no-cache' }
+    })
+      .then((res) => res.json())
+      .then((d) => d.data as TreeNode[]);
+  }
 };

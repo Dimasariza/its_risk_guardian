@@ -35,7 +35,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
           label: 'Log Out',
           icon: 'pi pi-sign-out',
           command: () => {
-              // router.push('/installation');
+            // router.push('/installation');
           }
         }
       ]
@@ -60,8 +60,8 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
       <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
         <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
         <Button label="Ahmad Akbar Rivai" text className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup>
-            <Avatar  image="/team/image/AAR.png" size="large" style={{ backgroundColor: '#9c27b0', color: '#ffffff' }} shape="circle" className='ml-2'/>
-        </Button >    
+          <Avatar image="/team/image/AAR.png" size="large" style={{ backgroundColor: '#9c27b0', color: '#ffffff' }} shape="circle" className="ml-2" />
+        </Button>
       </div>
     </div>
   );

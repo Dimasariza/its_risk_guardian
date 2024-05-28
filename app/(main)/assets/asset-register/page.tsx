@@ -1,64 +1,64 @@
-"use client";
+'use client';
 
-import { Card } from "primereact/card";
-import { TabMenu } from "primereact/tabmenu";
-import { useState } from "react";
-import AssetSummary from "./tab-menu/asset-summary";
-import Installation from "./tab-menu/installation";
-import FluidProperties from "./tab-menu/fluid-properties";
-import Documents from "./tab-menu/documents";
+import { Card } from 'primereact/card';
+import { TabMenu } from 'primereact/tabmenu';
+import { useState } from 'react';
+import AssetSummary from './tab-menu/asset-summary';
+import Installation from './tab-menu/installation';
+import FluidProperties from './tab-menu/fluid-properties';
+import Documents from './tab-menu/documents';
 
 function AssetRegister() {
-  const [tabActive, setTabActive] = useState<string>("asset_summary");
+  const [tabActive, setTabActive] = useState<string>('asset_summary');
 
   const items = [
-    { 
-      label: 'Asset Summary', 
+    {
+      label: 'Asset Summary',
       command: () => {
-          setTabActive("asset_summary");
+        setTabActive('asset_summary');
       }
     },
-    { 
-      label: 'Installation', 
+    {
+      label: 'Installation',
       command: () => {
-          setTabActive("installation");
+        setTabActive('installation');
       }
     },
-    { 
-      label: 'Fluid Properties', 
+    {
+      label: 'Fluid Properties',
       command: () => {
-          setTabActive("fluid_properties");
+        setTabActive('fluid_properties');
       }
     },
-    { 
-      label: 'Documents', 
+    {
+      label: 'Documents',
       command: () => {
-          setTabActive("documents");
+        setTabActive('documents');
       }
     }
   ];
 
   const tabMenuView = () => {
-    switch(tabActive) {
-      case "asset_summary":
-      return <AssetSummary />
-      case "installation":
-      return <Installation />
-      case "fluid_properties":
-      return <FluidProperties />
-      case "documents":
-      return <Documents />
+    switch (tabActive) {
+      case 'asset_summary':
+        return <AssetSummary />;
+      case 'installation':
+        return <Installation />;
+      case 'fluid_properties':
+        return <FluidProperties />;
+      case 'documents':
+        return <Documents />;
     }
-  }
-    
+  };
+
   return (
     <>
       <Card>
-      <TabMenu model={items} />
+        <TabMenu model={items} />
         {tabMenuView()}
       </Card>
     </>
-  )
+  );
 }
 
 export default AssetRegister;

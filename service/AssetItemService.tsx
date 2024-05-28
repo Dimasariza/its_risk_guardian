@@ -1,10 +1,10 @@
-import { IAssetItem } from "@/types/assetItem";
+import { IAssetItem } from '@/types/assetItem';
 
-const url = process.env.DB_URL + "/items" || "http://localhost:3030/items";
+const url = process.env.DB_URL + '/items' || 'http://localhost:3030/items';
 export const AssetItemService = {
   async postItem(value: any) {
     const res = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -13,24 +13,24 @@ export const AssetItemService = {
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data')
+      throw new Error('Failed to fetch Companies data');
     }
-    
-    return await res.json() as IAssetItem;
+
+    return (await res.json()) as IAssetItem;
   },
   async getItem() {
     const res = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
-      },
+      }
     });
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data')
+      throw new Error('Failed to fetch Companies data');
     }
-    
-    return await res.json() as IAssetItem;
+
+    return (await res.json()) as IAssetItem;
   }
-}
+};

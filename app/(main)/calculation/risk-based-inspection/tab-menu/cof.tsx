@@ -1,11 +1,7 @@
-"use client";
+'use client';
 
 function COF() {
-    return(
-        <>
-            COF Works!!
-        </>
-    )
+  return <>COF Works!!</>;
 }
 
 export default COF;

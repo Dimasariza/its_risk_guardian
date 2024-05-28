@@ -1,14 +1,14 @@
-import { useRouter } from "next/navigation";
-import { MegaMenu } from "primereact/megamenu";
-import { useEffect, useState } from "react";
-import ItemDialog from "./dialog/item-dialog";
-import EquipmentDialog from "./dialog/equipment-dialog";
-import ComponentDialog from "./dialog/component-dialog";
-import { LiaCutSolid } from "react-icons/lia";
-import { GrDocumentPdf } from "react-icons/gr";
-import { SiMicrosoftexcel } from "react-icons/si";
-import { MdOutlineQrCode2 } from "react-icons/md";
-import { SiWebcomponentsdotorg } from "react-icons/si";
+import { useRouter } from 'next/navigation';
+import { MegaMenu } from 'primereact/megamenu';
+import { useEffect, useState } from 'react';
+import ItemDialog from './dialog/item-dialog';
+import EquipmentDialog from './dialog/equipment-dialog';
+import ComponentDialog from './dialog/component-dialog';
+import { LiaCutSolid } from 'react-icons/lia';
+import { GrDocumentPdf } from 'react-icons/gr';
+import { SiMicrosoftexcel } from 'react-icons/si';
+import { MdOutlineQrCode2 } from 'react-icons/md';
+import { SiWebcomponentsdotorg } from 'react-icons/si';
 
 function AppMegaMenu() {
   const router = useRouter();
@@ -17,46 +17,46 @@ function AppMegaMenu() {
     equipment: false,
     component: false
   });
-    
+
   const items = [
     {
-      label: "",
-      icon: "pi pi-save",
-      className: "mr-8  ",
+      label: '',
+      icon: 'pi pi-save',
+      className: 'mr-8  '
     },
     {
       label: 'File',
       items: [
-          [
-            {
-              label: 'Export',
-              items: [
-                { 
-                  label: 'PDF', 
-                  icon: (options: any) => <GrDocumentPdf {...options.iconProps} />,
-                }, 
-                { 
-                  label: 'Excel', 
-                  icon: (options: any) => <SiMicrosoftexcel {...options.iconProps} />,
-                }, 
-                { 
-                  label: 'QR Code',
-                  icon: (options: any) => <MdOutlineQrCode2 {...options.iconProps} />,
-                }, 
-              ]
-            },
-            {
-              label: 'Import',
-              items: [
-                { 
-                  label: 'Excel',
-                  icon: (options: any) => <SiMicrosoftexcel {...options.iconProps} />,
-                }, 
-              ]
-            }
-          ],
+        [
+          {
+            label: 'Export',
+            items: [
+              {
+                label: 'PDF',
+                icon: (options: any) => <GrDocumentPdf {...options.iconProps} />
+              },
+              {
+                label: 'Excel',
+                icon: (options: any) => <SiMicrosoftexcel {...options.iconProps} />
+              },
+              {
+                label: 'QR Code',
+                icon: (options: any) => <MdOutlineQrCode2 {...options.iconProps} />
+              }
+            ]
+          },
+          {
+            label: 'Import',
+            items: [
+              {
+                label: 'Excel',
+                icon: (options: any) => <SiMicrosoftexcel {...options.iconProps} />
+              }
+            ]
+          }
         ]
-      },
+      ]
+    },
     {
       label: 'Home',
       items: [
@@ -64,48 +64,45 @@ function AppMegaMenu() {
           {
             label: 'View',
             items: [
-              { 
+              {
                 label: 'Asset Register',
-                icon: "pi pi-book",
+                icon: 'pi pi-book',
                 command: () => {
                   // Callback to run
-                  router.push('/assets/asset-register', { scroll: false })
+                  router.push('/assets/asset-register', { scroll: false });
                 }
-              }, 
-              { 
+              },
+              {
                 label: 'Risk Based Inspection',
-                icon: "pi pi-cog",
+                icon: 'pi pi-cog',
                 command: () => {
                   // Callback to run
-                  router.push('/calculation/risk-based-inspection', { scroll: false })
+                  router.push('/calculation/risk-based-inspection', { scroll: false });
                 }
-              }, 
+              }
             ]
           },
           {
             label: 'Clipboard',
             items: [
-              { 
+              {
                 label: 'Copy',
                 icon: 'pi pi-copy',
-                command: () => {
-                }
-              }, 
-              { 
+                command: () => {}
+              },
+              {
                 label: 'Paste',
                 icon: 'pi pi-clone',
-                command: () => {
-                }
-              }, 
-              { 
+                command: () => {}
+              },
+              {
                 label: 'Cut',
                 icon: (options: any) => <LiaCutSolid {...options.iconProps} />,
-                command: () => {
-                }
-              }, 
+                command: () => {}
+              }
             ]
           }
-        ],
+        ]
       ]
     },
     {
@@ -115,30 +112,30 @@ function AppMegaMenu() {
           {
             label: 'Assets',
             items: [
-              { 
+              {
                 label: 'Item',
                 icon: 'pi pi-box',
                 command: () => {
-                  setVisible(prev => ({...prev, item: true}));
-                }
-              }, 
-              { 
-                label: 'Equipment', 
-                icon: 'pi pi-wrench',
-                command: () => {
-                  setVisible(prev => ({...prev, equipment: true}));
-                }
-              }, 
-              { 
-                label: 'Component', 
-                icon: (options: any) => <SiWebcomponentsdotorg {...options.iconProps} />,
-                command: () => {
-                  setVisible(prev => ({...prev, component: true}));
+                  setVisible((prev) => ({ ...prev, item: true }));
                 }
               },
+              {
+                label: 'Equipment',
+                icon: 'pi pi-wrench',
+                command: () => {
+                  setVisible((prev) => ({ ...prev, equipment: true }));
+                }
+              },
+              {
+                label: 'Component',
+                icon: (options: any) => <SiWebcomponentsdotorg {...options.iconProps} />,
+                command: () => {
+                  setVisible((prev) => ({ ...prev, component: true }));
+                }
+              }
             ]
           }
-        ],
+        ]
       ]
     },
     {
@@ -148,13 +145,13 @@ function AppMegaMenu() {
           {
             label: 'Filter',
             items: [
-              { 
+              {
                 label: 'Advanced Filter',
                 icon: 'pi pi-filter'
-              }, 
+              }
             ]
           }
-        ],
+        ]
       ]
     }
   ];
@@ -166,7 +163,7 @@ function AppMegaMenu() {
       <ComponentDialog visible={visible.component} setVisible={setVisible} />
       <MegaMenu model={items} breakpoint="960px" />
     </>
-  )
+  );
 }
 
 export default AppMegaMenu;

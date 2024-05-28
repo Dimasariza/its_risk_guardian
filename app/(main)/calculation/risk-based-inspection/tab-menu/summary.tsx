@@ -1,11 +1,7 @@
-"use client";
+'use client';
 
 function Summary() {
-    return (
-        <>
-            Summary works!!
-        </>
-    )
+  return <>Summary works!!</>;
 }
 
 export default Summary;

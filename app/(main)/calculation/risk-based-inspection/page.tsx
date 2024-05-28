@@ -1,102 +1,102 @@
-"use client";
+'use client';
 
-import { Card } from "primereact/card";
-import { TabMenu } from "primereact/tabmenu";
-import { useState } from "react";
-import COF from "./tab-menu/cof";
-import RiskAnalysis from "./tab-menu/risk-analysis";
-import InspectionPlanning from "./tab-menu/inspection-planning";
-import Summary from "./tab-menu/summary";
-import GeneralData from "./tab-menu/general-data";
-import DamageMechanism from "./tab-menu/damage-mechanism";
-import POFPlanDate from "./tab-menu/pof-plan-date";
-import POFRBIDate from "./tab-menu/pof-rbi-date";
+import { Card } from 'primereact/card';
+import { TabMenu } from 'primereact/tabmenu';
+import { useState } from 'react';
+import COF from './tab-menu/cof';
+import RiskAnalysis from './tab-menu/risk-analysis';
+import InspectionPlanning from './tab-menu/inspection-planning';
+import Summary from './tab-menu/summary';
+import GeneralData from './tab-menu/general-data';
+import DamageMechanism from './tab-menu/damage-mechanism';
+import POFPlanDate from './tab-menu/pof-plan-date';
+import POFRBIDate from './tab-menu/pof-rbi-date';
 
 function RiskBasedInspection() {
-  const [tabActive, setTabActive] = useState<string>("general_data");
+  const [tabActive, setTabActive] = useState<string>('general_data');
 
   const items = [
-    { 
-      label: 'General Data', 
+    {
+      label: 'General Data',
       command: () => {
-          setTabActive("general_data");
+        setTabActive('general_data');
       }
     },
-    { 
-      label: 'Damage Mechanism', 
+    {
+      label: 'Damage Mechanism',
       command: () => {
-          setTabActive("damage_mechanism");
+        setTabActive('damage_mechanism');
       }
     },
-    { 
-      label: 'POF RBI Date', 
+    {
+      label: 'POF RBI Date',
       command: () => {
-          setTabActive("pof_rbi_date");
+        setTabActive('pof_rbi_date');
       }
     },
-    { 
-      label: 'POF Plan Date', 
+    {
+      label: 'POF Plan Date',
       command: () => {
-          setTabActive("pof_plan_date");
+        setTabActive('pof_plan_date');
       }
     },
-    { 
-      label: 'COF', 
+    {
+      label: 'COF',
       command: () => {
-          setTabActive("cof");
+        setTabActive('cof');
       }
     },
-    { 
-      label: 'Risk Analysis', 
+    {
+      label: 'Risk Analysis',
       command: () => {
-          setTabActive("risk_analysis");
+        setTabActive('risk_analysis');
       }
     },
-    { 
-      label: 'Inspection Planning', 
+    {
+      label: 'Inspection Planning',
       command: () => {
-          setTabActive("inspection_planning");
+        setTabActive('inspection_planning');
       }
     },
-    { 
-      label: 'Summary', 
+    {
+      label: 'Summary',
       command: () => {
-          setTabActive("summary");
+        setTabActive('summary');
       }
-    },
+    }
   ];
 
   const tabMenuView = () => {
-    switch(tabActive) {
-      case "general_data":
+    switch (tabActive) {
+      case 'general_data':
         return <GeneralData />;
-      case "damage_mechanism":
+      case 'damage_mechanism':
         return <DamageMechanism />;
-      case "pof_rbi_date":
+      case 'pof_rbi_date':
         return <POFRBIDate />;
-      case "pof_plan_date":
+      case 'pof_plan_date':
         return <POFPlanDate />;
-      case "cof":
+      case 'cof':
         return <COF />;
-      case "risk_analysis":
+      case 'risk_analysis':
         return <RiskAnalysis />;
-      case "inspection_planning":
+      case 'inspection_planning':
         return <InspectionPlanning />;
-      case "summary":
+      case 'summary':
         return <Summary />;
       default:
         return <GeneralData />;
     }
-  }
-    
+  };
+
   return (
     <>
       <Card>
-      <TabMenu model={items} />
+        <TabMenu model={items} />
         {tabMenuView()}
       </Card>
     </>
-  )
+  );
 }
 
 export default RiskBasedInspection;

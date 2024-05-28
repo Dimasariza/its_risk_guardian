@@ -1,11 +1,7 @@
-"use client";
+'use client';
 
 function InspectionPlanning() {
-    return (
-        <>
-            Inspection Planning works!!
-        </>
-    )
+  return <>Inspection Planning works!!</>;
 }
 
 export default InspectionPlanning;

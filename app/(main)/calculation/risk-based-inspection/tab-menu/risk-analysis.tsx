@@ -1,11 +1,7 @@
-"use client";
+'use client';
 
 function RiskAnalysis() {
-    return(
-        <>
-            Risk analysis works!!
-        </>
-    )
+  return <>Risk analysis works!!</>;
 }
 
 export default RiskAnalysis;
