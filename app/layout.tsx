@@ -8,6 +8,7 @@ import 'primeicons/primeicons.css';
 import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import store from '@/redux/root/root';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -20,9 +21,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link id="theme-css" href={`${process.env.PUBLIC_URL}/themes/lara-light-blue/theme.css`} rel="stylesheet"></link>
       </head>
       <body>
-        <PrimeReactProvider>
-          <LayoutProvider>{children}</LayoutProvider>
-        </PrimeReactProvider>
+        <Provider store={store}>
+            <PrimeReactProvider>
+            <LayoutProvider>{children}</LayoutProvider>
+            </PrimeReactProvider>
+        </Provider>
       </body>
     </html>
   );

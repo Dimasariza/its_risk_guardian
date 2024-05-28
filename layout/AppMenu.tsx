@@ -7,13 +7,14 @@ import { MenuProvider } from './context/menucontext';
 import Link from 'next/link';
 import { AppMenuItem } from '@/types';
 import { MenuItemService } from '@/service/MenuItemService';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AppMenu = () => {
   const { layoutConfig } = useContext(LayoutContext);
   const [menuItems, setMenuItems] = useState<AppMenuItem[]>([]);
 
   useEffect(() => {
-    MenuItemService.getAllAssets().then((res) => console.log(res));
+    // MenuItemService.getAllAssets().then((res) => console.log(res));
   }, []);
 
   const model: AppMenuItem[] = [

@@ -7,6 +7,7 @@ import AssetSummary from './tab-menu/asset-summary';
 import Installation from './tab-menu/installation';
 import FluidProperties from './tab-menu/fluid-properties';
 import Documents from './tab-menu/documents';
+import { useSelector } from 'react-redux';
 
 function AssetRegister() {
   const [tabActive, setTabActive] = useState<string>('asset_summary');
@@ -50,10 +51,12 @@ function AssetRegister() {
         return <Documents />;
     }
   };
+  const data = useSelector((state: any) => state.Reducer);
+  console.log(data)
 
   return (
     <>
-      <Card>
+      <Card title={data.menu.label}>
         <TabMenu model={items} />
         {tabMenuView()}
       </Card>

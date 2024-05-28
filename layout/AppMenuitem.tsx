@@ -10,6 +10,8 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { TreeProps } from 'react-animated-tree';
 import Tree from 'react-animated-tree';
 import './style.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { MenuItem } from '@/redux/action/action';
 
 const treeStyles = {
   fill: 'rgba(0, 0, 0, 0.5)',
@@ -65,9 +67,10 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     </CSSTransition>
   );
 
+  const dispatch = useDispatch();
   const text = (value: any) => {
     return (
-      <span style={{ cursor: 'pointer' }} onClick={(e) => console.log('cliecked', value)}>
+      <span style={{ cursor: 'pointer' }} onClick={(e) => dispatch(MenuItem(value))}>
         {value!.label}
       </span>
     );
