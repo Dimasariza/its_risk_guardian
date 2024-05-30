@@ -8,12 +8,14 @@ import { LayoutContext } from './context/layoutcontext';
 import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { Menu } from 'primereact/menu';
+import { useRouter } from 'next/navigation';
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
   const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
   const menubuttonRef = useRef(null);
   const topbarmenuRef = useRef(null);
   const topbarmenubuttonRef = useRef(null);
+  const router = useRouter();
 
   useImperativeHandle(ref, () => ({
     menubutton: menubuttonRef.current,
@@ -29,13 +31,13 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
         {
           label: 'My Profile',
           icon: 'pi pi-user',
-          url: '/unstyled'
+          url: '/profile'
         },
         {
           label: 'Log Out',
           icon: 'pi pi-sign-out',
           command: () => {
-            // router.push('/installation');
+            router.push('/');
           }
         }
       ]
@@ -44,7 +46,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
 
   return (
     <div className="layout-topbar">
-      <Link href="/" className="layout-topbar-logo">
+      <Link href="/assets/asset-register" className="layout-topbar-logo">
         <img src={`${process.env.PUBLIC_URL}/layout/images/ITS Risk Guardian - ${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg`} width="97.22px" height={'85px'} alt="logo" />
         <span>ITS Risk Guardian</span>
       </Link>

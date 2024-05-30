@@ -61,6 +61,12 @@
       "id": "f061",
       "tagOfComponent": "Tag of component 10",
       "nameOfComponent": "Name of component 10"
+    },
+    {
+      "id": "3a5f",
+      "tagOfComponent": "Component no 1",
+      "nameOfComponent": "Name of Component no 1",
+      "equipmentId": "4d1a"
     }
   ]
 }

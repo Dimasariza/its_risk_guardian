@@ -11,6 +11,7 @@ import GeneralData from './tab-menu/general-data';
 import DamageMechanism from './tab-menu/damage-mechanism';
 import POFPlanDate from './tab-menu/pof-plan-date';
 import POFRBIDate from './tab-menu/pof-rbi-date';
+import { useSelector } from 'react-redux';
 
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
@@ -89,9 +90,11 @@ function RiskBasedInspection() {
     }
   };
 
+  const data = useSelector((state: any) => state.Reducer);
+
   return (
     <>
-      <Card>
+      <Card title={data.menu.label}>
         <TabMenu model={items} />
         {tabMenuView()}
       </Card>

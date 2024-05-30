@@ -4,17 +4,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppMenuitem from './AppMenuitem';
 import { LayoutContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
-import Link from 'next/link';
 import { AppMenuItem } from '@/types';
 import { MenuItemService } from '@/service/MenuItemService';
 import { useDispatch, useSelector } from 'react-redux';
+import { MenuItem } from '@/redux/action/action';
 
 const AppMenu = () => {
   const { layoutConfig } = useContext(LayoutContext);
   const [menuItems, setMenuItems] = useState<AppMenuItem[]>([]);
-
+  const dispatch = useDispatch()
   useEffect(() => {
-    // MenuItemService.getAllAssets().then((res) => console.log(res));
+    MenuItemService.getAllAssets().then((res) => {
+      setMenuItems(res);
+      dispatch(MenuItem(res[0]));
+    });
   }, []);
 
   const model: AppMenuItem[] = [
@@ -290,7 +293,7 @@ const AppMenu = () => {
     <MenuProvider>
       <h5 className="m-3">Assets Register</h5>
       {/* <ul className="layout-menu"> */}
-      {model.map((item, i) => {
+      {menuItems.map((item, i) => {
         return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label} /> : <li className="menu-separator"></li>;
       })}
       {/* </ul> */}

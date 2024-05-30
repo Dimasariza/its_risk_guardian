@@ -55,7 +55,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     else setActiveMenu(key);
   };
 
-  const subMenu = item!.items && item!.visible !== false && (
+  const subMenu = item!.items?.length && item!.visible !== false && (
     <CSSTransition timeout={{ enter: 1000, exit: 450 }} classNames="layout-submenu" in={props.root ? true : active} key={item!.label}>
       {/* <ul> */}
       <>

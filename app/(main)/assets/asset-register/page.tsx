@@ -2,7 +2,7 @@
 
 import { Card } from 'primereact/card';
 import { TabMenu } from 'primereact/tabmenu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AssetSummary from './tab-menu/asset-summary';
 import Installation from './tab-menu/installation';
 import FluidProperties from './tab-menu/fluid-properties';
@@ -52,7 +52,6 @@ function AssetRegister() {
     }
   };
   const data = useSelector((state: any) => state.Reducer);
-  console.log(data)
 
   return (
     <>

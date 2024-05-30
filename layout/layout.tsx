@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useRouter } from 'next/router';
-import { useEventListener, useMountEffect, useUnmountEffect } from 'primereact/hooks';
+import { useEventListener, useUnmountEffect } from 'primereact/hooks';
 import React, { useContext, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import AppFooter from './AppFooter';
@@ -13,10 +12,6 @@ import { LayoutContext } from './context/layoutcontext';
 import { PrimeReactContext } from 'primereact/api';
 import { ChildContainerProps, LayoutState, AppTopbarRef } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { PanelMenu } from 'primereact/panelmenu';
-import { Card } from 'primereact/card';
-import { BreadCrumb } from 'primereact/breadcrumb';
-import { MegaMenu } from 'primereact/megamenu';
 import AppMegaMenu from './AppMegaMenu';
 
 const Layout = ({ children }: ChildContainerProps) => {
@@ -128,9 +123,6 @@ const Layout = ({ children }: ChildContainerProps) => {
     'p-ripple-disabled': !layoutConfig.ripple
   });
 
-  const breadItems = [{ label: 'Assets' }, { label: 'Component' }, { label: 'Component-Detail' }, { label: 'Data' }, { label: 'General' }];
-  const home = { icon: 'pi pi-home', url: 'https://primereact.org' };
-
   return (
     <React.Fragment>
       <div className={containerClass}>
@@ -142,8 +134,6 @@ const Layout = ({ children }: ChildContainerProps) => {
           <AppSidebar />
         </div>
         <div className="layout-main-container">
-          {/* <div className="mb-2 gap-2 flex flex-column">
-                    </div> */}
           <div className="layout-main">{children}</div>
           <AppFooter />
         </div>
