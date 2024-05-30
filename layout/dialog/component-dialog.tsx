@@ -1,6 +1,7 @@
 'use client';
 
 import InputTypeText from '@/fragments/input-type-text';
+import { RerenderMenu } from '@/redux/action/action';
 import { AssetComponentService } from '@/service/AssetComponentService';
 import { AssetEquipmentService } from '@/service/AssetEquipmentService';
 import { IAssetComponent } from '@/types/assetComponent';
@@ -9,6 +10,7 @@ import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function ComponentDialog({ visible, setVisible }: any) {
   const emptyComponent: IAssetComponent = {
@@ -80,9 +82,14 @@ function ComponentDialog({ visible, setVisible }: any) {
     setSelectedItem(e.value);
   };
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     AssetEquipmentService.getItem()
-      .then((res) => setItems(res))
+      .then((res) => {
+        setItems(res)
+        dispatch(RerenderMenu());
+      })
       .catch((err) => {
         toast.current.show({
           severity: 'danger',

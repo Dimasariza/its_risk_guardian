@@ -1,12 +1,14 @@
 'use client';
 
 import InputTypeText from '@/fragments/input-type-text';
+import { RerenderMenu } from '@/redux/action/action';
 import { AssetItemService } from '@/service/AssetItemService';
 import { IAssetItem } from '@/types/assetItem';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ItemDialog({ visible, setVisible }: any) {
   const emptyItem: IAssetItem = {
@@ -70,10 +72,16 @@ function ItemDialog({ visible, setVisible }: any) {
     </div>
   );
 
+  const dispatch = useDispatch();
+  const data = useSelector((state: any) => state.RerenderMenu);
+
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
       AssetItemService.postItem(value)
         .then((res) => {
+          dispatch(RerenderMenu());
+          console.log(data)
+
           toast.current.show({
             severity: 'success',
             summary: 'Data has been added',

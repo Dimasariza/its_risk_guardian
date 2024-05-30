@@ -4,3 +4,10 @@ export const MenuItem = (menu: string) => {
         menu
     }
 }
+
+export const RerenderMenu = () => {
+    console.log("rerender menu")
+    return {
+        type: "RERENDER_MENU"
+    }
+}

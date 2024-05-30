@@ -1,4 +1,4 @@
-const Reducer = (state: any = {menu: ""}, {type, menu}: any) => {
+export const Reducer = (state: any = {menu: ""}, {type, menu}: any) => {
     switch(type){
         case "MENU_ITEM":
             return {
@@ -8,6 +8,16 @@ const Reducer = (state: any = {menu: ""}, {type, menu}: any) => {
         default:
             return state;
     }
-}
+};
 
-export default Reducer;
+export const RerenderMenu = (state: any = {rerender: false}, { type }: any) => {
+    switch(type) {
+        case "RERENDER_MENU":
+            return {
+                ...state,
+                rerender: true,
+            };
+        default:
+            return state;
+    }
+}

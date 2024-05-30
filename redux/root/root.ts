@@ -1,8 +1,9 @@
 import { combineReducers, createStore } from "redux";
-import Reducer from "../reducer/reducer";
+import { Reducer, RerenderMenu } from "../reducer/reducer";
 
 const rootReducer = combineReducers({
-    Reducer
+    Reducer,
+    RerenderMenu
 });
 
 const store = createStore(rootReducer);

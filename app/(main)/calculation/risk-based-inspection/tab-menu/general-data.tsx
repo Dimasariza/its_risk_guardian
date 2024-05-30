@@ -9,74 +9,74 @@ function GeneralData() {
   return (
     <>
       <section className="grid gap-2 m-2">
-        <label htmlFor="idOfInstallation" className="col-6">
+        <label htmlFor="equipmentName" className="col-6">
           Equipment Name
         </label>
-        <InputText id="idOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="tagOfInstallation" className="col-6">
+        <InputText id="equipmentName" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="vesselType" className="col-6">
           Vessel Type
         </label>
-        <InputText id="tagOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="nameOfInstallation" className="col-6">
+        <InputText id="vesselType" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="serialNumber" className="col-6">
           Serial No.
         </label>
-        <InputText id="nameOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="serialNumber" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="size" className="col-6">
           Size
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="size" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="yearBuild" className="col-6">
           Year Built
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="yearBuild" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="designCode" className="col-6">
           Design Code
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="designCode" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="liquidCategory" className="col-6">
           Liquid Category
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="liquidCategory" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="liquidPhase" className="col-6">
           Liquid Phase
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="liquidPhase" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="cladding" className="col-6">
           Cladding
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="cladding" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="coating" className="col-6">
           Coating
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="coating" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="jointEfficiency" className="col-6">
           Joint Efficiency
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="jointEfficiency" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="materialOfShell" className="col-6">
           Material of Shell
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="materialOfShell" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="designPressure" className="col-6">
           Design Pressure
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="designPressure" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="designTemperature" className="col-6">
           Design Temperature
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="designTemperature" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="thickness" className="col-6">
           Thickness
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="thickness" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="minWallThicknessper" className="col-6">
           Minimum Wall Thicknessper Code
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
-        <label htmlFor="categoryOfInstallation" className="col-6">
+        <InputText id="minWallThicknessper" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <label htmlFor="corrosionAllowance" className="col-6">
           Corrosion Allowance
         </label>
-        <InputText id="categoryOfInstallation" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
+        <InputText id="corrosionAllowance" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
       </section>
     </>
   );

@@ -14,26 +14,6 @@
       "id": "a5b5",
       "tagOfItem": "Tag of Item no 2",
       "nameOfItem": "Name of Item no 2"
-    },
-    {
-      "id": "445a",
-      "tagOfItem": "Tag of item no 3",
-      "nameOfItem": "Name of item no 3"
-    },
-    {
-      "id": "5236",
-      "tagOfItem": "Tag of Item no 4",
-      "nameOfItem": "Name of Item no 4"
-    },
-    {
-      "id": "94ce",
-      "tagOfItem": "Tag of Item no 5",
-      "nameOfItem": "Name of Item no 5"
-    },
-    {
-      "id": "bf6b",
-      "tagOfItem": "Tag of Item no 6",
-      "nameOfItem": "Name of Item no 6"
     }
   ],
   "equipments": [
@@ -54,6 +34,12 @@
       "tagOfEquipment": "Tag of Equipment no 3",
       "nameOfEquipment": "Name of Equipment no 3",
       "itemId": "bf6b"
+    },
+    {
+      "id": "8432",
+      "tagOfEquipment": "Tag of item no 1b1",
+      "nameOfEquipment": "Name of item no 1b1",
+      "itemId": "5d38"
     }
   ],
   "components": [
