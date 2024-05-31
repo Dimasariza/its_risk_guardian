@@ -14,7 +14,7 @@ const AppMenu = () => {
   const dispatch = useDispatch();
   const [menuItems, setMenuItems] = useState<AppMenuItem[]>([]);
   const rerenderMenu = useSelector((state: any) => state.RerenderMenu);
-
+ 
   useEffect(() => {
     MenuItemService.getAllAssets().then((res) => {
       setMenuItems(res);

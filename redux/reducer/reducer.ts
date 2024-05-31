@@ -4,7 +4,7 @@ export const Reducer = (state: any = {menu: ""}, {type, menu}: any) => {
             return {
                 ...state,
                 menu,
-            }
+            };
         default:
             return state;
     }
@@ -20,4 +20,15 @@ export const RerenderMenu = (state: any = {rerender: false}, { type }: any) => {
         default:
             return state;
     }
-}
+};
+
+export const AssetData = (state: any, type: any) => {
+    switch(type) {
+        case "ASSET_DATA":
+            return {
+                ...state
+            };
+        default:
+            return state;
+    }
+};

@@ -140,14 +140,14 @@ function DamageMechanism() {
   };
 
   return (
-    <div className="card">
+    <section className="p-4">
       <DataTable value={damageFactor} stripedRows tableStyle={{ minWidth: '50rem' }}>
         <Column field="number" header="No" style={{ width: '50px' }}></Column>
         <Column field="damageFactor" header="Damage Factor"></Column>
         <Column field="screeningCriteria" header="Screening Criteria" body={(e) => screeningCriteria(e.screeningCriteria)}></Column>
         <Column field="status" header="Yes/No" body={(e) => damageFactorStatus(e.screeningCriteria)} style={{ width: '70px' }} className="p-0 align-self-center"></Column>
       </DataTable>
-    </div>
+    </section>
   );
 }
 

@@ -14,7 +14,7 @@ function FluidProperties() {
         </label>
         <InputText id="fluidName" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
         <label htmlFor="fluidType" className="col-6">
-          FLuid Type
+          Fluid Type
         </label>
         <InputText id="fluidType" className="col" value={value} onChange={(e) => setValue(e.target.value)} />
         <label htmlFor="fluidDescription" className="col-6">

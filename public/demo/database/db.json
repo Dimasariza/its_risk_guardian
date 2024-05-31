@@ -14,6 +14,11 @@
       "id": "a5b5",
       "tagOfItem": "Tag of Item no 2",
       "nameOfItem": "Name of Item no 2"
+    },
+    {
+      "id": "5446",
+      "tagOfItem": "Tag of item no 3",
+      "nameOfItem": "Name of item no 3"
     }
   ],
   "equipments": [
@@ -53,6 +58,32 @@
       "tagOfComponent": "Component no 1",
       "nameOfComponent": "Name of Component no 1",
       "equipmentId": "4d1a"
+    }
+  ],
+  "assetSummary": [
+    {
+      "componentId": "3a5f",
+      "itemId": "",
+      "installation": {
+        "equipment": "",
+        "equipmentType": "",
+        "componentShape": "",
+        "notes": "",
+        "material": "",
+        "designPressure": "",
+        "diameter": ""
+      },
+      "fulidProperties": {
+        "fluidName": "",
+        "fluidType": "",
+        "fluidDescription": "",
+        "operationFluidPhase": "",
+        "ph": ""
+      },
+      "documents": {
+        "pfdName": "",
+        "pfdDocUrl": ""
+      }
     }
   ]
 }

@@ -1,7 +1,13 @@
 'use client';
 
 function COF() {
-  return <>COF Works!!</>;
+  return (
+    <>
+      <section className="p-4">
+        COF Works!!
+      </section>
+    </>
+  )
 }
 
 export default COF;

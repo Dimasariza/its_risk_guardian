@@ -6,8 +6,13 @@ export const MenuItem = (menu: string) => {
 }
 
 export const RerenderMenu = () => {
-    console.log("rerender menu")
     return {
         type: "RERENDER_MENU"
+    }
+}
+
+export const AssetData = () => {
+    return {
+        type: "ASSET_DATA"
     }
 }

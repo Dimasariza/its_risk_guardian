@@ -1,7 +1,13 @@
 'use client';
 
 function RiskAnalysis() {
-  return <>Risk analysis works!!</>;
+  return (
+  <>
+    <section className="p-4">
+      Risk Analysis works!!!
+    </section>
+  </>
+  )
 }
 
 export default RiskAnalysis;

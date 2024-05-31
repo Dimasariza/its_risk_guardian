@@ -26,9 +26,9 @@ function POFRBIDate() {
       }
     },
     {
-      label: 'DF A',
+      label: 'DF Alkaline',
       command: () => {
-        setTabActive('df_a');
+        setTabActive('df_alkaline');
       }
     },
     {
@@ -53,8 +53,8 @@ function POFRBIDate() {
         return <div>DF Thinning Works!!!</div>;
       case 'df_ex_corrosion':
         return <div>DF EX Corrosion Works!!!</div>;
-      case 'df_a':
-        return <div>DF A Works!!!</div>;
+      case 'df_alkaline':
+        return <div>DF Alkaline Works!!!</div>;
       case 'total_df':
         return <div>Total DF Works!!!</div>;
       case 'pof_value':
