@@ -85,5 +85,50 @@
         "pfdDocUrl": ""
       }
     }
+  ],
+  "generalData": [
+    {
+      "componentId": "3a5f",
+      "tagNumber": "JNE-MAM-106 (V-300)",
+      "service":"FWKO Separator",
+      "manufacturedBy": "PT. Gunanusa Utama Fabricators",
+      "typeOfPressureVessel": "Horizontal",
+      "geometryData": "Ellipsoidal",
+      "code": "ASME Section VIII Division 1",
+      "designPressure": "3.01 bar",
+      "operatingPressure": "93.4 °C",
+      "operatingTemperature": "",
+      "dimmension": "2.41 bar",
+      "vesselVolume": "54.5 °C",
+      "support": "Saddle",
+      "jointEfficiency": "1 mm",
+      "corrosionAllowance": "1,58 mm",
+      "yearBuilt": "1987",
+      "material": "SA 516 Grade 70",
+      "lastInspection": "20 Mar 10",
+      "shellTagNumber": "JNE-MAM-106 (V-300)",
+      "shellService": "FWKO Separator",
+      "shellCode": "ASME Section VIII Division 1",
+      "shellDesignPressure": "93.4 °C",
+      "shellOuterDiameter": "2743 mm",
+      "shellMaterial": "SA 516 Grade 70 (Carbon steel)",
+      "shellAllowableStress": "17500 psig",
+      "shellEfficiency": "1",
+      "shellCorrosionAllowance": "1.58 mm",
+      "shellMinimumThickness": "15.8 mm",
+      "shellCorrosionRate": "0.0057 mm/years",
+      "headTagNumber": "JNE-MAM-106 (V-300)",
+      "headService": "FWKO Separator",
+      "headCode": "ASME Section VIII Division 1",
+      "headDesignPressure": "3.01 bar",
+      "headDesignTemperature": "93.4 °C",
+      "headOuterDiameter": "2743 mm",
+      "headMaterial": "SA 516 Grade 70 (Carbon steel)",
+      "headAllowableStress": "17500 psig",
+      "headEfficiency": "1",
+      "headCorrosionAllowance": "1.58 mm",
+      "headMinimumThickness": "18.40 mm",
+      "headCorrosionRate": "0.006 mm/years"
+    }
   ]
 }

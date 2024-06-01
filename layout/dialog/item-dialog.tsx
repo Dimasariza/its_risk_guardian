@@ -2,7 +2,7 @@
 
 import InputTypeText from '@/fragments/input-type-text';
 import { RerenderMenu } from '@/redux/action/action';
-import { AssetItemService } from '@/service/AssetItemService';
+import { AssetItemService } from '@/service/assets/AssetItemService';
 import { IAssetItem } from '@/types/assetItem';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';

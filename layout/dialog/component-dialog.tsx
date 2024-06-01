@@ -2,8 +2,8 @@
 
 import InputTypeText from '@/fragments/input-type-text';
 import { RerenderMenu } from '@/redux/action/action';
-import { AssetComponentService } from '@/service/AssetComponentService';
-import { AssetEquipmentService } from '@/service/AssetEquipmentService';
+import { AssetComponentService } from '@/service/assets/AssetComponentService';
+import { AssetEquipmentService } from '@/service/assets/AssetEquipmentService';
 import { IAssetComponent } from '@/types/assetComponent';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';

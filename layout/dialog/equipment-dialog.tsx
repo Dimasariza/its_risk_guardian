@@ -1,8 +1,8 @@
 'use client';
 
 import InputTypeText from '@/fragments/input-type-text';
-import { AssetEquipmentService } from '@/service/AssetEquipmentService';
-import { AssetItemService } from '@/service/AssetItemService';
+import { AssetEquipmentService } from '@/service/assets/AssetEquipmentService';
+import { AssetItemService } from '@/service/assets/AssetItemService';
 import { IAssetEquipment } from '@/types/assetEquipment';
 import { IAssetItem } from '@/types/assetItem';
 import { Button } from 'primereact/button';
