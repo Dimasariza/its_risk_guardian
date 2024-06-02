@@ -2,17 +2,20 @@
 
 import { TabMenu } from 'primereact/tabmenu';
 import { useState } from 'react';
+import DFThinning from './pof-rbi-date/df-thinning';
+import DFExternalCorrosion from './pof-rbi-date/df-external-corrosion';
+import DFAlkalineCorrosion from './pof-rbi-date/df-alkaline';
 
 function POFPlanDate() {
-  const [tabActive, setTabActive] = useState<string>('gff');
+  const [tabActive, setTabActive] = useState<string>('df_thinning');
 
   const items = [
-    {
-      label: 'GFF',
-      command: () => {
-        setTabActive('gff');
-      }
-    },
+    // {
+    //   label: 'GFF',
+    //   command: () => {
+    //     setTabActive('gff');
+    //   }
+    // },
     {
       label: 'DF Thinning',
       command: () => {
@@ -31,12 +34,12 @@ function POFPlanDate() {
         setTabActive('df_alkaline');
       }
     },
-    {
-      label: 'Total DF',
-      command: () => {
-        setTabActive('total_df');
-      }
-    },
+    // {
+    //   label: 'Total DF',
+    //   command: () => {
+    //     setTabActive('total_df');
+    //   }
+    // },
     {
       label: 'POF Value',
       command: () => {
@@ -47,14 +50,14 @@ function POFPlanDate() {
 
   const tabMenuView = () => {
     switch (tabActive) {
-      case 'gff':
-        return <div>GFF Works!!!</div>;
+      // case 'gff':
+      //   return <div>GFF Works!!!</div>;
       case 'df_thinning':
-        return <div>DF Thinning Works!!!</div>;
+        return <DFThinning />;
       case 'df_ex_corrosion':
-        return <div>DF EX Corrosion Works!!!</div>;
+        return <DFExternalCorrosion />;
       case 'df_alkaline':
-        return <div>DF Alkaline Works!!!</div>;
+        return <DFAlkalineCorrosion />;
       case 'total_df':
         return <div>Total DF Works!!!</div>;
       case 'pof_value':

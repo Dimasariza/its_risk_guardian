@@ -262,7 +262,6 @@ function GeneralData() {
       className: 'col'
     },
   ];
-
   
   const inputsHeadCalc = [
     {
