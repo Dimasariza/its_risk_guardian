@@ -138,6 +138,50 @@
       "headCorrosionAllowance": "1.58 mm",
       "headMinimumThickness": "18.40 mm",
       "headCorrosionRate": "0.006 mm/years"
+    },
+    {
+      "componentId": "f061",
+      "tagNumber": "JNE-MAM-107 (V-300)",
+      "service":"FWKO",
+      "manufacturedBy": "PT. Gunanusa Utama",
+      "typeOfPressureVessel": "Vertical",
+      "geometryData": "Tube",
+      "code": "ASME Section VIII Division 2",
+      "designPressure": "",
+      "designTemperature": "",
+      "operatingPressure": "",
+      "operatingTemperature": "54,5 °C",
+      "dimmension": "2743 (OD) x 7620 S/S",
+      "vesselVolume": "1776 lb/ft3",
+      "support": "Saddle",
+      "jointEfficiency": "1 mm",
+      "corrosionAllowance": "1,58 mm",
+      "yearBuilt": "1987",
+      "material": "SA 516 Grade 70",
+      "lastInspection": "20 Mar 10",
+      "shellTagNumber": "JNE-MAM-106 (V-300)",
+      "shellService": "FWKO Separator",
+      "shellCode": "ASME Section VIII Division 1",
+      "shellDesignPressure": "93.4 °C",
+      "shellOuterDiameter": "2743 mm",
+      "shellMaterial": "SA 516 Grade 70 (Carbon steel)",
+      "shellAllowableStress": "17500 psig",
+      "shellEfficiency": "1",
+      "shellCorrosionAllowance": "1.58 mm",
+      "shellMinimumThickness": "15.8 mm",
+      "shellCorrosionRate": "0.0057 mm/years",
+      "headTagNumber": "JNE-MAM-106 (V-300)",
+      "headService": "FWKO Separator",
+      "headCode": "ASME Section VIII Division 1",
+      "headDesignPressure": "3.01 bar",
+      "headDesignTemperature": "93.4 °C",
+      "headOuterDiameter": "2743 mm",
+      "headMaterial": "SA 516 Grade 70 (Carbon steel)",
+      "headAllowableStress": "17500 psig",
+      "headEfficiency": "1",
+      "headCorrosionAllowance": "1.58 mm",
+      "headMinimumThickness": "18.40 mm",
+      "headCorrosionRate": "0.006 mm/years"
     }
   ],
   "pofRBIDate": 
@@ -165,7 +209,7 @@
       },
       "dfExternalCorrosion": 
       {
-        "yearAssesment": "",
+        "yearAssesment": "test external corrosion",
         "yearInstallation": "",
         "thicknessValue": "",
         "baseCorrosionRate": "",
@@ -187,7 +231,7 @@
         "numInspD": ""
       },
       "dfAlkaline": {
-        "shellSusceptibility": "",
+        "shellSusceptibility": "test alkaline",
         "headSusceptibility": "",
         "shellSeverityId": "",
         "headSeverityId": "",
@@ -196,7 +240,7 @@
         "headSection": ""
       },
       "pofValue": {
-        "gffTotal": "",
+        "gffTotal": "test value",
         "shellThinning": "",
         "headThinning": "",
         "shellExternal": "",
@@ -211,10 +255,10 @@
   "pofPlanDate": 
   [
     {
-      "componentId": "",
+      "componentId": "3a5f",
       "dfThinning": 
       {
-        "startDate": "",
+        "startDate": "test start date",
         "thickness": "",
         "corrosionAllowance": "",
         "designTemperature": "",

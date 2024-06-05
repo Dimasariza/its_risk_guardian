@@ -1,5 +1,7 @@
 import InputTypeText from "@/fragments/input-type-text";
-import { useState } from "react";
+import { getAlkaline } from "@/service/calculation/pofRBIDateService";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function DFAlkalineCorrosion() {
     const [value, setValue] = useState<any>({});
@@ -69,7 +71,17 @@ function DFAlkalineCorrosion() {
             autoFocus: true,
             className: 'col'
         },
-    ]
+    ];
+
+    const data = useSelector((state: any) => state.Reducer);
+
+    useEffect(() => {
+        getAlkaline(data.menu.id)
+            .then((res: any) => {
+            setValue(res)
+        })
+    }, [data])
+
     return (
         <>
             <section className="grid m-2">

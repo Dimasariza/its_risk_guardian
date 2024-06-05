@@ -1,5 +1,7 @@
 import InputTypeText from "@/fragments/input-type-text";
-import { useState } from "react";
+import { getThinning } from "@/service/calculation/pofRBIDateService";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function DFThinning() {
     const [value, setValue] = useState<any>({});
@@ -157,6 +159,16 @@ function DFThinning() {
             className: ''
         },
     ];
+
+    const data = useSelector((state: any) => state.Reducer);
+
+    useEffect(() => {
+      getThinning(data.menu.id)
+      .then(res => {
+        console.log(res)
+        setValue(res)
+      })
+    }, [data])
 
     return(
         <>

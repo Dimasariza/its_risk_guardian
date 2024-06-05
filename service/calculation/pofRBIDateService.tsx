@@ -1,5 +1,6 @@
-const url = process.env.DB_URL + '/generalData' || 'http://localhost:3030/generalData';
-export const GeneralDataService = {
+const url = process.env.DB_URL + '/pofRBIDate' || 'http://localhost:3030/pofRBIDate';
+
+const POFRBIDate = {
   async postItem(value: any) {
     const res = await fetch(url, {
       method: 'POST',
@@ -16,7 +17,7 @@ export const GeneralDataService = {
 
     return (await res.json());
   },
-  async getItem(id: string) {
+  async getItem(id: string, param: string) {
     const res = await fetch(url + "?componentId=" + id, {
       method: 'GET',
       headers: {
@@ -28,7 +29,24 @@ export const GeneralDataService = {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch Companies data');
     }
+
     const data = await res.json();
-    return data[0] ?? {};
+    return data[0]?.[param] ?? {};
   }
 };
+
+export async function getThinning(id: string) {
+  return await POFRBIDate.getItem(id, "dfThinning");
+}
+
+export async function getExternalCorrosion(id: string) {
+  return await POFRBIDate.getItem(id, "dfExternalCorrosion");
+}
+
+export async function getAlkaline(id: string) {
+  return await POFRBIDate.getItem(id, "dfAlkaline");
+}
+
+export async function getValue(id: string) {
+  return await POFRBIDate.getItem(id, "pofValue");
+}

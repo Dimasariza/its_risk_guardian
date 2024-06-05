@@ -1,7 +1,10 @@
 import InputTypeText from "@/fragments/input-type-text";
+import { POFDExCorService } from "@/service/calculation/pofDExCor";
+import { getExternalCorrosion } from "@/service/calculation/pofRBIDateService";
 import { InputText } from "primereact/inputtext";
 import { Message } from "primereact/message";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function DFExternalCorrosion() {
     const [value, setValue] = useState<any>({});
@@ -168,7 +171,16 @@ function DFExternalCorrosion() {
             autoFocus: false,
             className: ''
         },
-    ]
+    ];
+
+    const data = useSelector((state: any) => state.Reducer);
+
+    useEffect(() => {
+    getExternalCorrosion(data.menu.id)
+      .then((res: any) => {
+        setValue(res)
+      })
+    }, [data])
 
     return (
         <>

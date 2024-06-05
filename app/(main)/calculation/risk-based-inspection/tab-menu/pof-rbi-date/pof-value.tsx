@@ -1,7 +1,8 @@
 import InputTypeText from "@/fragments/input-type-text";
-import { InputText } from "primereact/inputtext";
-import { Message } from "primereact/message";
-import { useState } from "react";
+import { POFDValue } from "@/service/calculation/pofDValue";
+import { getValue } from "@/service/calculation/pofRBIDateService";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function POFValue() {
     const [value, setValue] = useState<any>({});
@@ -87,6 +88,15 @@ function POFValue() {
             className: ''
         },
     ];
+
+    const data = useSelector((state: any) => state.Reducer);
+
+    useEffect(() => {
+        getValue(data.menu.id)
+            .then((res: any) => {
+            setValue(res)
+        })
+    }, [data])
     
     return (
         <>
