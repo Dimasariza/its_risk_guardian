@@ -3,6 +3,7 @@
 import InputTypeText from '@/fragments/input-type-text';
 import { GeneralDataService } from '@/service/calculation/generalDataService';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function GeneralData() {
   const inputsGeneralSpec = [
@@ -13,7 +14,7 @@ function GeneralData() {
       label: 'Tag Number',
       required: true,
       autoFocus: true,
-      className: 'col'
+      className: ''
     },
     {
       name: 'service',
@@ -22,7 +23,7 @@ function GeneralData() {
       label: 'Service',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'manufacturedBy',
@@ -31,7 +32,7 @@ function GeneralData() {
       label: 'Manufactured By',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'typeOfPressureVessel',
@@ -40,7 +41,7 @@ function GeneralData() {
       label: 'Type of Pressure Vessel',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'geometryData',
@@ -49,7 +50,7 @@ function GeneralData() {
       label: 'Geometry Data',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'code',
@@ -58,7 +59,7 @@ function GeneralData() {
       label: 'Code',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'designPressure',
@@ -67,7 +68,7 @@ function GeneralData() {
       label: 'Design Pressure',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'operatingPressure',
@@ -76,7 +77,7 @@ function GeneralData() {
       label: 'Operating Pressure',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'operatingTemperature',
@@ -85,7 +86,7 @@ function GeneralData() {
       label: 'Operating Temperature',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'dimmension',
@@ -94,7 +95,7 @@ function GeneralData() {
       label: 'Dimension',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'vesselVolume',
@@ -103,7 +104,7 @@ function GeneralData() {
       label: 'Vessel Volume',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'support',
@@ -112,7 +113,7 @@ function GeneralData() {
       label: 'Support',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'jointEfficiency',
@@ -121,7 +122,7 @@ function GeneralData() {
       label: 'Joint Efficiency (Head/Sheel)',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'corrosionAllowance',
@@ -130,7 +131,7 @@ function GeneralData() {
       label: 'Corrosion Allowance',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'yearBuilt',
@@ -139,7 +140,7 @@ function GeneralData() {
       label: 'Year Built',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'material',
@@ -148,7 +149,7 @@ function GeneralData() {
       label: 'Material',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'lastInspection',
@@ -157,7 +158,7 @@ function GeneralData() {
       label: 'Last Inspection',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
   ];
 
@@ -169,7 +170,7 @@ function GeneralData() {
       label: 'Tag Number',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellService',
@@ -178,7 +179,7 @@ function GeneralData() {
       label: 'Service',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellCode',
@@ -187,7 +188,7 @@ function GeneralData() {
       label: 'Code',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellDesignPressure',
@@ -196,7 +197,7 @@ function GeneralData() {
       label: 'Design Pressure',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellOuterDiameter',
@@ -205,7 +206,7 @@ function GeneralData() {
       label: 'Outer Diameter',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellMaterial',
@@ -214,7 +215,7 @@ function GeneralData() {
       label: 'Material',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellAllowableStress',
@@ -223,7 +224,7 @@ function GeneralData() {
       label: 'Allowable Stress',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellEfficiency',
@@ -232,7 +233,7 @@ function GeneralData() {
       label: 'Efficiency',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellCorrosionAllowance',
@@ -241,7 +242,7 @@ function GeneralData() {
       label: 'Corrosion Allowance',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellMinimumThickness',
@@ -250,7 +251,7 @@ function GeneralData() {
       label: 'Minimum Thickness',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'shellCorrosionRate',
@@ -259,7 +260,7 @@ function GeneralData() {
       label: 'Corrosion Rate',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
   ];
   
@@ -271,7 +272,7 @@ function GeneralData() {
       label: 'Tag Number',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headService',
@@ -280,7 +281,7 @@ function GeneralData() {
       label: 'Service',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headCode',
@@ -289,7 +290,7 @@ function GeneralData() {
       label: 'Code',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headDesignPressure',
@@ -298,7 +299,7 @@ function GeneralData() {
       label: 'Head Design Pressure (P)',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headDesignTemperature',
@@ -307,7 +308,7 @@ function GeneralData() {
       label: 'Head Design Temperature (T)',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headOuterDiameter',
@@ -316,7 +317,7 @@ function GeneralData() {
       label: 'Outer Diameter',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headMaterial',
@@ -325,7 +326,7 @@ function GeneralData() {
       label: 'Material',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headAllowableStress',
@@ -334,7 +335,7 @@ function GeneralData() {
       label: 'Allowable Stress',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headEfficiency',
@@ -343,7 +344,7 @@ function GeneralData() {
       label: 'Efficiency',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headCorrosionAllowance',
@@ -352,7 +353,7 @@ function GeneralData() {
       label: 'Corrosion Allowance',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headMinimumThickness',
@@ -361,7 +362,7 @@ function GeneralData() {
       label: 'Minimum Thickness',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
     {
       name: 'headCorrosionRate',
@@ -370,37 +371,42 @@ function GeneralData() {
       label: 'Corrosion Rate',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     },
   ];
 
   const [value, setValue] = useState<any>({});
   const [error, setError] = useState<any>({});
 
+  const data = useSelector((state: any) => state.Reducer);
+
   useEffect(() => {
-    GeneralDataService.getItem()
-    .then(res => setValue(res[0]))
-  }, [])
+    console.log(data)
+    GeneralDataService.getItem(data.menu.id)
+    .then(res => {
+      setValue(res ?? {})
+    })
+  }, [data])
 
   return (
     <>
       <section className="p-4">
         <h5>GENERAL SPECIFICATION OF PRESSURE VESSEL</h5>
-        <div className="grid gap-2 m-2">
+        <div className="grid m-2">
           {inputsGeneralSpec.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
         </div>
 
         <h5>SHELL CALCULATION</h5>
-        <div className="grid gap-2 m-2">
+        <div className="grid m-2">
           {inputsShellCalc.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
         </div>
 
         <h5>HEAD CALCULATION</h5>
-        <div className="grid gap-2 m-2">
+        <div className="grid m-2">
           {inputsHeadCalc.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}

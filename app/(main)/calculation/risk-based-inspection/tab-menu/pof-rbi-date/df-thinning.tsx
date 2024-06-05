@@ -12,7 +12,7 @@ function DFThinning() {
             label: 'Start Date',
             required: true,
             autoFocus: true,
-            className: 'col'
+            className: ''
         },
         {
             name: 'thickness',
@@ -21,7 +21,7 @@ function DFThinning() {
             label: 'Thickness',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'corrosionAllowance',
@@ -30,7 +30,7 @@ function DFThinning() {
             label: 'Corrosion Allowance',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'designTemperature',
@@ -39,7 +39,8 @@ function DFThinning() {
             label: 'Design Temperature',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'designPressure',
@@ -48,7 +49,8 @@ function DFThinning() {
             label: 'Design Pressure',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'operatingTemperature',
@@ -57,7 +59,8 @@ function DFThinning() {
             label: 'Operating Temperature',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'operatingPressure',
@@ -66,7 +69,7 @@ function DFThinning() {
             label: 'Operating Pressure',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'designCode',
@@ -75,7 +78,8 @@ function DFThinning() {
             label: 'Design Code',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'equipmentType',
@@ -84,7 +88,8 @@ function DFThinning() {
             label: 'Equipment Type',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'componentType',
@@ -93,7 +98,7 @@ function DFThinning() {
             label: 'Component Type',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'geometryData',
@@ -102,7 +107,8 @@ function DFThinning() {
             label: 'Geometry Data',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'materialSpecification',
@@ -111,7 +117,8 @@ function DFThinning() {
             label: 'Material Specification',
             required: true,
             autoFocus: false,
-            className: 'col'
+            readOnly: true,
+            className: ''
         },
         {
             name: 'yieldStrength',
@@ -120,7 +127,7 @@ function DFThinning() {
             label: 'Yield Strength',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'tensileStrength',
@@ -129,7 +136,7 @@ function DFThinning() {
             label: 'Tensile Strength',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'weldJointEfficiency',
@@ -138,7 +145,7 @@ function DFThinning() {
             label: 'Weld Joint Efficiency',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
         {
             name: 'heatTracing',
@@ -147,13 +154,13 @@ function DFThinning() {
             label: 'Heat Tracing',
             required: true,
             autoFocus: false,
-            className: 'col'
+            className: ''
         },
     ];
 
     return(
         <>
-            <section className="grid gap-2 m-2">
+            <section className="grid m-2">
                 {inputs.map((props: any, key: number) => (
                     <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
                 ))}

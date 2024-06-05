@@ -7,7 +7,7 @@ function DFAlkalineCorrosion() {
 
     const inputs = [
         {
-            name: 'startDate',
+            name: 'shellSusceptibility',
             type: 'text',
             placeholder: 'Shell Susceptibility',
             label: 'Shell Susceptibility',
@@ -16,7 +16,7 @@ function DFAlkalineCorrosion() {
             className: 'col'
         },
         {
-            name: 'startDate',
+            name: 'headSusceptibility',
             type: 'text',
             placeholder: 'Head Susceptibility',
             label: 'Head Susceptibility',
@@ -25,7 +25,7 @@ function DFAlkalineCorrosion() {
             className: 'col'
         },
         {
-            name: 'startDate',
+            name: 'shellSeverityId',
             type: 'text',
             placeholder: 'Shell Severity Index',
             label: 'Shell Severity Index',
@@ -34,7 +34,7 @@ function DFAlkalineCorrosion() {
             className: 'col'
         },
         {
-            name: 'startDate',
+            name: 'headSeverityId',
             type: 'text',
             placeholder: 'Head Severity Index',
             label: 'Head Severity Index',
@@ -43,7 +43,7 @@ function DFAlkalineCorrosion() {
             className: 'col'
         },
         {
-            name: 'startDate',
+            name: 'ageTimeInService',
             type: 'text',
             placeholder: 'Age Time in Service',
             label: 'Age Time in Service',
@@ -52,7 +52,7 @@ function DFAlkalineCorrosion() {
             className: 'col'
         },
         {
-            name: 'startDate',
+            name: 'sheelSection',
             type: 'text',
             placeholder: 'Shell Section',
             label: 'Shell Section',
@@ -61,7 +61,7 @@ function DFAlkalineCorrosion() {
             className: 'col'
         },
         {
-            name: 'startDate',
+            name: 'headSection',
             type: 'text',
             placeholder: 'Head Section',
             label: 'Head Section',

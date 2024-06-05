@@ -16,8 +16,8 @@ export const GeneralDataService = {
 
     return (await res.json());
   },
-  async getItem() {
-    const res = await fetch(url, {
+  async getItem(id: string) {
+    const res = await fetch(url + "?componentId=" + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export const GeneralDataService = {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch Companies data');
     }
-
-    return (await res.json());
+    const data = await res.json();
+    return data[0];
   }
 };

@@ -91,7 +91,7 @@ function RiskBasedInspection() {
   };
 
   const data = useSelector((state: any) => state.Reducer);
-
+  
   return (
     <>
       <Card title={data.menu.label}>

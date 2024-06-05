@@ -1,5 +1,6 @@
 {
-  "items": [
+  "items": 
+  [
     {
       "id": "dfec",
       "tagOfItem": "Tag of item no 1a",
@@ -21,7 +22,8 @@
       "nameOfItem": "Name of item no 3"
     }
   ],
-  "equipments": [
+  "equipments": 
+  [
     {
       "id": "4d1a",
       "tagOfEquipment": "Tag of Equipment no 1",
@@ -47,7 +49,8 @@
       "itemId": "5d38"
     }
   ],
-  "components": [
+  "components": 
+  [
     {
       "id": "f061",
       "tagOfComponent": "Tag of component 10",
@@ -60,11 +63,13 @@
       "equipmentId": "4d1a"
     }
   ],
-  "assetSummary": [
+  "assetSummary": 
+  [
     {
       "componentId": "3a5f",
       "itemId": "",
-      "installation": {
+      "installation": 
+      {
         "equipment": "",
         "equipmentType": "",
         "componentShape": "",
@@ -73,20 +78,23 @@
         "designPressure": "",
         "diameter": ""
       },
-      "fulidProperties": {
+      "fulidProperties": 
+      {
         "fluidName": "",
         "fluidType": "",
         "fluidDescription": "",
         "operationFluidPhase": "",
         "ph": ""
       },
-      "documents": {
+      "documents": 
+      {
         "pfdName": "",
         "pfdDocUrl": ""
       }
     }
   ],
-  "generalData": [
+  "generalData": 
+  [
     {
       "componentId": "3a5f",
       "tagNumber": "JNE-MAM-106 (V-300)",
@@ -130,6 +138,142 @@
       "headCorrosionAllowance": "1.58 mm",
       "headMinimumThickness": "18.40 mm",
       "headCorrosionRate": "0.006 mm/years"
+    }
+  ],
+  "pofRBIDate": 
+  [
+    {
+      "componentId": "3a5f",
+      "dfThinning": 
+      {
+        "startDate": "01/01/1987",
+        "thickness": "18.4",
+        "corrosionAllowance": "1.58",
+        "designTemperature": "",  
+        "designPressure": "",
+        "operatingTemperature": "",
+        "operatingPressure": "",
+        "designCode": "",
+        "equipmentType": "",
+        "componentType": "",
+        "geometryData": "",
+        "materialSpecification": "",
+        "yieldStrength": "",
+        "tensileStrength": "",
+        "weldJointEfficiency": "",
+        "heatTracing": ""
+      },
+      "dfExternalCorrosion": 
+      {
+        "yearAssesment": "",
+        "yearInstallation": "",
+        "thicknessValue": "",
+        "baseCorrosionRate": "",
+        "finalCorrosionRate": "",
+        "shellTimeInService": "",
+        "headTimeInService": "",
+        "ageCoat": "",
+        "adjusmentCoat": "",
+        "age": "",
+        "minReqWallThickness": "",
+        "shellDFParameter": "",
+        "headDFParameter": "",
+        "flowStress": "",
+        "shellStrengthRatio": "",
+        "headStrengthRatio": "",
+        "numInspA": "",
+        "numInspB": "",
+        "numInspC": "",
+        "numInspD": ""
+      },
+      "dfAlkaline": {
+        "shellSusceptibility": "",
+        "headSusceptibility": "",
+        "shellSeverityId": "",
+        "headSeverityId": "",
+        "ageTimeInService": "",
+        "sheelSection": "",
+        "headSection": ""
+      },
+      "pofValue": {
+        "gffTotal": "",
+        "shellThinning": "",
+        "headThinning": "",
+        "shellExternal": "",
+        "headExternal": "",
+        "shellTotal": "",
+        "headTotal": "",
+        "shellSection": "",
+        "headSection": ""
+      }
+    }
+  ],
+  "pofPlanDate": 
+  [
+    {
+      "componentId": "",
+      "dfThinning": 
+      {
+        "startDate": "",
+        "thickness": "",
+        "corrosionAllowance": "",
+        "designTemperature": "",
+        "designPressure": "",
+        "operatingTemperature": "",
+        "operatingPressure": "",
+        "designCode": "",
+        "equipmentType": "",
+        "componentType": "",
+        "geometryData": "",
+        "materialSpecification": "",
+        "yieldStrength": "",
+        "tensileStrength": "",
+        "weldJointEfficiency": "",
+        "heatTracing": ""
+      },
+      "dfExternalCorrosion": 
+      {
+        "yearAssesment": "",
+        "yearInstallation": "",
+        "thicknessValue": "",
+        "baseCorrosionRate": "",
+        "finalCorrosionRate": "",
+        "shellTimeInService": "",
+        "headTimeInService": "",
+        "ageCoat": "",
+        "adjusmentCoat": "",
+        "age": "",
+        "minReqWallThickness": "",
+        "shellDFParameter": "",
+        "headDFParameter": "",
+        "flowStress": "",
+        "shellStrengthRatio": "",
+        "headStrengthRatio": "",
+        "numInspA": "",
+        "numInspB": "",
+        "numInspC": "",
+        "numInspD": ""
+      },
+      "dfAlkaline": {
+        "shellSusceptibility": "",
+        "headSusceptibility": "",
+        "shellSeverityId": "",
+        "headSeverityId": "",
+        "ageTimeInService": "",
+        "sheelSection": "",
+        "headSection": ""
+      },
+      "pofValue": {
+        "gffTotal": "",
+        "shellThinning": "",
+        "headThinning": "",
+        "shellExternal": "",
+        "headExternal": "",
+        "shellTotal": "",
+        "headTotal": "",
+        "shellSection": "",
+        "headSection": ""
+      }
     }
   ]
 }
