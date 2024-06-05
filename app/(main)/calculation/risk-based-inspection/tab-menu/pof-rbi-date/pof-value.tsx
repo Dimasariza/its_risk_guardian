@@ -1,5 +1,4 @@
 import InputTypeText from "@/fragments/input-type-text";
-import { POFDValue } from "@/service/calculation/pofDValue";
 import { getValue } from "@/service/calculation/pofRBIDateService";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
