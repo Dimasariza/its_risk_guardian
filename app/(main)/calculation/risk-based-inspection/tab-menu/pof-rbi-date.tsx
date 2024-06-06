@@ -11,12 +11,6 @@ function POFRBIDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
 
   const items = [
-    // {
-    //   label: 'GFF',
-    //   command: () => {
-    //     setTabActive('gff');
-    //   }
-    // },
     {
       label: 'DF Thinning',
       command: () => {
@@ -35,12 +29,6 @@ function POFRBIDate() {
         setTabActive('df_alkaline');
       }
     },
-    // {
-    //   label: 'Total DF',
-    //   command: () => {
-    //     setTabActive('total_df');
-    //   }
-    // },
     {
       label: 'POF Value',
       command: () => {
@@ -51,20 +39,16 @@ function POFRBIDate() {
 
   const tabMenuView = () => {
     switch (tabActive) {
-      // case 'gff':
-      //   return <div>GFF Works!!!</div>;
       case 'df_thinning':
         return <DFThinning />;
       case 'df_ex_corrosion':
         return <DFExternalCorrosion />;
       case 'df_alkaline':
         return <DFAlkalineCorrosion />;
-      case 'total_df':
-        return <div>Total DF Works!!!</div>;
       case 'pof_value':
         return <POFValue />;
       default:
-        return <div></div>;
+        return <DFThinning />;
     }
   };
 

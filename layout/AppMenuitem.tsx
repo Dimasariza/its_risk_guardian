@@ -81,7 +81,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
   };
 
   return (
-    <TreeMenu content={text(item)} style={treeStyles}>
+    <TreeMenu content={text(item)} key={item?.label} style={treeStyles}>
       {subMenu}
     </TreeMenu>
 

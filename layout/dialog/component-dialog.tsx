@@ -8,6 +8,7 @@ import { IAssetComponent } from '@/types/assetComponent';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
+import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -31,7 +32,7 @@ function ComponentDialog({ visible, setVisible }: any) {
       label: 'Tag of Component',
       required: true,
       autoFocus: true,
-      className: 'col'
+      className: ''
     },
     {
       name: 'nameOfComponent',
@@ -40,7 +41,7 @@ function ComponentDialog({ visible, setVisible }: any) {
       label: 'Name of Component',
       required: true,
       autoFocus: false,
-      className: 'col'
+      className: ''
     }
   ];
 
@@ -76,11 +77,20 @@ function ComponentDialog({ visible, setVisible }: any) {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState<IAssetComponent | any>([]);
+  const [selectedComponentType, setselectedComponentType] = useState(null);
+  const componentType = [
+    {name: "Filter"}
+  ];
 
   const handleSelectItem = (e: any) => {
     setValue((prev) => ({ ...prev, equipmentId: e.value.id }));
     setSelectedItem(e.value);
   };
+
+  const handleSelectComponentType = (e: any) => {
+    setValue((prev) => ({ ...prev, componentType: e.value }));
+    setselectedComponentType(e.value)
+  }
 
   const dispatch = useDispatch();
 
@@ -120,12 +130,33 @@ function ComponentDialog({ visible, setVisible }: any) {
       <Toast ref={toast} />
       <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, component: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
-          <label htmlFor="equipment">Equipment</label>
-          <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfEquipment" placeholder="Select an Equipment" />
+
+          <div className='flex flex-column col p-1'>
+            <label htmlFor="equipment" className='m-1'>Equipment</label>
+            <div className='px-1'>
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfEquipment" placeholder="Select an Equipment" />
+              {error.equipment && <Message severity="error" text={error.equipment} />}
+            </div>
+          </div>
+
+          <div className='flex flex-column col p-1'>
+            <label htmlFor="equipmentType" className='m-1'>Component Type</label>
+            <div className='px-1'>
+              <Dropdown id="equipmentType" value={selectedComponentType} onChange={handleSelectComponentType} options={componentType} optionLabel="name" placeholder="Select Component Type" />
+              {error.equipment && <Message severity="error" text={error.equipment} />}
+            </div>
+          </div>
 
           {inputs.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+            <InputTypeText 
+              props={props} 
+              key={key} 
+              value={value} 
+              setValue={setValue} 
+              errorMessage={error[props.name]} 
+            />
           ))}
+
         </section>
       </Dialog>
     </>

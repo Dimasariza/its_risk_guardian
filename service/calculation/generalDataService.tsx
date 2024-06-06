@@ -1,4 +1,4 @@
-const url = process.env.DB_URL + '/generalData' || 'http://localhost:3030/generalData';
+const url = process.env.DB_URL + '/general_data' || 'http://localhost:3030/generalData';
 export const GeneralDataService = {
   async postItem(value: any) {
     const res = await fetch(url, {
@@ -28,7 +28,7 @@ export const GeneralDataService = {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch Companies data');
     }
-    const data = await res.json();
-    return data[0] ?? {};
+    const {data} = await res.json();
+    return data ?? {};
   }
 };

@@ -165,7 +165,6 @@ function DFThinning() {
     useEffect(() => {
       getThinning(data.menu.id)
       .then(res => {
-        console.log(res)
         setValue(res)
       })
     }, [data])

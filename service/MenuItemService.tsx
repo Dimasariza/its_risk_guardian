@@ -1,4 +1,4 @@
-const url = process.env.DB_URL || 'http://localhost:3030';
+const url = process.env.DB_URL;
 
 export const MenuItemService = {
   async getAllAssets() {
@@ -8,7 +8,7 @@ export const MenuItemService = {
       fetch(url + '/components')
     ]);
 
-    const [items, equipment, component] = await Promise.all([
+    const [{data: items}, {data: equipment}, {data: component}] = await Promise.all([
       fetchItem.json(), 
       fetchEquipment.json(), 
       fetchComponent.json()
@@ -42,11 +42,5 @@ export const MenuItemService = {
     })
 
     return [...menuItem, ...standAloneComp.map(c => ({...c, label: c.nameOfComponent}))];
-    // {
-      // items: items.map((c: any, key: number) => ({ ...c, key })),
-      // items: menuItem,
-      // equipment: equipment.map((c: any, key: number) => ({ ...c, key })),
-      // component: component.map((c: any, key: number) => ({ ...c, key }))
-    // };
   }
 };

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 function GeneralData() {
   const inputsGeneralSpec = [
     {
-      name: 'tagNumber',
+      name: 'gData_tagNumber',
       type: 'text',
       placeholder: 'Tag Number',
       label: 'Tag Number',
@@ -17,7 +17,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'service',
+      name: 'gData_service',
       type: 'text',
       placeholder: 'Service',
       label: 'Service',
@@ -26,7 +26,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'manufacturedBy',
+      name: 'gData_manufacturedBy',
       type: 'text',
       placeholder: 'Manufactured By',
       label: 'Manufactured By',
@@ -35,7 +35,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'typeOfPressureVessel',
+      name: 'gData_typeOfPressureVessel',
       type: 'text',
       placeholder: 'Type of Pressure Vessel',
       label: 'Type of Pressure Vessel',
@@ -44,7 +44,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'geometryData',
+      name: 'gData_geometryData',
       type: 'text',
       placeholder: 'Geometry Data',
       label: 'Geometry Data',
@@ -53,7 +53,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'code',
+      name: 'gData_code',
       type: 'text',
       placeholder: 'Code',
       label: 'Code',
@@ -62,7 +62,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'designPressure',
+      name: 'gData_designPressure',
       type: 'text',
       placeholder: 'Design Pressure',
       label: 'Design Pressure',
@@ -71,7 +71,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'operatingPressure',
+      name: 'gData_operatingPressure',
       type: 'text',
       placeholder: 'Operating Pressure',
       label: 'Operating Pressure',
@@ -80,7 +80,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'operatingTemperature',
+      name: 'gData_operatingTemperature',
       type: 'text',
       placeholder: 'Operating Temperature',
       label: 'Operating Temperature',
@@ -89,7 +89,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'dimmension',
+      name: 'gData_dimmension',
       type: 'text',
       placeholder: 'Dimension',
       label: 'Dimension',
@@ -98,7 +98,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'vesselVolume',
+      name: 'gData_vesselVolume',
       type: 'text',
       placeholder: 'Vessel Volume',
       label: 'Vessel Volume',
@@ -107,7 +107,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'support',
+      name: 'gData_support',
       type: 'text',
       placeholder: 'Support',
       label: 'Support',
@@ -116,7 +116,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'jointEfficiency',
+      name: 'gData_jointEfficiency',
       type: 'text',
       placeholder: 'Joint Efficiency',
       label: 'Joint Efficiency (Head/Sheel)',
@@ -125,7 +125,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'corrosionAllowance',
+      name: 'gData_corrosionAllowance',
       type: 'text',
       placeholder: 'Corrosion Allowance',
       label: 'Corrosion Allowance',
@@ -134,7 +134,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'yearBuilt',
+      name: 'gData_yearBuilt',
       type: 'text',
       placeholder: 'Year Built',
       label: 'Year Built',
@@ -143,7 +143,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'material',
+      name: 'gData_material',
       type: 'text',
       placeholder: 'Material',
       label: 'Material',
@@ -152,7 +152,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'lastInspection',
+      name: 'gData_lastInspection',
       type: 'text',
       placeholder: 'Last Inspection',
       label: 'Last Inspection',
@@ -164,7 +164,7 @@ function GeneralData() {
 
   const inputsShellCalc = [
     {
-      name: 'shellTagNumber',
+      name: 'gData_shellTagNumber',
       type: 'text',
       placeholder: 'Tag Number',
       label: 'Tag Number',
@@ -173,7 +173,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellService',
+      name: 'gData_shellService',
       type: 'text',
       placeholder: 'Service',
       label: 'Service',
@@ -182,7 +182,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellCode',
+      name: 'gData_shellCode',
       type: 'text',
       placeholder: 'Code',
       label: 'Code',
@@ -191,7 +191,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellDesignPressure',
+      name: 'gData_shellDesignPressure',
       type: 'text',
       placeholder: 'Design Pressure',
       label: 'Design Pressure',
@@ -200,7 +200,16 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellOuterDiameter',
+      name: 'gData_shellDesignTemperature',
+      type: 'text',
+      placeholder: 'Design Temperature',
+      label: 'Design Temperature',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_shellOuterDiameter',
       type: 'text',
       placeholder: 'Outer Diameter',
       label: 'Outer Diameter',
@@ -209,7 +218,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellMaterial',
+      name: 'gData_shellMaterial',
       type: 'text',
       placeholder: 'Material',
       label: 'Material',
@@ -218,7 +227,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellAllowableStress',
+      name: 'gData_shellAllowableStress',
       type: 'text',
       placeholder: 'Allowable Stress',
       label: 'Allowable Stress',
@@ -227,7 +236,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellEfficiency',
+      name: 'gData_shellEfficiency',
       type: 'text',
       placeholder: 'Efficiency',
       label: 'Efficiency',
@@ -236,7 +245,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellCorrosionAllowance',
+      name: 'gData_shellCorrosionAllowance',
       type: 'text',
       placeholder: 'Corrosion Allowance',
       label: 'Corrosion Allowance',
@@ -245,7 +254,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellMinimumThickness',
+      name: 'gData_shellMinimumThickness',
       type: 'text',
       placeholder: 'Minimum Thickness',
       label: 'Minimum Thickness',
@@ -254,7 +263,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'shellCorrosionRate',
+      name: 'gData_shellCorrosionRate',
       type: 'text',
       placeholder: 'Corrosion Rate',
       label: 'Corrosion Rate',
@@ -266,7 +275,7 @@ function GeneralData() {
   
   const inputsHeadCalc = [
     {
-      name: 'headTagNumber',
+      name: 'gData_headTagNumber',
       type: 'text',
       placeholder: 'Tag Number',
       label: 'Tag Number',
@@ -275,7 +284,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headService',
+      name: 'gData_headService',
       type: 'text',
       placeholder: 'Service',
       label: 'Service',
@@ -284,7 +293,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headCode',
+      name: 'gData_headCode',
       type: 'text',
       placeholder: 'Code',
       label: 'Code',
@@ -293,7 +302,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headDesignPressure',
+      name: 'gData_headDesignPressure',
       type: 'text',
       placeholder: 'Head Design Pressure',
       label: 'Head Design Pressure (P)',
@@ -302,7 +311,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headDesignTemperature',
+      name: 'gData_headDesignTemperature',
       type: 'text',
       placeholder: 'Head Design Temperature',
       label: 'Head Design Temperature (T)',
@@ -311,7 +320,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headOuterDiameter',
+      name: 'gData_headOuterDiameter',
       type: 'text',
       placeholder: 'Outer Diameter',
       label: 'Outer Diameter',
@@ -320,7 +329,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headMaterial',
+      name: 'gData_headMaterial',
       type: 'text',
       placeholder: 'Material',
       label: 'Material',
@@ -329,7 +338,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headAllowableStress',
+      name: 'gData_headAllowableStress',
       type: 'text',
       placeholder: 'Allowable Stress',
       label: 'Allowable Stress',
@@ -338,7 +347,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headEfficiency',
+      name: 'gData_headEfficiency',
       type: 'text',
       placeholder: 'Efficiency',
       label: 'Efficiency',
@@ -347,7 +356,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headCorrosionAllowance',
+      name: 'gData_headCorrosionAllowance',
       type: 'text',
       placeholder: 'Corrosion Allowance',
       label: 'Corrosion Allowance',
@@ -356,7 +365,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headMinimumThickness',
+      name: 'gData_headMinimumThickness',
       type: 'text',
       placeholder: 'Minimum Thickness',
       label: 'Minimum Thickness',
@@ -365,7 +374,7 @@ function GeneralData() {
       className: ''
     },
     {
-      name: 'headCorrosionRate',
+      name: 'gData_headCorrosionRate',
       type: 'text',
       placeholder: 'Corrosion Rate',
       label: 'Corrosion Rate',

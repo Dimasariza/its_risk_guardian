@@ -8,6 +8,7 @@ import { IAssetItem } from '@/types/assetItem';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
+import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react';
 
@@ -74,12 +75,21 @@ function EquipmentDialog({ visible, setVisible }: any) {
   );
 
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedEquipmentType, setselectedEquipmentType] = useState(null);
   const [items, setItems] = useState<IAssetItem | any>([]);
+  const equipmentType = [
+    {name: "FWKO Separator"}
+  ]
 
   const handleSelectItem = (e: any) => {
     setValue((prev) => ({ ...prev, itemId: e.value.id }));
     setSelectedItem(e.value);
   };
+
+  const handleSelectEquipmentType = (e: any) => {
+    setValue((prev) => ({ ...prev, equipmentType: e.value }));
+    setselectedEquipmentType(e.value)
+  }
 
   useEffect(() => {
     AssetItemService.getItem()
@@ -108,8 +118,22 @@ function EquipmentDialog({ visible, setVisible }: any) {
       <Toast ref={toast} />
       <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, equipment: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
-          <label htmlFor="equipment">Item</label>
-          <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfItem" placeholder="Select an Item" />
+
+          <div className='flex flex-column col p-1'>
+            <label htmlFor="equipment" className='m-1'>Item</label>
+            <div className='px-1'>
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfItem" placeholder="Select an Item" />
+              {error.equipment && <Message severity="error" text={error.equipment} />}
+            </div>
+          </div>
+
+          <div className='flex flex-column col p-1'>
+            <label htmlFor="equipmentType" className='m-1'>Equipment Type</label>
+            <div className='px-1'>
+              <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select Equipment Type" />
+              {error.equipment && <Message severity="error" text={error.equipment} />}
+            </div>
+          </div>
 
           {inputs.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
