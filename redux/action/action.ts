@@ -16,3 +16,10 @@ export const AssetData = () => {
         type: "ASSET_DATA"
     }
 }
+
+export const SaveData = (save: boolean) => {
+    return {
+        type: "SAVE_DATA",
+        save
+    }
+}

@@ -22,7 +22,7 @@ export const RerenderMenu = (state: any = {rerender: false}, { type }: any) => {
     }
 };
 
-export const AssetData = (state: any, type: any) => {
+export const AssetData = (state: any, type: string) => {
     switch(type) {
         case "ASSET_DATA":
             return {
@@ -32,3 +32,13 @@ export const AssetData = (state: any, type: any) => {
             return state;
     }
 };
+
+export const SaveData = (state: boolean = false, {type, save}: any) => {
+    switch(type) {
+        case "SAVE_DATA":
+            console.log(save)
+            return { state: save };
+        default:
+            return state;
+    }
+}

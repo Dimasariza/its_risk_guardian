@@ -1,6 +1,5 @@
 import { InputText } from 'primereact/inputtext';
 import { Message } from 'primereact/message';
-import { Fragment } from 'react';
 
 function InputTypeText({ props, value, setValue, errorMessage }: any) {
   const { name, placeholder } = props;
