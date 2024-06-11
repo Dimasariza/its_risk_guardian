@@ -1,7 +1,9 @@
+import InputCalendarYear from "@/fragments/input-year-range";
 import InputTypeText from "@/fragments/input-type-text";
 import { getExternalCorrosion } from "@/service/calculation/pofRBIDateService";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import InputYearRange from "@/fragments/input-year-range";
 
 function DFExternalCorrosion() {
     const [value, setValue] = useState<any>({});
@@ -10,20 +12,20 @@ function DFExternalCorrosion() {
     const inputs: any = [
         {
             name: 'yearAssesment',
-            type: 'text',
+            type: 'year-range',
             placeholder: 'Year Assesment',
             required: true,
             autoFocus: true,
             className: ''
         },
-        {
-            name: 'yearInstallation',
-            type: 'text',
-            placeholder: 'Year Installation',
-            required: true,
-            autoFocus: false,
-            className: ''
-        },
+        // {
+        //     name: 'yearInstallation',
+        //     type: 'year',
+        //     placeholder: 'Year Installation',
+        //     required: true,
+        //     autoFocus: false,
+        //     className: ''
+        // },
         {
             name: 'thicknessValue',
             type: 'text',
@@ -182,9 +184,25 @@ function DFExternalCorrosion() {
     return (
         <>
             <section className="grid m-2">
-                {inputs.map((props: any, key: number) => (
-                    <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-                ))}
+                {inputs.map((props: any, key: number) => {
+                    if(props.type == "text") {
+                        return <InputTypeText 
+                            props={props} 
+                            key={key} 
+                            value={value} 
+                            setValue={setValue} 
+                            errorMessage={error[props.name]} 
+                        />
+                    } else if(props.type == "year-range") {
+                        return <InputYearRange 
+                            props={props} 
+                            key={key} 
+                            value={value} 
+                            setValue={setValue} 
+                            errorMessage={error[props.name]} 
+                        />
+                    }
+                })}
             </section>
         </>
     )

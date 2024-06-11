@@ -43,3 +43,14 @@ export const SaveReducer = (state: boolean = false, {type}: any) => {
             return state;
     }
 };
+
+export const EditReducer = (state: boolean = false, {type}: any) => {
+    switch(type) {
+        case "EDIT_DATA":
+            return true;
+        case "EDIT_DONE":
+            return false;
+        default:
+            return state
+    }
+}

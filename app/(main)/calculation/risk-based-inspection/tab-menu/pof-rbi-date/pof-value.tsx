@@ -108,7 +108,6 @@ function POFValue() {
                     ))}
                 </div>
 
-
                 <h5>DF Total</h5>
                 <div className="grid m-2">
                     {inputDFTotal.map((props: any, key: number) => (
@@ -123,7 +122,6 @@ function POFValue() {
                         <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
                     ))}
                 </div>
-
             </section>
         </>
     )
