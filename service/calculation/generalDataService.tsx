@@ -30,8 +30,6 @@ export const GeneralDataService = {
     }
     const data = await res.json();
     return data[0] ?? {};
-<<<<<<< HEAD
-=======
   },
   async editItem(data: any) {
     const res = await fetch(url + "?gData_componentId=" + data.id, {
@@ -48,6 +46,5 @@ export const GeneralDataService = {
     }
 
     return res.json();
->>>>>>> 2127c55df2b771409112ff256773a88bd6332ea8
   }
 };

@@ -1,6 +1,5 @@
 {
-  "items": 
-  [
+  "items": [
     {
       "id": "dfec",
       "tagOfItem": "Tag of item no 1a",
@@ -20,10 +19,14 @@
       "id": "5446",
       "tagOfItem": "Tag of item no 3",
       "nameOfItem": "Name of item no 3"
+    },
+    {
+      "id": "a159",
+      "tagOfItem": "Uni cintaku sayangku",
+      "nameOfItem": "Dimas"
     }
   ],
-  "equipments": 
-  [
+  "equipments": [
     {
       "id": "4d1a",
       "tagOfEquipment": "Tag of Equipment no 1",
@@ -50,8 +53,7 @@
       "itemId": "5d38"
     }
   ],
-  "components": 
-  [
+  "components": [
     {
       "id": "f061",
       "tagOfComponent": "Tag of component 10",
@@ -64,13 +66,11 @@
       "equipmentId": "4d1a"
     }
   ],
-  "assetSummary": 
-  [
+  "assetSummary": [
     {
       "componentId": "3a5f",
       "itemId": "",
-      "installation": 
-      {
+      "installation": {
         "equipment": "",
         "equipmentType": "",
         "componentShape": "",
@@ -79,27 +79,25 @@
         "designPressure": "",
         "diameter": ""
       },
-      "fulidProperties": 
-      {
+      "fulidProperties": {
         "fluidName": "",
         "fluidType": "",
         "fluidDescription": "",
         "operationFluidPhase": "",
         "ph": ""
       },
-      "documents": 
-      {
+      "documents": {
         "pfdName": "",
         "pfdDocUrl": ""
-      }
+      },
+      "id": "9924"
     }
   ],
-  "general_data": 
-  [
+  "general_data": [
     {
       "gData_componentId": "3a5f",
       "gData_tagNumber": "JNE-MAM-106 (V-300)",
-      "gData_service":"FWKO Separator",
+      "gData_service": "FWKO Separator",
       "gData_manufacturedBy": "PT. Gunanusa Utama Fabricators",
       "gData_typeOfPressureVessel": "Horizontal",
       "gData_geometryData": "Ellipsoidal",
@@ -138,12 +136,13 @@
       "gData_headEfficiency": "1",
       "gData_headCorrosionAllowance": "1.58 mm",
       "gData_headMinimumThickness": "18.40 mm",
-      "gData_headCorrosionRate": "0.006 mm/years"
+      "gData_headCorrosionRate": "0.006 mm/years",
+      "id": "0fc5"
     },
     {
       "gData_componentId": "f061",
       "gData_tagNumber": "JNE-MAM-107 (V-300)",
-      "gData_service":"FWKO",
+      "gData_service": "FWKO",
       "gData_manufacturedBy": "PT. Gunanusa Utama",
       "gData_typeOfPressureVessel": "Vertical",
       "gData_geometryData": "Tube",
@@ -182,19 +181,18 @@
       "gData_headEfficiency": "1",
       "gData_headCorrosionAllowance": "1.58 mm",
       "gData_headMinimumThickness": "18.40 mm",
-      "gData_headCorrosionRate": "0.006 mm/years"
+      "gData_headCorrosionRate": "0.006 mm/years",
+      "id": "d6a2"
     }
   ],
-  "pofRBIDate": 
-  [
+  "pofRBIDate": [
     {
       "componentId": "3a5f",
-      "dfThinning": 
-      {
+      "dfThinning": {
         "startDate": "01/01/1987",
         "thickness": "18.4",
         "corrosionAllowance": "1.58",
-        "designTemperature": "93.4",  
+        "designTemperature": "93.4",
         "designPressure": "301",
         "operatingTemperature": "54.5",
         "operatingPressure": "241",
@@ -208,8 +206,7 @@
         "weldJointEfficiency": "1",
         "heatTracing": "No"
       },
-      "dfExternalCorrosion": 
-      {
+      "dfExternalCorrosion": {
         "yearAssesment": "2024",
         "yearInstallation": "1987",
         "thicknessValue": "0.72",
@@ -250,15 +247,14 @@
         "headTotal": "0.1",
         "shellSection": "0,000306",
         "headSection": "0,0003060,000306"
-      }
+      },
+      "id": "c4f8"
     }
   ],
-  "pofPlanDate": 
-  [
+  "pofPlanDate": [
     {
       "componentId": "3a5f",
-      "dfThinning": 
-      {
+      "dfThinning": {
         "startDate": "test start date",
         "thickness": "",
         "corrosionAllowance": "",
@@ -276,8 +272,7 @@
         "weldJointEfficiency": "",
         "heatTracing": ""
       },
-      "dfExternalCorrosion": 
-      {
+      "dfExternalCorrosion": {
         "yearAssesment": "",
         "yearInstallation": "",
         "thicknessValue": "",
@@ -318,7 +313,8 @@
         "headTotal": "",
         "shellSection": "",
         "headSection": ""
-      }
+      },
+      "id": "9968"
     }
   ]
 }

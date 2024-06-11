@@ -10,7 +10,7 @@ import { SiMicrosoftexcel } from 'react-icons/si';
 import { MdOutlineQrCode2 } from 'react-icons/md';
 import { SiWebcomponentsdotorg } from 'react-icons/si';
 import { useDispatch, useSelector } from 'react-redux';
-import { SaveData } from '@/redux/action/action';
+import { SaveData, SaveDone } from '@/redux/action/action';
 
 function AppMegaMenu() {
   const router = useRouter();
@@ -22,19 +22,27 @@ function AppMegaMenu() {
 
   // const [save, setSave] = useState<any>(false);
   const dispatch = useDispatch();
-  const data = useSelector((state: any) => state.SaveData)
+  const save = useSelector((state: any) => state.SaveReducer);
+  const edit = useSelector((state: any) => state.SaveReducer);
+
 
   const items: any = [
     {
       label: '',
       icon: 'pi pi-save',
-      className: 'mr-8',
-      // disabled: data,
+      className: '',
+      disabled: save,
       command: () => {
-        dispatch(SaveData(true))
-        console.log(data)
-        // setSave(true);
-        // dispatch(true)
+        dispatch(SaveData())
+      }
+    },
+    {
+      label: '',
+      icon: 'pi pi-file-edit',
+      className: 'mr-8',
+      disabled: edit,
+      command: () => {
+        dispatch(SaveData())
       }
     },
     {

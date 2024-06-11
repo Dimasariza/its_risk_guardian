@@ -5,10 +5,9 @@ function InputDropDown({ props, value, setValue, errorMessage }: any) {
   const { name, placeholder, options } = props;
 
   return (
-    <div className='flex flex-column p-1 flex-auto'>
+    <div className='p-2 flex flex-column lg:col-4 md:col-6 sm:col-12'>
       <label htmlFor={name} className="m-1">{placeholder}</label>
-      <div className='px-1'>
-        <div className='w-full bg-primary'>
+      {/* <div className='px-1'> */}
         <Dropdown 
           {...props}
           id={name} 
@@ -18,9 +17,8 @@ function InputDropDown({ props, value, setValue, errorMessage }: any) {
           optionLabel={name} 
           placeholder={placeholder} 
         />
-        </div>
         {errorMessage && <Message severity="error" text={errorMessage} />}
-      </div>
+      {/* </div> */}
     </div>
   );
 }

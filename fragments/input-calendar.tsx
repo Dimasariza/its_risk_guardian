@@ -5,7 +5,7 @@ function InputCalendar({ props, value, setValue, errorMessage }: any) {
   const { name, placeholder } = props;
 
   return (
-    <div className='flex flex-column  p-1'>
+    <div className='p-2 lg:col-4 md:col-6 sm:col-12'>
       <label htmlFor={name} className="m-1">{placeholder}</label>
       <div className='px-1'>
         <Calendar 

@@ -15,8 +15,9 @@ function DFThinning() {
             placeholder: 'Start Date',
             label: 'Start Date',
             required: true,
+            readOnly: false,
             autoFocus: false,
-            className: 'w-max'
+            className: ''
         },
         {
             name: 'thickness',
@@ -24,6 +25,7 @@ function DFThinning() {
             placeholder: 'Thickness',
             label: 'Thickness',
             required: true,
+            readOnly: false,
             autoFocus: true,
             className: ''
         },
@@ -33,6 +35,7 @@ function DFThinning() {
             placeholder: 'Corrosion Allowance',
             label: 'Corrosion Allowance',
             required: true,
+            readOnly: false,
             autoFocus: false,
             className: ''
         },
@@ -72,6 +75,7 @@ function DFThinning() {
             placeholder: 'Operating Pressure',
             label: 'Operating Pressure',
             required: true,
+            readOnly: false,
             autoFocus: false,
             className: ''
         },
@@ -90,25 +94,26 @@ function DFThinning() {
             type: 'drop-down',
             placeholder: 'Equipment Type',
             label: 'Equipment Type',
-            required: true,
+            disabled: true,
             autoFocus: false,
             readOnly: true,
             options: [
                 { equipmentType: "FWKO Separator" }, 
             ],
-            className: 'w-auto'
+            className: 'w-max'
         },
         {
             name: 'componentType',
             type: 'drop-down',
             placeholder: 'Component Type',
             label: 'Component Type',
+            disabled: false,
             required: true,
             autoFocus: false,
             options: [
                 { componentType: "Filter" }, 
             ],
-            className: 'w-auto'
+            className: 'w-max'
         },
         {
             name: 'geometryData',
@@ -117,11 +122,11 @@ function DFThinning() {
             label: 'Geometry Data',
             required: true,
             autoFocus: false,
-            readOnly: true,
+            disabled: true,
             options: [
                 { geometryData: "2:1 Ellipsoidal" }, 
             ],
-            className: 'w-auto'
+            className: 'w-max'
         },
         {
             name: 'materialSpecification',
@@ -139,6 +144,7 @@ function DFThinning() {
             placeholder: 'Yield Strength',
             label: 'Yield Strength',
             required: true,
+            readOnly: true,
             autoFocus: false,
             className: ''
         },
@@ -148,6 +154,7 @@ function DFThinning() {
             placeholder: 'Tensile Strength',
             label: 'Tensile Strength',
             required: true,
+            readOnly: true,
             autoFocus: false,
             className: ''
         },
@@ -157,6 +164,7 @@ function DFThinning() {
             placeholder: 'Weld Joint Efficiency',
             label: 'Weld Joint Efficiency',
             required: true,
+            readOnly: true,
             autoFocus: false,
             className: ''
         },
@@ -166,6 +174,7 @@ function DFThinning() {
             placeholder: 'Heat Tracing',
             label: 'Heat Tracing',
             required: true,
+            disabled: true,
             autoFocus: false,
             options: [{ heatTracing: "Yes" }, { heatTracing: "No" }],
             className: 'w-max'
@@ -183,7 +192,7 @@ function DFThinning() {
 
     return(
         <>
-            <section className="flex grid m-2">
+            <section className="grid m-2">
                 {inputs.map((props: any, key: number) => {
                     if(props.type == "text") {
                         return <InputTypeText 
