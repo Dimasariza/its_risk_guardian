@@ -13,7 +13,7 @@ function DFExternalCorrosion() {
             type: 'text',
             placeholder: 'Year Assesment',
             required: true,
-            autoFocus: false,
+            autoFocus: true,
             className: ''
         },
         {

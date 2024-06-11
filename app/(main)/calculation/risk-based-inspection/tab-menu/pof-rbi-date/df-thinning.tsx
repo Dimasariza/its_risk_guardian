@@ -1,3 +1,5 @@
+import InputCalendar from "@/fragments/input-calendar";
+import InputDropDown from "@/fragments/input-drop-down";
 import InputTypeText from "@/fragments/input-type-text";
 import { getThinning } from "@/service/calculation/pofRBIDateService";
 import { useEffect, useState } from "react";
@@ -9,12 +11,12 @@ function DFThinning() {
     const inputs = [
         {
             name: 'startDate',
-            type: 'text',
+            type: 'calendar',
             placeholder: 'Start Date',
             label: 'Start Date',
             required: true,
-            autoFocus: true,
-            className: ''
+            autoFocus: false,
+            className: 'w-max'
         },
         {
             name: 'thickness',
@@ -22,7 +24,7 @@ function DFThinning() {
             placeholder: 'Thickness',
             label: 'Thickness',
             required: true,
-            autoFocus: false,
+            autoFocus: true,
             className: ''
         },
         {
@@ -85,32 +87,41 @@ function DFThinning() {
         },
         {
             name: 'equipmentType',
-            type: 'text',
+            type: 'drop-down',
             placeholder: 'Equipment Type',
             label: 'Equipment Type',
             required: true,
             autoFocus: false,
             readOnly: true,
-            className: ''
+            options: [
+                { equipmentType: "FWKO Separator" }, 
+            ],
+            className: 'w-auto'
         },
         {
             name: 'componentType',
-            type: 'text',
+            type: 'drop-down',
             placeholder: 'Component Type',
             label: 'Component Type',
             required: true,
             autoFocus: false,
-            className: ''
+            options: [
+                { componentType: "Filter" }, 
+            ],
+            className: 'w-auto'
         },
         {
             name: 'geometryData',
-            type: 'text',
+            type: 'drop-down',
             placeholder: 'Geometry Data',
             label: 'Geometry Data',
             required: true,
             autoFocus: false,
             readOnly: true,
-            className: ''
+            options: [
+                { geometryData: "2:1 Ellipsoidal" }, 
+            ],
+            className: 'w-auto'
         },
         {
             name: 'materialSpecification',
@@ -151,12 +162,13 @@ function DFThinning() {
         },
         {
             name: 'heatTracing',
-            type: 'text',
+            type: 'drop-down',
             placeholder: 'Heat Tracing',
             label: 'Heat Tracing',
             required: true,
             autoFocus: false,
-            className: ''
+            options: [{ heatTracing: "Yes" }, { heatTracing: "No" }],
+            className: 'w-max'
         },
     ];
 
@@ -171,10 +183,34 @@ function DFThinning() {
 
     return(
         <>
-            <section className="grid m-2">
-                {inputs.map((props: any, key: number) => (
-                    <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-                ))}
+            <section className="flex grid m-2">
+                {inputs.map((props: any, key: number) => {
+                    if(props.type == "text") {
+                        return <InputTypeText 
+                            props={props} 
+                            key={key} 
+                            value={value} 
+                            setValue={setValue} 
+                            errorMessage={error[props.name]} 
+                        />
+                    } else if (props.type == "calendar") {
+                        return <InputCalendar 
+                            props={props} 
+                            key={key} 
+                            value={value} 
+                            setValue={setValue} 
+                            errorMessage={error[props.name]} 
+                        />
+                    } else if (props.type == "drop-down") {
+                        return <InputDropDown 
+                            props={props} 
+                            key={key} 
+                            value={value} 
+                            setValue={setValue} 
+                            errorMessage={error[props.name]} 
+                        />
+                    }
+                })}
             </section>
         </>
     )

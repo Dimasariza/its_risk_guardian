@@ -1,4 +1,4 @@
-const url = process.env.DB_URL + '/general_data' || 'http://localhost:3030/generalData';
+const url = process.env.DB_URL + '/general_data' || 'http://localhost:3030/general_data';
 export const GeneralDataService = {
   async postItem(value: any) {
     const res = await fetch(url, {
@@ -17,7 +17,7 @@ export const GeneralDataService = {
     return (await res.json());
   },
   async getItem(id: string) {
-    const res = await fetch(url + "?componentId=" + id, {
+    const res = await fetch(url + "?gData_componentId=" + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export const GeneralDataService = {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch Companies data');
     }
-    const {data} = await res.json();
-    return data ?? {};
+    const data = await res.json();
+    return data[0] ?? {};
   }
 };

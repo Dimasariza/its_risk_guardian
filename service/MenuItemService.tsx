@@ -8,7 +8,8 @@ export const MenuItemService = {
       fetch(url + '/components')
     ]);
 
-    const [{data: items}, {data: equipment}, {data: component}] = await Promise.all([
+    // const [{data: items}, {data: equipment}, {data: component}] = await Promise.all([
+    const [items, equipment, component] = await Promise.all([
       fetchItem.json(), 
       fetchEquipment.json(), 
       fetchComponent.json()

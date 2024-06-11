@@ -13,7 +13,8 @@ function POFValue() {
             type: 'text',
             placeholder: 'GFF Total',
             required: true,
-            autoFocus: false,
+            autoFocus: true,
+            readOnly: true,
             className: ''
         }
     ];

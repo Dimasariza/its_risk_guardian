@@ -23,7 +23,7 @@ function DFAlkalineCorrosion() {
             placeholder: 'Head Susceptibility',
             label: 'Head Susceptibility',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: 'col'
         },
         {
@@ -32,7 +32,7 @@ function DFAlkalineCorrosion() {
             placeholder: 'Shell Severity Index',
             label: 'Shell Severity Index',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: 'col'
         },
         {
@@ -41,7 +41,7 @@ function DFAlkalineCorrosion() {
             placeholder: 'Head Severity Index',
             label: 'Head Severity Index',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: 'col'
         },
         {
@@ -50,7 +50,7 @@ function DFAlkalineCorrosion() {
             placeholder: 'Age Time in Service',
             label: 'Age Time in Service',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: 'col'
         },
         {
@@ -59,7 +59,7 @@ function DFAlkalineCorrosion() {
             placeholder: 'Shell Section',
             label: 'Shell Section',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: 'col'
         },
         {
@@ -68,7 +68,7 @@ function DFAlkalineCorrosion() {
             placeholder: 'Head Section',
             label: 'Head Section',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: 'col'
         },
     ];
