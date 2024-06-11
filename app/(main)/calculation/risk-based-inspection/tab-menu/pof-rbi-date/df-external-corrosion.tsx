@@ -15,7 +15,7 @@ function DFExternalCorrosion() {
             type: 'year-range',
             placeholder: 'Year Assesment',
             required: true,
-            autoFocus: true,
+            autoFocus: false,
             className: ''
         },
         // {
@@ -31,7 +31,7 @@ function DFExternalCorrosion() {
             type: 'text',
             placeholder: 'Thickness Value',
             required: true,
-            autoFocus: false,
+            autoFocus: true,
             className: ''
         },
         {
@@ -173,12 +173,17 @@ function DFExternalCorrosion() {
     ];
 
     const data = useSelector((state: any) => state.Reducer);
+    const edit = useSelector((state: any) => state.EditReducer);
 
     useEffect(() => {
-    getExternalCorrosion(data.menu.id)
-      .then((res: any) => {
-        setValue(res)
-      })
+        console.log(edit)
+    }, [edit])
+
+    useEffect(() => {
+        getExternalCorrosion(data.menu.id)
+        .then((res: any) => {
+            setValue(res)
+        })
     }, [data])
 
     return (

@@ -28,3 +28,15 @@ export const SaveDone = () => {
         type: "SAVE_DONE"
     }
 }
+
+export const EditData = () => {
+    return {
+        type: "EDIT_DATA"
+    }
+}
+
+export const EditDone = () => {
+    return {
+        type: "EDIT_DONE"
+    }
+}
