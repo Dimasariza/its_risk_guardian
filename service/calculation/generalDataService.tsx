@@ -30,5 +30,24 @@ export const GeneralDataService = {
     }
     const data = await res.json();
     return data[0] ?? {};
+<<<<<<< HEAD
+=======
+  },
+  async editItem(data: any) {
+    const res = await fetch(url + "?gData_componentId=" + data.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error('Failed to fetch Companies data');
+    }
+
+    return res.json();
+>>>>>>> 2127c55df2b771409112ff256773a88bd6332ea8
   }
 };
