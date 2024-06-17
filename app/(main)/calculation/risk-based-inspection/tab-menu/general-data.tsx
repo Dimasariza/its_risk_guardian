@@ -388,6 +388,8 @@ function GeneralData() {
   const [error, setError] = useState<any>({});
 
   const data = useSelector((state: any) => state.Reducer);
+  const save = useSelector((state: any) => state.SaveReducer);
+  
 
   useEffect(() => {
     GeneralDataService.getItem(data.menu.id)
@@ -400,21 +402,21 @@ function GeneralData() {
     <>
       <section className="p-4">
         <h5>GENERAL SPECIFICATION OF PRESSURE VESSEL</h5>
-        <div className="grid m-2">
+        <div className="flex flex-wrap">
           {inputsGeneralSpec.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
         </div>
 
         <h5>SHELL CALCULATION</h5>
-        <div className="grid m-2">
+        <div className="flex flex-wrap">
           {inputsShellCalc.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
         </div>
 
         <h5>HEAD CALCULATION</h5>
-        <div className="grid m-2">
+        <div className="flex flex-wrap">
           {inputsHeadCalc.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}

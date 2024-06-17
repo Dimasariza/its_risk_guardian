@@ -1,6 +1,5 @@
 {
-  "items": 
-  [
+  "items": [
     {
       "id": "dfec",
       "tagOfItem": "Tag of item no 1a",
@@ -20,10 +19,14 @@
       "id": "5446",
       "tagOfItem": "Tag of item no 3",
       "nameOfItem": "Name of item no 3"
+    },
+    {
+      "id": "a159",
+      "tagOfItem": "Uni cintaku sayangku",
+      "nameOfItem": "Dimas"
     }
   ],
-  "equipments": 
-  [
+  "equipments": [
     {
       "id": "4d1a",
       "tagOfEquipment": "Tag of Equipment no 1",
@@ -50,8 +53,7 @@
       "itemId": "5d38"
     }
   ],
-  "components": 
-  [
+  "components": [
     {
       "id": "f061",
       "tagOfComponent": "Tag of component 10",
@@ -64,13 +66,11 @@
       "equipmentId": "4d1a"
     }
   ],
-  "assetSummary": 
-  [
+  "assetSummary": [
     {
       "componentId": "3a5f",
       "itemId": "",
-      "installation": 
-      {
+      "installation": {
         "equipment": "",
         "equipmentType": "",
         "componentShape": "",
@@ -79,71 +79,70 @@
         "designPressure": "",
         "diameter": ""
       },
-      "fulidProperties": 
-      {
+      "fulidProperties": {
         "fluidName": "",
         "fluidType": "",
         "fluidDescription": "",
         "operationFluidPhase": "",
         "ph": ""
       },
-      "documents": 
-      {
+      "documents": {
         "pfdName": "",
         "pfdDocUrl": ""
-      }
+      },
+      "id": "9924"
     }
   ],
-  "general_data": 
-  [
+  "general_data": [
     {
       "gData_componentId": "3a5f",
       "gData_tagNumber": "JNE-MAM-106 (V-300)",
-      "gData_service":"FWKO Separator",
+      "gData_service": "FWKO Separator",
       "gData_manufacturedBy": "PT. Gunanusa Utama Fabricators",
       "gData_typeOfPressureVessel": "Horizontal",
       "gData_geometryData": "Ellipsoidal",
       "gData_code": "ASME Section VIII Division 1",
-      "gData_designPressure": "3.01 bar",
-      "gData_designTemperature": "93.4 °C",
-      "gData_operatingPressure": "2.41 bar",
-      "gData_operatingTemperature": "54,5 °C",
-      "gData_dimmension": "2743 (OD) x 7620 S/S",
-      "gData_vesselVolume": "1776 lb/ft3",
+      "gData_designPressure": "3.01",
+      "gData_designTemperature": "93.4",
+      "gData_operatingPressure": "2.41",
+      "gData_operatingTemperature": "54,5",
+      "gData_dimmension": "2743 x 7620",
+      "gData_vesselVolume": "1776",
       "gData_support": "Saddle",
-      "gData_jointEfficiency": "1 mm",
-      "gData_corrosionAllowance": "1,58 mm",
+      "gData_jointEfficiency": "1",
+      "gData_corrosionAllowance": "1,58",
       "gData_yearBuilt": "1987",
       "gData_material": "SA 516 Grade 70",
       "gData_lastInspection": "20 Mar 10",
       "gData_shellTagNumber": "JNE-MAM-106 (V-300)",
       "gData_shellService": "FWKO Separator",
       "gData_shellCode": "ASME Section VIII Division 1",
-      "gData_shellDesignPressure": "93.4 °C",
-      "gData_shellOuterDiameter": "2743 mm",
+      "gData_shellDesignPressure": "93.4",
+      "gData_shellOuterDiameter": "2743",
       "gData_shellMaterial": "SA 516 Grade 70 (Carbon steel)",
-      "gData_shellAllowableStress": "17500 psig",
+      "gData_shellAllowableStress": "17500",
       "gData_shellEfficiency": "1",
-      "gData_shellCorrosionAllowance": "1.58 mm",
-      "gData_shellMinimumThickness": "15.8 mm",
-      "gData_shellCorrosionRate": "0.0057 mm/years",
+      "gData_shellCorrosionAllowance": "1.58",
+      "gData_shellMinimumThickness": "15.8",
+      "gData_shellCorrosionRate": "0.0057",
       "gData_headTagNumber": "JNE-MAM-106 (V-300)",
       "gData_headService": "FWKO Separator",
       "gData_headCode": "ASME Section VIII Division 1",
-      "gData_headDesignPressure": "3.01 bar",
-      "gData_headDesignTemperature": "93.4 °C",
-      "gData_headOuterDiameter": "2743 mm",
+      "gData_headDesignPressure": "3.01",
+      "gData_headDesignTemperature": "93.4",
+      "gData_headOuterDiameter": "2743",
       "gData_headMaterial": "SA 516 Grade 70 (Carbon steel)",
-      "gData_headAllowableStress": "17500 psig",
+      "gData_headAllowableStress": "17500",
       "gData_headEfficiency": "1",
-      "gData_headCorrosionAllowance": "1.58 mm",
-      "gData_headMinimumThickness": "18.40 mm",
-      "gData_headCorrosionRate": "0.006 mm/years"
+      "gData_headCorrosionAllowance": "1.58",
+      "gData_headMinimumThickness": "18.40",
+      "gData_headCorrosionRate": "0.006",
+      "id": "0fc5"
     },
     {
       "gData_componentId": "f061",
       "gData_tagNumber": "JNE-MAM-107 (V-300)",
-      "gData_service":"FWKO",
+      "gData_service": "FWKO",
       "gData_manufacturedBy": "PT. Gunanusa Utama",
       "gData_typeOfPressureVessel": "Vertical",
       "gData_geometryData": "Tube",
@@ -151,50 +150,49 @@
       "gData_designPressure": "",
       "gData_designTemperature": "",
       "gData_operatingPressure": "",
-      "gData_operatingTemperature": "54,5 °C",
-      "gData_dimmension": "2743 (OD) x 7620 S/S",
-      "gData_vesselVolume": "1776 lb/ft3",
+      "gData_operatingTemperature": "54,5",
+      "gData_dimmension": "2743 x 7620",
+      "gData_vesselVolume": "1776",
       "gData_support": "Saddle",
-      "gData_jointEfficiency": "1 mm",
-      "gData_corrosionAllowance": "1,58 mm",
+      "gData_jointEfficiency": "1",
+      "gData_corrosionAllowance": "1,58",
       "gData_yearBuilt": "1987",
       "gData_material": "SA 516 Grade 70",
       "gData_lastInspection": "20 Mar 10",
       "gData_shellTagNumber": "JNE-MAM-106 (V-300)",
       "gData_shellService": "FWKO Separator",
       "gData_shellCode": "ASME Section VIII Division 1",
-      "gData_shellDesignPressure": "93.4 °C",
-      "gData_shellOuterDiameter": "2743 mm",
+      "gData_shellDesignPressure": "93.4",
+      "gData_shellOuterDiameter": "2743",
       "gData_shellMaterial": "SA 516 Grade 70 (Carbon steel)",
-      "gData_shellAllowableStress": "17500 psig",
+      "gData_shellAllowableStress": "17500",
       "gData_shellEfficiency": "1",
-      "gData_shellCorrosionAllowance": "1.58 mm",
-      "gData_shellMinimumThickness": "15.8 mm",
-      "gData_shellCorrosionRate": "0.0057 mm/years",
+      "gData_shellCorrosionAllowance": "1.58",
+      "gData_shellMinimumThickness": "15.8",
+      "gData_shellCorrosionRate": "0.0057",
       "gData_headTagNumber": "JNE-MAM-106 (V-300)",
       "gData_headService": "FWKO Separator",
       "gData_headCode": "ASME Section VIII Division 1",
-      "gData_headDesignPressure": "3.01 bar",
-      "gData_headDesignTemperature": "93.4 °C",
-      "gData_headOuterDiameter": "2743 mm",
-      "gData_headMaterial": "SA 516 Grade 70 (Carbon steel)",
-      "gData_headAllowableStress": "17500 psig",
+      "gData_headDesignPressure": "3.01",
+      "gData_headDesignTemperature": "93.4",
+      "gData_headOuterDiameter": "2743",
+      "gData_headMaterial": "SA 516",
+      "gData_headAllowableStress": "17500",
       "gData_headEfficiency": "1",
-      "gData_headCorrosionAllowance": "1.58 mm",
-      "gData_headMinimumThickness": "18.40 mm",
-      "gData_headCorrosionRate": "0.006 mm/years"
+      "gData_headCorrosionAllowance": "1.58",
+      "gData_headMinimumThickness": "18.40",
+      "gData_headCorrosionRate": "0.006",
+      "id": "d6a2"
     }
   ],
-  "pofRBIDate": 
-  [
+  "pofRBIDate": [
     {
       "componentId": "3a5f",
-      "dfThinning": 
-      {
+      "dfThinning": {
         "startDate": "01/01/1987",
         "thickness": "18.4",
         "corrosionAllowance": "1.58",
-        "designTemperature": "93.4",  
+        "designTemperature": "93.4",
         "designPressure": "301",
         "operatingTemperature": "54.5",
         "operatingPressure": "241",
@@ -208,8 +206,7 @@
         "weldJointEfficiency": "1",
         "heatTracing": "No"
       },
-      "dfExternalCorrosion": 
-      {
+      "dfExternalCorrosion": {
         "yearAssesment": "2024",
         "yearInstallation": "1987",
         "thicknessValue": "0.72",
@@ -241,24 +238,23 @@
         "headSection": "0"
       },
       "pofValue": {
-        "gffTotal": "0,0000306",
+        "gffTotal": "0.0000306",
         "shellThinning": "0.1",
         "headThinning": "0.1",
         "shellExternal": "0.02205",
         "headExternal": "0.0156",
         "shellTotal": "0.1",
         "headTotal": "0.1",
-        "shellSection": "0,000306",
-        "headSection": "0,0003060,000306"
-      }
+        "shellSection": "0.000306",
+        "headSection": "0.0003060"
+      },
+      "id": "c4f8"
     }
   ],
-  "pofPlanDate": 
-  [
+  "pofPlanDate": [
     {
       "componentId": "3a5f",
-      "dfThinning": 
-      {
+      "dfThinning": {
         "startDate": "test start date",
         "thickness": "",
         "corrosionAllowance": "",
@@ -276,8 +272,7 @@
         "weldJointEfficiency": "",
         "heatTracing": ""
       },
-      "dfExternalCorrosion": 
-      {
+      "dfExternalCorrosion": {
         "yearAssesment": "",
         "yearInstallation": "",
         "thicknessValue": "",
@@ -318,7 +313,8 @@
         "headTotal": "",
         "shellSection": "",
         "headSection": ""
-      }
+      },
+      "id": "9968"
     }
   ]
 }

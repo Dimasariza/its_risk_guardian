@@ -17,9 +17,26 @@ export const AssetData = () => {
     }
 }
 
-export const SaveData = (save: boolean) => {
+export const SaveData = () => {
     return {
         type: "SAVE_DATA",
-        save
+    }
+}
+
+export const SaveDone = () => {
+    return {
+        type: "SAVE_DONE"
+    }
+}
+
+export const EditData = () => {
+    return {
+        type: "EDIT_DATA"
+    }
+}
+
+export const EditDone = () => {
+    return {
+        type: "EDIT_DONE"
     }
 }

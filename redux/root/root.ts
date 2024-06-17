@@ -1,9 +1,11 @@
 import { combineReducers, createStore } from "redux";
-import { Reducer, RerenderMenu } from "../reducer/reducer";
+import { EditReducer, Reducer, RerenderMenu, SaveReducer } from "../reducer/reducer";
 
 const rootReducer = combineReducers({
     Reducer,
-    RerenderMenu
+    RerenderMenu,
+    SaveReducer,
+    EditReducer
 });
 
 const store = createStore(rootReducer);

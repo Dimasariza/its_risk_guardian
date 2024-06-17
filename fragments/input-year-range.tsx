@@ -1,7 +1,7 @@
 import { Calendar } from 'primereact/calendar';
 import { Message } from 'primereact/message';
 
-function InputCalendar({ props, value, setValue, errorMessage }: any) {
+function InputYearRange({ props, value, setValue, errorMessage }: any) {
   const { name, placeholder } = props;
 
   return (
@@ -13,6 +13,9 @@ function InputCalendar({ props, value, setValue, errorMessage }: any) {
             {...props}
             value={value[name] ?? ""}
             onChange={(e) => setValue((prev: any) => ({ ...prev, [name]: e.target.value }))}
+            view="year" 
+            dateFormat="yy"
+            selectionMode="range" readOnlyInput hideOnRangeSelection
         />
         {errorMessage && <Message severity="error" text={errorMessage} />}
       </div>
@@ -20,4 +23,4 @@ function InputCalendar({ props, value, setValue, errorMessage }: any) {
   );
 }
 
-export default InputCalendar;
+export default InputYearRange;
