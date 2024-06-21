@@ -106,7 +106,7 @@ function Profile() {
 
     const inputs = [
         {
-            name: 'tagOfComponent',
+            name: 'comp_tagOfComponent',
             type: 'text',
             placeholder: 'Tag of Component',
             label: 'Tag of Component',
@@ -117,8 +117,9 @@ function Profile() {
     ];
 
     const emptyComponent: IAssetComponent = {
-        tagOfComponent: '',
-        nameOfComponent: ''
+        comp_tagOfComponent: '',
+        comp_nameOfComponent: '',
+        comp_componentType: ''
     };
 
     const [value, setValue] = useState<IAssetComponent>(emptyComponent);
