@@ -189,22 +189,22 @@
     {
       "componentId": "3a5f",
       "dfThinning": {
-        "startDate": "01/01/1987",
-        "thickness": "18.4",
-        "corrosionAllowance": "1.58",
-        "designTemperature": "93.4",
-        "designPressure": "301",
-        "operatingTemperature": "54.5",
-        "operatingPressure": "241",
-        "designCode": "ASME Section VIII Division 1",
-        "equipmentType": "FWKO Separator",
-        "componentType": "Filter",
-        "geometryData": "2:1 Ellipsoidal",
-        "materialSpecification": "SA 516 Grade 70",
-        "yieldStrength": "262000",
-        "tensileStrength": "485000",
-        "weldJointEfficiency": "1",
-        "heatTracing": "No"
+        "rbiThinnings_startDate": "01/01/1987",
+        "rbiThinnings_thickness": "18.4",
+        "rbiThinnings_corrosionAllowance": "1.58",
+        "rbiThinnings_designTemperature": "93.4",
+        "rbiThinnings_designPressure": "301",
+        "rbiThinnings_operatingTemperature": "54.5",
+        "rbiThinnings_operatingPressure": "241",
+        "rbiThinnings_designCode": "ASME Section VIII Division 1",
+        "rbiThinnings_equipmentType": "FWKO Separator",
+        "rbiThinnings_componentType": "Filter",
+        "rbiThinnings_geometryData": "2:1 Ellipsoidal",
+        "rbiThinnings_materialSpecification": "SA 516 Grade 70",
+        "rbiThinnings_yieldStrength": "262000",
+        "rbiThinnings_tensileStrength": "485000",
+        "rbiThinnings_weldJointEfficiency": "1",
+        "rbiThinnings_heatTracing": "No"
       },
       "dfExternalCorrosion": {
         "yearAssesment": "2024",
@@ -238,15 +238,15 @@
         "headSection": "0"
       },
       "pofValue": {
-        "gffTotal": "0.0000306",
-        "shellThinning": "0.1",
-        "headThinning": "0.1",
-        "shellExternal": "0.02205",
-        "headExternal": "0.0156",
-        "shellTotal": "0.1",
-        "headTotal": "0.1",
-        "shellSection": "0.000306",
-        "headSection": "0.0003060"
+        "rbi_gffTotal": "0.0000306",
+        "rbi_shellThinning": "0.1",
+        "rbi_headThinning": "0.1",
+        "rbi_shellExternal": "0.02205",
+        "rbi_headExternal": "0.0156",
+        "rbi_shellTotal": "0.1",
+        "rbi_headTotal": "0.1",
+        "rbi_shellSection": "0.000306",
+        "rbi_headSection": "0.0003060"
       },
       "id": "c4f8"
     }

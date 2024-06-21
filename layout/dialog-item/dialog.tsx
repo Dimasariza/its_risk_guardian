@@ -9,11 +9,13 @@ import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import inputs from './inputs';
+import validate from './validation';
 
 function ItemDialog({ visible, setVisible }: any) {
   const emptyItem: IAssetItem = {
-    tagOfItem: '',
-    nameOfItem: ''
+    item_tagOfItem: '',
+    item_nameOfItem: ''
   };
 
   const toast = useRef<any>(null);
@@ -21,48 +23,10 @@ function ItemDialog({ visible, setVisible }: any) {
   const [error, setError] = useState<IAssetItem>(emptyItem);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  const inputs = [
-    {
-      name: 'tagOfItem',
-      type: 'text',
-      placeholder: 'Tag of Item',
-      label: 'Tag of Item',
-      required: true,
-      autoFocus: true,
-      className: 'col'
-    },
-    {
-      name: 'nameOfItem',
-      type: 'text',
-      placeholder: 'Name Of Item',
-      label: 'Name of Item',
-      required: true,
-      autoFocus: false,
-      className: 'col'
-    }
-  ];
-
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(validate(value));
     setIsSubmit(true);
-  };
-
-  const validate = (formValue: any) => {
-    const errors: IAssetItem | any = {};
-    if (!formValue.nameOfItem) {
-      errors.nameOfItem = 'Name of Item is required!';
-    } else if (formValue.nameOfItem.length < 4) {
-      errors.nameOfItem = 'Name of Item must be more than 4 characters';
-    }
-
-    if (!formValue.tagOfItem) {
-      errors.tagOfItem = 'Tag of Item is required!';
-    } else if (formValue.tagOfItem.length < 4) {
-      errors.tagOfItem = 'Tag of Item must be more than 4 characters';
-    }
-
-    return errors;
   };
 
   const footerContent = (
@@ -73,14 +37,13 @@ function ItemDialog({ visible, setVisible }: any) {
   );
 
   const dispatch = useDispatch();
-  const data = useSelector((state: any) => state.RerenderMenu);
+  const { data } = useSelector((state: any) => state.AuthReducer);
 
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
-      AssetItemService.postItem(value)
+      AssetItemService.postItem(value, data.token)
         .then((res) => {
           dispatch(RerenderMenu());
-          console.log(data)
 
           toast.current.show({
             severity: 'success',

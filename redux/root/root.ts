@@ -1,11 +1,12 @@
 import { combineReducers, createStore } from "redux";
-import { EditReducer, Reducer, RerenderMenu, SaveReducer } from "../reducer/reducer";
+import { AuthReducer, EditReducer, Reducer, RerenderMenu, SaveReducer } from "../reducer/reducer";
 
 const rootReducer = combineReducers({
     Reducer,
     RerenderMenu,
     SaveReducer,
-    EditReducer
+    EditReducer,
+    AuthReducer
 });
 
 const store = createStore(rootReducer);

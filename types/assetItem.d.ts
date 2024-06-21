@@ -1,5 +1,5 @@
 export interface IAssetItem {
-  tagOfItem: string;
-  nameOfItem: string;
+  item_tagOfItem: string;
+  item_nameOfItem: string;
   [key: string]: string | string[];
 }

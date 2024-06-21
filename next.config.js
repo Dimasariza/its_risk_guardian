@@ -6,7 +6,8 @@ const nextConfig = {
     bashPath: "/its_risk_guardian",
     env: {
         PUBLIC_URL: process.env.PUBLIC_URL,
-        DB_URL: process.env.DB_URL
+        DB_URL: process.env.DB_URL,
+        AUTH_URL: process.env.AUTH_URL,
     },
     experimental: {
         appDir: true,

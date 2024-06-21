@@ -390,12 +390,16 @@ function GeneralData() {
   const data = useSelector((state: any) => state.Reducer);
   const save = useSelector((state: any) => state.SaveReducer);
   
-
   useEffect(() => {
-    GeneralDataService.getItem(data.menu.id)
-    .then(res => {
-      setValue(res)
-    })
+    console.log(data)
+    if(data.menu.comp_id) {
+      GeneralDataService.getItem(data.menu.comp_id)
+      .then(res => {
+        setValue(res)
+      })
+    } else {
+      setValue({})
+    }
   }, [data])
 
   return (

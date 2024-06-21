@@ -24,24 +24,24 @@ export const MenuItemService = {
           }
           return {
             ...c, 
-            label: c.nameOfComponent
+            label: c.comp_nameOfComponent
           }
         })
         .filter((c: any) => c.equipmentId == e.id)
         return {
           ...e,
-          label: e.nameOfEquipment,
+          label: e.eq_nameOfEquipment,
           items: comp
         }
       })
       .filter((e: any) => e.itemId == item.id)
       return {
         ...item,
-        label: item.nameOfItem,
+        label: item.item_nameOfItem,
         items: equipt
       }
     })
 
-    return [...menuItem, ...standAloneComp.map(c => ({...c, label: c.nameOfComponent}))];
+    return [...menuItem, ...standAloneComp.map(c => ({...c, label: c.comp_nameOfComponent}))];
   }
 };

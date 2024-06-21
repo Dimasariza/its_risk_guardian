@@ -11,6 +11,10 @@ import { Dropdown } from 'primereact/dropdown';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react';
+import inputs from './inputs';
+import validate from './validation';
+import { useDispatch, useSelector } from 'react-redux';
+import { RerenderMenu } from '@/redux/action/action';
 
 function EquipmentDialog({ visible, setVisible }: any) {
   const emptyEquipment: IAssetEquipment = {
@@ -23,48 +27,10 @@ function EquipmentDialog({ visible, setVisible }: any) {
   const [error, setError] = useState<IAssetEquipment>(emptyEquipment);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  const inputs = [
-    {
-      name: 'tagOfEquipment',
-      type: 'text',
-      placeholder: 'Tag of Equipment',
-      label: 'Tag of Equipment',
-      required: true,
-      autoFocus: true,
-      className: 'col'
-    },
-    {
-      name: 'nameOfEquipment',
-      type: 'text',
-      placeholder: 'Name Of Equipment',
-      label: 'Name of Equipment',
-      required: true,
-      autoFocus: false,
-      className: 'col'
-    }
-  ];
-
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(validate(value));
     setIsSubmit(true);
-  };
-
-  const validate = (formValue: any) => {
-    const errors: IAssetItem | any = {};
-    if (!formValue.nameOfEquipment) {
-      errors.nameOfEquipment = 'Name of Equipment is required!';
-    } else if (formValue.nameOfEquipment.length < 4) {
-      errors.nameOfEquipment = 'Name of Equipment must be more than 4 characters';
-    }
-
-    if (!formValue.tagOfEquipment) {
-      errors.tagOfEquipment = 'Tag of Equipment is required!';
-    } else if (formValue.tagOfEquipment.length < 4) {
-      errors.tagOfEquipment = 'Tag of Equipment must be more than 4 characters';
-    }
-
-    return errors;
   };
 
   const footerContent = (
@@ -97,10 +63,15 @@ function EquipmentDialog({ visible, setVisible }: any) {
       .catch((err) => console.log(err));
   }, [visible]);
 
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: any) => state.AuthReducer);
+
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
-      AssetEquipmentService.postItem(value)
+      AssetEquipmentService.postItem(value, data.token)
         .then((res) => {
+          dispatch(RerenderMenu());
+
           toast.current.show({
             severity: 'success',
             summary: 'Data has been added',

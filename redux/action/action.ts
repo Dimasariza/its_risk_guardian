@@ -40,3 +40,7 @@ export const EditDone = () => {
         type: "EDIT_DONE"
     }
 }
+
+export const AuthAction = (type: string, data: any) => {
+    return { type, data }
+}

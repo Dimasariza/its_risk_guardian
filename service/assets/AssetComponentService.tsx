@@ -2,11 +2,13 @@ import { IAssetComponent } from '@/types/assetComponent';
 
 const url = process.env.DB_URL + '/components' || 'http://localhost:3030/components';
 export const AssetComponentService = {
-  async postItem(value: any) {
+  async postItem(value: any, token: string) {
     const res = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        "Authorization": `Bearer ${token}`  
       },
       body: JSON.stringify(value)
     });

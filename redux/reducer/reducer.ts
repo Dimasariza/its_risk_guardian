@@ -54,3 +54,20 @@ export const EditReducer = (state: boolean = false, {type}: any) => {
             return state
     }
 }
+
+export const AuthReducer = (state: any = {login: false}, { type, data }: any ) => {
+    switch(type) {
+        case "LOGIN":
+            return {
+                ...state,
+                data
+            };
+        case "LOGOUT":
+            return {
+                ...state,
+                data
+            };
+        default:
+            return state
+    }
+}

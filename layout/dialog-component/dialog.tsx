@@ -11,12 +11,18 @@ import { Dropdown } from 'primereact/dropdown';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import inputs from './inputs';
+import validate from './validation';
+import InputDropDown from '@/fragments/input-drop-down';
+import InputCalendar from '@/fragments/input-calendar';
 
 function ComponentDialog({ visible, setVisible }: any) {
   const emptyComponent: IAssetComponent = {
-    tagOfComponent: '',
-    nameOfComponent: ''
+    comp_tagOfComponent: '',
+    comp_nameOfComponent: '',
+    comp_componentType: '',
+    comp_equipmentId: ''
   };
 
   const toast = useRef<any>(null);
@@ -24,48 +30,11 @@ function ComponentDialog({ visible, setVisible }: any) {
   const [error, setError] = useState<IAssetComponent>(emptyComponent);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  const inputs = [
-    {
-      name: 'tagOfComponent',
-      type: 'text',
-      placeholder: 'Tag of Component',
-      label: 'Tag of Component',
-      required: true,
-      autoFocus: true,
-      className: ''
-    },
-    {
-      name: 'nameOfComponent',
-      type: 'text',
-      placeholder: 'Name Of Component',
-      label: 'Name of Component',
-      required: true,
-      autoFocus: false,
-      className: ''
-    }
-  ];
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(validate(value));
     setIsSubmit(true);
-  };
-
-  const validate = (formValue: any) => {
-    const errors: IAssetComponent | any = {};
-    if (!formValue.nameOfComponent) {
-      errors.nameOfComponent = 'Name of Component is required!';
-    } else if (formValue.nameOfComponent.length < 4) {
-      errors.nameOfComponent = 'Name of Component must be more than 4 characters';
-    }
-
-    if (!formValue.tagOfComponent) {
-      errors.tagOfComponent = 'Tag of Component is required!';
-    } else if (formValue.tagOfComponent.length < 4) {
-      errors.tagOfComponent = 'Tag of Component must be more than 4 characters';
-    }
-
-    return errors;
   };
 
   const footerContent = (
@@ -83,21 +52,19 @@ function ComponentDialog({ visible, setVisible }: any) {
   ];
 
   const handleSelectItem = (e: any) => {
-    setValue((prev) => ({ ...prev, equipmentId: e.value.id }));
+    setValue((prev) => ({ ...prev, comp_equipmentId: e.value.eq_idEquipment }));
     setSelectedItem(e.value);
   };
 
   const handleSelectComponentType = (e: any) => {
-    setValue((prev) => ({ ...prev, componentType: e.value }));
+    setValue((prev) => ({ ...prev, comp_componentType: e.value }));
     setselectedComponentType(e.value)
   }
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     AssetEquipmentService.getItem()
       .then((res) => {
-        setItems(res)
+        setItems(res.data)
         dispatch(RerenderMenu());
       })
       .catch((err) => {
@@ -109,10 +76,15 @@ function ComponentDialog({ visible, setVisible }: any) {
       });
   }, [visible]);
 
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: any) => state.AuthReducer);
+
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
-      AssetComponentService.postItem(value)
+      AssetComponentService.postItem(value, data.token)
         .then((res) => {
+          dispatch(RerenderMenu());
+
           toast.current.show({
             severity: 'success',
             summary: 'Data has been added',
@@ -134,7 +106,7 @@ function ComponentDialog({ visible, setVisible }: any) {
           <div className='flex flex-column col p-1'>
             <label htmlFor="equipment" className='m-1'>Equipment</label>
             <div className='px-1'>
-              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfEquipment" placeholder="Select an Equipment" />
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="eq_nameOfEquipment" placeholder="Select an Equipment" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>
@@ -156,6 +128,34 @@ function ComponentDialog({ visible, setVisible }: any) {
               errorMessage={error[props.name]} 
             />
           ))}
+
+            {/* {inputs.map((props: any, key: number) => {
+              if(props.type == "text") {
+                  return <InputTypeText 
+                      props={props} 
+                      key={key} 
+                      value={value} 
+                      setValue={setValue} 
+                      errorMessage={error[props.name]} 
+                  />
+              } else if (props.type == "calendar") {
+                  return <InputCalendar 
+                      props={props} 
+                      key={key} 
+                      value={value} 
+                      setValue={setValue} 
+                      errorMessage={error[props.name]} 
+                  />
+              } else if (props.type == "drop-down") {
+                  return <InputDropDown
+                      props={props} 
+                      key={key} 
+                      value={value} 
+                      setValue={setValue} 
+                      errorMessage={error[props.name]} 
+                  />
+              }
+          })} */}
 
         </section>
       </Dialog>

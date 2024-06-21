@@ -9,7 +9,7 @@ function POFValue() {
 
     const inputsGFF: any = [
         {
-            name: 'gffTotal',
+            name: 'rbi_gffTotal',
             type: 'text',
             placeholder: 'GFF Total',
             required: true,
@@ -21,7 +21,7 @@ function POFValue() {
 
     const inputDFTotal: any = [
         {
-            name: 'shellThinning',
+            name: 'rbi_shellThinning',
             type: 'text',
             placeholder: 'Shell Thinning',
             required: true,
@@ -29,7 +29,7 @@ function POFValue() {
             className: ''
         },
         {
-            name: 'headThinning',
+            name: 'rbi_headThinning',
             type: 'text',
             placeholder: 'Head Thinning',
             required: true,
@@ -37,7 +37,7 @@ function POFValue() {
             className: ''
         },
         {
-            name: 'shellExternal',
+            name: 'rbi_shellExternal',
             type: 'text',
             placeholder: 'Shell External',
             required: true,
@@ -45,7 +45,7 @@ function POFValue() {
             className: ''
         },
         {
-            name: 'headExternal',
+            name: 'rbi_headExternal',
             type: 'text',
             placeholder: 'Head External',
             required: true,
@@ -53,7 +53,7 @@ function POFValue() {
             className: ''
         },
         {
-            name: 'shellTotal',
+            name: 'rbi_shellTotal',
             type: 'text',
             placeholder: 'Shell Total',
             required: true,
@@ -61,7 +61,7 @@ function POFValue() {
             className: ''
         },
         {
-            name: 'headTotal',
+            name: 'rbi_headTotal',
             type: 'text',
             placeholder: 'Head Total',
             required: true,
@@ -116,6 +116,7 @@ function POFValue() {
                 </div>
 
                 <h5>Management System Factor</h5>
+                
                 <h5>POF Total</h5>
                 <div className="grid m-2">
                     {headSection.map((props: any, key: number) => (

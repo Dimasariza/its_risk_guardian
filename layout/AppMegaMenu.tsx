@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 import { MegaMenu } from 'primereact/megamenu';
 import { useEffect, useState } from 'react';
-import ItemDialog from './dialog/item-dialog';
-import EquipmentDialog from './dialog/equipment-dialog';
-import ComponentDialog from './dialog/component-dialog';
+import ItemDialog from './dialog-item/dialog';
+import EquipmentDialog from './dialog-equipment/dialog';
+import ComponentDialog from './dialog-component/dialog';
 import { LiaCutSolid } from 'react-icons/lia';
 import { GrDocumentPdf } from 'react-icons/gr';
 import { SiMicrosoftexcel } from 'react-icons/si';

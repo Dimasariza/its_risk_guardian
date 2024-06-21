@@ -55,7 +55,7 @@ function AssetRegister() {
 
   return (
     <>
-      <Card title={data.menu.label}>
+      <Card title={data.menu?.label}>
         <TabMenu model={items} />
         {tabMenuView()}
       </Card>

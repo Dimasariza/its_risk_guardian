@@ -1,12 +1,15 @@
 import { IAssetItem } from '@/types/assetItem';
 
-const url = process.env.DB_URL + '/items' || 'http://localhost:3030/items';
+const url = process.env.DB_URL + '/items';
+// const token = useSelector((state: any) => state.AuthReducer);
 export const AssetItemService = {
-  async postItem(value: any) {
+  async postItem(value: any, token: string) {
     const res = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        "Authorization": `Bearer ${token}`  
       },
       body: JSON.stringify(value)
     });
