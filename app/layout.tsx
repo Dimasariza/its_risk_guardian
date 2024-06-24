@@ -8,7 +8,8 @@ import 'primeicons/primeicons.css';
 import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import store from '@/redux/root/root';
+import RootStore from '@/redux/root/root';
+import { PersistGate } from 'redux-persist/integration/react'
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -21,10 +22,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link id="theme-css" href={`${process.env.PUBLIC_URL}/themes/lara-light-blue/theme.css`} rel="stylesheet"></link>
       </head>
       <body>
-        <Provider store={store}>
+        <Provider store={RootStore().store}>
+          <PersistGate loading={null} persistor={RootStore().persistor}>
             <PrimeReactProvider>
             <LayoutProvider>{children}</LayoutProvider>
             </PrimeReactProvider>
+          </PersistGate>
         </Provider>
       </body>
     </html>
