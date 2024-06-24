@@ -184,10 +184,12 @@ function DFThinning() {
     const data = useSelector((state: any) => state.Reducer);
 
     useEffect(() => {
-      getThinning(data.menu.id)
-      .then(res => {
-        setValue(res)
-      })
+        if(data.menu.comp_id) {
+            getThinning(data.menu.comp_id)
+            .then(res => {
+              setValue(res)
+            })
+        }
     }, [data])
 
     return(

@@ -92,10 +92,12 @@ function POFValue() {
     const data = useSelector((state: any) => state.Reducer);
 
     useEffect(() => {
-        getValue(data.menu.id)
-            .then((res: any) => {
-            setValue(res)
-        })
+        if(data.menu.comp_id) {
+            getValue(data.menu.id)
+                .then((res: any) => {
+                setValue(res)
+            })
+        }
     }, [data])
     
     return (

@@ -9,6 +9,7 @@ import { Button } from 'primereact/button';
 import { Avatar } from 'primereact/avatar';
 import { Menu } from 'primereact/menu';
 import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
   const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
@@ -16,6 +17,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
   const topbarmenuRef = useRef(null);
   const topbarmenubuttonRef = useRef(null);
   const router = useRouter();
+  const { data } = useSelector((state: any) => state.AuthReducer);
 
   useImperativeHandle(ref, () => ({
     menubutton: menubuttonRef.current,
@@ -61,7 +63,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
 
       <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
         <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
-        <Button label="Ahmad Akbar Rivai" text className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup>
+        <Button label={`${data.user.user_firstName}`} text className="mr-2" onClick={(event) => menuRight.current.toggle(event)} aria-controls="popup_menu_right" aria-haspopup>
           <Avatar image={`${process.env.PUBLIC_URL}/team/image/AAR.png`} size="large" style={{ backgroundColor: '#9c27b0', color: '#ffffff' }} shape="circle" className="ml-2" />
         </Button>
       </div>

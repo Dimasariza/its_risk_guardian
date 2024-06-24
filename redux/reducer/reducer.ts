@@ -33,17 +33,6 @@ export const AssetData = (state: any, type: string) => {
     }
 };
 
-export const SaveReducer = (state: boolean = false, {type}: any) => {
-    switch(type) {
-        case "SAVE_DATA":
-            return true;
-        case "SAVE_DONE":
-            return false;
-        default:
-            return state;
-    }
-};
-
 export const EditReducer = (state: boolean = false, {type}: any) => {
     switch(type) {
         case "EDIT_DATA":

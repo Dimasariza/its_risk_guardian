@@ -76,10 +76,12 @@ function DFAlkalineCorrosion() {
     const data = useSelector((state: any) => state.Reducer);
 
     useEffect(() => {
-        getAlkaline(data.menu.id)
-            .then((res: any) => {
-            setValue(res)
-        })
+        if(data.menu.comp_id) {
+            getAlkaline(data.menu.id)
+                .then((res: any) => {
+                setValue(res)
+            })
+        }
     }, [data])
 
     return (

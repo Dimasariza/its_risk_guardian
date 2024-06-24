@@ -12,6 +12,7 @@ import { AuthService } from '@/service/auth/authService';
 import { Toast } from 'primereact/toast';
 import { useDispatch } from 'react-redux';
 import { AuthAction } from '@/redux/action/action';
+import validate from './validate';
 
 const LoginPage = () => {
   const emptyValue = {
@@ -26,26 +27,10 @@ const LoginPage = () => {
   const { layoutConfig } = useContext(LayoutContext);
   const [error, setError] = useState<any>({});
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
-
-  const validate = (formValue: any) => {
-    const errors: any = {};
-    if (!formValue.password) {
-      errors.password = 'Password is required!';
-    } else if (formValue.password.length < 4) {
-      errors.password = 'Password must be more than 4 characters';
-    }
-
-    if (!formValue.user_username) {
-      errors.user_username = 'Username is required!';
-    } else if (formValue.user_username.length < 4) {
-      errors.user_username = 'Username must be more than 4 characters';
-    }
-
-    return errors;
-  };
 
   const dispatch = useDispatch();
 
@@ -57,9 +42,10 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
+      setLoading(true);
       AuthService.postItem(value)
         .then((res) => {
-          const token = res.data.token;
+          setLoading(false);
           dispatch(AuthAction("LOGIN", res.data))
           toast.current.show({
             severity: 'success',
@@ -67,7 +53,9 @@ const LoginPage = () => {
             detail: `Login Success`
           });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          setLoading(false);
+        });
       setValue(emptyValue);
       router.push('/assets/asset-register')
     }
@@ -112,7 +100,7 @@ const LoginPage = () => {
                   Forgot password?
                 </a>
               </div>
-              <Button label="Sign In" className="w-full p-3 text-xl" onClick={handleLogin}></Button>
+              <Button loading={loading} label="Sign In" className="w-full p-3 text-xl" onClick={handleLogin}></Button>
             </div>
           </div>
         </div>

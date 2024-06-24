@@ -391,7 +391,6 @@ function GeneralData() {
   const save = useSelector((state: any) => state.SaveReducer);
   
   useEffect(() => {
-    console.log(data)
     if(data.menu.comp_id) {
       GeneralDataService.getItem(data.menu.comp_id)
       .then(res => {

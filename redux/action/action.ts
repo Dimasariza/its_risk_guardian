@@ -17,18 +17,6 @@ export const AssetData = () => {
     }
 }
 
-export const SaveData = () => {
-    return {
-        type: "SAVE_DATA",
-    }
-}
-
-export const SaveDone = () => {
-    return {
-        type: "SAVE_DONE"
-    }
-}
-
 export const EditData = () => {
     return {
         type: "EDIT_DATA"

@@ -10,7 +10,10 @@ import { SiMicrosoftexcel } from 'react-icons/si';
 import { MdOutlineQrCode2 } from 'react-icons/md';
 import { SiWebcomponentsdotorg } from 'react-icons/si';
 import { useDispatch, useSelector } from 'react-redux';
-import { EditData, SaveData, SaveDone } from '@/redux/action/action';
+import { EditData, EditDone } from '@/redux/action/action';
+import { Avatar } from 'primereact/avatar';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 
 function AppMegaMenu() {
   const router = useRouter();
@@ -21,28 +24,9 @@ function AppMegaMenu() {
   });
 
   const dispatch = useDispatch();
-  const save = useSelector((state: any) => state.SaveReducer);
   const edit = useSelector((state: any) => state.EditReducer);
 
   const items: any = [
-    {
-      label: '',
-      icon: 'pi pi-save',
-      className: '',
-      disabled: save,
-      command: () => {
-        dispatch(SaveData());
-      }
-    },
-    {
-      label: '',
-      icon: 'pi pi-file-edit',
-      className: 'mr-8',
-      disabled: false,
-      command: () => {
-        dispatch(EditData());
-      }
-    },
     {
       label: 'File',
       items: [
@@ -172,15 +156,84 @@ function AppMegaMenu() {
           }
         ]
       ]
-    }
+    },
   ];
+
+  // const end = <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" />;
+  const end = () => {
+    const button: any = [
+      {
+        icon: "pi pi-save",
+        severity: "success",
+        disabled: !edit,
+        tooltip: "Save",
+        command: () => {
+          dispatch(EditDone())
+        }
+      },
+      {
+        icon: "pi pi-file-edit",
+        severity: "info",
+        disabled: edit,
+        tooltip: "Edit",
+        command: () => {
+          dispatch(EditData())
+        }
+      },
+      {
+        icon: "pi pi-trash",
+        severity: "danger",
+        tooltip: "Delete",
+        command: () => {
+          setDialogVisible(true); 
+        }
+      }
+    ]
+    return <div className='mx-3'>
+      {
+        button.map(({icon, severity, tooltip, disabled, command}: any) => (
+          <Button icon={icon} rounded text severity={severity} disabled={disabled} tooltip={tooltip} tooltipOptions={{ position: 'bottom' }} onClick={command}/>
+        ))
+      }
+    </div>
+  }
+
+  const [dialogVisible, setDialogVisible] = useState(false);
+
+  const footerContent = (
+    <div>
+        <Button label="No" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" />
+        <Button label="Yes" icon="pi pi-check" onClick={() => setDialogVisible(false)} autoFocus />
+    </div>
+  );
 
   return (
     <>
       <ItemDialog visible={visible.item} setVisible={setVisible} />
       <EquipmentDialog visible={visible.equipment} setVisible={setVisible} />
       <ComponentDialog visible={visible.component} setVisible={setVisible} />
-      <MegaMenu model={items} breakpoint="960px" />
+      <MegaMenu model={items} breakpoint="768px" end={end} />
+
+      <Dialog 
+        header="Header" 
+        visible={dialogVisible} 
+        position="top" 
+        style={{ width: '50vw' }} 
+        onHide={() => {
+          if (!dialogVisible) return; 
+          setDialogVisible(false); 
+        }} 
+        footer={footerContent} 
+        draggable={false} 
+        resizable={false}
+        >
+        <p className="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </Dialog>
     </>
   );
 }

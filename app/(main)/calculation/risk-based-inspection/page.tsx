@@ -8,7 +8,7 @@ import RiskAnalysis from './tab-menu/risk-analysis';
 import InspectionPlanning from './tab-menu/inspection-planning';
 import Summary from './tab-menu/summary';
 import GeneralData from './tab-menu/general-data';
-import DamageMechanism from './tab-menu/damage-mechanism';
+import DamageMechanism from './tab-menu/damage-mechanism/damage-mechanism';
 import POFPlanDate from './tab-menu/pof-plan-date';
 import POFRBIDate from './tab-menu/pof-rbi-date';
 import { useSelector } from 'react-redux';

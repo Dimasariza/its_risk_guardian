@@ -180,10 +180,12 @@ function DFExternalCorrosion() {
     }, [edit])
 
     useEffect(() => {
-        getExternalCorrosion(data.menu.id)
-        .then((res: any) => {
-            setValue(res)
-        })
+        if(data.menu.comp_id) {
+            getExternalCorrosion(data.menu.id)
+            .then((res: any) => {
+                setValue(res)
+            })
+        }
     }, [data])
 
     return (
