@@ -15,7 +15,7 @@ const POFRBIDate = {
       throw new Error('Failed to fetch Companies data');
     }
 
-    return (await res.json());
+    return await res.json();
   },
   async getItem(id: string, param: string) {
     const res = await fetch(url + id, {
@@ -30,24 +30,24 @@ const POFRBIDate = {
       throw new Error('Failed to fetch Companies data');
     }
 
-    const {data} = await res.json();
+    const { data } = await res.json();
     // return data[0]?.[param] ?? {};
     return data ?? {};
   }
 };
 
 export async function getThinning(id: string) {
-  return await POFRBIDate.getItem(id, "dfThinning");
+  return await POFRBIDate.getItem(id, 'dfThinning');
 }
 
 export async function getExternalCorrosion(id: string) {
-  return await POFRBIDate.getItem(id, "dfExternalCorrosion");
+  return await POFRBIDate.getItem(id, 'dfExternalCorrosion');
 }
 
 export async function getAlkaline(id: string) {
-  return await POFRBIDate.getItem(id, "dfAlkaline");
+  return await POFRBIDate.getItem(id, 'dfAlkaline');
 }
 
 export async function getValue(id: string) {
-  return await POFRBIDate.getItem(id, "pofValue");
+  return await POFRBIDate.getItem(id, 'pofValue');
 }

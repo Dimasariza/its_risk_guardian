@@ -9,7 +9,7 @@ import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import RootStore from '@/redux/root/root';
-import { PersistGate } from 'redux-persist/integration/react'
+import { PersistGate } from 'redux-persist/integration/react';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Provider store={RootStore().store}>
           <PersistGate loading={null} persistor={RootStore().persistor}>
             <PrimeReactProvider>
-            <LayoutProvider>{children}</LayoutProvider>
+              <LayoutProvider>{children}</LayoutProvider>
             </PrimeReactProvider>
           </PersistGate>
         </Provider>

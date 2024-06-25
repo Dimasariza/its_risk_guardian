@@ -1,4 +1,4 @@
-const url: string|any = process.env.AUTH_URL;
+const url: string | any = process.env.AUTH_URL;
 
 export const AuthService = {
   async postItem(value: any) {
@@ -15,6 +15,6 @@ export const AuthService = {
       throw new Error('Failed to Login');
     }
 
-    return (await res.json());
-  },
+    return await res.json();
+  }
 };

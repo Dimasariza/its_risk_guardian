@@ -2,8 +2,8 @@
 
 import InputTypeText from '@/fragments/input-type-text';
 import { RerenderMenu } from '@/redux/action/action';
-import { AssetComponentService } from '@/service/assets/AssetComponentService';
-import { AssetEquipmentService } from '@/service/assets/AssetEquipmentService';
+import { AssetComponentService } from '@/service/assets/component-service';
+import { AssetEquipmentService } from '@/service/assets/equipment-service';
 import { IAssetComponent } from '@/types/assetComponent';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
@@ -30,7 +30,6 @@ function ComponentDialog({ visible, setVisible }: any) {
   const [error, setError] = useState<IAssetComponent>(emptyComponent);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(validate(value));
@@ -47,24 +46,22 @@ function ComponentDialog({ visible, setVisible }: any) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState<IAssetComponent | any>([]);
   const [selectedComponentType, setselectedComponentType] = useState(null);
-  const componentType = [
-    {name: "Filter"}
-  ];
+  const componentType = [{ name: 'Filter' }];
 
   const handleSelectItem = (e: any) => {
-    setValue((prev) => ({ ...prev, comp_equipmentId: e.value.eq_idEquipment }));
+    setValue((prev) => ({ ...prev, comp_equipmentId: e.value.eq_id }));
     setSelectedItem(e.value);
   };
 
   const handleSelectComponentType = (e: any) => {
-    setValue((prev) => ({ ...prev, comp_componentType: e.value }));
-    setselectedComponentType(e.value)
-  }
+    setValue((prev) => ({ ...prev, comp_componentType: e.value.name }));
+    setselectedComponentType(e.value);
+  };
 
   useEffect(() => {
-    AssetEquipmentService.getItem()
+    AssetEquipmentService.fetchData()
       .then((res) => {
-        setItems(res.data)
+        setItems(res.data);
         dispatch(RerenderMenu());
       })
       .catch((err) => {
@@ -81,14 +78,14 @@ function ComponentDialog({ visible, setVisible }: any) {
 
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
-      AssetComponentService.postItem(value, data.token)
+      AssetComponentService.postData({...value, comp_userId: data.user.user_id})
         .then((res) => {
           dispatch(RerenderMenu());
 
           toast.current.show({
             severity: 'success',
             summary: 'Data has been added',
-            detail: `You add Component ${res.nameOfItem}`
+            detail: `You add Component ${value.comp_nameOfComponent}`
           });
         })
         .catch((err) => console.log(err));
@@ -102,34 +99,31 @@ function ComponentDialog({ visible, setVisible }: any) {
       <Toast ref={toast} />
       <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, component: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
-
-          <div className='flex flex-column col p-1'>
-            <label htmlFor="equipment" className='m-1'>Equipment</label>
-            <div className='px-1'>
+          <div className="flex flex-column col p-1">
+            <label htmlFor="equipment" className="m-1">
+              Equipment
+            </label>
+            <div className="px-1">
               <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="eq_nameOfEquipment" placeholder="Select an Equipment" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>
 
-          <div className='flex flex-column col p-1'>
-            <label htmlFor="equipmentType" className='m-1'>Component Type</label>
-            <div className='px-1'>
+          <div className="flex flex-column col p-1">
+            <label htmlFor="equipmentType" className="m-1">
+              Component Type
+            </label>
+            <div className="px-1">
               <Dropdown id="equipmentType" value={selectedComponentType} onChange={handleSelectComponentType} options={componentType} optionLabel="name" placeholder="Select Component Type" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>
 
           {inputs.map((props: any, key: number) => (
-            <InputTypeText 
-              props={props} 
-              key={key} 
-              value={value} 
-              setValue={setValue} 
-              errorMessage={error[props.name]} 
-            />
+            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
 
-            {/* {inputs.map((props: any, key: number) => {
+          {/* {inputs.map((props: any, key: number) => {
               if(props.type == "text") {
                   return <InputTypeText 
                       props={props} 
@@ -156,7 +150,6 @@ function ComponentDialog({ visible, setVisible }: any) {
                   />
               }
           })} */}
-
         </section>
       </Dialog>
     </>

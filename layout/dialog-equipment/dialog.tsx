@@ -1,8 +1,8 @@
 'use client';
 
 import InputTypeText from '@/fragments/input-type-text';
-import { AssetEquipmentService } from '@/service/assets/AssetEquipmentService';
-import { AssetItemService } from '@/service/assets/AssetItemService';
+import { AssetEquipmentService } from '@/service/assets/equipment-service';
+import { AssetItemService } from '@/service/assets/item-service';
 import { IAssetEquipment } from '@/types/assetEquipment';
 import { IAssetItem } from '@/types/assetItem';
 import { Button } from 'primereact/button';
@@ -18,8 +18,8 @@ import { RerenderMenu } from '@/redux/action/action';
 
 function EquipmentDialog({ visible, setVisible }: any) {
   const emptyEquipment: IAssetEquipment = {
-    tagOfEquipment: '',
-    nameOfEquipment: ''
+    eq_tagOfEquipment: '',
+    eq_nameOfEquipment: ''
   };
 
   const toast = useRef<any>(null);
@@ -43,23 +43,21 @@ function EquipmentDialog({ visible, setVisible }: any) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedEquipmentType, setselectedEquipmentType] = useState(null);
   const [items, setItems] = useState<IAssetItem | any>([]);
-  const equipmentType = [
-    {name: "FWKO Separator"}
-  ]
+  const equipmentType = [{ name: 'FWKO Separator' }];
 
   const handleSelectItem = (e: any) => {
-    setValue((prev) => ({ ...prev, itemId: e.value.id }));
+    setValue((prev) => ({ ...prev, eq_itemId: e.value.item_id }));
     setSelectedItem(e.value);
   };
 
   const handleSelectEquipmentType = (e: any) => {
-    setValue((prev) => ({ ...prev, equipmentType: e.value }));
-    setselectedEquipmentType(e.value)
-  }
+    setValue((prev) => ({ ...prev, eq_equipmentType: e.value.name }));
+    setselectedEquipmentType(e.value);
+  };
 
   useEffect(() => {
-    AssetItemService.getItem()
-      .then((res) => setItems(res))
+    AssetItemService.fetchData()
+      .then((res) => setItems(res.data))
       .catch((err) => console.log(err));
   }, [visible]);
 
@@ -68,17 +66,22 @@ function EquipmentDialog({ visible, setVisible }: any) {
 
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
-      AssetEquipmentService.postItem(value, data.token)
+      AssetEquipmentService.postData({...value, eq_userId: data.user.user_id})
         .then((res) => {
           dispatch(RerenderMenu());
-
           toast.current.show({
             severity: 'success',
             summary: 'Data has been added',
-            detail: `You add Equipment ${res.nameOfItem}`
+            detail: `You add Equipment ${value.nameOfItem}`
           });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          toast.current.show({
+            severity: 'danger',
+            summary: 'Data failed to added.',
+            detail: `Add equipment failed`
+          });
+        });
       setValue(emptyEquipment);
       setVisible((prev: any) => ({ ...prev, equipment: false }));
     }
@@ -89,18 +92,21 @@ function EquipmentDialog({ visible, setVisible }: any) {
       <Toast ref={toast} />
       <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, equipment: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
-
-          <div className='flex flex-column col p-1'>
-            <label htmlFor="equipment" className='m-1'>Item</label>
-            <div className='px-1'>
-              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="nameOfItem" placeholder="Select an Item" />
+          <div className="flex flex-column col p-1">
+            <label htmlFor="equipment" className="m-1">
+              Item
+            </label>
+            <div className="px-1">
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="item_nameOfItem" placeholder="Select an Item" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>
 
-          <div className='flex flex-column col p-1'>
-            <label htmlFor="equipmentType" className='m-1'>Equipment Type</label>
-            <div className='px-1'>
+          <div className="flex flex-column col p-1">
+            <label htmlFor="equipmentType" className="m-1">
+              Equipment Type
+            </label>
+            <div className="px-1">
               <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select Equipment Type" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>

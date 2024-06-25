@@ -8,11 +8,12 @@ import { Password } from 'primereact/password';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
-import { AuthService } from '@/service/auth/authService';
 import { Toast } from 'primereact/toast';
 import { useDispatch } from 'react-redux';
 import { AuthAction } from '@/redux/action/action';
 import validate from './validate';
+import { AuthService } from '@/service/auth/auth-service';
+import axios from 'axios';
 
 const LoginPage = () => {
   const emptyValue = {
@@ -20,16 +21,15 @@ const LoginPage = () => {
     password: ""
   }
 
-  const [value, setValue] = useState<any>(emptyValue);
-
-  const toast = useRef<any>(null);
-  const [checked, setChecked] = useState(false);
   const { layoutConfig } = useContext(LayoutContext);
+  const toast = useRef<any>(null);
+  const [value, setValue] = useState<any>(emptyValue);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<any>({});
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
   const router = useRouter();
+
   const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
   const dispatch = useDispatch();
@@ -45,8 +45,10 @@ const LoginPage = () => {
       setLoading(true);
       AuthService.postItem(value)
         .then((res) => {
-          setLoading(false);
           dispatch(AuthAction("LOGIN", res.data))
+          axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}` // for all requests
+          axios.defaults.headers.common["Content-Type"] = `application/json` // for all requests
+          axios.defaults.headers.common["Accept"] = `*/*` // for all requests
           toast.current.show({
             severity: 'success',
             summary: 'Success',
@@ -54,8 +56,13 @@ const LoginPage = () => {
           });
         })
         .catch(() => {
-          setLoading(false);
+          toast.current.show({
+            severity: 'danger',
+            summary: 'Failed',
+            detail: `Login Failed`
+          });
         });
+      setLoading(false);
       setValue(emptyValue);
       router.push('/assets/asset-register')
     }
@@ -93,7 +100,7 @@ const LoginPage = () => {
 
               <div className="flex align-items-center justify-content-between mb-5 gap-5">
                 <div className="flex align-items-center">
-                  <Checkbox inputId="rememberme1" checked={checked} onChange={(e) => setChecked(e.checked ?? false)} className="mr-2"></Checkbox>
+                  <Checkbox inputId="rememberme1" checked={rememberMe} onChange={(e) => setRememberMe(e.checked ?? false)} className="mr-2"></Checkbox>
                   <label htmlFor="rememberme1">Remember me</label>
                 </div>
                 <a className="font-medium no-underline ml-2 text-right cursor-pointer" style={{ color: 'var(--primary-color)' }}>

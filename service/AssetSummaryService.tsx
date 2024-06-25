@@ -14,7 +14,7 @@ export const AssetItemService = {
       throw new Error('Failed to fetch Companies data');
     }
 
-    return (await res.json());
+    return await res.json();
   },
   async getItem() {
     const res = await fetch(url, {
@@ -29,6 +29,6 @@ export const AssetItemService = {
       throw new Error('Failed to fetch Companies data');
     }
 
-    return (await res.json());
+    return await res.json();
   }
 };

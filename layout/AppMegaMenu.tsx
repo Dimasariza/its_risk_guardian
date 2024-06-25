@@ -156,54 +156,54 @@ function AppMegaMenu() {
           }
         ]
       ]
-    },
+    }
   ];
 
   // const end = <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" />;
   const end = () => {
     const button: any = [
       {
-        icon: "pi pi-save",
-        severity: "success",
+        icon: 'pi pi-save',
+        severity: 'success',
         disabled: !edit,
-        tooltip: "Save",
+        tooltip: 'Save',
         command: () => {
-          dispatch(EditDone())
+          dispatch(EditDone());
         }
       },
       {
-        icon: "pi pi-file-edit",
-        severity: "info",
+        icon: 'pi pi-file-edit',
+        severity: 'info',
         disabled: edit,
-        tooltip: "Edit",
+        tooltip: 'Edit',
         command: () => {
-          dispatch(EditData())
+          dispatch(EditData());
         }
       },
       {
-        icon: "pi pi-trash",
-        severity: "danger",
-        tooltip: "Delete",
+        icon: 'pi pi-trash',
+        severity: 'danger',
+        tooltip: 'Delete',
         command: () => {
-          setDialogVisible(true); 
+          setDialogVisible(true);
         }
       }
-    ]
-    return <div className='mx-3'>
-      {
-        button.map(({icon, severity, tooltip, disabled, command}: any) => (
-          <Button icon={icon} rounded text severity={severity} disabled={disabled} tooltip={tooltip} tooltipOptions={{ position: 'bottom' }} onClick={command}/>
-        ))
-      }
-    </div>
-  }
+    ];
+    return (
+      <div className="mx-3">
+        {button.map(({ icon, severity, tooltip, disabled, command }: any, key: number) => (
+          <Button key={key} icon={icon} rounded text severity={severity} disabled={disabled} tooltip={tooltip} tooltipOptions={{ position: 'bottom' }} onClick={command} />
+        ))}
+      </div>
+    );
+  };
 
   const [dialogVisible, setDialogVisible] = useState(false);
 
   const footerContent = (
     <div>
-        <Button label="No" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" />
-        <Button label="Yes" icon="pi pi-check" onClick={() => setDialogVisible(false)} autoFocus />
+      <Button label="No" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" />
+      <Button label="Yes" icon="pi pi-check" onClick={() => setDialogVisible(false)} autoFocus />
     </div>
   );
 
@@ -214,24 +214,22 @@ function AppMegaMenu() {
       <ComponentDialog visible={visible.component} setVisible={setVisible} />
       <MegaMenu model={items} breakpoint="768px" end={end} />
 
-      <Dialog 
-        header="Header" 
-        visible={dialogVisible} 
-        position="top" 
-        style={{ width: '50vw' }} 
+      <Dialog
+        header="Header"
+        visible={dialogVisible}
+        position="top"
+        style={{ width: '50vw' }}
         onHide={() => {
-          if (!dialogVisible) return; 
-          setDialogVisible(false); 
-        }} 
-        footer={footerContent} 
-        draggable={false} 
+          if (!dialogVisible) return;
+          setDialogVisible(false);
+        }}
+        footer={footerContent}
+        draggable={false}
         resizable={false}
-        >
+      >
         <p className="m-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </Dialog>
     </>

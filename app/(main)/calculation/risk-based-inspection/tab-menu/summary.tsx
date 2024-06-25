@@ -1,13 +1,11 @@
 'use client';
 
 function Summary() {
-  return(
+  return (
     <>
-      <section className="p-4">
-        Summary Works!!!
-      </section>
+      <section className="p-4">Summary Works!!!</section>
     </>
-  ) 
+  );
 }
 
 export default Summary;

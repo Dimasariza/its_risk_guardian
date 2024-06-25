@@ -11,8 +11,8 @@ import { LayoutContext } from '../../layout/context/layoutcontext';
 import { NodeRef } from '@/types';
 import { classNames } from 'primereact/utils';
 import { Card } from 'primereact/card';
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const LandingPage = () => {
   const [isHidden, setIsHidden] = useState(false);
@@ -27,7 +27,7 @@ const LandingPage = () => {
   const [ref, inView] = useInView();
   useEffect(() => {
     if (inView) {
-      controls.start("visible");
+      controls.start('visible');
     }
   }, [controls, inView]);
 
@@ -97,21 +97,19 @@ const LandingPage = () => {
             clipPath: 'ellipse(150% 87% at 93% 13%)'
           }}
         >
-          <motion.div 
+          <motion.div
             className="mx-4 md:mx-8 md:mt-8 sm:mt-8 md:pt-8"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            variants={
-              {
-                hidden: { x: -20, opacity: 0 },
-                visible: {
-                  x: 0,
-                  opacity: 1
-                }
+            variants={{
+              hidden: { x: -20, opacity: 0 },
+              visible: {
+                x: 0,
+                opacity: 1
               }
-            }
+            }}
           >
             <h1 className="text-6xl font-bold text-gray-900 line-height-2">
               <span className="font-light block">Guiding You Today, </span>Empowering You Tomorrow
@@ -125,86 +123,68 @@ const LandingPage = () => {
             </Link>
           </motion.div>
           <div className="flex justify-content-center md:justify-content-end">
-            <motion.img 
-              src={`${process.env.PUBLIC_URL || ''}/demo/images/dashboard.png`} 
-              alt="Dashboard Image" 
-              style={{ height: '23em' }} 
-              className="h-1 md:w-auto" 
+            <motion.img
+              src={`${process.env.PUBLIC_URL || ''}/demo/images/dashboard.png`}
+              alt="Dashboard Image"
+              style={{ height: '23em' }}
+              className="h-1 md:w-auto"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               transition={{ duration: 1 }}
-              variants={
-                {
-                  hidden: { y: 20, opacity: 0 },
-                  visible: {
-                    y: 0,
-                    opacity: 1
-                  }
+              variants={{
+                hidden: { y: 20, opacity: 0 },
+                visible: {
+                  y: 0,
+                  opacity: 1
                 }
-              }
+              }}
             />
           </div>
         </div>
 
         <div id="features" className="py-4 px-4 lg:px-8 mt-5 mx-0 lg:mx-8">
           <div>
-            <motion.div
-              className="grid justify-content-center"
-              variants={container}
-              ref={ref}
-              animate={controls}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.3 }}
-            >
-
+            <motion.div className="grid justify-content-center" variants={container} ref={ref} animate={controls} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.3 }}>
               <div className="col-12 text-center mt-8 mb-4">
                 <h2 className="text-900 font-normal mb-2">Fill your curiousity</h2>
                 <span className="text-600 text-2xl">Advantages of our RBI program</span>
               </div>
 
-              {
-                [
-                  { name: 'Easy to Use', desc: 'Posuere morbi leo urna molestie.', icon: <i className="pi pi-fw pi-users text-2xl text-yellow-700"></i>, color: 'bg-yellow-200' },
-                  { name: 'Fresh Design', desc: 'Semper risus in hendrerit.', icon: <i className="pi pi-fw pi-palette text-2xl text-cyan-700"></i>, color: 'bg-blue-200' },
-                  { name: 'Responsive Layout', desc: 'Nulla malesuada pellentesque elit.', icon: <i className="pi pi-fw pi-id-card text-2xl text-bluegray-700"></i>, color: 'bg-green-200' },
-                  { name: 'Dark Mode', desc: 'Convallis tellus id interdum velit laoreet.', icon: <i className="pi pi-fw pi-moon text-2xl text-pink-700"></i>, color: 'bg-cyan-200' },
-                  { name: 'Ready to Use', desc: 'Mauris sit amet massa vitae.', icon: <i className="pi pi-fw pi-shopping-cart text-2xl text-teal-700"></i>, color: 'bg-pink-200' },
-                  { name: 'Modern Practices', desc: 'Elementum nibh tellus molestie nunc non.', icon: <i className="pi pi-fw pi-globe text-2xl text-blue-700"></i>, color: 'bg-red-200' }
-                ].map(({ name, desc, icon, color }: any, key) => (
-                  <motion.div 
-                    className="col-12 md:col-12 lg:col-4 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" 
-                    key={key}
-                    variants={item}
+              {[
+                { name: 'Easy to Use', desc: 'Posuere morbi leo urna molestie.', icon: <i className="pi pi-fw pi-users text-2xl text-yellow-700"></i>, color: 'bg-yellow-200' },
+                { name: 'Fresh Design', desc: 'Semper risus in hendrerit.', icon: <i className="pi pi-fw pi-palette text-2xl text-cyan-700"></i>, color: 'bg-blue-200' },
+                { name: 'Responsive Layout', desc: 'Nulla malesuada pellentesque elit.', icon: <i className="pi pi-fw pi-id-card text-2xl text-bluegray-700"></i>, color: 'bg-green-200' },
+                { name: 'Dark Mode', desc: 'Convallis tellus id interdum velit laoreet.', icon: <i className="pi pi-fw pi-moon text-2xl text-pink-700"></i>, color: 'bg-cyan-200' },
+                { name: 'Ready to Use', desc: 'Mauris sit amet massa vitae.', icon: <i className="pi pi-fw pi-shopping-cart text-2xl text-teal-700"></i>, color: 'bg-pink-200' },
+                { name: 'Modern Practices', desc: 'Elementum nibh tellus molestie nunc non.', icon: <i className="pi pi-fw pi-globe text-2xl text-blue-700"></i>, color: 'bg-red-200' }
+              ].map(({ name, desc, icon, color }: any, key) => (
+                <motion.div className="col-12 md:col-12 lg:col-4 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" key={key} variants={item}>
+                  <div
+                    style={{
+                      height: '160px',
+                      padding: '2px',
+                      borderRadius: '10px',
+                      background: 'linear-gradient(90deg, rgba(253, 228, 165, 0.2), rgba(187, 199, 205, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2), rgba(187, 199, 205, 0.2))'
+                    }}
                   >
-                    <div
-                      style={{
-                        height: '160px',
-                        padding: '2px',
-                        borderRadius: '10px',
-                        background: 'linear-gradient(90deg, rgba(253, 228, 165, 0.2), rgba(187, 199, 205, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2), rgba(187, 199, 205, 0.2))'
-                      }}
-                    >
-                      <div className="p-3 surface-card h-full" style={{ borderRadius: '8px' }}>
-                        <div
-                          className={`${color} flex align-items-center justify-content-center  mb-3`}
-                          style={{
-                            width: '3.5rem',
-                            height: '3.5rem',
-                            borderRadius: '10px'
-                          }}
-                        >
-                          {icon}
-                        </div>
-                        <h5 className="mb-2 text-900">{name}</h5>
-                        <span className="text-600">{desc}</span>
+                    <div className="p-3 surface-card h-full" style={{ borderRadius: '8px' }}>
+                      <div
+                        className={`${color} flex align-items-center justify-content-center  mb-3`}
+                        style={{
+                          width: '3.5rem',
+                          height: '3.5rem',
+                          borderRadius: '10px'
+                        }}
+                      >
+                        {icon}
                       </div>
+                      <h5 className="mb-2 text-900">{name}</h5>
+                      <span className="text-600">{desc}</span>
                     </div>
-                  </motion.div>
-                ))
-              }
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
             <div
@@ -242,7 +222,7 @@ const LandingPage = () => {
                 name: 'Ahmad Akbar Rivai',
                 title: 'Asset Integrity Engineer',
                 desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
-                imgSrc: 'AAR.png',
+                imgSrc: 'AAR.png'
               },
               {
                 name: 'Amirta Mega Prastiwi',
@@ -257,8 +237,8 @@ const LandingPage = () => {
                 imgSrc: 'Hesti.png'
               }
             ].map(({ name, title, desc, imgSrc }, key) => (
-              <motion.div 
-                className="col-12 justify-content-center flex md:col-12 lg:col-6 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0" 
+              <motion.div
+                className="col-12 justify-content-center flex md:col-12 lg:col-6 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0"
                 key={key}
                 animate={controls}
                 ref={ref}
@@ -266,15 +246,13 @@ const LandingPage = () => {
                 whileInView="visible"
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
-                variants={
-                  {
-                    hidden: { y: 30, opacity: 0 },
-                    visible: {
-                      y: 0,
-                      opacity: 1
-                    }
+                variants={{
+                  hidden: { y: 30, opacity: 0 },
+                  visible: {
+                    y: 0,
+                    opacity: 1
                   }
-                }
+                }}
               >
                 <Card title={name} subTitle={title} header={() => <img alt="Card" src={`${process.env.PUBLIC_URL || ''}/team/image/${imgSrc}`} />} className="md:w-25rem">
                   <p className="m-0">{desc}</p>

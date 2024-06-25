@@ -7,7 +7,7 @@ import COF from './tab-menu/cof';
 import RiskAnalysis from './tab-menu/risk-analysis';
 import InspectionPlanning from './tab-menu/inspection-planning';
 import Summary from './tab-menu/summary';
-import GeneralData from './tab-menu/general-data';
+import GeneralData from './tab-menu/general-data/general-data';
 import DamageMechanism from './tab-menu/damage-mechanism/damage-mechanism';
 import POFPlanDate from './tab-menu/pof-plan-date';
 import POFRBIDate from './tab-menu/pof-rbi-date';
@@ -91,7 +91,7 @@ function RiskBasedInspection() {
   };
 
   const data = useSelector((state: any) => state.Reducer);
-  
+
   return (
     <>
       <Card title={data.menu.label}>

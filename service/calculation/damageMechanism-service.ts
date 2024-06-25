@@ -14,10 +14,10 @@ export const GeneralDataService = {
       throw new Error('Failed to fetch Companies data');
     }
 
-    return (await res.json());
+    return await res.json();
   },
   async getItem(id: string) {
-    const res = await fetch(url + "/" + id, {
+    const res = await fetch(url + '/' + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -28,11 +28,11 @@ export const GeneralDataService = {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch Companies data');
     }
-    const {data} = await res.json();
+    const { data } = await res.json();
     return data ?? {};
   },
   async editItem(data: any) {
-    const res = await fetch(url + "/" + data.id, {
+    const res = await fetch(url + '/' + data.id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

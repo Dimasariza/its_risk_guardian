@@ -2,7 +2,7 @@
 
 import InputTypeText from '@/fragments/input-type-text';
 import { RerenderMenu } from '@/redux/action/action';
-import { AssetItemService } from '@/service/assets/AssetItemService';
+import { AssetItemService } from '@/service/assets/item-service';
 import { IAssetItem } from '@/types/assetItem';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
@@ -41,14 +41,14 @@ function ItemDialog({ visible, setVisible }: any) {
 
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
-      AssetItemService.postItem(value, data.token)
+      AssetItemService.postData({...value, item_userId: data.user.user_id})
         .then((res) => {
           dispatch(RerenderMenu());
 
           toast.current.show({
             severity: 'success',
             summary: 'Data has been added',
-            detail: `You add item ${res.nameOfItem}`
+            detail: `You add item ${value.item_nameOfItem}`
           });
         })
         .catch((err) => console.log(err));
@@ -61,7 +61,7 @@ function ItemDialog({ visible, setVisible }: any) {
     <>
       <Toast ref={toast} />
       <Dialog header="Item" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, item: false }))} footer={footerContent}>
-        <section className="flex flex-column gap-2">
+        <section className="flex flex-wrap flex-column">
           {inputs.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}

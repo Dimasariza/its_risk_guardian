@@ -58,26 +58,18 @@ function DamageMechanism() {
     dm_sigma_phase_B: false,
     dm_piping_mechanical: false,
     dm_piping_mechanical_A: false,
-    dm_piping_mechanical_B: false,
-  }
+    dm_piping_mechanical_B: false
+  };
   const [checked, setChecked] = useState<any>(uncheckedAll);
   const edit = useSelector((state: any) => state.EditReducer);
 
-  useEffect(() => {
-    
-  }, [])
+  useEffect(() => {}, []);
 
   const damageFactorStatus = (value: any) => {
-    const {screeningCriteria, checkedValue} = value;
+    const { screeningCriteria, checkedValue } = value;
     return (
       <div className="flex justify-content-center">
-        <Checkbox 
-          readOnly={typeof screeningCriteria == 'object'} 
-          onChange={(e) => setChecked((prev: any) => ({...prev, [checkedValue]: e.checked}))} 
-          checked={checked[checkedValue]}
-          disabled={!edit}
-          >
-        </Checkbox>
+        <Checkbox readOnly={typeof screeningCriteria == 'object'} onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} checked={checked[checkedValue]} disabled={!edit}></Checkbox>
       </div>
     );
   };
@@ -87,17 +79,12 @@ function DamageMechanism() {
       <>
         {typeof item == 'string'
           ? item
-          : item.map(({text, checkedValue}, key: number) => (
+          : item.map(({ text, checkedValue }, key: number) => (
               <div key={key} className="mb-1 grid">
                 <span className="col-10">{text}</span>
-                {key !== 0 && 
-                <Checkbox 
-                  className="col-2 justify-content-end flex  p-0 align-self-center" 
-                  onChange={(e) => setChecked((prev: any) => ({...prev, [checkedValue]: e.checked}))} 
-                  checked={checked[checkedValue]}
-                  disabled={!edit}
-                  >
-                </Checkbox>}
+                {key !== 0 && (
+                  <Checkbox className="col-2 justify-content-end flex  p-0 align-self-center" onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} checked={checked[checkedValue]} disabled={!edit}></Checkbox>
+                )}
               </div>
             ))}
       </>

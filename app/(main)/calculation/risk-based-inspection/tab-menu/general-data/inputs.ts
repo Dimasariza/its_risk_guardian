@@ -1,12 +1,4 @@
-'use client';
-
-import InputTypeText from '@/fragments/input-type-text';
-import { GeneralDataService } from '@/service/calculation/generalDataService';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
-function GeneralData() {
-  const inputsGeneralSpec = [
+const inputsGeneralSpec = [
     {
       name: 'gData_tagNumber',
       type: 'text',
@@ -159,7 +151,7 @@ function GeneralData() {
       required: true,
       autoFocus: false,
       className: ''
-    },
+    }
   ];
 
   const inputsShellCalc = [
@@ -270,9 +262,9 @@ function GeneralData() {
       required: true,
       autoFocus: false,
       className: ''
-    },
+    }
   ];
-  
+
   const inputsHeadCalc = [
     {
       name: 'gData_headTagNumber',
@@ -381,52 +373,7 @@ function GeneralData() {
       required: true,
       autoFocus: false,
       className: ''
-    },
-  ];
-
-  const [value, setValue] = useState<any>({});
-  const [error, setError] = useState<any>({});
-
-  const data = useSelector((state: any) => state.Reducer);
-  const save = useSelector((state: any) => state.SaveReducer);
-  
-  useEffect(() => {
-    if(data.menu.comp_id) {
-      GeneralDataService.getItem(data.menu.comp_id)
-      .then(res => {
-        setValue(res)
-      })
-    } else {
-      setValue({})
     }
-  }, [data])
+];
 
-  return (
-    <>
-      <section className="p-4">
-        <h5>GENERAL SPECIFICATION OF PRESSURE VESSEL</h5>
-        <div className="flex flex-wrap">
-          {inputsGeneralSpec.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
-        </div>
-
-        <h5>SHELL CALCULATION</h5>
-        <div className="flex flex-wrap">
-          {inputsShellCalc.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
-        </div>
-
-        <h5>HEAD CALCULATION</h5>
-        <div className="flex flex-wrap">
-          {inputsHeadCalc.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
-        </div>
-      </section>
-    </>
-  );
-}
-
-export default GeneralData;
+export { inputsGeneralSpec, inputsShellCalc, inputsHeadCalc }
