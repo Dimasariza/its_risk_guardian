@@ -14,7 +14,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import Link from 'next/link';
-import { ComponentService } from '@/service/ComponentService';
+// import { ComponentService } from '@/service/ComponentService';
 
 const ComponentTree = () => {
   const toast = useRef<any>(null);
@@ -59,7 +59,7 @@ const ComponentTree = () => {
 
   useEffect(() => {
     // NodeService.getFilesystem().then((files) => setFiles2(files));
-    ComponentService.getComponent().then((files: any) => setFiles2(files));
+    // ComponentService.getComponent().then((files: any) => setFiles2(files));
   }, []);
 
   const openNew = () => {

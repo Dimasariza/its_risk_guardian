@@ -10,7 +10,7 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
-import { EquipmentService } from '@/service/EquipmentService';
+// import { EquipmentService } from '@/service/EquipmentService';
 
 const EquipmentData = () => {
   let emptyProduct: Demo.Product = {
@@ -33,7 +33,7 @@ const EquipmentData = () => {
   const [product, setProduct] = useState<Demo.Product>(emptyProduct);
 
   useEffect(() => {
-    EquipmentService.getEquipment().then((data) => setFiles2(data));
+    // EquipmentService.getEquipment().then((data) => setFiles2(data));
   }, []);
 
   const openNew = () => {

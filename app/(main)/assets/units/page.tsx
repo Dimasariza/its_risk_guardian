@@ -8,10 +8,10 @@ import { Dialog } from 'primereact/dialog';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Demo } from '@/types';
 import { Dropdown } from 'primereact/dropdown';
-import { UnitsService } from '@/service/UnitsService';
+// import { UnitsService } from '@/service/UnitsService';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import { CompanyService } from '@/service/CompanyService';
+// import { CompanyService } from '@/service/CompanyService';
 
 interface ICompanies {
   company: string;
@@ -42,7 +42,7 @@ const UnitsTree = () => {
   const [unit, setUnit] = useState<ICompanies>(emptyProduct);
 
   useEffect(() => {
-    UnitsService.getUnits().then((unitFiles: any) => setUnits(unitFiles));
+    // UnitsService.getUnits().then((unitFiles: any) => setUnits(unitFiles));
   }, []);
 
   const openNew = () => {

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Column } from 'primereact/column';
 import { TreeTable, TreeTableSelectionKeysType } from 'primereact/treetable';
 import { TreeNode } from 'primereact/treenode';
-import { CompanyService } from '@/service/CompanyService';
+// import { CompanyService } from '@/service/CompanyService';
 
 const riskMatrix: any = [
   {
@@ -103,7 +103,7 @@ const Dashboard = () => {
   const [selectedFileKeys, setSelectedFileKeys] = useState<TreeTableSelectionKeysType | null>(null);
 
   useEffect(() => {
-    CompanyService.getCompanies().then((files) => setFiles(files));
+    // CompanyService.getCompanies().then((files) => setFiles(files));
   }, []);
 
   return (
