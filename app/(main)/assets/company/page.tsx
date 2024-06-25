@@ -11,7 +11,7 @@ import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import { CompanyService } from '@/service/CompanyService';
+// import { CompanyService } from '@/service/CompanyService';
 // import CompaniesData from './data';
 
 interface ICompanies {
@@ -75,7 +75,7 @@ const CompanyPage = () => {
   };
 
   useEffect(() => {
-    CompanyService.getCompanies().then((companiesFile) => setFiles(companiesFile));
+    // CompanyService.getCompanies().then((companiesFile) => setFiles(companiesFile));
   }, []);
 
   const companyType: any = [
