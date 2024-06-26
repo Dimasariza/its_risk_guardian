@@ -4,7 +4,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Tag Number',
       label: 'Tag Number',
-      required: true,
       autoFocus: true,
       className: ''
     },
@@ -13,7 +12,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Service',
       label: 'Service',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -22,7 +20,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Manufactured By',
       label: 'Manufactured By',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -31,7 +28,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Position ',
       label: 'Position Type',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -40,7 +36,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Shape Type',
       label: 'Shape Type',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -49,7 +44,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Geometry Data',
       label: 'Geometry Data',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -58,7 +52,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Code',
       label: 'Code',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -67,7 +60,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Design Pressure',
       label: 'Design Pressure',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -76,7 +68,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Design Temperature',
       label: 'Design Temperature',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -85,7 +76,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Operating Pressure',
       label: 'Operating Pressure',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -94,7 +84,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Operating Temperature',
       label: 'Operating Temperature',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -103,7 +92,6 @@ const inputsGeneralSpec = [
       type: 'number',
       placeholder: 'Dimension (Length)',
       label: 'Length',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -112,7 +100,6 @@ const inputsGeneralSpec = [
       type: 'number',
       placeholder: 'Dimension (Width)',
       label: 'Width',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -121,7 +108,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Vessel Volume (lb/ft3)',
       label: 'Vessel Volume (lb/ft3)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -130,7 +116,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Vessel Volume (kg/m3)',
       label: 'Vessel Volume (lb/ft3)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -139,7 +124,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Support',
       label: 'Support',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -148,7 +132,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Joint Efficiency',
       label: 'Joint Efficiency (Head/Sheel)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -157,7 +140,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Corrosion Allowance (mm)',
       label: 'Corrosion Allowance (mm)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -166,7 +148,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Corrosion Allowance (inch)',
       label: 'Corrosion Allowance (inch)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -175,7 +156,6 @@ const inputsGeneralSpec = [
       type: 'number',
       placeholder: 'Year Built',
       label: 'Year Built',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -184,7 +164,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Material',
       label: 'Material',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -193,7 +172,6 @@ const inputsGeneralSpec = [
       type: 'calendar',
       placeholder: 'Last Inspection',
       label: 'Last Inspection',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -202,7 +180,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Outer Diameter (mm)',
       label: 'Outer Diameter',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -211,7 +188,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Outer Diameter (inch)',
       label: 'Outer Diameter',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -220,7 +196,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Allowable Stress (psig)',
       label: 'Allowable Stress (psig)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -229,7 +204,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Allowable Stress (bar)',
       label: 'Allowable Stress (bar)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -238,7 +212,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Allowable Stress (kPa)',
       label: 'Allowable Stress (kPa)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -247,7 +220,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Efficiency',
       label: 'Efficiency',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -259,7 +231,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Code',
       label: 'Code',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -268,7 +239,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Minimum Thickness (mm)',
       label: 'Minimum Thickness (mm)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -277,7 +247,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Minimum Thickness (inch)',
       label: 'Minimum Thickness (inch)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -286,7 +255,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Corrosion Rate (mm/years)',
       label: 'Corrosion Rate (mm/years)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -295,7 +263,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Corrosion Rate (inch/years)',
       label: 'Corrosion Rate (inch/years)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -305,7 +272,6 @@ const inputsGeneralSpec = [
       placeholder: 'T Requirement',
       label: 'T Requirement',
       readonly: true,
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -315,7 +281,6 @@ const inputsGeneralSpec = [
       placeholder: 'MAWP',
       label: 'MAWP',
       readonly: true,
-      required: true,
       autoFocus: false,
       className: ''
     }
@@ -327,7 +292,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Code',
       label: 'Code',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -336,7 +300,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Minimum Thickness (mm)',
       label: 'Minimum Thickness (mm)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -345,7 +308,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Minimum Thickness (inch)',
       label: 'Minimum Thickness (inch)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -354,7 +316,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Corrosion Rate (mm/years)',
       label: 'Corrosion Rate (mm/years)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -363,7 +324,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Corrosion Rate (inch/years)',
       label: 'Corrosion Rate (inch/years)',
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -373,7 +333,6 @@ const inputsGeneralSpec = [
       placeholder: 'T Requirement',
       label: 'T Requirement',
       readonly: true,
-      required: true,
       autoFocus: false,
       className: ''
     },
@@ -383,7 +342,6 @@ const inputsGeneralSpec = [
       placeholder: 'MAWP',
       label: 'MAWP',
       readonly: true,
-      required: true,
       autoFocus: false,
       className: ''
     }

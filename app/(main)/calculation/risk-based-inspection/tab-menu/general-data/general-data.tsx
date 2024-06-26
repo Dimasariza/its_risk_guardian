@@ -131,12 +131,10 @@ function GeneralData() {
         <div className="flex flex-wrap column-gap-5 lg:column-gap-6">
           {inputsGeneralSpec.map((props: any, key: number) => {
             if (props.type == 'text' || props.type == 'number') {
-              return <InputTypeText props={props} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
+              return <InputTypeText props={{...props, disabled}} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
             } else if (props.type == 'calendar') {
-              return <InputCalendar props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
-            } else if (props.type == 'drop-down') {
-              return <InputDropDown props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
-            }
+              return <InputCalendar props={{...props, disabled}} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
+            } 
           })}
         </div>
 
