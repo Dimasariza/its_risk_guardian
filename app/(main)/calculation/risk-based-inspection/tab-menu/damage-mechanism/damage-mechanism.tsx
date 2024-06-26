@@ -2,7 +2,7 @@
 
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IDamageMechanism } from '@/types/damageMechanism';
 import { Checkbox } from 'primereact/checkbox';
 import damageFactor from './damage-factor';
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import validate from './validate';
 import { EditData } from '@/redux/action/action';
 import { damageMechanismService } from '@/service/calculation/damageMechanism-service';
+import { Toast } from 'primereact/toast';
 
 function DamageMechanism() {
   const uncheckedAll = {
@@ -64,8 +65,10 @@ function DamageMechanism() {
     dm_piping_mechanical_B: false
   };
 
+  const toast = useRef<any>(null);
   const [checked, setChecked] = useState<any>(uncheckedAll);
   const [error, setError] = useState<any | null>({});
+  const [disabled, setDisabled] = useState(true);
   const data = useSelector((state: any) => state.Reducer);
   const dispatchEdit = useDispatch();
   let edit = useSelector((state: any) => state.EditReducer);
@@ -73,11 +76,13 @@ function DamageMechanism() {
   useEffect(() => {
     edit = true; // to disabled edit useeffect in first call
     if (data.menu.comp_id) {
+      setDisabled(false);
       damageMechanismService.getData(data.menu.comp_id)
       .then((res) => {
         setChecked((prev: any) => ({...prev, ...res.data}));
       });
     } else {
+      setDisabled(true);
       setChecked(uncheckedAll);
     }
   }, [data]);
@@ -90,10 +95,15 @@ function DamageMechanism() {
 
   useEffect(() => {
     if(Object.keys(error).length === 0 && !edit) {
-      console.log("save data")
       damageMechanismService.editData(checked)
-      .then(res => console.log(res))
-    } else {
+      .then(res => {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data Updated',
+          detail: `You update General Data`
+        });
+      })
+    } else if(!edit) {
       dispatchEdit(EditData());
     }
   }, [error])
@@ -105,7 +115,9 @@ function DamageMechanism() {
         <Checkbox 
           readOnly={typeof screeningCriteria == 'object'} 
           onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} 
-          checked={checked[checkedValue]} disabled={!edit}>
+          checked={checked[checkedValue]} 
+          disabled={disabled}
+        >
         </Checkbox>
       </div>
     );
@@ -123,7 +135,9 @@ function DamageMechanism() {
                   <Checkbox 
                     className="col-2 justify-content-end flex  p-0 align-self-center" 
                     onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} 
-                    checked={checked[checkedValue]} disabled={!edit}>
+                    checked={checked[checkedValue]} 
+                    disabled={disabled}
+                    >
                   </Checkbox>
                 )}
               </div>
@@ -134,6 +148,8 @@ function DamageMechanism() {
 
   return (
     <section className="p-4">
+      <Toast ref={toast}  position="bottom-right" />
+
       <DataTable value={damageFactor} stripedRows tableStyle={{ minWidth: '50rem' }}>
         <Column field="number" header="No" style={{ width: '50px' }}></Column>
         <Column field="damageFactor" header="Damage Factor"></Column>

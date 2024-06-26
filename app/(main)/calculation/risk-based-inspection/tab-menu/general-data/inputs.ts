@@ -27,10 +27,19 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_typeOfPressureVessel',
+      name: 'gData_positionType',
       type: 'text',
-      placeholder: 'Type of Pressure Vessel',
-      label: 'Type of Pressure Vessel',
+      placeholder: 'Position ',
+      label: 'Position Type',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_shapeType',
+      type: 'text',
+      placeholder: 'Shape Type',
+      label: 'Shape Type',
       required: true,
       autoFocus: false,
       className: ''
@@ -63,6 +72,15 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
+      name: 'gData_designTemperature',
+      type: 'text',
+      placeholder: 'Design Temperature',
+      label: 'Design Temperature',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
       name: 'gData_operatingPressure',
       type: 'text',
       placeholder: 'Operating Pressure',
@@ -81,19 +99,37 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_dimmension',
-      type: 'text',
-      placeholder: 'Dimension',
-      label: 'Dimension',
+      name: 'gData_dimensionLength',
+      type: 'number',
+      placeholder: 'Dimension (Length)',
+      label: 'Length',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_vesselVolume',
+      name: 'gData_dimensionWidth',
+      type: 'number',
+      placeholder: 'Dimension (Width)',
+      label: 'Width',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_vesselVolumeLB',
       type: 'text',
-      placeholder: 'Vessel Volume',
-      label: 'Vessel Volume',
+      placeholder: 'Vessel Volume (lb/ft3)',
+      label: 'Vessel Volume (lb/ft3)',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_vesselVolumeKG',
+      type: 'text',
+      placeholder: 'Vessel Volume (kg/m3)',
+      label: 'Vessel Volume (lb/ft3)',
       required: true,
       autoFocus: false,
       className: ''
@@ -117,17 +153,26 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_corrosionAllowance',
+      name: 'gData_corrosionAllowanceMM',
       type: 'text',
-      placeholder: 'Corrosion Allowance',
-      label: 'Corrosion Allowance',
+      placeholder: 'Corrosion Allowance (mm)',
+      label: 'Corrosion Allowance (mm)',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_corrosionAllowanceInch',
+      type: 'text',
+      placeholder: 'Corrosion Allowance (inch)',
+      label: 'Corrosion Allowance (inch)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
       name: 'gData_yearBuilt',
-      type: 'text',
+      type: 'number',
       placeholder: 'Year Built',
       label: 'Year Built',
       required: true,
@@ -145,34 +190,70 @@ const inputsGeneralSpec = [
     },
     {
       name: 'gData_lastInspection',
-      type: 'text',
+      type: 'calendar',
       placeholder: 'Last Inspection',
       label: 'Last Inspection',
       required: true,
       autoFocus: false,
       className: ''
-    }
+    },
+    {
+      name: 'gData_outerDiameterMM',
+      type: 'text',
+      placeholder: 'Outer Diameter (mm)',
+      label: 'Outer Diameter',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_outerDiameterInch',
+      type: 'text',
+      placeholder: 'Outer Diameter (inch)',
+      label: 'Outer Diameter',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_allowableStressPsig',
+      type: 'text',
+      placeholder: 'Allowable Stress (psig)',
+      label: 'Allowable Stress (psig)',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_allowableStressBar',
+      type: 'text',
+      placeholder: 'Allowable Stress (bar)',
+      label: 'Allowable Stress (bar)',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_allowableStressKpa',
+      type: 'text',
+      placeholder: 'Allowable Stress (kPa)',
+      label: 'Allowable Stress (kPa)',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_efficiency',
+      type: 'text',
+      placeholder: 'Efficiency',
+      label: 'Efficiency',
+      required: true,
+      autoFocus: false,
+      className: ''
+    },
   ];
 
   const inputsShellCalc = [
-    {
-      name: 'gData_shellTagNumber',
-      type: 'text',
-      placeholder: 'Tag Number',
-      label: 'Tag Number',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    {
-      name: 'gData_shellService',
-      type: 'text',
-      placeholder: 'Service',
-      label: 'Service',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
     {
       name: 'gData_shellCode',
       type: 'text',
@@ -183,125 +264,64 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_shellDesignPressure',
+      name: 'gData_shellMinimumThicknessMM',
       type: 'text',
-      placeholder: 'Design Pressure',
-      label: 'Design Pressure',
+      placeholder: 'Minimum Thickness (mm)',
+      label: 'Minimum Thickness (mm)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_shellDesignTemperature',
+      name: 'gData_shellMinimumThicknessInch',
       type: 'text',
-      placeholder: 'Design Temperature',
-      label: 'Design Temperature',
+      placeholder: 'Minimum Thickness (inch)',
+      label: 'Minimum Thickness (inch)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_shellOuterDiameter',
+      name: 'gData_shellCorrosionRateMM',
       type: 'text',
-      placeholder: 'Outer Diameter',
-      label: 'Outer Diameter',
+      placeholder: 'Corrosion Rate (mm/years)',
+      label: 'Corrosion Rate (mm/years)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_shellMaterial',
+      name: 'gData_shellCorrosionRateInch',
       type: 'text',
-      placeholder: 'Material',
-      label: 'Material',
+      placeholder: 'Corrosion Rate (inch/years)',
+      label: 'Corrosion Rate (inch/years)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_shellAllowableStress',
+      name: 'gData_shellTreq',
       type: 'text',
-      placeholder: 'Allowable Stress',
-      label: 'Allowable Stress',
+      placeholder: 'T Requirement',
+      label: 'T Requirement',
+      readonly: true,
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_shellEfficiency',
+      name: 'gData_shellMAWP',
       type: 'text',
-      placeholder: 'Efficiency',
-      label: 'Efficiency',
+      placeholder: 'MAWP',
+      label: 'MAWP',
+      readonly: true,
       required: true,
       autoFocus: false,
       className: ''
-    },
-    {
-      name: 'gData_shellCorrosionAllowance',
-      type: 'text',
-      placeholder: 'Corrosion Allowance',
-      label: 'Corrosion Allowance',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    {
-      name: 'gData_shellMinimumThickness',
-      type: 'text',
-      placeholder: 'Minimum Thickness',
-      label: 'Minimum Thickness',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    {
-      name: 'gData_shellCorrosionRate',
-      type: 'text',
-      placeholder: 'Corrosion Rate',
-      label: 'Corrosion Rate',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    // {
-    //   name: 'gData_shellTreq',
-    //   type: 'text',
-    //   placeholder: 'T Requirement',
-    //   label: 'T Requirement',
-    //   required: true,
-    //   autoFocus: false,
-    //   className: ''
-    // },
-    // {
-    //   name: 'gData_shellMAWP',
-    //   type: 'text',
-    //   placeholder: 'MAWP',
-    //   label: 'MAWP',
-    //   required: true,
-    //   autoFocus: false,
-    //   className: ''
-    // }
+    }
   ];
 
   const inputsHeadCalc = [
-    {
-      name: 'gData_headTagNumber',
-      type: 'text',
-      placeholder: 'Tag Number',
-      label: 'Tag Number',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    {
-      name: 'gData_headService',
-      type: 'text',
-      placeholder: 'Service',
-      label: 'Service',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
     {
       name: 'gData_headCode',
       type: 'text',
@@ -312,104 +332,61 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_headDesignPressure',
+      name: 'gData_headMinimumThicknessMM',
       type: 'text',
-      placeholder: 'Head Design Pressure',
-      label: 'Head Design Pressure (P)',
+      placeholder: 'Minimum Thickness (mm)',
+      label: 'Minimum Thickness (mm)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_headDesignTemperature',
+      name: 'gData_headMinimumThicknessInch',
       type: 'text',
-      placeholder: 'Head Design Temperature',
-      label: 'Head Design Temperature (T)',
+      placeholder: 'Minimum Thickness (inch)',
+      label: 'Minimum Thickness (inch)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_headOuterDiameter',
+      name: 'gData_headCorrosionRateMM',
       type: 'text',
-      placeholder: 'Outer Diameter',
-      label: 'Outer Diameter',
+      placeholder: 'Corrosion Rate (mm/years)',
+      label: 'Corrosion Rate (mm/years)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_headMaterial',
+      name: 'gData_headCorrosionRateInch',
       type: 'text',
-      placeholder: 'Material',
-      label: 'Material',
+      placeholder: 'Corrosion Rate (inch/years)',
+      label: 'Corrosion Rate (inch/years)',
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_headAllowableStress',
+      name: 'gData_headTreq',
       type: 'text',
-      placeholder: 'Allowable Stress',
-      label: 'Allowable Stress',
+      placeholder: 'T Requirement',
+      label: 'T Requirement',
+      readonly: true,
       required: true,
       autoFocus: false,
       className: ''
     },
     {
-      name: 'gData_headEfficiency',
+      name: 'gData_headMAWP',
       type: 'text',
-      placeholder: 'Efficiency',
-      label: 'Efficiency',
+      placeholder: 'MAWP',
+      label: 'MAWP',
+      readonly: true,
       required: true,
       autoFocus: false,
       className: ''
-    },
-    {
-      name: 'gData_headCorrosionAllowance',
-      type: 'text',
-      placeholder: 'Corrosion Allowance',
-      label: 'Corrosion Allowance',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    {
-      name: 'gData_headMinimumThickness',
-      type: 'text',
-      placeholder: 'Minimum Thickness',
-      label: 'Minimum Thickness',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    {
-      name: 'gData_headCorrosionRate',
-      type: 'text',
-      placeholder: 'Corrosion Rate',
-      label: 'Corrosion Rate',
-      required: true,
-      autoFocus: false,
-      className: ''
-    },
-    // {
-    //   name: 'gData_headTreq',
-    //   type: 'text',
-    //   placeholder: 'T Requirement',
-    //   label: 'T Requirement',
-    //   required: true,
-    //   autoFocus: false,
-    //   className: ''
-    // },
-    // {
-    //   name: 'gData_headMAWP',
-    //   type: 'text',
-    //   placeholder: 'MAWP',
-    //   label: 'MAWP',
-    //   required: true,
-    //   autoFocus: false,
-    //   className: ''
-    // }
+    }
 ];
 
 export { inputsGeneralSpec, inputsShellCalc, inputsHeadCalc }

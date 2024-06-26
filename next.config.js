@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+    distDir: 'build',
     output: "export",
     reactStrictMode: false,
-    bashPath: "/its_risk_guardian",
+    // useFileSystemPublicRoutes: false,
+    // bashPath: "https://itsriskguardian.com",
+    trailingSlash: true,
     env: {
         PUBLIC_URL: process.env.PUBLIC_URL,
         DB_URL: process.env.DB_URL,
