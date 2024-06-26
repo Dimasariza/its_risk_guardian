@@ -2,7 +2,7 @@
 
 const nextConfig = {
     output: "export",
-    reactStrictMode: true,
+    reactStrictMode: false,
     bashPath: "/its_risk_guardian",
     env: {
         PUBLIC_URL: process.env.PUBLIC_URL,

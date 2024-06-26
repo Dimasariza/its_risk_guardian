@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react';
 import { IDamageMechanism } from '@/types/damageMechanism';
 import { Checkbox } from 'primereact/checkbox';
 import damageFactor from './damage-factor';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import validate from './validate';
+import { EditData } from '@/redux/action/action';
+import { damageMechanismService } from '@/service/calculation/damageMechanism-service';
 
 function DamageMechanism() {
   const uncheckedAll = {
@@ -60,16 +63,50 @@ function DamageMechanism() {
     dm_piping_mechanical_A: false,
     dm_piping_mechanical_B: false
   };
-  const [checked, setChecked] = useState<any>(uncheckedAll);
-  const edit = useSelector((state: any) => state.EditReducer);
 
-  useEffect(() => {}, []);
+  const [checked, setChecked] = useState<any>(uncheckedAll);
+  const [error, setError] = useState<any | null>({});
+  const data = useSelector((state: any) => state.Reducer);
+  const dispatchEdit = useDispatch();
+  let edit = useSelector((state: any) => state.EditReducer);
+
+  useEffect(() => {
+    edit = true; // to disabled edit useeffect in first call
+    if (data.menu.comp_id) {
+      damageMechanismService.getData(data.menu.comp_id)
+      .then((res) => {
+        setChecked((prev: any) => ({...prev, ...res.data}));
+      });
+    } else {
+      setChecked(uncheckedAll);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if(!edit) {
+      setError(validate(checked));
+    }
+  }, [edit])
+
+  useEffect(() => {
+    if(Object.keys(error).length === 0 && !edit) {
+      console.log("save data")
+      damageMechanismService.editData(checked)
+      .then(res => console.log(res))
+    } else {
+      dispatchEdit(EditData());
+    }
+  }, [error])
 
   const damageFactorStatus = (value: any) => {
     const { screeningCriteria, checkedValue } = value;
     return (
       <div className="flex justify-content-center">
-        <Checkbox readOnly={typeof screeningCriteria == 'object'} onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} checked={checked[checkedValue]} disabled={!edit}></Checkbox>
+        <Checkbox 
+          readOnly={typeof screeningCriteria == 'object'} 
+          onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} 
+          checked={checked[checkedValue]} disabled={!edit}>
+        </Checkbox>
       </div>
     );
   };
@@ -83,7 +120,11 @@ function DamageMechanism() {
               <div key={key} className="mb-1 grid">
                 <span className="col-10">{text}</span>
                 {key !== 0 && (
-                  <Checkbox className="col-2 justify-content-end flex  p-0 align-self-center" onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} checked={checked[checkedValue]} disabled={!edit}></Checkbox>
+                  <Checkbox 
+                    className="col-2 justify-content-end flex  p-0 align-self-center" 
+                    onChange={(e) => setChecked((prev: any) => ({ ...prev, [checkedValue]: e.checked }))} 
+                    checked={checked[checkedValue]} disabled={!edit}>
+                  </Checkbox>
                 )}
               </div>
             ))}

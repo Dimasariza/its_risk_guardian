@@ -1,50 +1,17 @@
+import axios from "axios";
+
 const url = process.env.DB_URL + '/damage_mechanism';
-export const GeneralDataService = {
-  async postItem(value: any) {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(value)
-    });
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data');
-    }
-
-    return await res.json();
+export const damageMechanismService = {
+  async postData(value: any) {
+    const res = await axios.post(url, value);
+    return await res;
   },
-  async getItem(id: string) {
-    const res = await fetch(url + '/' + id, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data');
-    }
-    const { data } = await res.json();
-    return data ?? {};
+  async getData(id: string) {
+    const res = await axios.get(url + '/' + id);
+    return await res.data;
   },
-  async editItem(data: any) {
-    const res = await fetch(url + '/' + data.id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data');
-    }
-
-    return res.json();
+  async editData(data: any) {
+    const res = await axios.put(url + '/' + data.dm_componentId, data);
+    return await res;
   }
 };

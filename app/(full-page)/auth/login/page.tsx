@@ -55,6 +55,8 @@ const LoginPage = () => {
             detail: `Login Success`
           });
           setLoading(false);
+          setValue(emptyValue);
+          router.push('/assets/asset-register')
         })
         .catch(() => {
           toast.current.show({
@@ -64,8 +66,6 @@ const LoginPage = () => {
           });
           setLoading(false);
         });
-      setValue(emptyValue);
-      router.push('/assets/asset-register')
     }
   }, [error]);
 

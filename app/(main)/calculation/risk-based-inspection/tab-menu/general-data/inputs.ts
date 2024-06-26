@@ -262,7 +262,25 @@ const inputsGeneralSpec = [
       required: true,
       autoFocus: false,
       className: ''
-    }
+    },
+    // {
+    //   name: 'gData_shellTreq',
+    //   type: 'text',
+    //   placeholder: 'T Requirement',
+    //   label: 'T Requirement',
+    //   required: true,
+    //   autoFocus: false,
+    //   className: ''
+    // },
+    // {
+    //   name: 'gData_shellMAWP',
+    //   type: 'text',
+    //   placeholder: 'MAWP',
+    //   label: 'MAWP',
+    //   required: true,
+    //   autoFocus: false,
+    //   className: ''
+    // }
   ];
 
   const inputsHeadCalc = [
@@ -373,7 +391,25 @@ const inputsGeneralSpec = [
       required: true,
       autoFocus: false,
       className: ''
-    }
+    },
+    // {
+    //   name: 'gData_headTreq',
+    //   type: 'text',
+    //   placeholder: 'T Requirement',
+    //   label: 'T Requirement',
+    //   required: true,
+    //   autoFocus: false,
+    //   className: ''
+    // },
+    // {
+    //   name: 'gData_headMAWP',
+    //   type: 'text',
+    //   placeholder: 'MAWP',
+    //   label: 'MAWP',
+    //   required: true,
+    //   autoFocus: false,
+    //   className: ''
+    // }
 ];
 
 export { inputsGeneralSpec, inputsShellCalc, inputsHeadCalc }
