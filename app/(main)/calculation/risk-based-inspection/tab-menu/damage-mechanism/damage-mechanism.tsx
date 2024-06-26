@@ -103,6 +103,13 @@ function DamageMechanism() {
           detail: `You update General Data`
         });
       })
+      .catch((e: any) => {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Data Failed to Updated',
+          detail: `Damage mechanism not updated`
+        });
+      })
     } else if(!edit) {
       dispatchEdit(EditData());
     }

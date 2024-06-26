@@ -112,7 +112,7 @@ function GeneralData() {
       })
       .catch((err: any) => {
         toast.current.show({
-          severity: 'danger',
+          severity: 'error',
           summary: 'Data Failed to Update',
           detail: `Failed to updated your data`
         });
