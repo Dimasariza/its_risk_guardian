@@ -21,7 +21,7 @@ const LoginPage = () => {
     password: ""
   }
 
-  const { layoutConfig } = useContext(LayoutContext);
+  const { layoutConfig } = useContext<any>(LayoutContext);
   const toast = useRef<any>(null);
   const [value, setValue] = useState<any>(emptyValue);
   const [rememberMe, setRememberMe] = useState(false);
@@ -43,7 +43,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (Object.keys(error).length === 0 && isSubmit) {
       setLoading(true);
-      AuthService.postItem(value)
+      AuthService.postData(value)
         .then((res) => {
           dispatch(AuthAction("LOGIN", res.data))
           axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}` // for all requests
