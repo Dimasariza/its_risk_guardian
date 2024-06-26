@@ -10,6 +10,7 @@ import '../styles/demo/Demos.scss';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import RootStore from '@/redux/root/root';
 import { PersistGate } from 'redux-persist/integration/react';
+import { HashRouter } from 'react-router-dom'
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -22,13 +23,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link id="theme-css" href={`${process.env.PUBLIC_URL}/themes/lara-light-blue/theme.css`} rel="stylesheet"></link>
       </head>
       <body>
-        <Provider store={RootStore().store}>
-          <PersistGate loading={null} persistor={RootStore().persistor}>
-            <PrimeReactProvider>
-              <LayoutProvider>{children}</LayoutProvider>
-            </PrimeReactProvider>
-          </PersistGate>
-        </Provider>
+        <HashRouter>
+          <Provider store={RootStore().store}>
+            <PersistGate loading={null} persistor={RootStore().persistor}>
+              <PrimeReactProvider>
+                <LayoutProvider>{children}</LayoutProvider>
+              </PrimeReactProvider>
+            </PersistGate>
+          </Provider>
+        </HashRouter>
       </body>
     </html>
   );
