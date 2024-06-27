@@ -131,9 +131,9 @@ function GeneralData() {
         <div className="flex flex-wrap column-gap-5 lg:column-gap-6">
           {inputsGeneralSpec.map((props: any, key: number) => {
             if (props.type == 'text' || props.type == 'number') {
-              return <InputTypeText props={{...props, disabled}} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
+              return <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
             } else if (props.type == 'calendar') {
-              return <InputCalendar props={{...props, disabled}} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
+              return <InputCalendar props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
             } 
           })}
         </div>
@@ -141,14 +141,14 @@ function GeneralData() {
         <h5>SHELL CALCULATION</h5>
         <div className="flex flex-wrap lg:column-gap-6">
           {inputsShellCalc.map((props: any, key: number) => (
-            <InputTypeText props={{...props, disabled}} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
+            <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
           ))}
         </div>
 
         <h5>HEAD CALCULATION</h5>
         <div className="flex flex-wrap lg:column-gap-6">
           {inputsHeadCalc.map((props: any, key: number) => (
-            <InputTypeText props={{...props, disabled}} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
+            <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
           ))}
         </div>
       </section>
