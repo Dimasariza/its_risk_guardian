@@ -99,7 +99,7 @@ function GeneralData() {
       setError(validate(value));
     }
     if(!data.menu.comnp_id) {
-      dispatchEdit(EditDone());
+      // dispatchEdit(EditDone());
     }
   }, [edit])
 
