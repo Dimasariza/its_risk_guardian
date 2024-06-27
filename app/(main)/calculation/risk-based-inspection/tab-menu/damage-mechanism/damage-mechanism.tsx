@@ -78,7 +78,6 @@ function DamageMechanism() {
   }
 
   useEffect(() => {
-    console.log("checked")
     setChecked((prev: any) => ({ 
       ...prev, 
       dm_scc_chloride:  

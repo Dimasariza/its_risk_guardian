@@ -96,7 +96,7 @@ function ComponentDialog({ visible, setVisible }: any) {
 
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} position="bottom-right"/>
       <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, component: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">

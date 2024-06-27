@@ -59,7 +59,7 @@ function ItemDialog({ visible, setVisible }: any) {
 
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} position="bottom-right"/>
       <Dialog header="Item" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, item: false }))} footer={footerContent}>
         <section className="flex flex-wrap flex-column">
           {inputs.map((props: any, key: number) => (

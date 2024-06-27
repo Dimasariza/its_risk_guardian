@@ -89,7 +89,7 @@ function EquipmentDialog({ visible, setVisible }: any) {
 
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} position="bottom-right"/>
       <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, equipment: false }))} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">
