@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { inputsGeneralSpec, inputsHeadCalc, inputsShellCalc } from './inputs';
 import validate from './validate';
-import { EditData } from '@/redux/action/action';
+import { EditData, EditDone } from '@/redux/action/action';
 import InputCalendar from '@/fragments/input-calendar';
 import InputDropDown from '@/fragments/input-drop-down';
 import { Toast } from 'primereact/toast';
@@ -95,8 +95,11 @@ function GeneralData() {
   }, [data]);
   
   useEffect(() => {
-    if(!edit) {
+    if(!edit && data.menu.comp_id) {
       setError(validate(value));
+    }
+    if(!data.menu.comnp_id) {
+      dispatchEdit(EditDone());
     }
   }, [edit])
 
