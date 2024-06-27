@@ -271,7 +271,7 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'T Requirement',
       label: 'T Requirement',
-      readonly: true,
+      readOnly: true,
       autoFocus: false,
       className: ''
     },
@@ -280,7 +280,7 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'MAWP',
       label: 'MAWP',
-      readonly: true,
+      readOnly: true,
       autoFocus: false,
       className: ''
     }
@@ -332,7 +332,7 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'T Requirement',
       label: 'T Requirement',
-      readonly: true,
+      readOnly: true,
       autoFocus: false,
       className: ''
     },
@@ -341,7 +341,7 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'MAWP',
       label: 'MAWP',
-      readonly: true,
+      readOnly: true,
       autoFocus: false,
       className: ''
     }

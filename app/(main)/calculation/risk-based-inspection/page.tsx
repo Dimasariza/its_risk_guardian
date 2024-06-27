@@ -5,13 +5,14 @@ import { TabMenu } from 'primereact/tabmenu';
 import { useState } from 'react';
 import COF from './tab-menu/cof';
 import RiskAnalysis from './tab-menu/risk-analysis';
-import InspectionPlanning from './tab-menu/inspection-planning';
+import InspectionPlanning from './tab-menu/recomendation/recomendation';
 import Summary from './tab-menu/summary';
 import GeneralData from './tab-menu/general-data/general-data';
 import DamageMechanism from './tab-menu/damage-mechanism/damage-mechanism';
 import POFPlanDate from './tab-menu/pof-plan-date';
 import POFRBIDate from './tab-menu/pof-rbi-date';
 import { useSelector } from 'react-redux';
+import Recomendation from './tab-menu/recomendation/recomendation';
 
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
@@ -42,6 +43,18 @@ function RiskBasedInspection() {
       }
     },
     {
+      label: 'POL RBI Date',
+      command: () => {
+        setTabActive('pol_rbi_date');
+      }
+    },
+    {
+      label: 'POL Plan Date',
+      command: () => {
+        setTabActive('pol_plan_date');
+      }
+    },
+    {
       label: 'COF',
       command: () => {
         setTabActive('cof');
@@ -54,9 +67,9 @@ function RiskBasedInspection() {
       }
     },
     {
-      label: 'Inspection Planning',
+      label: 'Recomendation',
       command: () => {
-        setTabActive('inspection_planning');
+        setTabActive('recomendation');
       }
     },
     {
@@ -77,12 +90,18 @@ function RiskBasedInspection() {
         return <POFRBIDate />;
       case 'pof_plan_date':
         return <POFPlanDate />;
+      case 'pol_rbi_date':
+        return
+      case 'pol_plan_date':
+        return
       case 'cof':
         return <COF />;
       case 'risk_analysis':
         return <RiskAnalysis />;
       case 'inspection_planning':
         return <InspectionPlanning />;
+      case 'recomendation':
+        return <Recomendation />
       case 'summary':
         return <Summary />;
       default:
