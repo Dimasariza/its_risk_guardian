@@ -10,11 +10,11 @@ import { Checkbox } from "primereact/checkbox";
 import { DataTable } from "primereact/datatable";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
+import { Calendar } from "primereact/calendar";
 
 function Recomendation() {
   const [value, setValue] = useState<any>();
   const [nodes, setNodes] = useState<any>([]);
-  const [selected, setSelected] = useState<any>(0);
 
   useEffect(() => {
     const nodesArr: any = []
@@ -40,15 +40,15 @@ function Recomendation() {
   const headerGroup = (
     <ColumnGroup>
         <Row>
-            <Column header="Damage Factor" headerStyle={{ width: '5rem' }} rowSpan={2} />
-            <Column header="Level of Inspection" rowSpan={2} />
-            <Column header="Inspection Effectiveness" rowSpan={2} />
-            <Column header="Inspection Activities" rowSpan={2}/>
-            <Column header="Inspection Date" colSpan={2}/>
+          <Column header="Damage Factor" headerStyle={{ width: '5rem' }} rowSpan={2} />
+          <Column header="Level of Inspection" rowSpan={2} />
+          <Column header="Inspection Effectiveness" rowSpan={2} />
+          <Column header="Inspection Activities" rowSpan={2}/>
+          <Column header="Inspection Date" colSpan={2}/>
         </Row>
         <Row>
-            <Column header="Shell" />
-            <Column header="Head"/>
+          <Column header="Shell" />
+          <Column header="Head"/>
         </Row>
     </ColumnGroup>
   );
@@ -99,22 +99,13 @@ function Recomendation() {
     />
   }
 
-  const inspActivities = ({activities, id}: any) => {
-    return (
-      <>
-        { activities }
-      </>
-    ) 
-  }
-
   const shellBody = () => {
-    return <>
-      {/* <InputCalendar /> */}
-    </>
+    return <Calendar id="shell" style={{width: 235}} />
+    
   }
 
   const headBody = () => {
-    return <>Head</>
+    return <Calendar id="head" style={{width: 235}} />
   }
 
   return (
