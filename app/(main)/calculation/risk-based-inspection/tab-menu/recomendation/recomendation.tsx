@@ -132,7 +132,7 @@ function Recomendation() {
           <Column field="dm" style={{ minWidth: '5rem' }} body={representativeBodyTemplate} ></Column>
           <Column field="level" body={levelOfInsp} ></Column>
           <Column body={inspOfEfectivess}></Column>
-          {/* <Column field="activities"></Column> */}
+          <Column field="activities"></Column>
           <Column field="shell" body={shellBody}></Column>
           <Column field="head" body={headBody}></Column>
         </DataTable>
