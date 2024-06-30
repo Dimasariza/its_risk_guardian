@@ -3,7 +3,7 @@
 import InputCalendar from "@/fragments/input-calendar";
 import { Column } from "primereact/column";
 import { InputTextarea } from "primereact/inputtextarea";
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import recomendationTable from "./tableRecomendation";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
@@ -55,7 +55,7 @@ function Recomendation() {
 
   const representativeBodyTemplate = (rowData: any) => {
     return (
-        <div className="flex align-items-center gap-2">
+        <div className="flex align-items-center gap-2" key={rowData.dm}>
             <span className="font-bold">{rowData.dm}</span>
         </div>
     );
@@ -80,6 +80,7 @@ function Recomendation() {
   const inspOfEfectivess = ({inspOfEfectivess, disabled, activitiesSelected, id}: any) => {
     const item = inspOfEfectivess.map((i: any) => ({...i, name: `(${i.value}) ${i.effectiveness}`}));
     return <Dropdown 
+      key={id}
       id="inspOfEfectivess" 
       onChange={(e) => {
         const selectedIndex = item.findIndex((x:any) => x.value == e.value);
@@ -98,11 +99,11 @@ function Recomendation() {
     />
   }
 
-  const inspActivities = ({activities}: any) => {
+  const inspActivities = ({activities, id}: any) => {
     return (
-      <div>
+      <>
         { activities }
-      </div>
+      </>
     ) 
   }
 
@@ -131,7 +132,7 @@ function Recomendation() {
           <Column field="dm" style={{ minWidth: '5rem' }} body={representativeBodyTemplate} ></Column>
           <Column field="level" body={levelOfInsp} ></Column>
           <Column body={inspOfEfectivess}></Column>
-          <Column field="activities" body={inspActivities}></Column>
+          {/* <Column field="activities"></Column> */}
           <Column field="shell" body={shellBody}></Column>
           <Column field="head" body={headBody}></Column>
         </DataTable>
