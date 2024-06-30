@@ -4,11 +4,15 @@ import { Dialog } from "primereact/dialog";
 import representativeFluidNodes from "./representativeFluidTable";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
+import { useState } from "react";
 
 function RepresentativeFluidDialog({visible, setVisible}: any) {
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
     const headerGroup = (
         <ColumnGroup>
             <Row>
+                <Column header="" rowSpan={2} style={{ width: '3rem' }}/>
                 <Column header="Fluid" rowSpan={2} style={{width: "10rem"}}/>
                 <Column header="MW" rowSpan={2} />
                 <Column header="Luquid Density (lb/ft³)" rowSpan={2} />
@@ -35,7 +39,8 @@ function RepresentativeFluidDialog({visible, setVisible}: any) {
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, representative: false})); }} >
                 <div>
-                <DataTable value={representativeFluidNodes} scrollable scrollHeight="700px" headerColumnGroup={headerGroup} tableStyle={{ minWidth: '50rem' }}>
+                <DataTable value={representativeFluidNodes} selectionMode={"single"} selection={selectedProduct} scrollable scrollHeight="700px" headerColumnGroup={headerGroup} tableStyle={{ minWidth: '50rem' }} onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id">
+                    <Column selectionMode="single"></Column>
                     <Column field="fluid" body={(e) => e.fluid ? <>{e.fluid}</> : <div className="">---</div>}></Column>
                     <Column field="mw" body={(e) => e.mw ? <>{e.mw}</> : <div className="">---</div>}></Column>
                     <Column field="liquid" body={(e) => e.liquid ? <>{e.liquid}</> : <div className="">---</div>}></Column>

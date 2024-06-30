@@ -13,6 +13,7 @@ import { classNames } from 'primereact/utils';
 import { Card } from 'primereact/card';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { BlockUI } from 'primereact/blockui';
 
 const LandingPage = () => {
   const [isHidden, setIsHidden] = useState(false);
@@ -51,8 +52,20 @@ const LandingPage = () => {
     }
   };
 
+  const [blocked, setBlocked] = useState(true);
+
+  useEffect(() => {
+      if (blocked) {
+          setTimeout(() => {
+              setBlocked(false);
+          }, 2000);
+      }
+  }, [blocked]);
+
   return (
     <div className="surface-0 flex justify-content-center">
+      <BlockUI blocked={blocked} fullScreen  template={<i className="pi pi-spin pi-cog" style={{ fontSize: '3rem' }}></i>}/>
+
       <div id="home" className="landing-wrapper overflow-hidden">
         <div className="p-4 lg:px-8 flex w-full align-items-center justify-content-between fixed lg:fixed z-5">
           <Link href="/" className="flex align-items-center">

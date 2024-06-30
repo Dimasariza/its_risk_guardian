@@ -2,9 +2,6 @@
 
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
-import { representativeFluidList } from "./inputs";
-import InputDropDown from "@/fragments/input-drop-down";
-import representativeFluidNodes from "./representativeFluidTable";
 import RepresentativeFluidDialog from "./representativeFluidDialog";
 import InputValueOnly from "@/fragments/inputValueOnly";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
@@ -51,8 +48,8 @@ function COF() {
       <RepresentativeFluidDialog visible={visible.representative} setVisible={setVisible} />
       <PhaseOfFluid visible={visible.phase} setVisible={setVisible} />
 
-      <div className="flex align-items-center">
-        {
+      <div className="gird gap-2">
+        {/* {
           <InputDropDown  
             props={{...representativeFluidList, 
               options: representativeFluidNodes,
@@ -64,9 +61,13 @@ function COF() {
               setFluidSelected(e.value)
             }} 
           />
-        }
-        <div>
+        } */}
+        <div className="flex align-items-center">
+          <label htmlFor="">Representative Fluid</label>
           <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, representative: true}))} />
+        </div>
+        <div className="flex align-items-center">
+          <label htmlFor="">Phase of Fluid</label>
           <Button label="Phase Of Fluid" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
         </div>
       </div>

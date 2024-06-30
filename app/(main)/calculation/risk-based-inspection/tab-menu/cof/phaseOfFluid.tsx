@@ -10,28 +10,28 @@ function PhaseOfFluid({visible, setVisible}: any) {
 
     const products = [
         {
-            id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
+            id: 'phase1001',
+            normal: 'Gas',
+            ambient: 'Gas',
+            final: 'Model as Gas',
         },
         {
-            id: '10001',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch 2',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
+            id: 'phase1002',
+            normal: 'Gas',
+            ambient: 'Liquid',
+            final: 'Model as Gas',
+        },
+        {
+            id: 'phase1003',
+            normal: 'Liquid',
+            ambient: 'Gas',
+            final: 'Model as Gas unless the fluid boiling point at ambient conditions is greater than 80°F, then model as a liquid',
+        },
+        {
+            id: 'phase1004',
+            normal: 'Liquid',
+            ambient: 'Liquid',
+            final: 'Model as Liquid',
         },
     ]
     return (
@@ -40,13 +40,11 @@ function PhaseOfFluid({visible, setVisible}: any) {
             style={{ width: '50vw' }} 
             onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, phase: false})); }}
         >
-
             <DataTable value={products} selectionMode={"single"} selection={selectedProduct} onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                 <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="code" header="Code"></Column>
-                <Column field="name" header="Name"></Column>
-                <Column field="category" header="Category"></Column>
-                <Column field="quantity" header="Quantity"></Column>
+                <Column field="normal" header="Normal Operating (Storage) Conditions"></Column>
+                <Column field="ambient" header="Phase of Fluid at Ambient (After relase) Conditions"></Column>
+                <Column field="final" header="Determination of Final Phase of Consequence Calculation"></Column>
             </DataTable>
         </Dialog>
     )
