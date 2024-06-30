@@ -1,4 +1,5 @@
 const recomendationTable: any = [
+    {}
     // {
     //     id: 1,
     //     damageFactor: "Thinning",
