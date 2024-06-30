@@ -5,8 +5,7 @@ import representativeFluidNodes from "./representativeFluidTable";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 
-function RepresentativeFluidDialog(props: any) {
-    const {visible, setVisible} = props;
+function RepresentativeFluidDialog({visible, setVisible}: any) {
     const headerGroup = (
         <ColumnGroup>
             <Row>
@@ -34,7 +33,7 @@ function RepresentativeFluidDialog(props: any) {
     return (
         <>
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
-                modal onHide={() => {if (!visible) return; setVisible(false); }} >
+                modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, representative: false})); }} >
                 <div>
                 <DataTable value={representativeFluidNodes} scrollable scrollHeight="700px" headerColumnGroup={headerGroup} tableStyle={{ minWidth: '50rem' }}>
                     <Column field="fluid" body={(e) => e.fluid ? <>{e.fluid}</> : <div className="">---</div>}></Column>

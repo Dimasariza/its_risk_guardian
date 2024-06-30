@@ -9,10 +9,14 @@ import RepresentativeFluidDialog from "./representativeFluidDialog";
 import InputValueOnly from "@/fragments/inputValueOnly";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { useSelector } from "react-redux";
+import PhaseOfFluid from "./phaseOfFluid";
 
 function COF() {
   const [fluidSelected, setFluidSelected] = useState<any>({});
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<any>({
+    representative: false,
+    phase: false
+  });
   const [generalData, setGeneralData] = useState<any>({});
   const data = useSelector((state: any) => state.Reducer);
 
@@ -24,6 +28,10 @@ function COF() {
       console.log(res)
     })
   }, []);
+
+  useEffect(() => {
+    console.log(visible)
+  }, [visible])
 
   const getIdealGasHeatRatio = () => {
     if(!generalData.gData_operatingTemperature) return "-"
@@ -40,7 +48,8 @@ function COF() {
 
   return (
     <section className="p-4">
-      <RepresentativeFluidDialog visible={visible} setVisible={setVisible} />
+      <RepresentativeFluidDialog visible={visible.representative} setVisible={setVisible} />
+      <PhaseOfFluid visible={visible.phase} setVisible={setVisible} />
 
       <div className="flex align-items-center">
         {
@@ -57,7 +66,8 @@ function COF() {
           />
         }
         <div>
-          <Button label="Show Table" size="small" className="mx-4" onClick={() => setVisible(true)} />
+          <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, representative: true}))} />
+          <Button label="Phase Of Fluid" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
         </div>
       </div>
 
@@ -88,31 +98,6 @@ function COF() {
         }
       </div>
 
-
-        
-      {
-        // inputs.map((props: any, key: number) => {
-        //   const {type} = props;
-        //   if(type == "drop-down") {
-        //     return <Dropdown 
-        //       key={key}
-        //       id="equipment" 
-        //       value={selectedItem} 
-        //       onChange={() => {}} 
-        //       options={items} 
-        //       optionLabel="name"
-        //       placeholder="List Representative fulid" />
-        //   } else if (type == "text") {
-        //     return <InputTypeText 
-        //       props={props} 
-        //       key={key} 
-        //       value={values} 
-        //       setValue={setValue} 
-        //       errorMessage={error?.[props.name]} 
-        //     />
-        //   }
-        // })
-      }
     </section>
   );
 }

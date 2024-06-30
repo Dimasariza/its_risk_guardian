@@ -127,6 +127,7 @@ function Recomendation() {
           <Column field="shell" body={shellBody}></Column>
           <Column field="head" body={headBody}></Column>
         </DataTable>
+        
         <div className="flex flex-column my-3">
           <label htmlFor="">Notes</label>
           <InputTextarea value={value} onChange={(e) => setValue(e.target.value)} rows={5} cols={30} />
