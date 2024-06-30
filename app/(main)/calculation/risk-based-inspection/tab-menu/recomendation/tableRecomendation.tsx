@@ -1,4 +1,5 @@
-/* eslint no-use-before-define: 0 */  // --> OFF
+/* eslint-disable */
+
 const recomendationTable: any = [
     {
         id: 1,
