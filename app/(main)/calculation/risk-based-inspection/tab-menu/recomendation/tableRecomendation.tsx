@@ -1,3 +1,5 @@
+/* eslint-disable no-console, no-control-regex*/
+
 const recomendationTable: any = [
     {
         id: 1,
