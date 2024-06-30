@@ -9,7 +9,7 @@ const representativeFluidList = {
     className: 'w-max'
 }
 
-const inputs = [
+const inputs: any = [
     // {
     //   name: 'f',
     //   type: 'text',

@@ -2,7 +2,7 @@
 
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
-import { inputs, representativeFluidList } from "./inputs";
+import { representativeFluidList } from "./inputs";
 import InputDropDown from "@/fragments/input-drop-down";
 import representativeFluidNodes from "./representativeFluidTable";
 import RepresentativeFluidDialog from "./representativeFluidDialog";
