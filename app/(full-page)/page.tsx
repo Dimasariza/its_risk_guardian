@@ -251,7 +251,7 @@ const LandingPage = () => {
               }
             ].map(({ name, title, desc, imgSrc }, key) => (
               <motion.div
-                className="col-12 justify-content-center flex md:col-12 lg:col-6 p-0 lg:pr-5 lg:pb-5 mt-4 lg:mt-0"
+                className="col-12 justify-content-center flex p-0 mt-4 md:col-6 md:p-3 lg:col-4 lg:pb-5 lg:mt-0"
                 key={key}
                 animate={controls}
                 ref={ref}
@@ -267,7 +267,11 @@ const LandingPage = () => {
                   }
                 }}
               >
-                <Card title={name} subTitle={title} header={() => <img alt="Card" src={`${process.env.PUBLIC_URL || ''}/team/image/${imgSrc}`} />} className="md:w-25rem">
+                <Card 
+                  title={name} 
+                  subTitle={title} 
+                  header={() => <img alt="Card" src={`${process.env.PUBLIC_URL || ''}/team/image/${imgSrc}`} />} 
+                  className="md:w-20rem lg:w-20rem">
                   <p className="m-0">{desc}</p>
                 </Card>
               </motion.div>

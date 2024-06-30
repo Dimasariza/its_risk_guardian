@@ -7,12 +7,14 @@ import InputValueOnly from "@/fragments/inputValueOnly";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { useSelector } from "react-redux";
 import PhaseOfFluid from "./phaseOfFluid";
+import GenericFailureFrequency from "./genericFailureFreq";
 
 function COF() {
   const [fluidSelected, setFluidSelected] = useState<any>({});
   const [visible, setVisible] = useState<any>({
     representative: false,
-    phase: false
+    phase: false,
+    generic: false
   });
   const [generalData, setGeneralData] = useState<any>({});
   const data = useSelector((state: any) => state.Reducer);
@@ -25,10 +27,6 @@ function COF() {
       console.log(res)
     })
   }, []);
-
-  useEffect(() => {
-    console.log(visible)
-  }, [visible])
 
   const getIdealGasHeatRatio = () => {
     if(!generalData.gData_operatingTemperature) return "-"
@@ -47,6 +45,7 @@ function COF() {
     <section className="p-4">
       <RepresentativeFluidDialog visible={visible.representative} setVisible={setVisible} />
       <PhaseOfFluid visible={visible.phase} setVisible={setVisible} />
+      <GenericFailureFrequency visible={visible.generic} setVisible={setVisible}/>
 
       <div className="gird gap-2">
         {/* {
@@ -68,7 +67,11 @@ function COF() {
         </div>
         <div className="flex align-items-center">
           <label htmlFor="">Phase of Fluid</label>
-          <Button label="Phase Of Fluid" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
+          <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
+        </div>
+        <div className="flex align-items-center">
+          <label htmlFor="">Generic Failure Frequency</label>
+          <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, generic: true}))} />
         </div>
       </div>
 
