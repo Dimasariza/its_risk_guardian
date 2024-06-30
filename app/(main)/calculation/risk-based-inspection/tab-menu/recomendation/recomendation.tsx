@@ -4,7 +4,7 @@ import InputCalendar from "@/fragments/input-calendar";
 import { Column } from "primereact/column";
 import { InputTextarea } from "primereact/inputtextarea";
 import { act, useEffect, useState } from "react";
-// import recomendationTable from "./tableRecomendation";
+import recomendationTable from "./tableRecomendation";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { DataTable } from "primereact/datatable";
@@ -18,22 +18,22 @@ function Recomendation() {
 
   useEffect(() => {
     const nodesArr: any = []
-    // recomendationTable.forEach((item: any, keyOne: number) => {
-    //   if(item?.level) {
-    //     item?.level.map((e: any, keyTwo: number) => {
-    //       const tableNodes = {
-    //         id: `${keyOne}${keyTwo}`,
-    //         dm: item.damageFactor,
-    //         level: e.name,
-    //         inspOfEfectivess: e.category,
-    //         activities: e.category[keyTwo].nonIntrusive,
-    //         disabled: keyTwo != 0,
-    //         activitiesSelected: 0
-    //       }
-    //       nodesArr.push(tableNodes) 
-    //     })
-    //   }
-    // })
+    recomendationTable.forEach((item: any, keyOne: number) => {
+      if(item?.level) {
+        item?.level.map((e: any, keyTwo: number) => {
+          const tableNodes = {
+            id: `${keyOne}${keyTwo}`,
+            dm: item.damageFactor,
+            level: e.name,
+            inspOfEfectivess: e.category,
+            activities: e.category[keyTwo].nonIntrusive,
+            disabled: keyTwo != 0,
+            activitiesSelected: 0
+          }
+          nodesArr.push(tableNodes) 
+        })
+      }
+    })
     setNodes(nodesArr)    
   }, [])
 
