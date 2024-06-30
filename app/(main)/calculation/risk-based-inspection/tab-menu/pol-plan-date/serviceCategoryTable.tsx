@@ -30,12 +30,10 @@ function ServiceCategoryTable({visible, setVisible}: any) {
     );
 
     const expectedStreamTemplate = (rowData: any) => {
-        console.log(rowData)
         return (
             rowData.expectedStream.map((i: any, key: number) => {
-                return <div>
+                return <div key={key}>
                     <span>{i}</span> 
-
                     <div style={{borderBottom: "1px solid #999", width: "100%"}} className="flex my-3"></div>
                 </div>
             })
