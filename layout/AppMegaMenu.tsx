@@ -77,7 +77,15 @@ function AppMegaMenu() {
               },
               {
                 label: 'Risk Based Inspection',
-                icon: 'pi pi-cog',
+                icon: 'pi pi-spin pi-cog',
+                command: () => {
+                  // Callback to run
+                  router.push('/calculation/risk-based-inspection', { scroll: false });
+                }
+              },
+              {
+                label: 'Corrosion Loop',
+                icon: 'pi pi-spin pi-sync',
                 command: () => {
                   // Callback to run
                   router.push('/calculation/risk-based-inspection', { scroll: false });

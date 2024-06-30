@@ -3,7 +3,7 @@
 import { Card } from 'primereact/card';
 import { TabMenu } from 'primereact/tabmenu';
 import { useState } from 'react';
-import COF from './tab-menu/cof';
+import COF from './tab-menu/cof/cof';
 import RiskAnalysis from './tab-menu/risk-analysis';
 import InspectionPlanning from './tab-menu/recomendation/recomendation';
 import Summary from './tab-menu/summary';
@@ -13,6 +13,8 @@ import POFPlanDate from './tab-menu/pof-plan-date';
 import POFRBIDate from './tab-menu/pof-rbi-date';
 import { useSelector } from 'react-redux';
 import Recomendation from './tab-menu/recomendation/recomendation';
+import POLPlanDate from './tab-menu/pol-plan-date/pol-plan-date';
+import POLRBIDate from './tab-menu/pol-rbi-date/pol-rbi-date';
 
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
@@ -91,9 +93,9 @@ function RiskBasedInspection() {
       case 'pof_plan_date':
         return <POFPlanDate />;
       case 'pol_rbi_date':
-        return
+        return <POLRBIDate />;
       case 'pol_plan_date':
-        return
+        return <POLPlanDate />;
       case 'cof':
         return <COF />;
       case 'risk_analysis':

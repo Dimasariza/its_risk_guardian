@@ -2,9 +2,7 @@
 
 import InputCalendar from "@/fragments/input-calendar";
 import { Column } from "primereact/column";
-// import { Dropdown } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
-import { TreeTable } from "primereact/treetable";
 import { useEffect, useState } from "react";
 import recomendationTable from "./tableRecomendation";
 import { Dropdown } from "primereact/dropdown";
@@ -16,7 +14,6 @@ import { Row } from "primereact/row";
 function Recomendation() {
   const [value, setValue] = useState<any>();
   const [nodes, setNodes] = useState<any>([]);
-  const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState<any>(0);
 
   useEffect(() => {
@@ -25,19 +22,19 @@ function Recomendation() {
       if(item?.level) {
         item?.level.map((e: any, keyTwo: number) => {
           const tableNodes = {
-            key: `${keyOne}${keyTwo}`,
-            data: {
-              dm: item.damageFactor,
-              level: e.name,
-              inspOfEfectivess: e.category,
-              activities: e.category[keyTwo].nonIntrusive
-            }
+            id: `${keyOne}${keyTwo}`,
+            dm: item.damageFactor,
+            level: e.name,
+            inspOfEfectivess: e.category,
+            activities: e.category[keyTwo].nonIntrusive,
+            disabled: keyTwo != 0,
+            activitiesSelected: 0
           }
           nodesArr.push(tableNodes) 
         })
       }
     })
-    setNodes(nodesArr)
+    setNodes(nodesArr)    
   }, [])
 
   const headerGroup = (
@@ -59,41 +56,60 @@ function Recomendation() {
   const representativeBodyTemplate = (rowData: any) => {
     return (
         <div className="flex align-items-center gap-2">
-            <span className="font-bold">{rowData.data.dm}</span>
+            <span className="font-bold">{rowData.dm}</span>
         </div>
     );
   };
 
-  const levelOfInsp = ({data}: any) => {
-    return <div className="flex align-items-center">
-      <Checkbox onChange={(e: any) => setChecked(e.checked)} checked={checked} className="mr-2" ></Checkbox>
-      <span>{ data.level }</span> 
+  const levelOfInsp = (rowData: any) => {
+    const {level, disabled, id} = rowData;
+    return <div className="flex align-items-center" key={id}>
+      <Checkbox onChange={(e: any) => { 
+          setNodes((prev: any) => {
+            return prev.map((i: any) => i.id == id ? {...i, disabled: !e.checked} : i)
+          })
+        }} 
+        checked={!disabled} 
+        className="mr-2" 
+      >
+      </Checkbox>
+      <span>{ level }</span> 
     </div>
   }
 
-  const inspOfEfectivess = ({data}: any) => {
-    const item = data.inspOfEfectivess.map((i: any) => ({...i, name: `(${i.value}) ${i.effectiveness}`}))
+  const inspOfEfectivess = ({inspOfEfectivess, disabled, activitiesSelected, id}: any) => {
+    const item = inspOfEfectivess.map((i: any) => ({...i, name: `(${i.value}) ${i.effectiveness}`}));
     return <Dropdown 
       id="inspOfEfectivess" 
-      onChange={() => {}} 
-      value={item[selected].value}
+      onChange={(e) => {
+        const selectedIndex = item.findIndex((x:any) => x.value == e.value);
+        setNodes((prev: any) => { 
+          return prev.map((i: any) => i.id == id ? {...i, 
+            activitiesSelected: selectedIndex,
+            activities: inspOfEfectivess[selectedIndex].nonIntrusive
+          } : i)
+        })
+      }} 
+      value={item[activitiesSelected].value}
       options={item} 
       optionLabel="name"
       placeholder="Effectiveness" 
-      disabled={true}
+      disabled={disabled}
     />
   }
 
-  const inspActivities = (rowData: any) => {
+  const inspActivities = ({activities}: any) => {
     return (
       <div>
-        { rowData.data.activities }
+        { activities }
       </div>
     ) 
   }
 
   const shellBody = () => {
-    return <>Shell</>
+    return <>
+      {/* <InputCalendar /> */}
+    </>
   }
 
   const headBody = () => {
@@ -103,7 +119,15 @@ function Recomendation() {
   return (
     <>
       <section className="p-4">
-        <DataTable resizableColumns={true} value={nodes} headerColumnGroup={headerGroup} rowGroupMode="rowspan" groupRowsBy="dm">
+        <DataTable 
+          resizableColumns={true} 
+          value={nodes} 
+          headerColumnGroup={headerGroup} 
+          rowGroupMode="rowspan" 
+          groupRowsBy="dm" 
+          sortMode="single" 
+          tableStyle={{ minWidth: '20rem' }}
+        >
           <Column field="dm" style={{ minWidth: '5rem' }} body={representativeBodyTemplate} ></Column>
           <Column field="level" body={levelOfInsp} ></Column>
           <Column body={inspOfEfectivess}></Column>
@@ -119,5 +143,30 @@ function Recomendation() {
     </>
   );
 }
+
+
+// interface Country {
+//   name: string;
+//   code: string;
+// }
+
+// interface Representative {
+//   name: string;
+//   code: string;
+// }
+
+// interface Customer {
+//   id: number;
+//   name: string;
+//   country: Country;
+//   company: string;
+//   date: string;
+//   status: string;
+//   verified: boolean;
+//   activity: number;
+//   representative: Representative;
+//   balance: number;
+// }
+
 
 export default Recomendation;
