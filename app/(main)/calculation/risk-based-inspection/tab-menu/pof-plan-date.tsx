@@ -29,12 +29,12 @@ function POFPlanDate() {
         setTabActive('df_alkaline');
       }
     },
-    {
-      label: 'POF Value',
-      command: () => {
-        setTabActive('pof_value');
-      }
-    }
+    // {
+    //   label: 'POF Value',
+    //   command: () => {
+    //     setTabActive('pof_value');
+    //   }
+    // }
   ];
 
   const tabMenuView = () => {
@@ -45,8 +45,8 @@ function POFPlanDate() {
         return <DFExternalCorrosion />;
       case 'df_alkaline':
         return <DFAlkalineCorrosion />;
-      case 'pof_value':
-        return <POFValue />;
+      // case 'pof_value':
+      //   return <POFValue />;
       default:
         return <DFThinning />;
     }

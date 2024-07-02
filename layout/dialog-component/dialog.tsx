@@ -46,7 +46,12 @@ function ComponentDialog({ visible, setVisible }: any) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState<IAssetComponent | any>([]);
   const [selectedComponentType, setselectedComponentType] = useState(null);
-  const componentType = [{ name: 'Filter' }];
+  const componentType = [
+    { name: 'Pressure Vessel' },
+    { name: 'Tank' },
+    { name: 'Pipe' },
+    { name: 'Pressure Relief Device' },
+  ];
 
   const handleSelectItem = (e: any) => {
     setValue((prev) => ({ ...prev, comp_equipmentId: e.value.eq_id }));
@@ -110,11 +115,16 @@ function ComponentDialog({ visible, setVisible }: any) {
           </div>
 
           <div className="flex flex-column col p-1">
-            <label htmlFor="equipmentType" className="m-1">
+            <label htmlFor="componentType" className="m-1">
               Component Type
             </label>
             <div className="px-1">
-              <Dropdown id="equipmentType" value={selectedComponentType} onChange={handleSelectComponentType} options={componentType} optionLabel="name" placeholder="Select Component Type" />
+              <Dropdown id="componentType" 
+              value={selectedComponentType} 
+              onChange={handleSelectComponentType} 
+              options={componentType} 
+              optionLabel="name" 
+              placeholder="Select Component Type" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>
@@ -123,33 +133,6 @@ function ComponentDialog({ visible, setVisible }: any) {
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
 
-          {/* {inputs.map((props: any, key: number) => {
-              if(props.type == "text") {
-                  return <InputTypeText 
-                      props={props} 
-                      key={key} 
-                      value={value} 
-                      setValue={setValue} 
-                      errorMessage={error[props.name]} 
-                  />
-              } else if (props.type == "calendar") {
-                  return <InputCalendar 
-                      props={props} 
-                      key={key} 
-                      value={value} 
-                      setValue={setValue} 
-                      errorMessage={error[props.name]} 
-                  />
-              } else if (props.type == "drop-down") {
-                  return <InputDropDown
-                      props={props} 
-                      key={key} 
-                      value={value} 
-                      setValue={setValue} 
-                      errorMessage={error[props.name]} 
-                  />
-              }
-          })} */}
         </section>
       </Dialog>
     </>

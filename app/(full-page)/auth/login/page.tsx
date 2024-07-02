@@ -56,7 +56,7 @@ const LoginPage = () => {
           });
           setLoading(false);
           setValue(emptyValue);
-          router.push('/assets/asset-register')
+          router.push('/calculation/risk-based-inspection')
         })
         .catch(() => {
           toast.current.show({

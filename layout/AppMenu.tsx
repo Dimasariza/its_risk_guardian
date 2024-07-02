@@ -14,20 +14,26 @@ const AppMenu = () => {
   const dispatch = useDispatch();
   const [menuItems, setMenuItems] = useState<AppMenuItem[]>([]);
   const rerenderMenu = useSelector((state: any) => state.RerenderMenu);
+  const { data } = useSelector((state: any) => state.AuthReducer);
 
   useEffect(() => {
-    MenuItemService.getAllAssets().then((res) => {
+    MenuItemService.getAllAssets(data.user.user_id).then((res) => {
       setMenuItems(res);
       dispatch(MenuItem(res[0]));
     });
   }, [rerenderMenu]);
+
+  
+  const generateRandomString = () => {
+    return Math.floor(Math.random() * Date.now()).toString(36);
+  };
 
   return (
     <MenuProvider>
       <h5 className="m-3">Assets Register</h5>
       {/* <ul className="layout-menu"> */}
       {menuItems.map((item, i) => {
-        return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label} /> : <li className="menu-separator"></li>;
+        return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label + generateRandomString()} /> : <li className="menu-separator"></li>;
       })}
       {/* </ul> */}
     </MenuProvider>

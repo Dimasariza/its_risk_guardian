@@ -5,6 +5,7 @@ import { getThinning } from '@/service/calculation/pofRBIDate-service';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
+import CorrosionRateDialog from './corrosionRateDialog';
 
 function DFThinning() {
   const [value, setValue] = useState<any>({});
@@ -13,8 +14,8 @@ function DFThinning() {
   const data = useSelector((state: any) => state.Reducer);
 
   useEffect(() => {
-    if (data.menu.comp_id) {
-      getThinning(data.menu.comp_id).then((res) => {
+    if (data.menu?.comp_id) {
+      getThinning(data.menu?.comp_id).then((res) => {
         setValue(res);
       });
     }
@@ -23,6 +24,7 @@ function DFThinning() {
   return (
     <>
       <section className="flex flex-wrap lg:column-gap-5">
+        <CorrosionRateDialog />
         {inputs.map((props: any, key: number) => {
           if (props.type == 'text') {
             return <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;

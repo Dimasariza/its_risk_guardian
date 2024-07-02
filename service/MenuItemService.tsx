@@ -1,21 +1,31 @@
+import axios from "axios";
+
 const url = process.env.DB_URL;
 
 export const MenuItemService = {
-  async getAllAssets() {
-    const [fetchItem, fetchEquipment, fetchComponent] = await Promise.all([fetch(url + '/items'), fetch(url + '/equipments'), fetch(url + '/components')]);
-
-    const [{ data: items }, { data: equipment }, { data: component }] = await Promise.all([
-      // const [items, equipment, component] = await Promise.all([
-      fetchItem.json(),
-      fetchEquipment.json(),
-      fetchComponent.json()
+  async getAllAssets(userId: string) {
+    const [fetchItem, fetchEquipment, fetchComponent] = await Promise.all([
+      fetch(url + '/items'),
+      fetch(url + '/equipments'),
+      fetch(url + '/components')
     ]);
 
+    // const [{ data: items }, { data: equipment }, { data: component }] = await Promise.all([
+    //   fetchItem.json(),
+    //   fetchEquipment.json(),
+    //   fetchComponent.json()
+    // ]);
+
+    const requests = [url + '/itemByUser', url + '/equipmentByUser', url + '/componentByUser'].map((url) => axios.post(url, {"user_id": userId}));
+    const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((responses) => {
+      return responses
+    });
+
     const standAloneComp: any[] = [];
-    const menuItem = items.map((item: any) => {
-      const eqFilter = equipment
+    const menuItem = items.data?.map((item: any) => {
+      const eqFilter = equipment.data
         .map((e: any) => {
-          const compFilter = component
+          const compFilter = component.data
             .map((c: any) => {
               if (!c?.comp_equipmentId && !standAloneComp.includes(c)) {
                 standAloneComp.push(c);
@@ -40,6 +50,8 @@ export const MenuItemService = {
       };
     });
 
-    return [...menuItem, ...standAloneComp.map((c) => ({ ...c, label: c.comp_nameOfComponent }))];
+    return menuItem 
+    ? [...menuItem, ...standAloneComp.map((c) => ({ ...c, label: c.comp_nameOfComponent }))]
+    : []
   }
 };

@@ -20,8 +20,8 @@ function COF() {
   const data = useSelector((state: any) => state.Reducer);
 
   useEffect(() => {
-    if(data.menu.comp_id)
-    GeneralDataService.fetchData(data.menu.comp_id)
+    if(data.menu?.comp_id)
+    GeneralDataService.fetchData(data.menu?.comp_id)
     .then((res: any) => {
       setGeneralData(res)
       console.log(res)

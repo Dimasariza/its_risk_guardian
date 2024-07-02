@@ -19,6 +19,8 @@ import POLRBIDate from './tab-menu/pol-rbi-date/pol-rbi-date';
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
 
+  const data = useSelector((state: any) => state.Reducer);
+  console.log(data)
   const items = [
     {
       label: 'General Data',
@@ -46,12 +48,14 @@ function RiskBasedInspection() {
     },
     {
       label: 'POL RBI Date',
+      disabled: data.menu?.comp_componentType != "Pressure Relief Device",
       command: () => {
         setTabActive('pol_rbi_date');
       }
     },
     {
       label: 'POL Plan Date',
+      disabled: data.menu?.comp_componentType != "Pressure Relief Device",
       command: () => {
         setTabActive('pol_plan_date');
       }
@@ -111,11 +115,10 @@ function RiskBasedInspection() {
     }
   };
 
-  const data = useSelector((state: any) => state.Reducer);
 
   return (
     <>
-      <Card title={data.menu.label}>
+      <Card title={data.menu?.label ?? "No Selected Data"}>
         <TabMenu model={items} />
         {tabMenuView()}
       </Card>

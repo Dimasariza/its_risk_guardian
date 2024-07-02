@@ -154,9 +154,9 @@ function DamageMechanism() {
 
   useEffect(() => {
     edit = true; // to disabled edit useeffect in first call
-    if (data.menu.comp_id) {
+    if (data.menu?.comp_id) {
       setDisabled(false);
-      damageMechanismService.getData(data.menu.comp_id)
+      damageMechanismService.getData(data.menu?.comp_id)
       .then((res) => {
         setChecked((prev: any) => ({...prev, ...res.data}));
       });

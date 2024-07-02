@@ -82,9 +82,9 @@ function GeneralData() {
 
   useEffect(() => {
     edit = true; // to disabled edit useeffect in first call
-    if (data.menu.comp_id) {
+    if (data.menu?.comp_id) {
       setDisabled(false);
-      GeneralDataService.fetchData(data.menu.comp_id)
+      GeneralDataService.fetchData(data.menu?.comp_id)
       .then((res) => {
         setValue(res);
       });
@@ -95,10 +95,10 @@ function GeneralData() {
   }, [data]);
   
   useEffect(() => {
-    if(!edit && data.menu.comp_id) {
+    if(!edit && data.menu?.comp_id) {
       setError(validate(value));
     }
-    if(!data.menu.comnp_id) {
+    if(!data.menu?.comp_id) {
       // dispatchEdit(EditDone());
     }
   }, [edit])
