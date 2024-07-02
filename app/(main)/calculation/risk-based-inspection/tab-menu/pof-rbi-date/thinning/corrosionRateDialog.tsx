@@ -252,7 +252,7 @@ function CorrosionRateDialog({visible, setVisible}: any) {
                 <div className="grid" key={value + id}>
                     <div className="col-1">{id + 1}. </div>
                     <div className="col-9">{value}</div>
-                    <div className="col-2">{useCheckBox(screeningValue[name])}</div>
+                    <div className="col-2">{checkBox(screeningValue[name])}</div>
                     {
                         notes && 
                         <>
@@ -266,10 +266,10 @@ function CorrosionRateDialog({visible, setVisible}: any) {
     }
 
     const actionBodyTemplate = (check: any) => {
-        return useCheckBox(true)
+        return checkBox(true)
     }
     
-    const useCheckBox = (check: boolean) => {
+    const checkBox = (check: boolean) => {
         return <Checkbox inputId="rememberme1" checked={check} onChange={(e) => {} } className="mr-2"></Checkbox>
     }
 

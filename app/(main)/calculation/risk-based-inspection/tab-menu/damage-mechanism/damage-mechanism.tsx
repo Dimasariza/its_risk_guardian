@@ -3,7 +3,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { useEffect, useRef, useState } from 'react';
-import { IDamageMechanism } from '@/types/damageMechanism';
 import { Checkbox } from 'primereact/checkbox';
 import damageFactor from './damage-factor';
 import { useDispatch, useSelector } from 'react-redux';
