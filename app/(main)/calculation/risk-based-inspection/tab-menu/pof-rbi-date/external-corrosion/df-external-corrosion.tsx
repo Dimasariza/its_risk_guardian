@@ -14,10 +14,6 @@ function DFExternalCorrosion() {
   const edit = useSelector((state: any) => state.EditReducer);
 
   useEffect(() => {
-    console.log(edit);
-  }, [edit]);
-
-  useEffect(() => {
     if (data.menu?.comp_id) {
       getExternalCorrosion(data.menu.id).then((res: any) => {
         setValue(res);

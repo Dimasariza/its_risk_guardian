@@ -20,7 +20,7 @@ function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
 
   const data = useSelector((state: any) => state.Reducer);
-  console.log(data)
+  
   const items = [
     {
       label: 'General Data',
