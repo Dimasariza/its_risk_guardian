@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable */
 
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
