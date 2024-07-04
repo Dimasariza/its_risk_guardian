@@ -1,3 +1,4 @@
+import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
 import { DataTable } from "primereact/datatable";
@@ -290,10 +291,23 @@ function GenericFailureFrequency({visible, setVisible}: any) {
         return <div>{rowData.sizeRupture}</div>
     }
 
+    const footerContent = (
+        <div>
+          <Button label="Cancel" icon="pi pi-check" 
+          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          severity="danger" />
+          <Button label="Save" icon="pi pi-times" 
+          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          severity="success" />
+        </div>
+    );
+
     return (
         <>
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
-                modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, generic: false})); }} >
+                modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, generic: false})); }} 
+                footer={footerContent}
+                >
                 <div>
                     <DataTable 
                         resizableColumns={true} 

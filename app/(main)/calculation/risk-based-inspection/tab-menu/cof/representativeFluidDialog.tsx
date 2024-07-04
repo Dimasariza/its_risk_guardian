@@ -5,6 +5,7 @@ import representativeFluidNodes from "./representativeFluidTable";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { Button } from "primereact/button";
 
 function RepresentativeFluidDialog({visible, setVisible}: any) {
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -34,10 +35,24 @@ function RepresentativeFluidDialog({visible, setVisible}: any) {
             </Row>
         </ColumnGroup>
     );
+
+    const footerContent = (
+        <div>
+          <Button label="Cancel" icon="pi pi-check" 
+          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          severity="danger" />
+          <Button label="Save" icon="pi pi-times" 
+          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          severity="success" />
+        </div>
+    );
+
     return (
         <>
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
-                modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, representative: false})); }} >
+                modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, representative: false})); }} 
+                footer={footerContent}
+                >
                 <div>
                 <DataTable value={representativeFluidNodes} selectionMode={"single"} selection={selectedProduct} scrollable scrollHeight="700px" headerColumnGroup={headerGroup} tableStyle={{ minWidth: '50rem' }} onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id">
                     <Column selectionMode="single"></Column>

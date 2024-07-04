@@ -1,3 +1,4 @@
+import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
@@ -34,11 +35,23 @@ function PhaseOfFluid({visible, setVisible}: any) {
         },
     ]
     
+    const footerContent = (
+        <div>
+          <Button label="Cancel" icon="pi pi-check" 
+          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          severity="danger" />
+          <Button label="Save" icon="pi pi-times" 
+          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          severity="success" />
+        </div>
+    );
+
     return (
         <Dialog header="Phase of Fluid" 
             visible={visible} 
             style={{ width: '50vw' }} 
             onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, phase: false})); }}
+            footer={footerContent}
         >
             <DataTable value={liquidPhase} selectionMode={"single"} selection={selectedProduct} onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                 <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
