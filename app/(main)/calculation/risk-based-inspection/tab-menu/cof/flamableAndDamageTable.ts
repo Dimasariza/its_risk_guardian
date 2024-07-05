@@ -796,4 +796,4 @@ const flamable = [
     }
 ]
 
-export default { damage, flamable }
+export { damage, flamable }

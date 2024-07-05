@@ -12,7 +12,8 @@ import PhaseOfFluid from "./phaseOfFluid";
 import GenericFailureFrequency from "./genericFailureFreq";
 import LiquidInventories from "./liquidInventories";
 import DetectionAndIsolation from "./DetectionAndIsolationTable";
-import FlamableAndDamageDialog from "./flamableAndDamge";
+import FlamableDialog from "./flamableDialog";
+import DamageDialog from "./damageDialog";
 
 function COF() {
   const [fluidSelected, setFluidSelected] = useState<any>({});
@@ -57,7 +58,8 @@ function COF() {
           <GenericFailureFrequency />
           <LiquidInventories />
           <DetectionAndIsolation />
-          <FlamableAndDamageDialog/>
+          <FlamableDialog />
+          <DamageDialog />
         </div>
 
         <div className="flex flex-column">
