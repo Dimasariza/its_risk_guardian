@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import CorrosionRateDialog from './corrosionRateDialog';
 import InputValueOnly from '@/fragments/inputValueOnly';
+import InspectionEffectivenessTable from './inspectionEfectivenessTableRef';
 
 function DFThinning() {
   const [value, setValue] = useState<any>({});
@@ -36,8 +37,9 @@ function DFThinning() {
             } 
           })}
         </div>
-        <div className='flex w-full flex-wrap mt-4'>
+        <div className='flex w-full flex-wrap flex-column gap-2 mt-4'>
           <CorrosionRateDialog />
+          <InspectionEffectivenessTable />
         </div>
         <div className='flex w-full flex-wrap'>
           <InputValueOnly label="Last Inspection" value="test"/>

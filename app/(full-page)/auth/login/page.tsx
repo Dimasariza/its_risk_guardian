@@ -65,6 +65,7 @@ const LoginPage = () => {
             detail: `Login Failed`
           });
           setLoading(false);
+          setValue(emptyValue);
         });
     }
   }, [error]);

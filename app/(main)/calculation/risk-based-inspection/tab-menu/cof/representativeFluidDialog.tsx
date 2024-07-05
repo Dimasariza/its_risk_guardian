@@ -7,7 +7,8 @@ import { Row } from "primereact/row";
 import { useState } from "react";
 import { Button } from "primereact/button";
 
-function RepresentativeFluidDialog({visible, setVisible}: any) {
+function RepresentativeFluidDialog() {
+    const [visible, setVisible] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const headerGroup = (
@@ -39,18 +40,22 @@ function RepresentativeFluidDialog({visible, setVisible}: any) {
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-check" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="success" />
         </div>
     );
 
     return (
         <>
+            <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
+                <label htmlFor="">Representative Fluid</label>
+                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+            </div>
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
-                modal onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, representative: false})); }} 
+                modal onHide={() => {if (!visible) return; setVisible(false); }} 
                 footer={footerContent}
                 >
                 <div>

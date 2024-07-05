@@ -155,13 +155,14 @@ function CorrosionRateDialog() {
                 <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Screening Question" visible={visible} style={{ width: '90%' }} maximizable
-                modal onHide={() => {if (!visible) return; setVisible(false); }} >
+                modal onHide={() => {if (!visible) return; setVisible(false); }} 
+                footer={footerContent}
+                >
                 <div>
                 <DataTable 
                     value={screeningQuestions.map((i: any, no: number) => ({...i, no: no + 1}))} 
                     scrollable 
                     tableStyle={{ minWidth:  '50rem' }} 
-                    footer={footerContent}
                 >
                     <Column field="no" header="No"></Column>
                     <Column field="type" header="Type of Corrosion"></Column>

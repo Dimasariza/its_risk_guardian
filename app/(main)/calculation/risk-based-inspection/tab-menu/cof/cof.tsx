@@ -12,6 +12,7 @@ import PhaseOfFluid from "./phaseOfFluid";
 import GenericFailureFrequency from "./genericFailureFreq";
 import LiquidInventories from "./liquidInventories";
 import DetectionAndIsolation from "./DetectionAndIsolationTable";
+import FlamableAndDamageDialog from "./flamableAndDamge";
 
 function COF() {
   const [fluidSelected, setFluidSelected] = useState<any>({});
@@ -49,38 +50,14 @@ function COF() {
 
   return (
     <section className="p-4">
-      <RepresentativeFluidDialog visible={visible.representative} setVisible={setVisible} />
-      <PhaseOfFluid visible={visible.phase} setVisible={setVisible} />
-      <GenericFailureFrequency visible={visible.generic} setVisible={setVisible}/>
-      <LiquidInventories visible={visible.inventories} setVisible={setVisible} />
-      <DetectionAndIsolation visible={visible.detection} setVisible={setVisible} />
-
-      <div className="flex">
+      <div className="flex gap-5">
         <div className="flex flex-column gap-2">
-          <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-            <label htmlFor="">Representative Fluid</label>
-            <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, representative: true}))} />
-          </div>
-          <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-            <label htmlFor="">Phase of Fluid</label>
-            <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
-          </div>
-          <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-            <label htmlFor="">Generic Failure Frequency</label>
-            <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, generic: true}))} />
-          </div>
-          <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-            <label htmlFor="">Liquid Inventories</label>
-            <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, inventories: true}))} />
-          </div>
-          <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-            <label htmlFor="">Detection and Isolation System</label>
-            <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, detection: true}))} />
-          </div>
-          <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-            <label htmlFor="">Component Damage Flammable Consequence Equation Constants</label>
-            <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, detection: true}))} />
-          </div>
+          <RepresentativeFluidDialog />
+          <PhaseOfFluid />
+          <GenericFailureFrequency />
+          <LiquidInventories />
+          <DetectionAndIsolation />
+          <FlamableAndDamageDialog/>
         </div>
 
         <div className="flex flex-column">

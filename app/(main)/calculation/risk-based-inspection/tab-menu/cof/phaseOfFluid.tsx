@@ -5,7 +5,8 @@ import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
 import { useState } from "react";
 
-function PhaseOfFluid({visible, setVisible}: any) {
+function PhaseOfFluid() {
+    const [visible, setVisible] = useState<boolean>(false)
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const liquidPhase = [
@@ -38,28 +39,36 @@ function PhaseOfFluid({visible, setVisible}: any) {
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-check" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="success" />
         </div>
     );
 
     return (
-        <Dialog header="Phase of Fluid" 
-            visible={visible} 
-            style={{ width: '50vw' }} 
-            onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, phase: false})); }}
-            footer={footerContent}
-        >
-            <DataTable value={liquidPhase} selectionMode={"single"} selection={selectedProduct} onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
-                <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="normal" header="Normal Operating (Storage) Conditions"></Column>
-                <Column field="ambient" header="Phase of Fluid at Ambient (After relase) Conditions"></Column>
-                <Column field="final" header="Determination of Final Phase of Consequence Calculation"></Column>
-            </DataTable>
-        </Dialog>
+        <>
+        
+            <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
+                <label htmlFor="">Phase of Fluid</label>
+                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
+            </div>
+            <Dialog header="Phase of Fluid" 
+                visible={visible} 
+                style={{ width: '50vw' }} 
+                onHide={() => {if (!visible) return; setVisible(false); }}
+                footer={footerContent}
+            >
+                <DataTable value={liquidPhase} selectionMode={"single"} selection={selectedProduct} 
+                onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
+                    <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
+                    <Column field="normal" header="Normal Operating (Storage) Conditions"></Column>
+                    <Column field="ambient" header="Phase of Fluid at Ambient (After relase) Conditions"></Column>
+                    <Column field="final" header="Determination of Final Phase of Consequence Calculation"></Column>
+                </DataTable>
+            </Dialog>
+        </>
     )
 }
 

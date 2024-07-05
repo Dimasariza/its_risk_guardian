@@ -4,7 +4,8 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 
-function DetectionAndIsolation({visible, setVisible}: any) {
+function DetectionAndIsolation() {
+    const [visible, setVisible] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<any>({
         detection: null,
         isolation: null
@@ -54,39 +55,45 @@ function DetectionAndIsolation({visible, setVisible}: any) {
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-check" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="success" />
         </div>
     );
     
     return (
-        <Dialog header="Detection and Isolation system" 
-            visible={visible} 
-            footer={footerContent}
-            style={{ width: '50vw' }} 
-            onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, detection: false})); }}
-        >
-            <DataTable value={detection} selectionMode={"single"} selection={selectedValue.detection} 
-            onSelectionChange={(e: any) => setSelectedValue((prev: any) => ({...prev, detection: e.value}))} 
-            dataKey="id" 
-            tableStyle={{ minWidth: '50rem' }}>
-                <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="type" header="Type of Detection System"></Column>
-                <Column field="classification" header="Detection Classification"></Column>
-            </DataTable>
+        <>
+            <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
+                <label htmlFor="">Detection and Isolation System</label>
+                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+            </div>
+            <Dialog header="Detection and Isolation system" 
+                visible={visible} 
+                footer={footerContent}
+                style={{ width: '50vw' }} 
+                onHide={() => {if (!visible) return; setVisible(false); }}
+            >
+                <DataTable value={detection} selectionMode={"single"} selection={selectedValue.detection} 
+                onSelectionChange={(e: any) => setSelectedValue((prev: any) => ({...prev, detection: e.value}))} 
+                dataKey="id" 
+                tableStyle={{ minWidth: '50rem' }}>
+                    <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
+                    <Column field="type" header="Type of Detection System"></Column>
+                    <Column field="classification" header="Detection Classification"></Column>
+                </DataTable>
 
-            <DataTable value={isolation} selectionMode={"single"} selection={selectedValue.isolation} 
-            onSelectionChange={(e: any) => setSelectedValue((prev: any) => ({...prev, isolation: e.value}))} 
-            dataKey="id" 
-            tableStyle={{ minWidth: '50rem' }}>
-                <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
-                <Column field="type" header="Type of Isolation System"></Column>
-                <Column field="classification" header="Isolation     Classification"></Column>
-            </DataTable>
-        </Dialog>
+                <DataTable value={isolation} selectionMode={"single"} selection={selectedValue.isolation} 
+                onSelectionChange={(e: any) => setSelectedValue((prev: any) => ({...prev, isolation: e.value}))} 
+                dataKey="id" 
+                tableStyle={{ minWidth: '50rem' }}>
+                    <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
+                    <Column field="type" header="Type of Isolation System"></Column>
+                    <Column field="classification" header="Isolation     Classification"></Column>
+                </DataTable>
+            </Dialog>
+        </>
     )
 }
 

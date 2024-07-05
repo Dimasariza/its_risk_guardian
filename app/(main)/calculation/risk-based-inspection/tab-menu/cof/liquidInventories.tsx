@@ -6,7 +6,8 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 
-function LiquidInventories({visible, setVisible}: any) {
+function LiquidInventories() {
+    const [visible, setVisible] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const liquidPhase = [
@@ -121,20 +122,24 @@ function LiquidInventories({visible, setVisible}: any) {
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-check" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
-          onClick={() => setVisible((prev: any) => ({ ...prev, detection: false }))} 
+          onClick={() => setVisible(false)} 
           severity="success" />
         </div>
     );
 
     return (
         <>
+            <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
+                <label htmlFor="">Liquid Inventories</label>
+                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+            </div>
             <Dialog header="Liquid Inventories" 
                 visible={visible} 
                 style={{ width: '50vw' }} 
-                onHide={() => {if (!visible) return; setVisible((prev: any) => ({...prev, inventories: false})); }}
+                onHide={() => {if (!visible) return; setVisible(false); }}
                 footer={footerContent}
             >
                 <DataTable value={liquidPhase} 
