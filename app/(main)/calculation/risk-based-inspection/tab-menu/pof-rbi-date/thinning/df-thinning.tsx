@@ -37,11 +37,11 @@ function DFThinning() {
             } 
           })}
         </div>
-        <div className='flex w-full flex-wrap flex-column gap-2 mt-4'>
+        <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
           <CorrosionRateDialog />
           <InspectionEffectivenessTable />
         </div>
-        <div className='flex w-full flex-wrap'>
+        <div className='flex w-full flex-wrap mt-5'>
           <InputValueOnly label="Last Inspection" value="test"/>
           <InputValueOnly label="Age" value="test"/>
           <InputValueOnly label="Shell Art" value="test"/>

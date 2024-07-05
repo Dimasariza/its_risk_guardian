@@ -1,68 +1,32 @@
 
 const inputs = [
     {
-      name: 'shellSusceptibility',
+      name: 'ph',
       type: 'text',
-      placeholder: 'Shell Susceptibility',
-      label: 'Shell Susceptibility',
+      placeholder: 'Ph',
+      label: 'Ph',
       required: true,
       autoFocus: true,
       className: 'col'
     },
     {
-      name: 'headSusceptibility',
+      name: 'co3Consentration',
       type: 'text',
-      placeholder: 'Head Susceptibility',
-      label: 'Head Susceptibility',
+      placeholder: 'CO3 Consentration',
+      label: 'CO3 Consentration',
       required: true,
-      autoFocus: false,
+      autoFocus: true,
       className: 'col'
     },
     {
-      name: 'shellSeverityId',
+      name: 'dfacscc',
       type: 'text',
-      placeholder: 'Shell Severity Index',
-      label: 'Shell Severity Index',
+      placeholder: 'DFACSCC',
+      label: 'DFACSCC',
       required: true,
-      autoFocus: false,
+      autoFocus: true,
       className: 'col'
     },
-    {
-      name: 'headSeverityId',
-      type: 'text',
-      placeholder: 'Head Severity Index',
-      label: 'Head Severity Index',
-      required: true,
-      autoFocus: false,
-      className: 'col'
-    },
-    {
-      name: 'ageTimeInService',
-      type: 'text',
-      placeholder: 'Age Time in Service',
-      label: 'Age Time in Service',
-      required: true,
-      autoFocus: false,
-      className: 'col'
-    },
-    {
-      name: 'sheelSection',
-      type: 'text',
-      placeholder: 'Shell Section',
-      label: 'Shell Section',
-      required: true,
-      autoFocus: false,
-      className: 'col'
-    },
-    {
-      name: 'headSection',
-      type: 'text',
-      placeholder: 'Head Section',
-      label: 'Head Section',
-      required: true,
-      autoFocus: false,
-      className: 'col'
-    }
   ];
 
   export {inputs}

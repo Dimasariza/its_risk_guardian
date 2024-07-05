@@ -37,10 +37,10 @@ function DFExternalCorrosion() {
             }
           })}
         </div>
-        <div className='flex w-full flex-wrap flex-column gap-2 mt-4'>
+        <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
           <OperatingTempTableRef />
         </div>
-        <div className='flex w-full flex-wrap'>
+        <div className='flex w-full flex-wrap mt-5'>
           <InputValueOnly label="Age" value="test"/>
           <InputValueOnly label="Thickness (mm)" value="test"/>
           <InputValueOnly label="Thickness (Inch)" value="test"/>
