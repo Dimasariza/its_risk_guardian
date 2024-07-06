@@ -65,6 +65,12 @@ function GeneralData() {
       case "gData_shellCorrosionRateInch":
         setValue((prev: any) => ({...prev, gData_shellCorrosionRateMM: (e.target.value / 0.03937).toFixed(4)}))
         break;
+      case "gData_shellTreqInch":
+        setValue((prev: any) => ({...prev, gData_shellTreqMM: (e.target.value / 0.03937).toFixed(4)}))
+        break;
+      case "gData_shellTreqMM":
+        setValue((prev: any) => ({...prev, gData_shellTreqInch: (e.target.value * 0.03937).toFixed(4)}))
+        break;
       case "gData_headMinimumThicknessMM":
         setValue((prev: any) => ({...prev, gData_headMinimumThicknessInch: (e.target.value * 0.03937).toFixed(4)}))
         break;
@@ -76,6 +82,12 @@ function GeneralData() {
         break;
       case "gData_headCorrosionRateInch":
         setValue((prev: any) => ({...prev, gData_headCorrosionRateMM: (e.target.value / 0.03937).toFixed(4)}))
+        break;
+      case "gData_headTreqInch":
+        setValue((prev: any) => ({...prev, gData_headTreqMM: (e.target.value / 0.03937).toFixed(4)}))
+        break;
+      case "gData_headTreqMM":
+        setValue((prev: any) => ({...prev, gData_headTreqInch: (e.target.value * 0.03937).toFixed(4)}))
         break;
     }
   }

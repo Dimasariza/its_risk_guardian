@@ -136,6 +136,22 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
+      name: 'gData_yieldStrength',
+      type: 'text',
+      placeholder: 'Yield Strength',
+      label: 'Yield Strength',
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_tensileStrength',
+      type: 'text',
+      placeholder: 'Tensile Strength',
+      label: 'Tensile Strength',
+      autoFocus: false,
+      className: ''
+    },
+    {
       name: 'gData_corrosionAllowanceMM',
       type: 'text',
       placeholder: 'Corrosion Allowance (mm)',
@@ -267,11 +283,18 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_shellTreq',
+      name: 'gData_shellTreqInch',
       type: 'text',
-      placeholder: 'T Requirement',
-      label: 'T Requirement',
-      readOnly: true,
+      placeholder: 'T Requirement (inch)',
+      label: 'T Requirement (Inch)',
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_shellTreqMM',
+      type: 'text',
+      placeholder: 'T Requirement (mm)',
+      label: 'T Requirement (mm)',
       autoFocus: false,
       className: ''
     },
@@ -280,7 +303,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'MAWP',
       label: 'MAWP',
-      readOnly: true,
       autoFocus: false,
       className: ''
     }
@@ -328,11 +350,18 @@ const inputsGeneralSpec = [
       className: ''
     },
     {
-      name: 'gData_headTreq',
+      name: 'gData_headTreqInch',
       type: 'text',
-      placeholder: 'T Requirement',
-      label: 'T Requirement',
-      readOnly: true,
+      placeholder: 'T Requirement (inch)',
+      label: 'T Requirement (Inchi)',
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'gData_headTreqMM',
+      type: 'text',
+      placeholder: 'T Requirement (mm)',
+      label: 'T Requirement (mm)',
       autoFocus: false,
       className: ''
     },
@@ -341,7 +370,6 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'MAWP',
       label: 'MAWP',
-      readOnly: true,
       autoFocus: false,
       className: ''
     }

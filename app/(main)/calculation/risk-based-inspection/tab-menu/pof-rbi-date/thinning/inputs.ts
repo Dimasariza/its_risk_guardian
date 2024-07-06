@@ -1,6 +1,6 @@
 const inputs = [
     {
-      name: 'corrosionRate',
+      name: 'rbiThinning_corrosionRate',
       type: 'text',
       placeholder: 'Corrosion Rate',
       label: 'Corrosion Rate',
@@ -10,8 +10,8 @@ const inputs = [
       className: ''
     },
     {
-      name: 'rbiDate',
-      type: 'text',
+      name: 'rbiThinning_rbiDate',
+      type: 'calendar',
       placeholder: 'RBI Date',
       label: 'RBI Date',
       required: true,
@@ -20,9 +20,9 @@ const inputs = [
       className: ''
     },
     {
-      name: 'tMinInch',
+      name: 'rbiThinning_tMinInch',
       type: 'text',
-      placeholder: 'T min',
+      placeholder: 'T min (Inch)',
       label: 'T min (inch)',
       required: true,
       readOnly: false,
@@ -30,9 +30,9 @@ const inputs = [
       className: ''
     },
     {
-      name: 'tMinMM',
+      name: 'rbiThinning_tMinMM',
       type: 'text',
-      placeholder: 'T min',
+      placeholder: 'T min (mm)',
       label: 'T min (mm)',
       required: true,
       autoFocus: false,
@@ -40,7 +40,7 @@ const inputs = [
       className: ''
     },
     {
-      name: 'injectionPoints',
+      name: 'rbiThinning_injectionPoints',
       type: 'text',
       placeholder: 'DF adj for injection points',
       label: 'DF adj for injection points',
@@ -50,7 +50,7 @@ const inputs = [
       className: ''
     },
     {
-      name: 'deadLegs',
+      name: 'rbiThinning_deadLegs',
       type: 'text',
       placeholder: 'DF adj for dead legs',
       label: 'DF adj for dead legs',
@@ -60,7 +60,7 @@ const inputs = [
       className: ''
     },
     {
-      name: 'weldingConstruction',
+      name: 'rbiThinning_weldingConstruction',
       type: 'text',
       placeholder: 'DF adj for welding construction',
       label: 'DF adj for welding construction',
@@ -70,7 +70,7 @@ const inputs = [
       className: ''
     },
     {
-      name: 'astMaintenance',
+      name: 'rbiThinning_astMaintenance',
       type: 'text',
       placeholder: 'DF adjustment for AST maintenance per API STD 653',
       label: 'DF adjustment for AST maintenance per API STD 653',
@@ -80,7 +80,7 @@ const inputs = [
       className: ''
     },
     {
-      name: 'settlement',
+      name: 'rbiThinning_settlement',
       type: 'text',
       placeholder: 'DF adjustment for settlement',
       label: 'DF adjustment for settlement',
@@ -90,7 +90,7 @@ const inputs = [
       className: ''
     },
     {
-      name: 'onlineMonitoring',
+      name: 'rbiThinning_onlineMonitoring',
       type: 'text',
       placeholder: 'DF adjustment for online monitoring',
       label: 'DF adjustment for online monitoring',

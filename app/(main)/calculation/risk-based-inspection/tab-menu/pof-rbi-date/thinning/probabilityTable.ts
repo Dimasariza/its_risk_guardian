@@ -45,3 +45,5 @@ const conditional = [
         a: 0.01
     }
 ]
+
+export { prior, conditional }
