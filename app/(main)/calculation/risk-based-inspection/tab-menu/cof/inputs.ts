@@ -10,26 +10,26 @@ const representativeFluidList = {
 }
 
 const inputs: any = [
-    // {
-    //   name: 'f',
-    //   type: 'text',
-    //   placeholder: 'AIT (°F)',
-    //   label: 'AIT (°F)',
-    //   required: true,
-    //   disabled: true,
-    //   autoFocus: false,
-    //   className: 'w-max'
-    // },
-    // {
-    //   name: 'k',
-    //   type: 'text',
-    //   placeholder: 'AIT (K)',
-    //   label: 'AIT (K)',
-    //   required: true,
-    //   disabled: true,
-    //   autoFocus: false,
-    //   className: 'w-max'
-    // },
+    {
+      name: 'massComponent',
+      type: 'text',
+      placeholder: 'Mass Component',
+      label: 'Mass Component',
+      required: true,
+      disabled: true,
+      autoFocus: false,
+      className: 'w-max'
+    },
+    {
+      name: 'massInventory',
+      type: 'text',
+      placeholder: 'Mass Inventory',
+      label: 'Mass Inventory',
+      required: true,
+      disabled: true,
+      autoFocus: false,
+      className: 'w-max'
+    },
     // {
     //   name: 'r',
     //   type: 'text',

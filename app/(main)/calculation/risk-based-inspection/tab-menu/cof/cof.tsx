@@ -14,17 +14,14 @@ import LiquidInventories from "./liquidInventories";
 import DetectionAndIsolation from "./DetectionAndIsolationTable";
 import FlamableDialog from "./flamableDialog";
 import DamageDialog from "./damageDialog";
+import ReleaseHoleSize from "./realeseHoleSize";
+import { inputs } from "./inputs";
+import InputTypeText from "@/fragments/input-type-text";
 
 function COF() {
   const [fluidSelected, setFluidSelected] = useState<any>({});
-  const [visible, setVisible] = useState<any>({
-    representative: false,
-    phase: false,
-    generic: false,
-    inventories: false,
-    detection: false,
-    flamableConsequence: false
-  });
+  const [value, setValue] = useState<any>({});
+  const [error, setError] = useState<any>({});
   const [generalData, setGeneralData] = useState<any>({});
   const data = useSelector((state: any) => state.Reducer);
 
@@ -50,44 +47,418 @@ function COF() {
   }
 
   return (
-    <section className="p-4">
-      <div className="flex gap-5">
-        <div className="flex flex-column gap-2">
+    <section className="grid m-2">
+      <div className="flex flex-wrap w-full lg:gap-8 md:gap-3 sm:gap-2">
+        <div className='flex flex-wrap flex-column lg:mr-5 mt-5'>
+          {inputs.map((props: any, key: number) => (
+            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+          ))}
+        </div>
+        <div className="flex flex-wrap flex-column gap-2 mt-5">
           <RepresentativeFluidDialog />
           <PhaseOfFluid />
+          <ReleaseHoleSize />
           <GenericFailureFrequency />
           <LiquidInventories />
           <DetectionAndIsolation />
           <FlamableDialog />
           <DamageDialog />
         </div>
+      </div>
 
-        <div className="flex flex-column">
-          {
-            [
-              {
-                label: "AIT (°C)",
-                value: fluidSelected.ait || "-"
-              },
-              {
-                label: "AIT (°F)",
-                value: (fluidSelected.ait * 1.8 + 32).toFixed(3) || "-"
-              },
-              {
-                label: "AIT (K)",
-                value: fluidSelected.ait + 273 || "-"
-              },
-              {
-                label: "AIT (°R)",
-                value: fluidSelected.ait * 4 / 5 || "-"
-              },
-              {
-                label: "Ideal Gas Spesific Heat Ratio",
-                value:  getIdealGasHeatRatio()
-              }
-            ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
-          }
-        </div>
+      <div className="flex w-full flex-wrap mt-5">
+        {
+          [
+            {
+              label: "AIT (°C)",
+              value: fluidSelected.ait || "-"
+            },
+            {
+              label: "AIT (°F)",
+              value: (fluidSelected.ait * 1.8 + 32).toFixed(3) || "-"
+            },
+            {
+              label: "AIT (K)",
+              value: fluidSelected.ait + 273 || "-"
+            },
+            {
+              label: "AIT (°R)",
+              value: fluidSelected.ait * 4 / 5 || "-"
+            },
+            {
+              label: "Ideal Gas Spesific Heat Ratio",
+              value:  getIdealGasHeatRatio()
+            },
+            {
+              label: "Final consequence area (m²)",
+              value:  ""
+            },
+            {
+              label: "Final consequence area (ft²)",
+              value:  ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>
+
+      <h5>Release hole size area based on dn</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Release rate (Wn)</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Added fluid mass</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Available mass</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Time required to release</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Release type</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Total leak durations</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Adjusted release rate</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Leak duration</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>
+      
+      <h5>Release mass</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Energy efficiency</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Component damage consequence areas for Auto-Ignition Not Likely (Continous Release)</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>
+
+      <h5>Component damage consequence areas for Auto-Ignition Likely (Continous Release)</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>      
+      
+      <h5>Component damage consequence areas for Auto-ignition Not Likely (Instaneous Release)</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
+      </div>
+
+      <h5>Component damage consequence areas for Auto-ignition Not Likely (Instaneous Release)</h5>
+      <div className="flex flex-wrap">
+        {
+          [
+            {
+              label: "Small Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Medium Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Large Release Hole Size",
+              value: ""
+            },
+            {
+              label: "Rupture Release Hole Size",
+              value: ""
+            },
+          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+        }
       </div>
 
     </section>

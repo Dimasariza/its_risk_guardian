@@ -14,12 +14,16 @@
     "deploy": "echo 'true' > ./out/.nojekyll && gh-pages -d out -b main -r https://github.com/Dimasariza/rbits.git -f -t"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.16.0",
+    "@mui/x-charts": "^7.9.0",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@testing-library/react": "^15.0.7",
     "@types/node": "20.3.1",
     "@types/react-dom": "18.2.5",
     "axios": "^1.7.2",
-    "chart.js": "4.2.1",
+    "chart.js": "^4.2.1",
     "framer-motion": "^11.2.11",
     "json-server": "^1.0.0-beta.0",
     "next": "13.4.8",
