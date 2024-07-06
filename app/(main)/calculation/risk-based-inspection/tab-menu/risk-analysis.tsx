@@ -1,6 +1,7 @@
 'use client';
 
-import { axisClasses, LineChart } from "@mui/x-charts";
+import { axisClasses, ChartsLegend, LineChart, lineElementClasses } from "@mui/x-charts";
+import { useState } from "react";
 
 const riskMatrix: any = [
   {
@@ -111,19 +112,88 @@ const riskMatrix: any = [
   }
 ];
 
-const planDate = [4000, 3000, 2000, 2780, 1890, 2390];
-const RBIDate = [2400, 1398, 9800, 3908, 4800, 3800];
-const riskTarget = [1400, 1198, 800, 908, 2800, 1800];
-const xLabels = [
-  '0',
-  '5',
-  '10',
-  '15',
-  '20',
-  '25',
-];
+const chartProps: any = {
+  slotProps: {
+    legend: {
+      labelStyle: {
+        fontSize: 14,
+        fill: 'blue',
+      },
+      markGap: 5,
+      itemGap: 10,
+    },
+    mark: {
+      display: 'none',
+      shape: "square",
+    }
+  },
+  grid: { 
+    horizontal: true 
+  },
+  bottomAxis: {
+    label: "Years",
+    labelStyle: {
+      fill: 'white'
+    }
+  },
+  leftAxis: {
+    label: "Risk (ft²/year)",
+    labelStyle: {
+      fill: "white"
+    }
+  },
+  width: 600,
+  height: 400,
+  yAxis: [{ data: [0, 2, 4, 6, 8, 10] }],
+  sx: () => ({
+    [`.${axisClasses.root}`]: {
+      [`.${axisClasses.tick}, .${axisClasses.line}`]: {
+        stroke: '#006BD6',
+        opacity: 0.5,
+        strokeWidth: 2,
+      },
+      [`.${axisClasses.tickLabel}`]: {
+        fill: '#006BD6',
+      },
+    },
+    [`.MuiMarkElement-series-PlanDate:nth-of-type(1)`]: {
+      stroke: "blue",
+      strokeOpacity: 0.5,
+      fill: 'cyan',
+      display: 'block'
+    },
+    [`.MuiMarkElement-series-PlanDate:nth-of-type(2)`]: {
+      stroke: "green",
+      strokeOpacity: 0.9,
+      fill: 'yellowgreen',
+      display: 'block'
+    },
+    [".MuiChartsAxisHighlight-root"]: {
+      // stroke: "white"
+    },
+    [".MuiChartsGrid-root"]: {
+      // stroke: "white"
+    },
+  })
+}
 
 function RiskAnalysis() {
+  const [value, setValue] = useState<any>({
+    shellRangeDate: [3, 7],
+    headRangeDate: [2, 5],
+    shellRiskTarget: 5.71,
+    headRiskTarget: 4.71,
+    shellXAxis: [3, 12],
+    headXAxis: [2, 16]
+  });
+
+  const shellRangeDate = [null, ...value.shellRangeDate];
+  const headRangeDate = [null, ...value.headRangeDate];
+  const shellXAxis = [0, ...value.shellXAxis, 25];
+  const headXAxis = [0, ...value.headXAxis, 25];
+  const shellRiskTarget = shellXAxis.map(_ => value.shellRiskTarget); 		
+  const headRiskTarget = headXAxis.map(_ => value.headRiskTarget); 		
+
   return (
     <section className="p-4">
       <div className="grid">
@@ -165,34 +235,14 @@ function RiskAnalysis() {
               <div>Shell Curva RBI date VS Plan date</div>
 
               <LineChart
-                sx={(theme) => ({
-                  [`.MuiBarElement-series-l_id`]: {
-                    stroke: '#006BD6',
-                  },
-                  [`.MuiBarElement-series-r_id`]: {
-                    stroke: '#EC407A',
-                  },
-                  [`.${axisClasses.root}`]: {
-                    [`.${axisClasses.tick}, .${axisClasses.line}`]: {
-                      stroke: '#006BD6',
-                      opacity: 0.5,
-                      strokeWidth: 2,
-                    },
-                    [`.${axisClasses.tickLabel}`]: {
-                      fill: '#006BD6',
-                    },
-                  },
-                  backgroundSize: '35px 35px',
-                  backgroundPosition: '20px 20px, 20px 20px',
-                })}
-                width={600}
-                height={400}
+                {...chartProps}
                 series={[
-                  { data: RBIDate, label: 'RBI Date', curve: "linear", color: "#1f77b4", },
-                  { data: planDate, label: 'PlanDate', curve: "linear", color: "#7f7f7f", },
-                  { data: riskTarget, label: 'PlanDate', curve: "linear", color: "#ff7f0e", },
+                  { data: shellRiskTarget, label: 'Risk Target', curve: "linear", color: "#ff7f0e", id: "RiskTarget" },
+                  { data: shellRangeDate, label: 'Range Date', curve: "linear", color: "yellow", id: "PlanDate" },
+                  { data: [], label: 'RBI date', color: "green", id: "RbiDate" },
+                  { data: [10], label: 'PlanDate', color: "blue", id: "RiskTarget2" },
                 ]}
-                xAxis={[{ scaleType: 'point', data: xLabels }]}
+                xAxis={[{ data: shellXAxis, tickMinStep: 5 }]}
               />
             </div>
           </div>
@@ -201,37 +251,17 @@ function RiskAnalysis() {
         <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6">
           <div className="card mb-0">
             <div className="flex flex-column w-full justify-content-center align-items-center">
-              <div>Shell Curva RBI date VS Plan date</div>
+              <div>Head Curva RBI date VS Plan date</div>
 
               <LineChart
-                sx={(theme) => ({
-                  [`.MuiBarElement-series-l_id`]: {
-                    stroke: '#006BD6',
-                  },
-                  [`.MuiBarElement-series-r_id`]: {
-                    stroke: '#EC407A',
-                  },
-                  [`.${axisClasses.root}`]: {
-                    [`.${axisClasses.tick}, .${axisClasses.line}`]: {
-                      stroke: '#006BD6',
-                      opacity: 0.5,
-                      strokeWidth: 2,
-                    },
-                    [`.${axisClasses.tickLabel}`]: {
-                      fill: '#006BD6',
-                    },
-                  },
-                  backgroundSize: '35px 35px',
-                  backgroundPosition: '20px 20px, 20px 20px',
-                })}
-                width={600}
-                height={400}
+                {...chartProps}
                 series={[
-                  { data: RBIDate, label: 'RBI Date', curve: "linear", color: "#1f77b4", },
-                  { data: planDate, label: 'PlanDate', curve: "linear", color: "#7f7f7f", },
-                  { data: riskTarget, label: 'PlanDate', curve: "linear", color: "#ff7f0e", },
+                  { data: headRiskTarget, label: 'Risk Target', curve: "linear", color: "#ff7f0e", id: "RiskTarget" },
+                  { data: headRangeDate, label: 'Range Date', curve: "linear", color: "yellow", id: "PlanDate" },
+                  { data: [], label: 'RBI date', color: "green", id: "RbiDate" },
+                  { data: [10], label: 'PlanDate', color: "blue", id: "RiskTarget2" },
                 ]}
-                xAxis={[{ scaleType: 'point', data: xLabels }]}
+                xAxis={[{ data: headXAxis, tickMinStep: 5 }]}
               />
             </div>
           </div>
