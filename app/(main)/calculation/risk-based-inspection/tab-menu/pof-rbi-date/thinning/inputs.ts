@@ -4,9 +4,7 @@ const inputs = [
       type: 'text',
       placeholder: 'Corrosion Rate',
       label: 'Corrosion Rate',
-      required: true,
-      readOnly: false,
-      autoFocus: false,
+      autoFocus: true,
       className: ''
     },
     {
@@ -14,9 +12,7 @@ const inputs = [
       type: 'calendar',
       placeholder: 'RBI Date',
       label: 'RBI Date',
-      required: true,
-      readOnly: false,
-      autoFocus: true,
+      autoFocus: false,
       className: ''
     },
     {
@@ -24,8 +20,6 @@ const inputs = [
       type: 'text',
       placeholder: 'T min (Inch)',
       label: 'T min (inch)',
-      required: true,
-      readOnly: false,
       autoFocus: false,
       className: ''
     },
@@ -34,9 +28,39 @@ const inputs = [
       type: 'text',
       placeholder: 'T min (mm)',
       label: 'T min (mm)',
-      required: true,
       autoFocus: false,
-      readOnly: true,
+      className: ''
+    },
+    {
+      name: 'rbiThinning_nInspA',
+      type: 'text',
+      placeholder: 'Number of Inspection A',
+      label: 'Number of Inspection A',
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'rbiThinning_nInspB',
+      type: 'text',
+      placeholder: 'Number of Inspection B',
+      label: 'Number of Inspection B',
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'rbiThinning_nInspC',
+      type: 'text',
+      placeholder: 'Number of Inspection C',
+      label: 'Number of Inspection C',
+      autoFocus: false,
+      className: ''
+    },
+    {
+      name: 'rbiThinning_nInspD',
+      type: 'text',
+      placeholder: 'Number of Inspection D',
+      label: 'Number of Inspection D',
+      autoFocus: false,
       className: ''
     },
     {
@@ -44,9 +68,7 @@ const inputs = [
       type: 'text',
       placeholder: 'DF adj for injection points',
       label: 'DF adj for injection points',
-      required: true,
       autoFocus: false,
-      readOnly: true,
       className: ''
     },
     {
@@ -54,9 +76,7 @@ const inputs = [
       type: 'text',
       placeholder: 'DF adj for dead legs',
       label: 'DF adj for dead legs',
-      required: true,
       autoFocus: false,
-      readOnly: true,
       className: ''
     },
     {
@@ -64,8 +84,6 @@ const inputs = [
       type: 'text',
       placeholder: 'DF adj for welding construction',
       label: 'DF adj for welding construction',
-      required: true,
-      readOnly: false,
       autoFocus: false,
       className: ''
     },
@@ -74,9 +92,7 @@ const inputs = [
       type: 'text',
       placeholder: 'DF adjustment for AST maintenance per API STD 653',
       label: 'DF adjustment for AST maintenance per API STD 653',
-      required: true,
       autoFocus: false,
-      readOnly: true,
       className: ''
     },
     {
@@ -84,9 +100,7 @@ const inputs = [
       type: 'text',
       placeholder: 'DF adjustment for settlement',
       label: 'DF adjustment for settlement',
-      required: true,
       autoFocus: false,
-      readOnly: true,
       className: ''
     },
     {
@@ -94,8 +108,6 @@ const inputs = [
       type: 'text',
       placeholder: 'DF adjustment for online monitoring',
       label: 'DF adjustment for online monitoring',
-      required: true,
-      readOnly: true,
       autoFocus: false,
       className: ''
     },

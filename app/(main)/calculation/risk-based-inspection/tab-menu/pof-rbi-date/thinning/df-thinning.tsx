@@ -9,7 +9,7 @@ import CorrosionRateDialog from './corrosionRateDialog';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import InspectionEffectivenessTable from './inspectionEfectivenessTableRef';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
-import calculateThinning from '@/function/calculateThinningValue';
+import { calculateThinning } from '@/function/calculateThinningValue';
 import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
 
@@ -22,7 +22,6 @@ function DFThinning() {
 
   useEffect(() => {
     const componentId = data.menu?.comp_id;
-    console.log(componentId)
     if(!componentId) return;
     getThinning(componentId).then((res) => {
       setThinning(res);
@@ -43,7 +42,19 @@ function DFThinning() {
     headArt,
     flowStress,
     shellStrengthRatio,
-    headStrengthRatio
+    headStrengthRatio,
+    inspEffectiveness1,
+    inspEffectiveness2,
+    inspEffectiveness3,
+    postProbability1,
+    postProbability2,
+    postProbability3,
+    shellSectionB1,
+    shellSectionB2,
+    shellSectionB3,
+    headSectionB1,
+    headSectionB2,
+    headSectionB3
   } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning)
 
   return (
@@ -104,51 +115,51 @@ function DFThinning() {
             },
             {
               label: "Inspection Effectiveness 1",
-              value: "test"
+              value: inspEffectiveness1
             },
             {
               label: "Inspection Effectiveness 2",
-              value: "test"
+              value: inspEffectiveness2
             },
             {
               label: "Inspection Effectiveness 3",
-              value: "test"
+              value: inspEffectiveness3
             },
             {
               label: "Posterior Probability 1",
-              value: "test"
+              value: postProbability1
             },
             {
               label: "Posterior Probability 2",
-              value: "test"
+              value: postProbability2
             },
             {
               label: "Posterior Probability 3",
-              value: "test"
+              value: postProbability3
             },
             {
               label: "Shell Section β1",
-              value: "test"
+              value: shellSectionB1
             },
             {
               label: "Shell Section β2",
-              value: "test"
+              value: shellSectionB2
             },
             {
               label: "Shell Section β3",
-              value: "test"
+              value: shellSectionB3
             },
             {
               label: "Head Section β1",
-              value: "test"
+              value: headSectionB1
             },
             {
               label: "Head Section β2",
-              value: "test"
+              value: headSectionB2
             },
             {
               label: "Head Section β3",
-              value: "test"
+              value: headSectionB3
             },
             {
               label: "Shell Section Base DF",

@@ -1,18 +1,18 @@
 const prior = [
     {
-        state: "P1",
+        state: "Pr1",
         low: 0.5,
         medium: 0.7,
         high: 0.8
     },
     {
-        state: "P2",
+        state: "Pr2",
         low: 0.3,
         medium: 0.2,
         high: 0.15
     },
     {
-        state: "P3",
+        state: "Pr3",
         low: 0.2,
         medium: 0.1,
         high: 0.05
@@ -21,7 +21,7 @@ const prior = [
 
 const conditional = [
     {
-        state: "P1",
+        state: "Co1",
         e: 0.33,
         d: 0.4,
         c: 0.5,
@@ -29,7 +29,7 @@ const conditional = [
         a: 0.9
     },
     {
-        state: "P2",
+        state: "Co2",
         e: 0.33,
         d: 0.33,
         c: 0.3,
@@ -37,7 +37,7 @@ const conditional = [
         a: 0.09
     },
     {
-        state: "P3",
+        state: "Co3",
         e: 0.33,
         d: 0.27,
         c: 0.2,
