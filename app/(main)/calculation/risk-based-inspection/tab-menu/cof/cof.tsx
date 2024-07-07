@@ -97,7 +97,7 @@ function COF() {
               label: "Final consequence area (ft²)",
               value:  ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>
 
@@ -121,7 +121,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -145,7 +145,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -169,7 +169,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -193,7 +193,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -217,7 +217,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -241,7 +241,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -265,7 +265,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -289,7 +289,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -313,7 +313,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>
       
@@ -337,7 +337,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -361,7 +361,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -385,7 +385,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>
 
@@ -409,7 +409,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>      
       
@@ -433,7 +433,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>
 
@@ -457,7 +457,7 @@ function COF() {
               label: "Rupture Release Hole Size",
               value: ""
             },
-          ].map((p: any, key) => <InputValueOnly {...p} key={key}/>)
+          ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
         }
       </div>
 

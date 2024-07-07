@@ -25,18 +25,33 @@ function DFAlkalineCorrosion() {
     <>
       <section className="grid m-2">
         <div className='flex flex-wrap lg:column-gap-5 mt-5'>
-          {inputs.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
+          {
+            inputs.map((props: any, key: number) => (
+              <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+            ))
+          }
         </div>
         <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
           <SuscepbilityCrackingTable />
           <InspectionEffectivenessTable />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
-          <InputValueOnly label="Age" value="test"/>
-          <InputValueOnly label="Shell DF ACSCC" value="test"/>
-          <InputValueOnly label="Head DF ACSCC" value="test"/>
+          {
+            [
+              {
+                label: "Age",
+                value: null
+              },
+              {
+                label: "Shell DF ACSCC",
+                value: null
+              },
+              {
+                label: "Head DF ACSCC",
+                value: null
+              }
+            ].map(({value, label}: any) => <InputValueOnly label={label} value={value || "-"} key={label} />)
+          }
         </div>
       </section>
     </>

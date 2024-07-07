@@ -54,7 +54,9 @@ function DFThinning() {
     shellSectionB3,
     headSectionB1,
     headSectionB2,
-    headSectionB3
+    headSectionB3,
+    shellBaseDF,
+    headBaseDF
   } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning)
 
   return (
@@ -163,13 +165,13 @@ function DFThinning() {
             },
             {
               label: "Shell Section Base DF",
-              value: "test"
+              value: shellBaseDF
             },
             {
               label: "Head Section Base DF",
-              value: "test"
+              value: headBaseDF
             },
-          ].map(({label, value} : any) => <InputValueOnly label={label} value={value} key={label} />)
+          ].map(({label, value} : any) => <InputValueOnly label={label} value={value || "-"} key={label} />)
         }
       </div>
     </section>

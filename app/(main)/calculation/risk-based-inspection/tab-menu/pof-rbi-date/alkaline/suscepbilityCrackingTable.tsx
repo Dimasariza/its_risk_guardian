@@ -71,7 +71,7 @@ function SuscepbilityCrackingTable() {
                 <label htmlFor="">Susceptibility to Cracking-ASCC</label>
                 <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
             </div>
-            <Dialog header="Susceptibility to Cracking-ASCC" visible={visible} style={{ width: '50%' }} maximizable
+            <Dialog header="Susceptibility to Cracking-ASCC" visible={visible} style={{ width: '80%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  
                 footer={footerContent}
                 >

@@ -284,7 +284,7 @@ function InspectionEffectivenessTable() {
                 <label htmlFor="">Inspection Effectiveness</label>
                 <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
             </div>
-            <Dialog header="Inspection Effectiveness" visible={visible} style={{ width: '50%' }} maximizable
+            <Dialog header="Inspection Effectiveness" visible={visible} style={{ width: '80%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  
                 footer={footerContent}
                 >

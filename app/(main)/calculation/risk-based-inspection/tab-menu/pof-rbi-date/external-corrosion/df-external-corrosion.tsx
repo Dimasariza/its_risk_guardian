@@ -41,34 +41,122 @@ function DFExternalCorrosion() {
           <OperatingTempTableRef />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
-          <InputValueOnly label="Age" value="test"/>
-          <InputValueOnly label="Thickness (mm)" value="test"/>
-          <InputValueOnly label="Thickness (Inch)" value="test"/>
-          <InputValueOnly label="Base Corrosion Rate" value="test"/>
-          <InputValueOnly label="Final Corrosion Rate" value="test"/>
-          <InputValueOnly label="Time in Service Age (Tk)" value="test"/>
-          <InputValueOnly label="Time in Service Age (Coat)" value="test"/>
-          <InputValueOnly label="Time in Service Age" value="test"/>
-          <InputValueOnly label="Adjusment coat" value="test"/>
-          <InputValueOnly label="Shell Art RBI Date" value="test"/>
-          <InputValueOnly label="Head Art RBI Date" value="test"/>
-          <InputValueOnly label="Flow Stress" value="test"/>
-          <InputValueOnly label="Shell Strength Ratio" value="test"/>
-          <InputValueOnly label="Head Strength Ratio" value="test"/>
-          <InputValueOnly label="Inspection Effectiveness Factor (I1)" value="test"/>
-          <InputValueOnly label="Inspection Effectiveness Factor (I2)" value="test"/>
-          <InputValueOnly label="Inspection Effectiveness Factor (I3)" value="test"/>
-          <InputValueOnly label="Posterior Probability (P1)" value="test"/>
-          <InputValueOnly label="Posterior Probability (P2)" value="test"/>
-          <InputValueOnly label="Posterior Probability (P3)" value="test"/>
-          <InputValueOnly label="Shell RBI Date β1" value="test"/>
-          <InputValueOnly label="Shell RBI Date β2" value="test"/>
-          <InputValueOnly label="Shell RBI Date β3" value="test"/>
-          <InputValueOnly label="Head RBI Date β1" value="test"/>
-          <InputValueOnly label="Head RBI Date β2" value="test"/>
-          <InputValueOnly label="Head RBI Date β3" value="test"/>
-          <InputValueOnly label="Shell Base Damage Factor" value="test"/>
-          <InputValueOnly label="Head Base Damage Factor" value="test"/>
+          {
+            [
+              {
+                label: "Age",
+                value: null
+              },
+              {
+                label: "Thickness (mm)",
+                value: null
+              },
+              {
+                label: "Thickness (Inch)",
+                value: null
+              },
+              {
+                label: "Base Corrosion Rate",
+                value: null
+              },              
+              {
+                label: "Final Corrosion Rate",
+                value: null
+              },
+              {
+                label: "Time in Service Age (Tk)",
+                value: null
+              },
+              {
+                label: "Time in Service Age (Coat)",
+                value: null
+              },
+              {
+                label: "Time in Service Age",
+                value: null
+              },
+              {
+                label: "Adjusment coat",
+                value: null
+              },
+              {
+                label: "Shell Art RBI Date",
+                value: null
+              },
+              {
+                label: "Head Art RBI Date",
+                value: null
+              },
+              {
+                label: "Flow Stress",
+                value: null
+              },
+              {
+                label: "Shell Strength Ratio",
+                value: null
+              },
+              {
+                label: "Head Strength Ratio",
+                value: null
+              },
+              {
+                label: "Inspection Effectiveness Factor (I1)",
+                value: null
+              },
+              {
+                label: "Inspection Effectiveness Factor (I2)",
+                value: null
+              },
+              {
+                label: "Inspection Effectiveness Factor (I3)",
+                value: null
+              },
+              {
+                label: "Posterior Probability (P1)",
+                value: null
+              },
+              {
+                label: "Posterior Probability (P2)",
+                value: null
+              },
+              {
+                label: "Posterior Probability (P3)",
+                value: null
+              },
+              {
+                label: "Shell RBI Date β1",
+                value: null
+              },
+              {
+                label: "Shell RBI Date β2",
+                value: null
+              },
+              {
+                label: "Shell RBI Date β3",
+                value: null
+              },
+              {
+                label: "Head RBI Date β1",
+                value: null
+              },
+              {
+                label: "Head RBI Date β2",
+                value: null
+              },
+              {
+                label: "Head RBI Date β3",
+                value: null
+              },
+              {
+                label: "Shell Base Damage Factor",
+                value: null
+              },
+              {
+                label: "Head Base Damage Factor",
+                value: null
+              },
+            ].map(({label, value}: any) => <InputValueOnly label={label} value={value || "-"} key={label}/>)
+          }
         </div>
       </section>
     </>

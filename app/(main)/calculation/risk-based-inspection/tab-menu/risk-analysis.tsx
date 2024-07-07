@@ -223,6 +223,32 @@ function RiskAnalysis() {
                     }
                     <div className="flex justify-content-center ml-8">Consequence</div>
                   </div>
+                  <div className="flex flex-column justify-content-center p-5">
+                    <div className="p-1">
+                      <div style={{width: "20px", height: "1rem"}} className="bg-red-600"></div>
+                      <span>High</span>
+                    </div>
+                    <div className="p-1">
+                      <div style={{width: "20px", height: "1rem"}} className="bg-orange-500"></div>
+                      <span>Medium High</span>
+                    </div>
+                    <div className="p-1">
+                      <div style={{width: "20px", height: "1rem"}} className="bg-yellow-500"></div>
+                      <span>Medium</span>
+                    </div>
+                    <div className="p-1">
+                      <div style={{width: "20px", height: "1rem"}} className="bg-green-400"></div>
+                      <span>Medium Low</span>
+                    </div>
+                    <div className="p-1">
+                      <div style={{fontSize: "2rem"}} >•</div>
+                      <span>RBI Date</span>
+                    </div>
+                    <div className="p-1">
+                      <div style={{fontSize: "2rem"}} >৹</div>
+                      <span>Plan Date</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

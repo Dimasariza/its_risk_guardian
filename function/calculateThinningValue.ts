@@ -49,17 +49,21 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
     const postProbability2: number | null = inspEffectiveness2! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
     const postProbability3: number | null = inspEffectiveness3! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
 
-    const shellSectionB1: number | null = ((1 - parameterBCoef.damageState1 * shellArt! - shellStrengthRatio) / ((parameterBCoef.damageState1 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState1 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5;
+    const shellSectionB1: number | null = ((1 - parameterBCoef.damageState1 * shellArt! - shellStrengthRatio) / ((parameterBCoef.damageState1 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState1 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5 || null;
 
-    const shellSectionB2: number | null = ((1 - parameterBCoef.damageState2 * shellArt! - shellStrengthRatio) / ((parameterBCoef.damageState2 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState2 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5;
+    const shellSectionB2: number | null = ((1 - parameterBCoef.damageState2 * shellArt! - shellStrengthRatio) / ((parameterBCoef.damageState2 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState2 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5 || null;
 
-    const shellSectionB3: number | null = ((1 - parameterBCoef.damageState3 * shellArt! - shellStrengthRatio) / ((parameterBCoef.damageState3 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState3 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5;
+    const shellSectionB3: number | null = ((1 - parameterBCoef.damageState3 * shellArt! - shellStrengthRatio) / ((parameterBCoef.damageState3 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState3 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5 || null;
 
-    const headSectionB1: number | null = ((1 - parameterBCoef.damageState1 * headArt! - shellStrengthRatio) / ((parameterBCoef.damageState1 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState1 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5;
+    const headSectionB1: number | null = ((1 - parameterBCoef.damageState1 * headArt! - shellStrengthRatio) / ((parameterBCoef.damageState1 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState1 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5 || null;
 
-    const headSectionB2: number | null = ((1 - parameterBCoef.damageState2 * headArt! - shellStrengthRatio) / ((parameterBCoef.damageState2 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState2 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5;
+    const headSectionB2: number | null = ((1 - parameterBCoef.damageState2 * headArt! - shellStrengthRatio) / ((parameterBCoef.damageState2 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState2 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5 || null;
 
-    const headSectionB3: number | null = ((1 - parameterBCoef.damageState3 * headArt! - shellStrengthRatio) / ((parameterBCoef.damageState3 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState3 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5;
+    const headSectionB3: number | null = ((1 - parameterBCoef.damageState3 * headArt! - shellStrengthRatio) / ((parameterBCoef.damageState3 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState3 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) * 0.5 || null;
+
+    const shellBaseDF = ((postProbability1! * (ncdf(-shellSectionB1!))) + (postProbability2! * (ncdf(-shellSectionB2!))) + (postProbability3! * (ncdf(-shellSectionB3!)))) / 0.000156;
+
+    const headBaseDF = ((postProbability1! * (ncdf(-headSectionB1!))) + (postProbability2! * (ncdf(-headSectionB2!))) + (postProbability3! * (ncdf(-headSectionB3!)))) / 0.000156;
 
     return {
         lastInspection: gData_lastInspection,
@@ -84,6 +88,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
         headSectionB1,
         headSectionB2,
         headSectionB3,
+        shellBaseDF,
+        headBaseDF
     }
 }
 
@@ -103,5 +109,5 @@ function ncdf(x: number, mean: number = 0, std: number = 1) {
     var prob = d * t * (.3193815 + t * ( -.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))))
     if( x > 0 ) prob = 1 - prob
     return prob
-  }
+}
 
