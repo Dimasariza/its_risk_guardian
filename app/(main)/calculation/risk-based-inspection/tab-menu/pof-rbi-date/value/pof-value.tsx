@@ -3,10 +3,16 @@ import { getValue } from '@/service/calculation/pofRBIDate-service';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputDFTotal, inputHeadSection, inputsGFF } from './inputs';
+import GenericFailureFrequency from './genericFailureFreq';
+import InputValueOnly from '@/fragments/inputValueOnly';
 
 function POFValue() {
   const [value, setValue] = useState<any>({});
   const [error, setError] = useState<any>({});
+
+  const [generalData, setGeneralData] = useState()
+  const [exCor, setExCor] = useState()
+  const [alkaline, setAlkaline] = useState()
 
   const data = useSelector((state: any) => state.Reducer);
 
@@ -20,29 +26,37 @@ function POFValue() {
 
   return (
     <>
-      <section className="m-2">
-        <h5>GFF</h5>
-        <div className="grid m-2">
-          {inputsGFF.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
+      <section className="p-3">
+        <div className='mt-5'>
+          <GenericFailureFrequency />
+        </div>
+        <div className='flex w-full flex-wrap mt-5'>
+          {
+            [
+              {
+                label: "Shell Section DF Total Value",
+                value: null
+              },
+              {
+                label: "Head Section DF Total Value",
+                value: null
+              },
+              {
+                label: "Management System Factor",
+                value: null
+              },
+              {
+                label: "Shell Section Probability of Failure",
+                value: null
+              },
+              {
+                label: "Head Section Probability of Failure",
+                value: null
+              },
+            ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
+          }
         </div>
 
-        <h5>DF Total</h5>
-        <div className="grid m-2">
-          {inputDFTotal.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
-        </div>
-
-        <h5>Management System Factor</h5>
-
-        <h5>POF Total</h5>
-        <div className="grid m-2">
-          {inputHeadSection.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
-        </div>
       </section>
     </>
   );

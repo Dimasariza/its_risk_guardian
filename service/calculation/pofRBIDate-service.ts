@@ -1,4 +1,4 @@
-const url = process.env.DB_URL + '/pof_rbi/thinning/' || 'http://localhost:3030/pofRBIDate';
+const url = process.env.DB_URL + '/pof_rbi/' || 'http://localhost:3030/pofRBIDate';
 
 const POFRBIDate = {
   async postItem(value: any) {
@@ -18,7 +18,7 @@ const POFRBIDate = {
     return await res.json();
   },
   async getItem(id: string, param: string) {
-    const res = await fetch(url + id, {
+    const res = await fetch(url + param + "/" + id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -37,17 +37,17 @@ const POFRBIDate = {
 };
 
 export async function getThinning(id: string) {
-  return await POFRBIDate.getItem(id, 'dfThinning');
+  return await POFRBIDate.getItem(id, 'thinning');
 }
 
 export async function getExternalCorrosion(id: string) {
-  return await POFRBIDate.getItem(id, 'dfExternalCorrosion');
+  return await POFRBIDate.getItem(id, 'ex_cor');
 }
 
 export async function getAlkaline(id: string) {
-  return await POFRBIDate.getItem(id, 'dfAlkaline');
+  return await POFRBIDate.getItem(id, 'alkaline');
 }
 
 export async function getValue(id: string) {
-  return await POFRBIDate.getItem(id, 'pofValue');
+  return await POFRBIDate.getItem(id, 'value');
 }

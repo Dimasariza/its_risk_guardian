@@ -1,25 +1,43 @@
 import InputTypeText from '@/fragments/input-type-text';
-import { getAlkaline } from '@/service/calculation/pofRBIDate-service';
-import { useEffect, useState } from 'react';
+import { getAlkaline, getExternalCorrosion, getThinning } from '@/service/calculation/pofRBIDate-service';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import SuscepbilityCrackingTable from './suscepbilityCrackingTable';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import InspectionEffectivenessTable from './inspectionEffectivenessTable';
 import { Checkbox } from '@mui/material';
+import { GeneralDataService } from '@/service/calculation/generalData-service';
 
 function DFAlkalineCorrosion() {
   const [value, setValue] = useState<any>({});
-  const [error, setError] = useState<any>({});
   const [checked, setChecked] = useState<any>({})
+  const [error, setError] = useState<any>({});
+  const [generalData, setGeneralData] = useState<any>({})
+  const [thinning, setThinning] = useState<any>()
+  const [exCor, setExCor] = useState<any>()
 
   const data = useSelector((state: any) => state.Reducer);
 
   useEffect(() => {
-    if (data.menu?.comp_id) {
-      getAlkaline(data.menu.id).then((res: any) => {
+    const componentId = data.menu?.comp_id
+    if (componentId) {
+      getAlkaline(componentId).then((res: any) => {
         setValue(res);
+        console.log(res)
       });
+      GeneralDataService.fetchData(componentId)
+      .then((res: any) => {
+        setGeneralData(res)
+      })
+      getThinning(componentId)
+      .then((res: any) => {
+        setThinning(res)
+      })
+      getExternalCorrosion(componentId)
+      .then((res: any) => {
+        setExCor(res)
+      })
     }
   }, [data]);
 
@@ -33,17 +51,22 @@ function DFAlkalineCorrosion() {
             ))
           }
         </div>
-        <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
-          <SuscepbilityCrackingTable />
-          <InspectionEffectivenessTable />
-        </div>
-        <div className='mt-3'>
-          <span>Shell subjects to PWHT</span>
-          <Checkbox style={{width: 235}} onChange={(e: any) => setChecked(e.checked)} checked={checked}></Checkbox>
-        </div>
-        <div className='mt-3'>
-          <span>Head subjects to PWHT</span>
-          <Checkbox style={{width: 235}} onChange={(e: any) => setChecked(e.checked)} checked={checked}></Checkbox>
+        
+        <div className='flex w-full flex-wrap mt-5 gap-5'>
+          <div className='flex gap-2 flex-column'>
+            <SuscepbilityCrackingTable />
+            <InspectionEffectivenessTable />
+          </div>
+          <div>
+            <div>
+              <span>Shell subjects to PWHT</span>
+              <Checkbox name='rbiAlkaline_shellPwht' onChange={(e: any) => setChecked((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={checked.rbiAlkaline_shellPwht}></Checkbox>
+            </div>
+            <div>
+              <span>Head subjects to PWHT</span>
+              <Checkbox name='rbiAlkaline_headPwht' onChange={(e: any) => setChecked((prev: any) => ({...prev, rbiAlkaline_headPwht: e.checked}))} checked={checked.rbiAlkaline_headPwht}></Checkbox>
+            </div>
+          </div>
         </div>
         <div className='flex w-full flex-wrap mt-5'>
           {

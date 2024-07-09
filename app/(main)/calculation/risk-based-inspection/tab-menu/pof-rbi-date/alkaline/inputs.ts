@@ -1,7 +1,7 @@
 
 const inputs = [
     {
-      name: 'ph',
+      name: 'rbiAlkaline_ph',
       type: 'text',
       placeholder: 'Ph',
       label: 'Ph',
@@ -10,7 +10,7 @@ const inputs = [
       className: 'col'
     },
     {
-      name: 'co3Consentration',
+      name: 'rbiAlkaline_co3Consentration',
       type: 'text',
       placeholder: 'CO3 Consentration',
       label: 'CO3 Consentration',
@@ -19,7 +19,7 @@ const inputs = [
       className: 'col'
     },
     {
-      name: 'dfacscc',
+      name: 'rbiAlkaline_dfacscc',
       type: 'text',
       placeholder: 'DFACSCC',
       label: 'DFACSCC',

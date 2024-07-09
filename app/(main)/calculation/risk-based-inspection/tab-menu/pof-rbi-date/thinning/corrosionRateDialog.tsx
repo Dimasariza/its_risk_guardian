@@ -156,7 +156,6 @@ function CorrosionRateDialog() {
         if(!componentId) return;
         RBIScreeningQuestionService.fetchData(componentId)
         .then(res => {
-            console.log(res)
             setScreeningValue(res)
         })
     }, [])
