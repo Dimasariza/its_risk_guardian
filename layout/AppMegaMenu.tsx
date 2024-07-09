@@ -124,21 +124,21 @@ function AppMegaMenu() {
             label: 'Assets',
             items: [
               {
-                label: 'Item',
+                label: 'Plan',
                 icon: 'pi pi-box',
                 command: () => {
                   setVisible((prev) => ({ ...prev, item: true }));
                 }
               },
               {
-                label: 'Equipment',
+                label: 'System',
                 icon: 'pi pi-wrench',
                 command: () => {
                   setVisible((prev) => ({ ...prev, equipment: true }));
                 }
               },
               {
-                label: 'Component',
+                label: 'Equipment',
                 icon: (options: any) => <SiWebcomponentsdotorg {...options.iconProps} />,
                 command: () => {
                   setVisible((prev) => ({ ...prev, component: true }));

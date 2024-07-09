@@ -42,7 +42,7 @@ function ReleaseHoleSize() {
             id: 'holeSize004',
             size: 'Rupture',
             range: '6',
-            release: 'd4 = min[D, 406]',
+            release: 'd4 = min[D, 16]',
             holeSizeValue: "d4"
         },
     ]
