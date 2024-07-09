@@ -9,7 +9,6 @@ import InputValueOnly from "@/fragments/inputValueOnly";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { useSelector } from "react-redux";
 import PhaseOfFluid from "./phaseOfFluid";
-import GenericFailureFrequency from "./genericFailureFreq";
 import LiquidInventories from "./liquidInventories";
 import DetectionAndIsolation from "./DetectionAndIsolationTable";
 import FlamableDialog from "./flamableDialog";
@@ -58,7 +57,6 @@ function COF() {
           <RepresentativeFluidDialog />
           <PhaseOfFluid />
           <ReleaseHoleSize />
-          <GenericFailureFrequency />
           <LiquidInventories />
           <DetectionAndIsolation />
           <FlamableDialog />

@@ -3,26 +3,66 @@ import InputTypeText from '@/fragments/input-type-text';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import InputYearRange from '@/fragments/input-year-range';
-import { getExternalCorrosion } from '@/service/calculation/pofRBIDate-service';
+import { getExternalCorrosion, getThinning } from '@/service/calculation/pofRBIDate-service';
 import { inputs } from './inputs';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import OperatingTempTableRef from './operatingTempTableRef';
-import InspectionEffectivenessTable from '../thinning/inspectionEfectivenessTableRef';
+import { calculateExCor } from '@/function/calcRBIExCorValue';
+import IGeneralData from '@/types/IGeneralData';
+import { GeneralDataService } from '@/service/calculation/generalData-service';
+import IRBIThinning from '@/types/IRBIThinning';
 
 function DFExternalCorrosion() {
   const [value, setValue] = useState<any>({});
   const [error, setError] = useState<any>({});
+  const [generalData, setGeneralData] = useState<IGeneralData | any>({});
+  const [thinning, setThinning] = useState<IRBIThinning | any>({});
 
   const data = useSelector((state: any) => state.Reducer);
   const edit = useSelector((state: any) => state.EditReducer);
 
   useEffect(() => {
-    if (data.menu?.comp_id) {
-      getExternalCorrosion(data.menu.id).then((res: any) => {
+    const componentId = data.menu.comp_id;
+    if (componentId) {
+      getExternalCorrosion(componentId).then((res: any) => {
         setValue(res);
+      });
+      GeneralDataService.fetchData(componentId).then(res => setGeneralData(res))
+      getThinning(componentId).then((res) => {
+        setThinning({...res, rbiThinning_rbiDate: new Date(res.rbiThinning_rbiDate)});
       });
     }
   }, [data]);
+
+  const {
+    thicknessInch,
+    thicknessMM,
+    age,
+    baseCRb,
+    finalCR,
+    ageCoat,
+    adjCoat,
+    timeInService,
+    shellArt,
+    headArt,
+    flowStress,
+    shellStrengthRatio,
+    headStrengthRatio,
+    inspectionI1,
+    inspectionI2,
+    inspectionI3,
+    posteriorP1,
+    posteriorP2,
+    posteriorP3,
+    shellRBIBeta1,
+    shellRBIBeta2,
+    shellRBIBeta3,
+    headRBIBeta1,
+    headRBIBeta2,
+    headRBIBeta3,
+    rbiShellSection,
+    rbiHeadSection
+  } = calculateExCor(generalData, thinning, value);
 
   return (
     <>
@@ -45,117 +85,117 @@ function DFExternalCorrosion() {
             [
               {
                 label: "Age",
-                value: null
+                value: age
               },
               {
                 label: "Thickness (mm)",
-                value: null
+                value: thicknessMM
               },
               {
                 label: "Thickness (Inch)",
-                value: null
+                value: thicknessInch
               },
               {
-                label: "Base Corrosion Rate",
-                value: null
-              },              
+                label: "Corrosion Rate (CRb)",
+                value: baseCRb
+              },             
               {
-                label: "Final Corrosion Rate",
-                value: null
+                label: "Final Corrosion Rate (Cr)",
+                value: finalCR
               },
               {
                 label: "Time in Service Age (Tk)",
-                value: null
+                value: age
               },
               {
                 label: "Time in Service Age (Coat)",
-                value: null
+                value: ageCoat
               },
               {
                 label: "Time in Service Age",
-                value: null
+                value: timeInService
               },
               {
                 label: "Adjusment coat",
-                value: null
+                value: adjCoat
               },
               {
                 label: "Shell Art RBI Date",
-                value: null
+                value: shellArt
               },
               {
                 label: "Head Art RBI Date",
-                value: null
+                value: headArt
               },
               {
                 label: "Flow Stress",
-                value: null
+                value: flowStress
               },
               {
                 label: "Shell Strength Ratio",
-                value: null
+                value: shellStrengthRatio
               },
               {
                 label: "Head Strength Ratio",
-                value: null
+                value: headStrengthRatio
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
-                value: null
+                value: inspectionI1
               },
               {
                 label: "Inspection Effectiveness Factor (I2)",
-                value: null
+                value: inspectionI2
               },
               {
                 label: "Inspection Effectiveness Factor (I3)",
-                value: null
+                value: inspectionI3
               },
               {
                 label: "Posterior Probability (P1)",
-                value: null
+                value: posteriorP1
               },
               {
                 label: "Posterior Probability (P2)",
-                value: null
+                value: posteriorP2
               },
               {
                 label: "Posterior Probability (P3)",
-                value: null
+                value: posteriorP3
               },
               {
                 label: "Shell RBI Date β1",
-                value: null
+                value: shellRBIBeta1
               },
               {
                 label: "Shell RBI Date β2",
-                value: null
+                value: shellRBIBeta2
               },
               {
                 label: "Shell RBI Date β3",
-                value: null
+                value: shellRBIBeta3
               },
               {
                 label: "Head RBI Date β1",
-                value: null
+                value: headRBIBeta1
               },
               {
                 label: "Head RBI Date β2",
-                value: null
+                value: headRBIBeta2
               },
               {
                 label: "Head RBI Date β3",
-                value: null
+                value: headRBIBeta3
               },
               {
                 label: "Shell Base Damage Factor",
-                value: null
+                value: rbiShellSection
               },
               {
                 label: "Head Base Damage Factor",
-                value: null
+                value: rbiHeadSection
               },
-            ].map(({label, value}: any) => <InputValueOnly label={label} value={value || "-"} key={label}/>)
+            ].map(({label, value}: any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label}/>)
           }
         </div>
       </section>

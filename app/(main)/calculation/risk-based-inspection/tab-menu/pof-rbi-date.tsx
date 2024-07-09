@@ -1,14 +1,77 @@
 'use client';
 
 import { TabMenu } from 'primereact/tabmenu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import POFValue from './pof-rbi-date/value/pof-value';
 import DFThinning from './pof-rbi-date/thinning/df-thinning';
 import DFExternalCorrosion from './pof-rbi-date/external-corrosion/df-external-corrosion';
 import DFAlkalineCorrosion from './pof-rbi-date/alkaline/df-alkaline';
+import InputTypeText from '@/fragments/input-type-text';
+import InputCalendar from '@/fragments/input-calendar';
+import { useSelector } from 'react-redux';
+import FluidServiceSeverity from './prd pof/fluidServiceSeverity';
+import WeibulParameters from './prd pof/defaultWeibulParameters';
+import AdjusmentFactor from './prd pof/adjusmentFactor';
+import InputValueOnly from '@/fragments/inputValueOnly';
+import InspectionConfidenceFactor from './prd pof/inspectionConfidenceFactor';
+import InitiatingEventFrequencies from './prd pof/initiatingEventFrequencies';
+import ClassProtectedEquipment from './prd pof/classForProtectedEquipment';
+
+const inputs = [
+  {
+    name: 'pofRBI_tInsp',
+    type: 'text',
+    placeholder: 'Tag Number',
+    label: 'Tag Number',
+    autoFocus: true,
+    className: ''
+  },
+  {
+    name: 'pofRBI_fluidService',
+    type: 'text',
+    placeholder: 'Tag Number',
+    label: 'Tag Number',
+    autoFocus: true,
+    className: ''
+  },
+  {
+    name: 'pofRBI_typicalTemp',
+    type: 'text',
+    placeholder: 'Tag Number',
+    label: 'Tag Number',
+    autoFocus: true,
+    className: ''
+  },
+  {
+    name: 'pofRBI_designType',
+    type: 'text',
+    placeholder: 'Tag Number',
+    label: 'Tag Number',
+    autoFocus: true,
+    className: ''
+  },
+  {
+    name: 'pofRBI_dischargeLocation',
+    type: 'text',
+    placeholder: 'Tag Number',
+    label: 'Tag Number',
+    autoFocus: true,
+    className: ''
+  },
+]
 
 function POFRBIDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
+  const [disabled, setDisabled] = useState(true);
+  const [value, setValue] = useState<any>({});
+
+  let edit = useSelector((state: any) => state.EditReducer);
+
+  useEffect(() => {
+    edit = true; // to disabled edit useeffect in first call
+
+  })
+
 
   const items = [
     {
@@ -29,12 +92,12 @@ function POFRBIDate() {
         setTabActive('df_alkaline');
       }
     },
-    // {
-    //   label: 'POF Value',
-    //   command: () => {
-    //     setTabActive('pof_value');
-    //   }
-    // }
+    {
+      label: 'POF Value',
+      command: () => {
+        setTabActive('pof_value');
+      }
+    }
   ];
 
   const tabMenuView = () => {
@@ -45,8 +108,8 @@ function POFRBIDate() {
         return <DFExternalCorrosion />;
       case 'df_alkaline':
         return <DFAlkalineCorrosion />;
-      // case 'pof_value':
-      //   return <POFValue />;
+      case 'pof_value':
+        return <POFValue />;
       default:
         return <DFThinning />;
     }
@@ -54,6 +117,31 @@ function POFRBIDate() {
 
   return (
     <>
+      {/* <div className='flex flex-wrap lg:column-gap-5 mt-5'>
+        {
+          inputs.map((props: any, key: number) => {
+            if (props.type == 'text' || props.type == 'number') {
+              return <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={() => {}} />;
+            } else if (props.type == 'calendar') {
+              return <InputCalendar props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} />;
+            } 
+          })
+        }
+      </div>
+
+      <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
+        <FluidServiceSeverity />
+        <WeibulParameters />
+        <AdjusmentFactor />
+        <InspectionConfidenceFactor />
+        <InitiatingEventFrequencies />
+        <ClassProtectedEquipment />
+      </div>
+
+      <InputValueOnly label="" value={null} /> */}
+
+
+      
       <TabMenu model={items} />
       {tabMenuView()}
     </>

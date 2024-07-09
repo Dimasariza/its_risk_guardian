@@ -6,17 +6,17 @@ const screeningQuestions: any = [
         name: "hcl",
         screening: [
             { 
-                name: "cr_HCLContain",
+                name: "rbiSQ_HCLContain",
                 value: "Does the process contain HCL?", 
             },
             {
-                name: "cr_HCLIsFreeWater",
+                name: "rbiSQ_HCLIsFreeWater",
                 value: "Is free water present in the process stream (including initial condensing)",
             },
             {
-                name: "cr_HCLphUnder7",
+                name: "rbiSQ_HCLphUnder7",
                 value: "Is the pH < 7.0?",
-                notes: "notesHCLphUnder7"
+                notes: "rbiSQ_notesHCLphUnder7"
             }
         ],
     },
@@ -26,13 +26,13 @@ const screeningQuestions: any = [
         name: "sulfidic",
         screening: [
             { 
-                name: "cr_SulfidicContainOil",
+                name: "rbiSQ_SulfidicContainOil",
                 value: "Does the process contain oil with sulfur compounds?", 
             },
             {
-                name: "cr_SulfidicTempOver204",
+                name: "rbiSQ_SulfidicTempOver204",
                 value: "Is the operating temperature > 204oC (400oF)?",
-                notes: "notessulfidicTempOver204"
+                notes: "rbiSQ_notessulfidicTempOver204"
             }
         ],
     },
@@ -42,7 +42,7 @@ const screeningQuestions: any = [
         type: "Sulfuric Acid Corrosion",
         screening: [
             { 
-                name: "cr_SulfuricContainH2SO4",
+                name: "rbiSQ_SulfuricContainH2SO4",
                 value: "Does the process contain H2SO4", 
             },
         ],
@@ -53,13 +53,13 @@ const screeningQuestions: any = [
         name: "h2sh2",
         screening: [
             { 
-                name: "cr_H2SH2containH2s",
+                name: "rbiSQ_H2SH2containH2s",
                 value: "Does the process contain H2S and Hydrogen?", 
             },
             {
-                name: "cr_H2SH2TempOver204",
+                name: "rbiSQ_H2SH2TempOver204",
                 value: "Is the operating temperature > 204oC (400oF)?",
-                notes: "notesH2SH2"
+                notes: "rbiSQ_notesH2SH2"
             }
         ],
     },
@@ -69,7 +69,7 @@ const screeningQuestions: any = [
         name: "hydrifluoric",
         screening: [
             { 
-                name: "cr_HydrifluoricContainHF",
+                name: "rbiSQ_HydrifluoricContainHF",
                 value: "Does the process contain HF?", 
             },
         ],
@@ -80,7 +80,7 @@ const screeningQuestions: any = [
         name: "sourWater",
         screening: [
             { 
-                name: "cr_SourWaterIsFreeH2S",
+                name: "rbiSQ_SourWaterIsFreeH2S",
                 value: "Is free water with H2S present?", 
             },
         ],
@@ -91,7 +91,7 @@ const screeningQuestions: any = [
         name: "amine",
         screening: [
             { 
-                name: "cr_AmineIsEquipment",
+                name: "rbiSQ_AmineIsEquipment",
                 value: "Is equipment exposed to acid gas treaating amines (MEA, DEA, DIPA, or MDEA)?", 
             },
         ],
@@ -102,12 +102,12 @@ const screeningQuestions: any = [
         name: "oxidation",
         screening: [
             { 
-                name: "cr_OxidationTempOver482",
+                name: "rbiSQ_OxidationTempOver482",
                 value: "Is the temperature ≥ 482oC (900oF)?", 
-                notes: "notesOxidatoin"
+                notes: "rbiSQ_notesOxidatoin"
             },
             {
-                name: "cr_OxidationOxigenPresent",
+                name: "rbiSQ_OxidationOxigenPresent",
                 value: "Is the oxygen present?",
             },
         ],
@@ -118,12 +118,12 @@ const screeningQuestions: any = [
         name: "acid",
         screening: [
             {
-                name: "cr_AcidphUnder7",
+                name: "rbiSQ_AcidphUnder7",
                 value: "Is free water with H2S present and pH < 7.0?",
-                notes: "notesAcid"
+                notes: "rbiSQ_notesAcid"
             },
             {
-                name: "cr_AcidContainPPM",
+                name: "rbiSQ_AcidContainPPM",
                 value: "Does the proocess contain < 50 ppm chlorides?",
             },
         ],
@@ -134,7 +134,7 @@ const screeningQuestions: any = [
         name: "coolingWater",
         screening: [
             { 
-                name: "cr_CoolingIsEquipment",
+                name: "rbiSQ_CoolingIsEquipment",
                 value: "Is equipment in cooling water service?", 
             },
         ],
@@ -145,11 +145,11 @@ const screeningQuestions: any = [
         name: "soilSide",
         screening: [
             { 
-                name: "cr_SoilSideIsEquipment",
+                name: "rbiSQ_SoilSideIsEquipment",
                 value: "Is equipment in contact with soil (buried or partially buried)?", 
             },
             {
-                name: "cr_SoilSideIsMaterial",
+                name: "rbiSQ_SoilSideIsMaterial",
                 value: "Is the material of construction carbon steel?",
             },
         ],
@@ -160,13 +160,13 @@ const screeningQuestions: any = [
         name: "co2",
         screening: [
             { 
-                name: "cr_CO2IsFreeWater",
+                name: "rbiSQ_CO2IsFreeWater",
                 value: "Is the free water with CO2 present (including consideration for dew point condensation)?", 
             },
             {
-                name: "cr_CO2IsMaterial",
+                name: "rbiSQ_CO2IsMaterial",
                 value: "Is the material of construction carbon steel or < 13% Cr?",
-                notes: "notesCO2"
+                notes: "rbiSQ_notesCO2"
             }
         ],
     },
@@ -176,7 +176,7 @@ const screeningQuestions: any = [
         name: "ast",
         screening: [
             { 
-                name: "cr_ASTIsEquipment",
+                name: "rbiSQ_ASTIsEquipment",
                 value: "Is the equipment item an AST tank bottom?", 
             },
         ],

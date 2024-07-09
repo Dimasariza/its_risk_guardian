@@ -9,7 +9,7 @@ import CorrosionRateDialog from './corrosionRateDialog';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import InspectionEffectivenessTable from './inspectionEfectivenessTableRef';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
-import { calculateThinning } from '@/function/calculateThinningValue';
+import { calculateThinning } from '@/function/calcRBIThinningValue';
 import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
 
@@ -24,12 +24,11 @@ function DFThinning() {
     const componentId = data.menu?.comp_id;
     if(!componentId) return;
     getThinning(componentId).then((res) => {
-      setThinning(res);
+      setThinning({...res, rbiThinning_rbiDate: new Date(res.rbiThinning_rbiDate)});
     });
     GeneralDataService.fetchData(componentId)
     .then(res => {
       setGeneralData(res)
-      console.log(res)
     })
   }, [data])
 
@@ -171,7 +170,7 @@ function DFThinning() {
               label: "Head Section Base DF",
               value: headBaseDF
             },
-          ].map(({label, value} : any) => <InputValueOnly label={label} value={value || "-"} key={label} />)
+          ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
         }
       </div>
     </section>

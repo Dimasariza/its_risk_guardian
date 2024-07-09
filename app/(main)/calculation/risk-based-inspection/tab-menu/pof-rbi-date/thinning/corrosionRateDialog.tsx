@@ -9,36 +9,38 @@ import { Row } from "primereact/row";
 import { useEffect, useState } from "react";
 import screeningQuestions from "./corrosionRateTable";
 import { Button } from "primereact/button";
+import { RBIScreeningQuestionService } from "@/service/calculation/rbiScreeningQuestion";
+import { useSelector } from "react-redux";
 
 function CorrosionRateDialog() {
     const initialValue = {
-        "cr_HCLContain": false,
-        "cr_HCLIsFreeWater": false,
-        "cr_HCLphUnder7": false,
-        "cr_SulfidicContainOil": false,
-        "cr_SulfidicTempOver204": false,
-        "cr_SulfuricContainH2SO4": false,
-        "cr_H2SH2containH2s": false,
-        "cr_H2SH2TempOver204": false,
-        "cr_HydrifluoricContainHF": false,
-        "cr_SourWaterIsFreeH2S": false,
-        "cr_AmineIsEquipment": false,
-        "cr_OxidationTempOver482": false,
-        "cr_OxidationOxigenPresent": false,
-        "cr_AcidphUnder7": false,
-        "cr_AcidContainPPM": false,
-        "cr_CoolingIsEquipment": false,
-        "cr_SoilSideIsEquipment": false,
-        "cr_SoilSideIsMaterial": false,
-        "cr_CO2IsFreeWater": false,
-        "cr_CO2IsMaterial": false,
-        "cr_ASTIsEquipment": false,
-        "notesHCLphUnder7": "",
-        "notessulfidicTempOver204": "",
-        "notesH2SH2": "",
-        "notesOxidatoin": "",
-        "notesAcid": "",
-        "notesCO2": ""
+        "rbiSQ_HCLContain": false,
+        "rbiSQ_HCLIsFreeWater": false,
+        "rbiSQ_HCLphUnder7": false,
+        "rbiSQ_SulfidicContainOil": false,
+        "rbiSQ_SulfidicTempOver204": false,
+        "rbiSQ_SulfuricContainH2SO4": false,
+        "rbiSQ_H2SH2containH2s": false,
+        "rbiSQ_H2SH2TempOver204": false,
+        "rbiSQ_HydrifluoricContainHF": false,
+        "rbiSQ_SourWaterIsFreeH2S": false,
+        "rbiSQ_AmineIsEquipment": false,
+        "rbiSQ_OxidationTempOver482": false,
+        "rbiSQ_OxidationOxigenPresent": false,
+        "rbiSQ_AcidphUnder7": false,
+        "rbiSQ_AcidContainPPM": false,
+        "rbiSQ_CoolingIsEquipment": false,
+        "rbiSQ_SoilSideIsEquipment": false,
+        "rbiSQ_SoilSideIsMaterial": false,
+        "rbiSQ_CO2IsFreeWater": false,
+        "rbiSQ_CO2IsMaterial": false,
+        "rbiSQ_ASTIsEquipment": false,
+        "rbiSQ_notesHCLphUnder7": "",
+        "rbiSQ_notessulfidicTempOver204": "",
+        "rbiSQ_notesH2SH2": "",
+        "rbiSQ_notesOxidatoin": "",
+        "rbiSQ_notesAcid": "",
+        "rbiSQ_notesCO2": ""
     }
 
     const initActionValue: any = {
@@ -106,47 +108,58 @@ function CorrosionRateDialog() {
     );
 
     useEffect(() => {
+        const { rbiSQ_HCLContain,
+                rbiSQ_HCLIsFreeWater,
+                rbiSQ_HCLphUnder7,
+                rbiSQ_SulfidicContainOil,
+                rbiSQ_SulfidicTempOver204,
+                rbiSQ_SulfuricContainH2SO4,
+                rbiSQ_H2SH2containH2s,
+                rbiSQ_H2SH2TempOver204,
+                rbiSQ_HydrifluoricContainHF,
+                rbiSQ_SourWaterIsFreeH2S,
+                rbiSQ_AmineIsEquipment,
+                rbiSQ_OxidationTempOver482,
+                rbiSQ_OxidationOxigenPresent,
+                rbiSQ_AcidphUnder7,
+                rbiSQ_AcidContainPPM,
+                rbiSQ_CoolingIsEquipment,
+                rbiSQ_SoilSideIsEquipment,
+                rbiSQ_SoilSideIsMaterial,
+                rbiSQ_CO2IsFreeWater,
+                rbiSQ_CO2IsMaterial,
+                rbiSQ_ASTIsEquipment,
+            } = screeningValue;
         setActionValue((prev: any) => {
-            const { cr_HCLContain,
-                    cr_HCLIsFreeWater,
-                    cr_HCLphUnder7,
-                    cr_SulfidicContainOil,
-                    cr_SulfidicTempOver204,
-                    cr_SulfuricContainH2SO4,
-                    cr_H2SH2containH2s,
-                    cr_H2SH2TempOver204,
-                    cr_HydrifluoricContainHF,
-                    cr_SourWaterIsFreeH2S,
-                    cr_AmineIsEquipment,
-                    cr_OxidationTempOver482,
-                    cr_OxidationOxigenPresent,
-                    cr_AcidphUnder7,
-                    cr_AcidContainPPM,
-                    cr_CoolingIsEquipment,
-                    cr_SoilSideIsEquipment,
-                    cr_SoilSideIsMaterial,
-                    cr_CO2IsFreeWater,
-                    cr_CO2IsMaterial,
-                    cr_ASTIsEquipment,
-                } = screeningValue;
             return {
                 ...prev,
-                hcl: cr_HCLContain && cr_HCLIsFreeWater && cr_HCLphUnder7,
-                sulfidic: cr_SulfidicContainOil && cr_SulfidicTempOver204,
-                sulfuric: cr_SulfuricContainH2SO4,
-                h2sh2: cr_H2SH2containH2s && cr_H2SH2TempOver204,
-                hydrifluoric: cr_HydrifluoricContainHF,
-                sourWater: cr_SourWaterIsFreeH2S,
-                amine: cr_AmineIsEquipment,
-                oxidation: cr_OxidationTempOver482 && cr_OxidationOxigenPresent,
-                acid: cr_AcidphUnder7 && cr_AcidContainPPM,
-                coolingWater: cr_CoolingIsEquipment,
-                soilSide: cr_SoilSideIsEquipment && cr_SoilSideIsMaterial,
-                co2: cr_CO2IsFreeWater && cr_CO2IsMaterial,
-                ast: cr_ASTIsEquipment
+                hcl: rbiSQ_HCLContain && rbiSQ_HCLIsFreeWater && rbiSQ_HCLphUnder7,
+                sulfidic: rbiSQ_SulfidicContainOil && rbiSQ_SulfidicTempOver204,
+                sulfuric: rbiSQ_SulfuricContainH2SO4,
+                h2sh2: rbiSQ_H2SH2containH2s && rbiSQ_H2SH2TempOver204,
+                hydrifluoric: rbiSQ_HydrifluoricContainHF,
+                sourWater: rbiSQ_SourWaterIsFreeH2S,
+                amine: rbiSQ_AmineIsEquipment,
+                oxidation: rbiSQ_OxidationTempOver482 && rbiSQ_OxidationOxigenPresent,
+                acid: rbiSQ_AcidphUnder7 && rbiSQ_AcidContainPPM,
+                coolingWater: rbiSQ_CoolingIsEquipment,
+                soilSide: rbiSQ_SoilSideIsEquipment && rbiSQ_SoilSideIsMaterial,
+                co2: rbiSQ_CO2IsFreeWater && rbiSQ_CO2IsMaterial,
+                ast: rbiSQ_ASTIsEquipment
             }
         })
     }, [screeningValue])
+
+    const data = useSelector((state: any) => state.Reducer);
+    useEffect(() => {
+        const componentId = data.menu?.comp_id;
+        if(!componentId) return;
+        RBIScreeningQuestionService.fetchData(componentId)
+        .then(res => {
+            console.log(res)
+            setScreeningValue(res)
+        })
+    }, [])
 
     return (
         <>
