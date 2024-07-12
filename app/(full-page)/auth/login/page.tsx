@@ -30,7 +30,9 @@ const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
+  const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 
+    'p-input-filled': layoutConfig.inputStyle === 'filled' 
+  });
 
   const dispatch = useDispatch();
 
@@ -41,33 +43,34 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(error).length === 0 && isSubmit) {
-      setLoading(true);
-      AuthService.postData(value)
-        .then((res) => {
-          dispatch(AuthAction("LOGIN", res.data))
-          axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}` // for all requests
-          axios.defaults.headers.common["Content-Type"] = `application/json` // for all requests
-          axios.defaults.headers.common["Accept"] = `*/*` // for all requests
-          toast.current.show({
-            severity: 'success',
-            summary: 'Success',
-            detail: `Login Success`
-          });
-          setLoading(false);
-          setValue(emptyValue);
-          router.push('/calculation/risk-based-inspection')
-        })
-        .catch(() => {
-          toast.current.show({
-            severity: 'danger',
-            summary: 'Failed',
-            detail: `Login Failed`
-          });
-          setLoading(false);
-          setValue(emptyValue);
-        });
-    }
+    if (Object.keys(error).length !== 0 || !isSubmit) return 
+
+    setLoading(true);
+    AuthService.postData(value)
+    .then((res) => {
+      dispatch(AuthAction("LOGIN", res.data))
+      axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}` // for all requests
+      axios.defaults.headers.common["Content-Type"] = `application/json` // for all requests
+      axios.defaults.headers.common["Accept"] = `*/*` // for all requests
+      toast.current.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: `Login Success`
+      });
+      setLoading(false);
+      setValue(emptyValue);
+      router.push('/risk-based-inspection')
+    })
+    .catch(() => {
+      toast.current.show({
+        severity: 'danger',
+        summary: 'Failed',
+        detail: `Login Failed`
+      });
+      setLoading(false);
+      setValue(emptyValue);
+    });
+
   }, [error]);
 
   return (
@@ -93,7 +96,7 @@ const LoginPage = () => {
               <label htmlFor="username" className="block text-900 text-xl font-medium mb-2">
                 Username
               </label>
-              <InputText id="username" type="text" placeholder="Username" className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} onChange={(e) => setValue((prev : any) => ({...prev, user_username: e.target.value}))}/>
+              <InputText id="username" type="text" placeholder="Username" className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} onChange={(e) => setValue((prev : any) => ({...prev, user_username: e.target.value}))} value={value.user_username || ""}/>
 
               <label htmlFor="password1" className="block text-900 font-medium text-xl mb-2">
                 Password

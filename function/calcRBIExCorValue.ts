@@ -1,9 +1,9 @@
-import { temperature as temperatureInterpolation } from "@/app/(main)/calculation/risk-based-inspection/tab-menu/pof-rbi-date/external-corrosion/operatingTemperature";
+import { temperature as temperatureInterpolation } from "@/app/(main)/risk-based-inspection/tab-menu/pof-rbi-date/external-corrosion/operatingTemperature";
 import IGeneralData from "@/types/IGeneralData";
 import IRBIThinning from "@/types/IRBIThinning";
 import { calculateThinning } from "./calcRBIThinningValue";
 import IRBIExCor from "@/types/IRBIExCor";
-import { conditional, prior } from "@/app/(main)/calculation/risk-based-inspection/tab-menu/pof-rbi-date/thinning/probabilityTable";
+import { conditional, prior } from "@/app/(main)/risk-based-inspection/tab-menu/pof-rbi-date/thinning/probabilityTable";
 import ncdf from "./cumulativeDistribution";
 
 const temperatureList = temperatureInterpolation.map(i => i.operating)

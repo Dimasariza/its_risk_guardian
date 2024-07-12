@@ -1,9 +1,8 @@
 'use client';
 
-import InputCalendar from "@/fragments/input-calendar";
 import { Column } from "primereact/column";
 import { InputTextarea } from "primereact/inputtextarea";
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import recomendationTable from "./tableRecomendation";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
@@ -16,10 +15,10 @@ function Recomendation() {
   const [value, setValue] = useState<any>();
   const [nodes, setNodes] = useState<any>([]);
 
-  useEffect(() => {
+  useEffect(() => { 
     const nodesArr: any = []
     recomendationTable.forEach((item: any, keyOne: number) => {
-      if(item?.level) {
+      if(!item?.level) return
         item?.level.map((e: any, keyTwo: number) => {
           const tableNodes = {
             id: `${keyOne}${keyTwo}`,
@@ -32,7 +31,6 @@ function Recomendation() {
           }
           nodesArr.push(tableNodes) 
         })
-      }
     })
     setNodes(nodesArr)    
   }, [])

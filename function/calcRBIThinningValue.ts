@@ -1,4 +1,4 @@
-import { conditional, prior } from "@/app/(main)/calculation/risk-based-inspection/tab-menu/pof-rbi-date/thinning/probabilityTable";
+import { conditional, prior } from "@/app/(main)/risk-based-inspection/tab-menu/pof-rbi-date/thinning/probabilityTable";
 import IGeneralData from "@/types/IGeneralData";
 import IRBIThinning from "@/types/IRBIThinning";
 import ncdf from "./cumulativeDistribution";

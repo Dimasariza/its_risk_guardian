@@ -55,11 +55,11 @@ const LandingPage = () => {
   const [blocked, setBlocked] = useState(true);
 
   useEffect(() => {
-      if (blocked) {
-          setTimeout(() => {
-              setBlocked(false);
-          }, 2000);
-      }
+    if (blocked) {
+        setTimeout(() => {
+            setBlocked(false);
+        }, 1000);
+    }
   }, [blocked]);
 
   return (

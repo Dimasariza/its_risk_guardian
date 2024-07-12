@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState, ReactElement } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { MenuContext } from './context/menucontext';
 import { AppMenuItemProps } from '@/types';
@@ -7,19 +7,16 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { TreeProps } from 'react-animated-tree';
 import Tree from 'react-animated-tree';
 import './style.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { MenuItem } from '@/redux/action/action';
-
-const treeStyles = {
-  fill: 'rgba(0, 0, 0, 0.5)',
-  width: '100%'
-};
+import { LayoutContext } from './context/layoutcontext';
 
 const AppMenuitem = (props: AppMenuItemProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
+  const { layoutConfig } = useContext(LayoutContext);
   const item = props.item;
   const key = props.parentKey ? props.parentKey + '-' + props.index : String(props.index);
   const isActiveRoute = item!.to && pathname === item!.to;
@@ -30,10 +27,24 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     }
   };
 
+  const [treeStyles, setTreeStyles] = useState<any>({
+    fill: 'rgba(0, 0, 0, 0.5)',
+    width: '100%',
+  }) 
+
   useEffect(() => {
     // onRouteChange(pathname);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
+
+  useEffect(() => {
+    const theme = layoutConfig.colorScheme === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
+    setTreeStyles((prev: any) => ({...prev, fill: theme}));
+    const allMenu = document.querySelectorAll(".treeview > div") as NodeListOf<HTMLElement>
+    allMenu.forEach(menu => {
+      menu.style.borderLeft = "1px dashed " + theme
+    })
+  }, [layoutConfig])
 
   const itemClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     //avoid processing disabled items
@@ -61,7 +72,13 @@ const AppMenuitem = (props: AppMenuItemProps) => {
       {/* <ul> */}
       <>
         {item!.items.map((child, i) => {
-          return <AppMenuitem item={child} index={i} className={child.badgeClass} parentKey={key} key={child.label + generateRandomString()} />;
+          return <AppMenuitem 
+            item={child} 
+            index={i} 
+            className={child.badgeClass} 
+            parentKey={key} 
+            key={child.label + generateRandomString()} 
+          />;
         })}
       </>
       {/* </ul> */}
@@ -69,10 +86,14 @@ const AppMenuitem = (props: AppMenuItemProps) => {
   );
 
   const dispatch = useDispatch();
+  
   const text = (value: any) => {
     return (
-      <span style={{ cursor: 'pointer' }} onClick={(e) => dispatch(MenuItem(value))}>
-        {value!.label}
+      <span style={{ cursor: 'pointer' }} onClick={(e) => {
+          dispatch(MenuItem(value))
+          router.push('/risk-based-inspection', { scroll: false });
+        }}>
+        {value.label}
       </span>
     );
   };
@@ -82,7 +103,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
   };
 
   return (
-    <TreeMenu content={text(item)} key={item?.label} style={treeStyles}>
+    <TreeMenu content={item?.items?.length ? item!.label : text(item)} key={item?.label} style={treeStyles} >
       {subMenu}
     </TreeMenu>
 
