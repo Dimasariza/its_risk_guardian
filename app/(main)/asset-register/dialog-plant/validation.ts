@@ -8,11 +8,11 @@ const validate = (formValue: any) => {
     errors.item_nameOfItem = 'Name of Item must be more than 4 characters';
   }
 
-  if (!formValue.item_tagOfItem) {
-    errors.item_tagOfItem = 'Tag of Item is required!';
-  } else if (formValue.item_tagOfItem.length < 4) {
-    errors.item_tagOfItem = 'Tag of Item must be more than 4 characters';
-  }
+  // if (!formValue.item_tagOfItem) {
+  //   errors.item_tagOfItem = 'Tag of Item is required!';
+  // } else if (formValue.item_tagOfItem.length < 4) {
+  //   errors.item_tagOfItem = 'Tag of Item must be more than 4 characters';
+  // }
 
   return errors;
 };

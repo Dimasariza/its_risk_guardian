@@ -48,14 +48,14 @@ function RiskBasedInspection() {
     },
     {
       label: 'POL RBI Date',
-      disabled: data.menu?.comp_componentType != "Pressure Relief Device",
+      // disabled: data.menu?.comp_componentType != "Pressure Relief Device",
       command: () => {
         setTabActive('pol_rbi_date');
       }
     },
     {
       label: 'POL Plan Date',
-      disabled: data.menu?.comp_componentType != "Pressure Relief Device",
+      // disabled: data.menu?.comp_componentType != "Pressure Relief Device",
       command: () => {
         setTabActive('pol_plan_date');
       }

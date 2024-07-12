@@ -6,33 +6,8 @@ import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function ServiceCategoryTable() {
+function EventFrequenciesTable() {
     const [visible, setVisible] = useState(false);
-
-    const headerGroup = (
-        <ColumnGroup>
-            <Row>
-              <Column header="" rowSpan={2} />
-              <Column header="PRD Service Severity" rowSpan={2} />
-              <Column header="Characteristic MTTF" rowSpan={2} />
-              <Column header="Characteristic of Failure" rowSpan={2} />
-              <Column header="Expected Stream Characterization" rowSpan={2}/>
-              <Column header="Typical Temperature" rowSpan={2}/>
-              <Column header="Examples of Service" rowSpan={2}/>
-              <Column header="Conventional and Balanced Bellows PRV" colSpan={2}/>
-              <Column header="Pilot-Operated PRV" colSpan={2}/>
-              <Column header="Rupture Disk" colSpan={2}/>
-            </Row>
-            <Row>
-              <Column header="β"/>
-              <Column header="ɳ def"/>
-              <Column header="β"/>
-              <Column header="ɳ def"/>
-              <Column header="β"/>
-              <Column header="ɳ def"/>
-            </Row>
-        </ColumnGroup>
-    );
 
     const expectedStreamTemplate = (rowData: any) => {
         return (
@@ -130,7 +105,6 @@ function ServiceCategoryTable() {
             modal onHide={() => {if (!visible) return; setVisible(false); }} footer={footerContent}>
                 <DataTable 
                     value={severity} 
-                    headerColumnGroup={headerGroup} 
                     // sortMode="single"
                     selectionMode={"single"}
                     // tableStyle={{width: "800px"}}
@@ -154,4 +128,4 @@ function ServiceCategoryTable() {
     )
 }
 
-export default ServiceCategoryTable;
+export default EventFrequenciesTable;

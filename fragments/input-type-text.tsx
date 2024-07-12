@@ -5,7 +5,7 @@ function InputTypeText({ props, value, setValue, errorMessage, handleOnChange = 
   const { name, placeholder } = props;
 
   return (
-    <div className="p-2" style={{width: 235}}>
+    <div className="p-2" style={{width: 335}}>
       <label htmlFor={name} className="m-1"> {placeholder} </label>
       <br></br>
       <InputText id={name} {...props} value={value[name] ?? ''} onChange={(e) => { 

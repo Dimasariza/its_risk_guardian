@@ -6,7 +6,6 @@ import { AppMenuItemProps } from '@/types';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { TreeProps } from 'react-animated-tree';
 import Tree from 'react-animated-tree';
-import './style.css';
 import { useDispatch } from 'react-redux';
 import { MenuItem } from '@/redux/action/action';
 import { LayoutContext } from './context/layoutcontext';

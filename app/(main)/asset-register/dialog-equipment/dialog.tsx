@@ -109,10 +109,10 @@ function ComponentDialog() {
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">
             <label htmlFor="equipment" className="m-1">
-              Equipment
+              System
             </label>
             <div className="px-1">
-              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="eq_nameOfEquipment" placeholder="Select an Equipment" />
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="eq_nameOfEquipment" placeholder="Select a System" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>

@@ -4,18 +4,6 @@ const url = process.env.DB_URL;
 
 export const MenuItemService = {
   async getAllAssets(userId: string) {
-    const [fetchItem, fetchEquipment, fetchComponent] = await Promise.all([
-      fetch(url + '/items'),
-      fetch(url + '/equipments'),
-      fetch(url + '/components')
-    ]);
-
-    // const [{ data: items }, { data: equipment }, { data: component }] = await Promise.all([
-    //   fetchItem.json(),
-    //   fetchEquipment.json(),
-    //   fetchComponent.json()
-    // ]);
-
     const requests = [url + '/itemByUser', url + '/equipmentByUser', url + '/componentByUser'].map((url) => axios.post(url, {"user_id": userId}));
     const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((responses) => {
       return responses
