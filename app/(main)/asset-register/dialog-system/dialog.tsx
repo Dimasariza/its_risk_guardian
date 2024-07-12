@@ -16,7 +16,7 @@ import validate from './validation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RerenderMenu } from '@/redux/action/action';
 
-function EquipmentDialog({ visible, setVisible }: any) {
+function EquipmentDialog() {
   const emptyEquipment: IAssetEquipment = {
     eq_tagOfEquipment: '',
     eq_nameOfEquipment: ''
@@ -26,6 +26,7 @@ function EquipmentDialog({ visible, setVisible }: any) {
   const [value, setValue] = useState<IAssetEquipment>(emptyEquipment);
   const [error, setError] = useState<IAssetEquipment>(emptyEquipment);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [visible, setVisible] = useState(false);
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ function EquipmentDialog({ visible, setVisible }: any) {
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({ ...prev, equipment: false }))} severity="danger" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
       <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
     </div>
   );
@@ -83,31 +84,32 @@ function EquipmentDialog({ visible, setVisible }: any) {
           });
         });
       setValue(emptyEquipment);
-      setVisible((prev: any) => ({ ...prev, equipment: false }));
+      setVisible(false);
     }
   }, [error]);
 
   return (
     <>
       <Toast ref={toast} position="bottom-right"/>
-      <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, equipment: false }))} footer={footerContent}>
+      <Button label="Add System" onClick={() => { setVisible(true) }} />
+      <Dialog header="System" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible(false)} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">
             <label htmlFor="equipment" className="m-1">
-              Item
+              Plan
             </label>
             <div className="px-1">
-              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="item_nameOfItem" placeholder="Select an Item" />
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="item_nameOfItem" placeholder="Select a Plan" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>
 
           <div className="flex flex-column col p-1">
             <label htmlFor="equipmentType" className="m-1">
-              Equipment Type
+              System Type
             </label>
             <div className="px-1">
-              <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select Equipment Type" />
+              <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select System Type" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>

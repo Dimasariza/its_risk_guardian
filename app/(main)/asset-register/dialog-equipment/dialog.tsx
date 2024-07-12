@@ -17,7 +17,7 @@ import validate from './validation';
 import InputDropDown from '@/fragments/input-drop-down';
 import InputCalendar from '@/fragments/input-calendar';
 
-function ComponentDialog({ visible, setVisible }: any) {
+function ComponentDialog() {
   const emptyComponent: IAssetComponent = {
     comp_tagOfComponent: '',
     comp_nameOfComponent: '',
@@ -29,6 +29,7 @@ function ComponentDialog({ visible, setVisible }: any) {
   const [value, setValue] = useState<IAssetComponent>(emptyComponent);
   const [error, setError] = useState<IAssetComponent>(emptyComponent);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [visible, setVisible] = useState(false);
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ function ComponentDialog({ visible, setVisible }: any) {
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({ ...prev, component: false }))} severity="danger" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
       <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
     </div>
   );
@@ -95,15 +96,16 @@ function ComponentDialog({ visible, setVisible }: any) {
         })
         .catch((err) => console.log(err));
       setValue(emptyComponent);
-      setVisible((prev: any) => ({ ...prev, component: false }));
+      setVisible(false);
     }
   }, [error]);
 
   return (
     <>
       <Toast ref={toast} position="bottom-right"/>
-      <Dialog header="Component" visible={visible} style={{ minWidth: '30vw' }} 
-        onHide={() => setVisible((prev: any) => ({ ...prev, component: false }))} footer={footerContent}>
+      <Button label="Add Equipment" onClick={() => { setVisible(true)} }/>
+      <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} 
+        onHide={() => setVisible(false)} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">
             <label htmlFor="equipment" className="m-1">
@@ -117,7 +119,7 @@ function ComponentDialog({ visible, setVisible }: any) {
 
           <div className="flex flex-column col p-1">
             <label htmlFor="componentType" className="m-1">
-              Component Type
+              Equipment Type
             </label>
             <div className="px-1">
               <Dropdown id="componentType" 
@@ -125,7 +127,7 @@ function ComponentDialog({ visible, setVisible }: any) {
               onChange={handleSelectComponentType} 
               options={componentType} 
               optionLabel="name" 
-              placeholder="Select Component Type" />
+              placeholder="Select Equipment Type" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>

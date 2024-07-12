@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import inputs from './inputs';
 import validate from './validation';
 
-function ItemDialog({ visible, setVisible }: any) {
+function ItemDialog() {
   const emptyItem: IAssetItem = {
     item_tagOfItem: '',
     item_nameOfItem: ''
@@ -22,6 +22,7 @@ function ItemDialog({ visible, setVisible }: any) {
   const [value, setValue] = useState<IAssetItem>(emptyItem);
   const [error, setError] = useState<IAssetItem>(emptyItem);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [visible, setVisible] = useState(false)
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ function ItemDialog({ visible, setVisible }: any) {
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible((prev: any) => ({ ...prev, item: false }))} severity="danger" />
+      <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
       <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
     </div>
   );
@@ -53,14 +54,15 @@ function ItemDialog({ visible, setVisible }: any) {
         })
         .catch((err) => console.log(err));
       setValue(emptyItem);
-      setVisible((prev: any) => ({ ...prev, item: false }));
+      setVisible(false);
     }
   }, [error]);
 
   return (
     <>
       <Toast ref={toast} position="bottom-right"/>
-      <Dialog header="Item" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible((prev: any) => ({ ...prev, item: false }))} footer={footerContent}>
+      <Button label="Add Plant" onClick={() => { setVisible(true) }} />
+      <Dialog header="Plant" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible(false)} footer={footerContent}>
         <section className="flex flex-wrap flex-column">
           {inputs.map((props: any, key: number) => (
             <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />

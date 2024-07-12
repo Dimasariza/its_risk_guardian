@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 import { MegaMenu } from 'primereact/megamenu';
 import { useEffect, useState } from 'react';
-import ItemDialog from './dialog-item/dialog';
-import EquipmentDialog from './dialog-equipment/dialog';
-import ComponentDialog from './dialog-component/dialog';
+import ItemDialog from '../app/(main)/asset-register/dialog-plant/dialog';
+import EquipmentDialog from '../app/(main)/asset-register/dialog-system/dialog';
+import ComponentDialog from '../app/(main)/asset-register/dialog-equipment/dialog';
 import { LiaCutSolid } from 'react-icons/lia';
 import { GrDocumentPdf } from 'react-icons/gr';
 import { SiMicrosoftexcel } from 'react-icons/si';
@@ -182,9 +182,9 @@ function AppMegaMenu() {
 
   return (
     <>
-      <ItemDialog visible={visible.item} setVisible={setVisible} />
+      {/* <ItemDialog visible={visible.item} setVisible={setVisible} />
       <EquipmentDialog visible={visible.equipment} setVisible={setVisible} />
-      <ComponentDialog visible={visible.component} setVisible={setVisible} />
+      <ComponentDialog visible={visible.component} setVisible={setVisible} /> */}
       <MegaMenu model={items} breakpoint="768px" end={end} />
 
       <Dialog
