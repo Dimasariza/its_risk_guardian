@@ -11,7 +11,7 @@ import { Tag } from 'primereact/tag';
 
 const url = process.env.DB_URL || 'http://localhost:8000';
 
-export default function InputFileUpload({path_folder = "file", doneUpload = () => {}}) {
+export default function InputFileUpload({path_folder = "file", fileType = "Image", icon = "pi-image", doneUpload = (e: FileUploadUploadEvent) => {}}) {
     const toast = useRef<Toast>(null);
     const [totalSize, setTotalSize] = useState(0);
     const fileUploadRef = useRef<FileUpload>(null);
@@ -35,7 +35,7 @@ export default function InputFileUpload({path_folder = "file", doneUpload = () =
         });
 
         setTotalSize(_totalSize);
-        doneUpload()
+        doneUpload(e)
         toast.current?.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
     };
 
@@ -87,9 +87,9 @@ export default function InputFileUpload({path_folder = "file", doneUpload = () =
     const emptyTemplate = () => {
         return (
             <div className="flex align-items-center flex-column">
-                <i className="pi pi-image mt-3 p-5" style={{ fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }}></i>
+                <i className={"pi mt-3 p-5 " + icon} style={{ fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }}></i>
                 <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">
-                    Drag and Drop Image Here
+                    Drag and Drop {fileType} Here
                 </span>
             </div>
         );

@@ -10,10 +10,11 @@ import { Image } from "primereact/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CorrosionGroup from "./corrosionGroup";
+import { FileUploadUploadEvent } from "primereact/fileupload";
 
 function CorrosionLoop() {
     const [assetDetails, setAssetDetails] = useState<any>();
-    const [doneUpload, setDoneUpload] = useState<boolean>(false)
+    const [uploadedFile, setUploadedFile] = useState<FileUploadUploadEvent>()
 
     const { data } = useSelector((state: any) => state.AuthReducer);
 
@@ -22,7 +23,7 @@ function CorrosionLoop() {
         .then(res => {
             setAssetDetails(res.data)
         })
-    }, [doneUpload])
+    }, [uploadedFile])
 
     const dateTemplate = (date: Date) => {
         const dateObj = new Date(date)
@@ -39,7 +40,9 @@ function CorrosionLoop() {
                     ? <div className="flex justify-content-center">
                         <Image src="https://primefaces.org/cdn/primereact/images/galleria/galleria10.jpg" alt="Image" width="100%" preview />
                     </div>
-                    : <InputFileUpload path_folder="file" doneUpload={() => setDoneUpload((prev: boolean) => !prev)}/>
+                    : <InputFileUpload path_folder="file" icon="pi-file" fileType="File" doneUpload={(e: FileUploadUploadEvent) => {
+                        setUploadedFile(e)
+                    }}/>
                 }
                 <DataTable value={assetDetails} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
                     <Column field="comp_tagOfComponent" header="Tag"></Column>
