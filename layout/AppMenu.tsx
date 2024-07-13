@@ -21,7 +21,9 @@ const AppMenu = () => {
   useEffect(() => {
     MenuItemService.getAllAssets(data.user.user_id).then((res) => {
       setMenuItems(res);
-      dispatch(MenuItem(res[0]));
+      if(data.menu?.comp_id) {
+        dispatch(MenuItem(res[0]));
+      }
     });
   }, [rerenderMenu]);
 

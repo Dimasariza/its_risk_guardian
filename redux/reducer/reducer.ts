@@ -33,14 +33,21 @@ export const AssetData = (state: any, type: string) => {
   }
 };
 
-export const EditReducer = (state: boolean = false, { type }: any) => {
+export const EditReducer = (state: any = { edit: false, undoEdit: false}, { type, undoEdit = false }: any) => {
   switch (type) {
     case 'EDIT_DATA':
-      return true;
-    case 'EDIT_DONE':
-      return false;
+      return {
+        ...state,
+        edit: true,
+      };
+      case 'EDIT_DONE':
+        return {
+        ...state,
+        edit: false,
+        undoEdit
+      };
     default:
-      return state;
+      return {...state};
   }
 };
 

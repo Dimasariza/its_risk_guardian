@@ -73,8 +73,7 @@ function DamageMechanism() {
   const [error, setError] = useState<any | null>({});
   const [disabled, setDisabled] = useState(true);
   const data = useSelector((state: any) => state.Reducer);
-  const dispatchEdit = useDispatch();
-  let edit = useSelector((state: any) => state.EditReducer);
+  let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
   useEffect(() => {
     setParentChecked((prev: any) => ({ 
@@ -141,7 +140,7 @@ function DamageMechanism() {
   }, [edit])
 
   useEffect(() => {
-    if(Object.keys(error).length === 0 && !edit) {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
       damageMechanismService.editData(checked)
       .then(res => {
         toast.current.show({
@@ -157,9 +156,7 @@ function DamageMechanism() {
           detail: `Damage mechanism not updated`
         });
       })
-    } else if(!edit) {
-      dispatchEdit(EditData());
-    }
+    } 
   }, [error])
 
   const damageFactorStatus = (value: any) => {
@@ -189,7 +186,8 @@ function DamageMechanism() {
   const screeningCriteria = (item: any[] | string) => {
     return (
       <>
-        {typeof item == 'string'
+        {
+          typeof item == 'string'
           ? item
           : item.map(({ text, checkedValue }, key: number) => (
               <div key={key} className="mb-1 grid">
@@ -205,7 +203,8 @@ function DamageMechanism() {
                   </Checkbox>
                 )}
               </div>
-            ))}
+            ))
+        }
       </>
     );
   };

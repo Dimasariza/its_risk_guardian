@@ -1,30 +1,14 @@
 import { useRouter } from 'next/navigation';
 import { MegaMenu } from 'primereact/megamenu';
-import { useEffect, useState } from 'react';
-import ItemDialog from '../app/(main)/asset-register/dialog-plant/dialog';
-import EquipmentDialog from '../app/(main)/asset-register/dialog-system/dialog';
-import ComponentDialog from '../app/(main)/asset-register/dialog-equipment/dialog';
-import { LiaCutSolid } from 'react-icons/lia';
-import { GrDocumentPdf } from 'react-icons/gr';
-import { SiMicrosoftexcel } from 'react-icons/si';
-import { MdOutlineQrCode2 } from 'react-icons/md';
-import { SiWebcomponentsdotorg } from 'react-icons/si';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EditData, EditDone } from '@/redux/action/action';
-import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 
 function AppMegaMenu() {
   const router = useRouter();
-  const [visible, setVisible] = useState({
-    item: false,
-    equipment: false,
-    component: false
-  });
 
-  const dispatch = useDispatch();
-  const edit = useSelector((state: any) => state.EditReducer);
 
   const items: any = [
     {
@@ -32,144 +16,14 @@ function AppMegaMenu() {
       command: () => {
         router.push('/asset-register', { scroll: false });
       },
-      // items: [
-      //   [
-      //     {
-      //       label: 'View',
-      //       items: [
-      //         {
-      //           label: 'Asset Register',
-      //           icon: 'pi pi-book',
-      //           command: () => {
-      //             // Callback to run
-      //             router.push('/assets/asset-register', { scroll: false });
-      //           }
-      //         },
-      //         {
-      //           label: 'Risk Based Inspection',
-      //           icon: 'pi pi-spin pi-cog',
-      //           command: () => {
-      //             // Callback to run
-      //             router.push('/calculation/risk-based-inspection', { scroll: false });
-      //           }
-      //         },
-      //         {
-      //           label: 'Corrosion Loop',
-      //           icon: 'pi pi-spin pi-sync',
-      //           command: () => {
-      //             // Callback to run
-      //           }
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       label: 'Clipboard',
-      //       items: [
-      //         {
-      //           label: 'Copy',
-      //           icon: 'pi pi-copy',
-      //           command: () => {}
-      //         },
-      //         {
-      //           label: 'Paste',
-      //           icon: 'pi pi-clone',
-      //           command: () => {}
-      //         },
-      //         {
-      //           label: 'Cut',
-      //           icon: (options: any) => <LiaCutSolid {...options.iconProps} />,
-      //           command: () => {}
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // ]
     },
     {
       label: 'Asset Detail',
       command: () => {
         router.push('/corrosion-loop', { scroll: false });
       },
-      // items: [
-      //   [
-      //     {
-      //       label: 'Assets',
-      //       items: [
-      //         {
-      //           label: 'Plan',
-      //           icon: 'pi pi-box',
-      //           command: () => {
-      //             setVisible((prev) => ({ ...prev, item: true }));
-      //           }
-      //         },
-      //         {
-      //           label: 'System',
-      //           icon: 'pi pi-wrench',
-      //           command: () => {
-      //             setVisible((prev) => ({ ...prev, equipment: true }));
-      //           }
-      //         },
-      //         {
-      //           label: 'Equipment',
-      //           icon: (options: any) => <SiWebcomponentsdotorg {...options.iconProps} />,
-      //           command: () => {
-      //             setVisible((prev) => ({ ...prev, component: true }));
-      //           }
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // ]
     },
   ];
-
-  // const end = <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="circle" />;
-  const end = () => {
-    const button: any = [
-      {
-        icon: 'pi pi-save',
-        severity: 'success',
-        disabled: !edit,
-        tooltip: 'Save',
-        command: () => {
-          dispatch(EditDone());
-        }
-      },
-      {
-        icon: 'pi pi-file-edit',
-        severity: 'info',
-        disabled: edit,
-        tooltip: 'Edit',
-        command: () => {
-          dispatch(EditData());
-        }
-      },
-      {
-        icon: 'pi pi-trash',
-        severity: 'danger',
-        tooltip: 'Delete',
-        command: () => {
-          setDialogVisible(true);
-        }
-      }
-    ];
-    return (
-      <div className="mx-3">
-        {button.map(({ icon, severity, tooltip, disabled, command }: any, key: number) => (
-          <Button 
-            key={key} 
-            icon={icon} 
-            rounded 
-            text 
-            severity={severity} 
-            disabled={disabled} 
-            tooltip={tooltip} 
-            tooltipOptions={{ position: 'bottom' }} 
-            onClick={command} />
-        ))}
-      </div>
-    );
-  };
 
   const [dialogVisible, setDialogVisible] = useState(false);
 
@@ -182,10 +36,7 @@ function AppMegaMenu() {
 
   return (
     <>
-      {/* <ItemDialog visible={visible.item} setVisible={setVisible} />
-      <EquipmentDialog visible={visible.equipment} setVisible={setVisible} />
-      <ComponentDialog visible={visible.component} setVisible={setVisible} /> */}
-      <MegaMenu model={items} breakpoint="768px" end={end} />
+      <MegaMenu model={items} breakpoint="768px"  />
 
       <Dialog
         header="Delete"

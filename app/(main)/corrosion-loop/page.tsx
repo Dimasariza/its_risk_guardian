@@ -9,8 +9,8 @@ import { DataTable } from "primereact/datatable";
 import { Image } from "primereact/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import CorrosionGroup from "./corrosionGroup";
 import { FileUploadUploadEvent } from "primereact/fileupload";
+import CorrosionLoopDialog from "./corrosionLoopDialog";
 
 function CorrosionLoop() {
     const [assetDetails, setAssetDetails] = useState<any>();
@@ -33,8 +33,7 @@ function CorrosionLoop() {
     return (
         <>
             <Card title="Asset Detail">
-                {/* <CorrosionGroup /> */}
-                <Button label="Add Corrosion Loop" className="my-3" />
+                <CorrosionLoopDialog assetDetails={assetDetails} />
                 {
                     assetDetails!?.cl_fileId 
                     ? <div className="flex justify-content-center">

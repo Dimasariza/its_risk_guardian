@@ -51,7 +51,7 @@ const inputs = [
       name: 'rbiThinning_nInspC',
       type: 'text',
       placeholder: 'Number of Inspection C',
-      label: 'Number of Inspection C',
+      // label: 'Number of Inspection C',
       autoFocus: false,
       className: ''
     },

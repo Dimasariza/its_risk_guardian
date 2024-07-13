@@ -60,7 +60,7 @@ function DFThinning() {
 
   return (
     <section className=" p-3">
-      <div className='flex flex-wrap lg:column-gap-5 mt-4'>
+      <div className='flex flex-wrap lg:column-gap-3 mt-4'>
         {inputs.map((props: any, key: number) => {
           if (props.type == 'text') {
             return <InputTypeText props={props} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;

@@ -23,9 +23,10 @@ export const EditData = () => {
   };
 };
 
-export const EditDone = () => {
+export const EditDone = (undoEdit = false) => {
   return {
-    type: 'EDIT_DONE'
+    type: 'EDIT_DONE',
+    undoEdit
   };
 };
 

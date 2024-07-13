@@ -3,12 +3,10 @@
 import InputTypeText from '@/fragments/input-type-text';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { inputsGeneralSpec, inputsHeadCalc, inputsShellCalc } from './inputs';
 import validate from './validate';
-import { EditData, EditDone } from '@/redux/action/action';
 import InputCalendar from '@/fragments/input-calendar';
-import InputDropDown from '@/fragments/input-drop-down';
 import { Toast } from 'primereact/toast';
 
 function GeneralData() {
@@ -18,8 +16,7 @@ function GeneralData() {
 
   const data = useSelector((state: any) => state.Reducer);
   const toast = useRef<any>(null);
-  const dispatchEdit = useDispatch();
-  let edit = useSelector((state: any) => state.EditReducer);
+  let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
   const handleOnChange = (name: string, e: any) => {
     switch(name) {
@@ -110,13 +107,10 @@ function GeneralData() {
     if(!edit && data.menu?.comp_id) {
       setError(validate(value));
     }
-    if(!data.menu?.comp_id) {
-      // dispatchEdit(EditDone());
-    }
   }, [edit])
 
   useEffect(() => {
-    if(Object.keys(error).length === 0 && !edit) {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
       GeneralDataService.editData(value)
       .then((res) => {
         toast.current.show({
@@ -132,9 +126,7 @@ function GeneralData() {
           detail: `Failed to updated your data`
         });
       })
-    } else if(!edit) {
-      dispatchEdit(EditData());
-    }
+    } 
   }, [error])
 
   return (
