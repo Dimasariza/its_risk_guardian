@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import InputCalendar from '@/fragments/input-calendar';
 import InputDropDown from '@/fragments/input-drop-down';
 import InputTypeText from '@/fragments/input-type-text';

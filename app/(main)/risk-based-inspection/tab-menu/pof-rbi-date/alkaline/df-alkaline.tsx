@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import InputTypeText from '@/fragments/input-type-text';
 import { getAlkaline, getExternalCorrosion, getThinning } from '@/service/calculation/pofRBIDate-service';
 import { ChangeEvent, useEffect, useState } from 'react';
