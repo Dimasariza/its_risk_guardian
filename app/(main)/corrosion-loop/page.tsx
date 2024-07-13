@@ -11,17 +11,26 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FileUploadUploadEvent } from "primereact/fileupload";
 import CorrosionLoopDialog from "./corrosionLoopDialog";
+import { CorrosionLoopService } from "@/service/corrosionLoopService";
+
+const url = process.env.DB_URL + '/file/';
 
 function CorrosionLoop() {
     const [assetDetails, setAssetDetails] = useState<any>();
     const [uploadedFile, setUploadedFile] = useState<FileUploadUploadEvent>()
+    const [corrosionLoop, setCorrosionLoop] = useState<any>()
 
     const { data } = useSelector((state: any) => state.AuthReducer);
-
+    const user = data.user.user_id
+console.log(url + user)
     useEffect(() => {
         AssetComponentService.fetchDataByUser(data.user.user_id)
         .then(res => {
             setAssetDetails(res.data)
+        })
+        CorrosionLoopService.getByUser(user)
+        .then(res => {
+            setCorrosionLoop(res.data)
         })
     }, [uploadedFile])
 
@@ -35,9 +44,11 @@ function CorrosionLoop() {
             <Card title="Asset Detail">
                 <CorrosionLoopDialog assetDetails={assetDetails} />
                 {
-                    assetDetails!?.cl_fileId 
+                    corrosionLoop?.cl_fileId 
                     ? <div className="flex justify-content-center">
-                        <Image src="https://primefaces.org/cdn/primereact/images/galleria/galleria10.jpg" alt="Image" width="100%" preview />
+                        <div className="w-5">
+                        <Image src={url + corrosionLoop.cl_fileId} alt="Image" width="100%" preview />
+                        </div>
                     </div>
                     : <InputFileUpload path_folder="file" icon="pi-file" fileType="File" doneUpload={(e: FileUploadUploadEvent) => {
                         setUploadedFile(e)

@@ -20,7 +20,7 @@ function CorrosionLoopDialog({assetDetails} : any) {
     const [error, setError] = useState<any>({});
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
     const [visible, setVisible] = useState(false);
-    const [source, setSource] = useState<any>(assetDetails);
+    const [source, setSource] = useState<any>();
     const [target, setTarget] = useState<any>([]);
 
     const handleSubmit = (e: React.MouseEvent) => {
@@ -30,44 +30,21 @@ function CorrosionLoopDialog({assetDetails} : any) {
 
     const footerContent = (
         <div>
-        <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
+        <Button label="Cancel" icon="pi pi-check" onClick={() => {
+            setVisible(false)
+            setSource([])
+            setTarget([])
+            }} severity="danger" />
         <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
         </div>
     );
 
     useEffect(() => {
-        AssetEquipmentService.fetchData()
-        .then((res) => {
-            dispatch(RerenderMenu());
-        })
-        .catch((err) => {
-            toast.current.show({
-            severity: 'danger',
-            summary: 'Error',
-            detail: `Failed to get Data.`
-            });
-        });
+        setSource(assetDetails)
     }, [visible]);
 
     const dispatch = useDispatch();
     const { data } = useSelector((state: any) => state.AuthReducer);
-
-    useEffect(() => {
-        if (Object.keys(error).length === 0 && isSubmit) {
-        AssetComponentService.postData({...value, comp_userId: data.user.user_id})
-            .then((res) => {
-            dispatch(RerenderMenu());
-
-            toast.current.show({
-                severity: 'success',
-                summary: 'Data has been added',
-                detail: `You add Component ${value.comp_nameOfComponent}`
-            });
-            })
-            .catch((err) => console.log(err));
-        setVisible(false);
-        }
-    }, [error]);
 
     const onChange = (event: any) => {
         setSource(event.source);
@@ -88,17 +65,19 @@ function CorrosionLoopDialog({assetDetails} : any) {
         );
     };
 
-    console.log(assetDetails)
-
     return (
         <>
         <Toast ref={toast} position="bottom-right"/>
         <Button label="Add Corrosion Loop" className='my-3' onClick={() => { setVisible(true)} }/>
         <Dialog header="Corrosion Loop" visible={visible} style={{ minWidth: '80%' }} 
-            onHide={() => setVisible(false)} footer={footerContent}>
+            onHide={() => {
+                setVisible(false); 
+                setTarget([])
+                setSource([])
+                }} footer={footerContent}>
             <section className="flex flex-column gap-2">
                 <InputTypeText props={{name: 'clGroup_name', placeholder: "Corrosion Loop Name"}}  type="text" value="test" setValue={() => {}} />
-                <PickList dataKey="id" source={source} target={target} onChange={onChange} itemTemplate={itemTemplate} breakpoint="1280px"
+                <PickList dataKey="comp_id" source={source} target={target} onChange={onChange} itemTemplate={itemTemplate} breakpoint="1280px"
                     sourceHeader="Available" targetHeader="Selected" sourceStyle={{ height: '24rem' }} targetStyle={{ height: '24rem' }} 
                     sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" filter filterBy="comp_nameOfComponent"
                     />
