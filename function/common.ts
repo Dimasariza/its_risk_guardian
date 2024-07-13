@@ -11,3 +11,7 @@ export function componentNavigation(data1: any, data2: any, dataId: string) {
     return { ...c, label: c.data.name, items };
   });
 }
+
+export function convertDateToString(date: Date) {
+  return date.getFullYear() + '-' + ((date.getMonth() + 1)) + '-' + date.getDate()
+}

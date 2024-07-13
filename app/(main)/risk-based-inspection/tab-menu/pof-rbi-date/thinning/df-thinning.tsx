@@ -16,6 +16,7 @@ import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
 import { Toast } from 'primereact/toast';
 import * as moment from 'moment';
+import { convertDateToString } from '@/function/common';
 
 function DFThinning() {
   const [thinning, setThinning] = useState<IRBIThinning | any>({});
@@ -45,7 +46,7 @@ function DFThinning() {
   useEffect(() => {
     if(Object.keys(error).length === 0 && !edit && !undoEdit) {
       updateThinning({...thinning, 
-        rbiThinning_rbiDate: moment(thinning.rbiThinning_rbiDate).format('YYYY-MM-DD')
+        rbiThinning_rbiDate: convertDateToString(thinning.rbiThinning_rbiDate) 
       }, componentId)
       .then((res) => {
         toast.current.show({
