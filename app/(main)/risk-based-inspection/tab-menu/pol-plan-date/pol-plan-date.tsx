@@ -81,7 +81,7 @@ const POLPlanDate = () => {
                             label: "Probability of Leakage needs",
                             value: ""
                         },
-                    ].map(({label, value} : any) => <InputValueOnly label={label} value={value} />)
+                    ].map(({label, value} : any, key) => <InputValueOnly label={label} value={value} key={label + key}/>)
                 }
             </div>
 

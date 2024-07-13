@@ -11,8 +11,8 @@ const nodes = [
     {
         key: '0',
         data: {
-            name: 'Documents',
-            location: 'Documents Folder',
+            name: 'MV Maratha',
+            location: 'Jakarta',
             createdAt: '2024-01-01',
             updatedAt: '2024-01-01'
         },
@@ -68,6 +68,14 @@ const nodes = [
             }
         ]
     },
+    {
+        data: {
+            name: 'MV Bung Tomo',
+            location: 'Surabaya',
+            createdAt: '2024-01-01',
+            updatedAt: '2024-01-01'
+        },
+    }
 ]
 function AssetRegister() {
 
