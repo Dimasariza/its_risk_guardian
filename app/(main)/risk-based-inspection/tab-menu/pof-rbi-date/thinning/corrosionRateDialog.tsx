@@ -6,11 +6,12 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Row } from "primereact/row";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import screeningQuestions from "./corrosionRateTable";
 import { Button } from "primereact/button";
 import { RBIScreeningQuestionService } from "@/service/calculation/rbiScreeningQuestion";
 import { useSelector } from "react-redux";
+import { Toast } from "primereact/toast";
 
 function CorrosionRateDialog() {
     const initialValue = {
@@ -62,6 +63,7 @@ function CorrosionRateDialog() {
     const [screeningValue, setScreeningValue] = useState(initialValue);
     const [actionValue, setActionValue] = useState<any>(initActionValue);
     const [visible, setVisible] = useState<boolean>(false);
+    const toast = useRef<any>(null);
 
     const screeningBodyTemplate = ({screening = []}) => {
         return screening.map(({name, value, notes}, id): any => {
@@ -98,7 +100,20 @@ function CorrosionRateDialog() {
 
     const updateScreeningQuestion = () => {
         RBIScreeningQuestionService.editData(screeningValue)
-        .then(res => console.log(res))
+        .then(res => {
+            toast.current.show({
+                severity: 'success',
+                summary: 'Data Updated',
+                detail: `Screening Question has been updated`
+            });
+        })
+        .catch(res => {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Data failed to Update',
+                detail: `Screening Question not updated`
+            });
+        })
     }
 
     const footerContent = (
@@ -170,6 +185,8 @@ function CorrosionRateDialog() {
 
     return (
         <>
+            <Toast ref={toast}  position="bottom-right" />
+
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Corrosion Rate Screening Question</label>
                 <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />

@@ -1,43 +1,30 @@
+import axios from "axios";
+
 const url = process.env.DB_URL + '/pof_rbi/' || 'http://localhost:3030/pofRBIDate';
 
 const POFRBIDate = {
   async postItem(value: any) {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(value)
-    });
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data');
-    }
-
-    return await res.json();
+    const res = await axios.post(url, value);
+    return await res.data;
   },
   async getItem(id: string, param: string) {
-    const res = await fetch(url + param + "/" + id, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch Companies data');
-    }
-
-    const { data } = await res.json();
-    // return data[0]?.[param] ?? {};
+    const res = await axios.get(url + param + "/" + id);
+    const { data } = await res.data;
+    return data ?? {};
+  },
+  async updateItem(value: string, id: string, param: string) {
+    const res = await axios.put(url + param + "/" + id, value);
+    const { data } = await res.data;
     return data ?? {};
   }
 };
 
 export async function getThinning(id: string) {
   return await POFRBIDate.getItem(id, 'thinning');
+}
+
+export async function updateThinning(value: any, id: string) {
+  return await POFRBIDate.updateItem(value, id, 'thinning');
 }
 
 export async function getExternalCorrosion(id: string) {

@@ -1,7 +1,7 @@
 import InputCalendar from '@/fragments/input-calendar';
 import InputDropDown from '@/fragments/input-drop-down';
 import InputTypeText from '@/fragments/input-type-text';
-import { getThinning } from '@/service/calculation/pofRBIDate-service';
+import { getThinning, updateThinning } from '@/service/calculation/pofRBIDate-service';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
@@ -13,6 +13,7 @@ import { calculateThinning } from '@/function/calcRBIThinningValue';
 import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
 import { Toast } from 'primereact/toast';
+import * as moment from 'moment';
 
 function DFThinning() {
   const [thinning, setThinning] = useState<IRBIThinning | any>({});
@@ -23,8 +24,9 @@ function DFThinning() {
   const toast = useRef<any>(null);
   let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
+  const componentId = data.menu?.comp_id;
   useEffect(() => {
-    const componentId = data.menu?.comp_id;
+    edit = true
     if(!componentId) return
 
     getThinning(componentId).then((res) => {
@@ -37,6 +39,28 @@ function DFThinning() {
     })
 
   }, [data])
+
+  useEffect(() => {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
+      updateThinning({...thinning, 
+        rbiThinning_rbiDate: moment(thinning.rbiThinning_rbiDate).format('YYYY-MM-DD')
+      }, componentId)
+      .then((res) => {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data Updated',
+          detail: `Your general data has been updated`
+        });
+      })
+      .catch((err: any) => {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Data Failed to Update',
+          detail: `Failed to updated your data`
+        });
+      })
+    } 
+  }, [edit])
 
   const {
     lastInspection,
