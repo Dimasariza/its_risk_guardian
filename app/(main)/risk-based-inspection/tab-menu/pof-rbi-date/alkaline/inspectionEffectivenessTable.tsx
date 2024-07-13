@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { calculateThinning } from "@/function/calcRBIThinningValue";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
