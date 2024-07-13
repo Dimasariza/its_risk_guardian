@@ -4,7 +4,7 @@ import IRBIThinning from "@/types/IRBIThinning";
 import ncdf from "./cumulativeDistribution";
 
 export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinning) => {
-    if(!Object.keys(generalData).length || !Object.keys(thinning).length ) return {}
+    if(!Object?.keys(generalData).length || !Object?.keys(thinning).length ) return {}
     const {
         gData_lastInspection,
         gData_headTreqInch,

@@ -96,13 +96,21 @@ function CorrosionRateDialog() {
         </Checkbox>
     }
 
+    const updateScreeningQuestion = () => {
+        RBIScreeningQuestionService.editData(screeningValue)
+        .then(res => console.log(res))
+    }
+
     const footerContent = (
         <div className="flex gap-2 justify-content-end">
             <Button label="Cancel" icon="pi pi-check" 
             onClick={() => setVisible(false)} 
             severity="danger" />
             <Button label="Save" icon="pi pi-times" 
-            onClick={() => setVisible(false)} 
+            onClick={() => {
+                setVisible(false)
+                updateScreeningQuestion()
+            }} 
             severity="success" />
         </div>
     );

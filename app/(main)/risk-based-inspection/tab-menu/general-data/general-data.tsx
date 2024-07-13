@@ -12,8 +12,7 @@ import { Toast } from 'primereact/toast';
 function GeneralData() {
   const [value, setValue] = useState<any>({});
   const [error, setError] = useState<any | null>({});
-  const [disabled, setDisabled] = useState(true);
-
+ 
   const data = useSelector((state: any) => state.Reducer);
   const toast = useRef<any>(null);
   let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
@@ -91,16 +90,12 @@ function GeneralData() {
 
   useEffect(() => {
     edit = true; // to disabled edit useeffect in first call
-    if (data.menu?.comp_id) {
-      setDisabled(false);
-      GeneralDataService.fetchData(data.menu?.comp_id)
-      .then((res) => {
-        setValue(res);
-      });
-    } else {
-      setDisabled(true);
-      setValue({});
-    }
+    const componentId = data.menu?.comp_id
+    if (!componentId) return 
+    GeneralDataService.fetchData(componentId)
+    .then((res) => {
+      setValue(res);
+    });
   }, [data]);
   
   useEffect(() => {
@@ -138,9 +133,9 @@ function GeneralData() {
         <div className="flex flex-wrap column-gap-5 lg:column-gap-6">
           {inputsGeneralSpec.map((props: any, key: number) => {
             if (props.type == 'text' || props.type == 'number') {
-              return <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
+              return <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
             } else if (props.type == 'calendar') {
-              return <InputCalendar props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
+              return <InputCalendar props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
             } 
           })}
         </div>
@@ -148,14 +143,14 @@ function GeneralData() {
         <h5>SHELL CALCULATION</h5>
         <div className="flex flex-wrap lg:column-gap-6">
           {inputsShellCalc.map((props: any, key: number) => (
-            <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
+            <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
           ))}
         </div>
 
         <h5>HEAD CALCULATION</h5>
         <div className="flex flex-wrap lg:column-gap-6">
           {inputsHeadCalc.map((props: any, key: number) => (
-            <InputTypeText props={{...props, disabled: disabled || !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
+            <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
           ))}
         </div>
       </section>

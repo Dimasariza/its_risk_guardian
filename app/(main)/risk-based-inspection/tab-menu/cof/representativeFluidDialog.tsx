@@ -7,9 +7,8 @@ import { Row } from "primereact/row";
 import { useState } from "react";
 import { Button } from "primereact/button";
 
-function RepresentativeFluidDialog() {
+function RepresentativeFluidDialog({fluidSelected, setFluidSelected}: any) {
     const [visible, setVisible] = useState<boolean>(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const headerGroup = (
         <ColumnGroup>
@@ -59,7 +58,16 @@ function RepresentativeFluidDialog() {
                 footer={footerContent}
                 >
                 <div>
-                <DataTable value={representativeFluidNodes} selectionMode={"single"} selection={selectedProduct} scrollable scrollHeight="700px" headerColumnGroup={headerGroup} tableStyle={{ minWidth: '50rem' }} onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id">
+                <DataTable 
+                        value={representativeFluidNodes} 
+                        selectionMode={"single"} 
+                        selection={fluidSelected} 
+                        scrollable 
+                        scrollHeight="700px" 
+                        headerColumnGroup={headerGroup} 
+                        tableStyle={{ minWidth: '50rem' }} 
+                        onSelectionChange={(e: any) => setFluidSelected(e.value)} dataKey="id"
+                    >
                     <Column selectionMode="single"></Column>
                     <Column field="fluid" body={(e) => e.fluid ? <>{e.fluid}</> : <div className="">---</div>}></Column>
                     <Column field="mw" body={(e) => e.mw ? <>{e.mw}</> : <div className="">---</div>}></Column>

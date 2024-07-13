@@ -65,35 +65,38 @@ function POFRBIDate() {
   const [disabled, setDisabled] = useState(true);
   const [value, setValue] = useState<any>({});
 
-  let edit = useSelector((state: any) => state.EditReducer);
+  let { edit } = useSelector((state: any) => state.EditReducer);
 
   useEffect(() => {
-    edit = true; // to disabled edit useeffect in first call
+    // edit = true; // to disabled edit useeffect in first call
 
-  })
-
+  }, [])
 
   const items = [
     {
       label: 'DF Thinning',
+      disabled: edit,
       command: () => {
         setTabActive('df_thinning');
       }
     },
     {
       label: 'DF External Corrosion',
+      disabled: edit,
       command: () => {
         setTabActive('df_ex_corrosion');
       }
     },
     {
       label: 'DF Alkaline',
+      disabled: edit,
       command: () => {
         setTabActive('df_alkaline');
       }
     },
     {
       label: 'POF Value',
+      disabled: edit,
       command: () => {
         setTabActive('pof_value');
       }

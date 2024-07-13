@@ -7,9 +7,9 @@ import { Row } from "primereact/row";
 import { useState } from "react";
 import { gffTableValue } from "./gffTableValue";
 
-function GenericFailureFrequency() {
+function GenericFailureFrequency({failureFrequency, setFailureFrequency}: any) {
     const [visible, setVisible] = useState<boolean>(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
+
     const headerGroup = (
         <ColumnGroup>
             <Row>
@@ -64,8 +64,8 @@ function GenericFailureFrequency() {
                         groupRowsBy="equipment" 
                         sortMode="single"
                         selectionMode={"single"}
-                        selection={selectedProduct} 
-                        onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id"
+                        selection={failureFrequency} 
+                        onSelectionChange={(e: any) => setFailureFrequency(e.value)} dataKey="id"
                     >
                         
                         <Column selectionMode="single"></Column>

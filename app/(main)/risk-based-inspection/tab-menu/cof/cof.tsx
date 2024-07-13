@@ -16,6 +16,8 @@ import DamageDialog from "./damageDialog";
 import ReleaseHoleSize from "./realeseHoleSize";
 import { inputs } from "./inputs";
 import InputTypeText from "@/fragments/input-type-text";
+import { calculateCOF } from "@/function/calcCOFValue";
+import IGeneralData from "@/types/IGeneralData";
 
 function COF() {
   const [fluidSelected, setFluidSelected] = useState<any>({});
@@ -23,38 +25,31 @@ function COF() {
   const [error, setError] = useState<any>({});
   const [generalData, setGeneralData] = useState<any>({});
   const data = useSelector((state: any) => state.Reducer);
+  const { edit } = useSelector((state: any) => state.EditReducer);
 
   useEffect(() => {
-    if(data.menu?.comp_id)
-    GeneralDataService.fetchData(data.menu?.comp_id)
+    const componentId = data.menu?.comp_id
+    if(componentId)
+    GeneralDataService.fetchData(componentId)
     .then((res: any) => {
       setGeneralData(res)
     })
-  }, []);
+  }, [data]);
 
-  const getIdealGasHeatRatio = () => {
-    if(!generalData.gData_operatingTemperature) return "-"
-
-    const gData_operatingTempOnF = (generalData?.gData_operatingTemperature * 9 / 5) + 32
-    const gData_operatingTempOnK = (gData_operatingTempOnF - 32) * 5 / 9 + 273.15
-
-    const { constant_a = null, constant_b = null, constant_c = null , constant_d = null } = fluidSelected;
-    const kRatio = constant_a + (constant_b * gData_operatingTempOnK) + ((constant_c * gData_operatingTempOnK) ** 2) + ((constant_d * gData_operatingTempOnK) ** 3) 
-    
-    const constantR = 8.314
-    return (kRatio / (kRatio - constantR)).toFixed(4)
-  }
+  const {
+    getIdealGasHeatRatio
+  } = calculateCOF(generalData as IGeneralData, fluidSelected )
 
   return (
     <section className="grid m-2">
       <div className="flex flex-wrap w-full lg:gap-8 md:gap-3 sm:gap-2">
         <div className='flex flex-wrap flex-column lg:mr-5 mt-5'>
           {inputs.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+            <InputTypeText props={{...props, disabled: !edit}} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
           ))}
         </div>
         <div className="flex flex-wrap flex-column gap-2 mt-5">
-          <RepresentativeFluidDialog />
+          <RepresentativeFluidDialog fluidSelected={fluidSelected} setFluidSelected={setFluidSelected} />
           <PhaseOfFluid />
           <ReleaseHoleSize />
           <LiquidInventories />
@@ -85,7 +80,7 @@ function COF() {
             },
             {
               label: "Ideal Gas Spesific Heat Ratio",
-              value:  getIdealGasHeatRatio()
+              value:  getIdealGasHeatRatio
             },
             {
               label: "Final consequence area (m²)",

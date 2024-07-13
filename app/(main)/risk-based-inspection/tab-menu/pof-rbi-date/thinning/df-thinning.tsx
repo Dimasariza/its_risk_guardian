@@ -2,7 +2,7 @@ import InputCalendar from '@/fragments/input-calendar';
 import InputDropDown from '@/fragments/input-drop-down';
 import InputTypeText from '@/fragments/input-type-text';
 import { getThinning } from '@/service/calculation/pofRBIDate-service';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import CorrosionRateDialog from './corrosionRateDialog';
@@ -12,6 +12,7 @@ import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { calculateThinning } from '@/function/calcRBIThinningValue';
 import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
+import { Toast } from 'primereact/toast';
 
 function DFThinning() {
   const [thinning, setThinning] = useState<IRBIThinning | any>({});
@@ -19,17 +20,22 @@ function DFThinning() {
   const [error, setError] = useState<any>({});
 
   const data = useSelector((state: any) => state.Reducer);
+  const toast = useRef<any>(null);
+  let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
   useEffect(() => {
     const componentId = data.menu?.comp_id;
-    if(!componentId) return;
+    if(!componentId) return
+
     getThinning(componentId).then((res) => {
       setThinning({...res, rbiThinning_rbiDate: new Date(res.rbiThinning_rbiDate)});
     });
+
     GeneralDataService.fetchData(componentId)
     .then(res => {
       setGeneralData(res)
     })
+
   }, [data])
 
   const {
@@ -60,14 +66,16 @@ function DFThinning() {
 
   return (
     <section className=" p-3">
+      <Toast ref={toast}  position="bottom-right" />
+
       <div className='flex flex-wrap lg:column-gap-3 mt-4'>
         {inputs.map((props: any, key: number) => {
           if (props.type == 'text') {
-            return <InputTypeText props={props} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
+            return <InputTypeText props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
           } else if (props.type == 'calendar') {
-            return <InputCalendar props={props} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
+            return <InputCalendar props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
           } else if (props.type == 'drop-down') {
-            return <InputDropDown props={props} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
+            return <InputDropDown props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
           } 
         })}
       </div>

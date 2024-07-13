@@ -89,111 +89,111 @@ function DFExternalCorrosion() {
               },
               {
                 label: "Thickness (mm)",
-                value: thicknessMM
+                value: thicknessMM?.toFixed(4)
               },
               {
                 label: "Thickness (Inch)",
-                value: thicknessInch
+                value: thicknessInch?.toFixed(4)
               },
               {
                 label: "Corrosion Rate (CRb)",
-                value: baseCRb
+                value: baseCRb?.toFixed(4)
               },             
               {
                 label: "Final Corrosion Rate (Cr)",
-                value: finalCR
+                value: finalCR?.toFixed(4)
               },
               {
                 label: "Time in Service Age (Tk)",
-                value: age
+                value: age?.toFixed(4)
               },
               {
                 label: "Time in Service Age (Coat)",
-                value: ageCoat
+                value: ageCoat?.toFixed(4)
               },
               {
                 label: "Time in Service Age",
-                value: timeInService
+                value: timeInService?.toFixed(4)
               },
               {
                 label: "Adjusment coat",
-                value: adjCoat
+                value: adjCoat?.toFixed(4)
               },
               {
                 label: "Shell Art RBI Date",
-                value: shellArt
+                value: shellArt?.toFixed(4)
               },
               {
                 label: "Head Art RBI Date",
-                value: headArt
+                value: headArt?.toFixed(4)
               },
               {
                 label: "Flow Stress",
-                value: flowStress
+                value: flowStress?.toFixed(4)
               },
               {
                 label: "Shell Strength Ratio",
-                value: shellStrengthRatio
+                value: shellStrengthRatio?.toFixed(4)
               },
               {
                 label: "Head Strength Ratio",
-                value: headStrengthRatio
+                value: headStrengthRatio?.toFixed(4)
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
-                value: inspectionI1
+                value: inspectionI1?.toFixed(4)
               },
               {
                 label: "Inspection Effectiveness Factor (I2)",
-                value: inspectionI2
+                value: inspectionI2?.toFixed(4)
               },
               {
                 label: "Inspection Effectiveness Factor (I3)",
-                value: inspectionI3
+                value: inspectionI3?.toFixed(4)
               },
               {
                 label: "Posterior Probability (P1)",
-                value: posteriorP1
+                value: posteriorP1?.toFixed(4)
               },
               {
                 label: "Posterior Probability (P2)",
-                value: posteriorP2
+                value: posteriorP2?.toFixed(4)
               },
               {
                 label: "Posterior Probability (P3)",
-                value: posteriorP3
+                value: posteriorP3?.toFixed(4)
               },
               {
                 label: "Shell RBI Date β1",
-                value: shellRBIBeta1
+                value: shellRBIBeta1?.toFixed(4)
               },
               {
                 label: "Shell RBI Date β2",
-                value: shellRBIBeta2
+                value: shellRBIBeta2?.toFixed(4)
               },
               {
                 label: "Shell RBI Date β3",
-                value: shellRBIBeta3
+                value: shellRBIBeta3?.toFixed(4)
               },
               {
                 label: "Head RBI Date β1",
-                value: headRBIBeta1
+                value: headRBIBeta1?.toFixed(4)
               },
               {
                 label: "Head RBI Date β2",
-                value: headRBIBeta2
+                value: headRBIBeta2?.toFixed(4)
               },
               {
                 label: "Head RBI Date β3",
-                value: headRBIBeta3
+                value: headRBIBeta3?.toFixed(4)
               },
               {
                 label: "Shell Base Damage Factor",
-                value: rbiShellSection
+                value: rbiShellSection?.toFixed(4)
               },
               {
                 label: "Head Base Damage Factor",
-                value: rbiHeadSection
+                value: rbiHeadSection?.toFixed(4)
               },
             ].map(({label, value}: any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label}/>)
           }

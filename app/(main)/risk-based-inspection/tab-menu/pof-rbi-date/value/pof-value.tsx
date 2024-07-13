@@ -1,57 +1,125 @@
 import InputTypeText from '@/fragments/input-type-text';
-import { getValue } from '@/service/calculation/pofRBIDate-service';
+import { getAlkaline, getExternalCorrosion, getThinning, getValue } from '@/service/calculation/pofRBIDate-service';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { inputDFTotal, inputHeadSection, inputsGFF } from './inputs';
 import GenericFailureFrequency from './genericFailureFreq';
 import InputValueOnly from '@/fragments/inputValueOnly';
+import { calculateAlkaline } from '@/function/calcRBIAlkalineValue';
+import { GeneralDataService } from '@/service/calculation/generalData-service';
+import { gffTableValue } from './gffTableValue';
 
 function POFValue() {
-  const [value, setValue] = useState<any>({});
-  const [error, setError] = useState<any>({});
-
-  const [generalData, setGeneralData] = useState()
+  const [failureFrequency, setFailureFrequency] = useState<any>()
+  const [value, setValue] = useState<any>({})
+  const [generalData, setGeneralData] = useState({})
+  const [thinning, setThinning] = useState({})
   const [exCor, setExCor] = useState()
-  const [alkaline, setAlkaline] = useState()
+  const [alkaline, setAlkaline] = useState({})
 
   const data = useSelector((state: any) => state.Reducer);
 
   useEffect(() => {
-    if (data.menu?.comp_id) {
-      getValue(data.menu.id).then((res: any) => {
-        setValue(res);
-      });
-    }
+    const componentId = data.menu?.comp_id
+    if (!componentId) return 
+
+    GeneralDataService.fetchData(componentId)
+    .then((res: any) => {
+      setGeneralData(res)
+    })
+
+    getAlkaline(componentId).then((res: any) => {
+      setAlkaline(res);
+    });
+
+    getThinning(componentId)
+    .then((res: any) => {
+      setThinning(res)
+    })
+
+    getExternalCorrosion(componentId)
+    .then((res: any) => {
+      setExCor(res)
+    })
+
+    getValue(componentId)
+    .then((res) => {
+      setValue(res)
+      const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
+      setFailureFrequency(failureFreq)
+    })
   }, [data]);
+
+  const {
+    shellBaseDF,
+    headBaseDF,
+    age,
+    rbiShellSection,
+    rbiHeadSection,
+    shellPWHT,
+    headPWHT
+  } = calculateAlkaline({
+    generalData,
+    thinning,
+    exCor,
+    alkaline
+  })
+
+  const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
+  const headTotal = Math.max(headBaseDF!, rbiHeadSection!) + headPWHT
 
   return (
     <>
       <section className="p-3">
+        <div className='flex flex-wrap lg:column-gap-3 mt-4'>
+          <InputTypeText props={{
+            name: 'rbiValue_FMS',
+            type: 'text',
+            placeholder: 'Management System Factor',
+            label: 'Management System Factor',
+            autoFocus: true,
+          }} value={value} setValue={setValue} />
+        </div>
         <div className='mt-5'>
-          <GenericFailureFrequency />
+          <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
           {
             [
               {
-                label: "Shell Section DF Total Value",
-                value: null
+                label: "Generic Failure Frequency",
+                value: failureFrequency?.total
               },
               {
-                label: "Head Section DF Total Value",
-                value: null
+                label: "Shell Governing thinning damage factor",
+                value: shellBaseDF?.toFixed(4)
               },
               {
-                label: "Management System Factor",
-                value: null
+                label: "Head Governing thinning damage factor",
+                value: headBaseDF?.toFixed(4)
+              },
+              {
+                label: "Shell Governing External damage factor",
+                value: rbiShellSection?.toFixed(4)
+              },
+              {
+                label: "Head Governing External damage factor",
+                value: rbiHeadSection?.toFixed(4)
+              },
+              {
+                label: "Shell Total Value damage factor",
+                value: shellTotal.toFixed(4)
+              },
+              {
+                label: "Head Total Value damage factor",
+                value: headTotal.toFixed(4)
               },
               {
                 label: "Shell Section Probability of Failure",
-                value: null
+                value: (failureFrequency?.total * shellTotal * value.rbiValue_FMS).toFixed(6)
               },
               {
                 label: "Head Section Probability of Failure",
-                value: null
+                value: (failureFrequency?.total * headTotal * value.rbiValue_FMS).toFixed(6)
               },
             ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
           }

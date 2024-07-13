@@ -40,7 +40,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
         baseCRb = interpolationTemperature(generalData)
     }
 
-    const finalCR = baseCRb! * (Math.max(exCor.rbiExCor_equationDesign, exCor.rbiExCor_interface))
+    const finalCR = baseCRb! * (Math.max(exCor?.rbiExCor_equationDesign, exCor?.rbiExCor_interface))
 
     const ageCoat = rbiDateObj?.getFullYear() - gData_yearBuilt
 
@@ -79,8 +79,6 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
     const shellRBIBeta2 = ((1 - (damageState2 * shellArt)) - shellStrengthRatio) / (((damageState2 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * shellArt)) ** 2) * (covSf ** 2)) + ((shellStrengthRatio ** 2) * (covP ** 2))) ** 0.5
     const shellRBIBeta3 = ((1 - (damageState3 * shellArt)) - shellStrengthRatio) / (((damageState3 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) + ((shellStrengthRatio ** 2) * (covP ** 2))) ** 0.5
 
-    console.log(shellRBIBeta1)
-    
     const headRBIBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
     const headRBIBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
     const headRBIBeta3 = ((1 - (damageState3 * headArt)) - headStrengthRatio) / (((damageState3 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5

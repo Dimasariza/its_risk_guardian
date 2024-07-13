@@ -15,9 +15,7 @@ const inputs: any = [
       type: 'text',
       placeholder: 'Mass Component',
       label: 'Mass Component',
-      required: true,
-      disabled: true,
-      autoFocus: false,
+      autoFocus: true,
       className: 'w-max'
     },
     {
@@ -25,9 +23,6 @@ const inputs: any = [
       type: 'text',
       placeholder: 'Mass Inventory',
       label: 'Mass Inventory',
-      required: true,
-      disabled: true,
-      autoFocus: false,
       className: 'w-max'
     },
     // {
