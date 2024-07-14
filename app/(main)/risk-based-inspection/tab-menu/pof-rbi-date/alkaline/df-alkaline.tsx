@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 import InputTypeText from '@/fragments/input-type-text';
-import { getAlkaline, getExternalCorrosion, getThinning } from '@/service/calculation/pofRBIDate-service';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { getAlkaline, getExternalCorrosion, getThinning, updateAlkaline } from '@/service/calculation/pofRBIDate-service';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import SuscepbilityCrackingTable from './suscepbilityCrackingTable';
@@ -10,11 +10,12 @@ import InputValueOnly from '@/fragments/inputValueOnly';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { Checkbox } from 'primereact/checkbox';
 import BaseDamageFactorTable from './baseDamageFactor';
-import InspectionEffectivenessTable from './inspectionEffectivenessTable';
+import InspectionEffectivenessTable, { inspection } from './inspectionEffectivenessTable';
 import { calculateThinning } from '@/function/calcRBIThinningValue';
 import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
 import { calculateAlkaline } from '@/function/calcRBIAlkalineValue';
+import { Toast } from 'primereact/toast';
 
 function DFAlkalineCorrosion() {
   const [value, setValue] = useState<any>({});
@@ -22,17 +23,21 @@ function DFAlkalineCorrosion() {
   const [error, setError] = useState<any>({});
   const [generalData, setGeneralData] = useState<any>({})
   const [thinning, setThinning] = useState<any>({})
+  const [inspectionSelected, setInspectionSelected] = useState()
   const [exCor, setExCor] = useState<any>({})
 
-  const { edit } = useSelector((state: any) => state.EditReducer);
   const data = useSelector((state: any) => state.Reducer);
+  const toast = useRef<any>(null);
+  let {edit, undoEdit} = useSelector((state: any) => state.EditReducer);
 
+  const componentId = data.menu?.comp_id
   useEffect(() => {
-    const componentId = data.menu?.comp_id
-    if (!componentId) return 
+    edit = true
 
+    if (!componentId) return 
     getAlkaline(componentId).then((res: any) => {
       setValue(res);
+      setInspectionSelected(inspection.find((i: any) => i.id == res.rbiAlkaline_inspection))
       setChecked((prev: any) => ({
         ...prev, 
         rbiAlkaline_headPwht: res.rbiAlkaline_headPwht,
@@ -56,6 +61,29 @@ function DFAlkalineCorrosion() {
     })
   }, [data]);
 
+  useEffect(() => {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
+      updateAlkaline({
+        ...value
+        // inspection: inspectionSelected
+      }, componentId)
+      .then((res) => {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data Updated',
+          detail: `Your general data has been updated`
+        });
+      })
+      .catch((err: any) => {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Data Failed to Update',
+          detail: `Failed to updated your data`
+        });
+      })
+    } 
+  }, [edit, inspectionSelected])
+
   const {
     age,
     shellPWHT,
@@ -68,6 +96,8 @@ function DFAlkalineCorrosion() {
 
   return (
     <>
+      <Toast ref={toast}  position="bottom-right" />
+
       <section className="grid m-2">
         <div className='flex flex-wrap lg:column-gap-5 mt-5'>
           {
@@ -81,7 +111,7 @@ function DFAlkalineCorrosion() {
           <div className='flex gap-2 flex-column'>
             <SuscepbilityCrackingTable />
             <BaseDamageFactorTable />
-            <InspectionEffectivenessTable />
+            <InspectionEffectivenessTable inspectionSelected={inspectionSelected} setInspectionSelected={setInspectionSelected} />
           </div>
           <div className='gap-5 flex flex-column'>
             <div style={{width: "20rem"}} className='flex justify-content-between'>

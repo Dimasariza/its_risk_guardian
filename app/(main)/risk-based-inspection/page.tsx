@@ -110,7 +110,7 @@ function RiskBasedInspection() {
       case 'pof_plan_date':
         return <POFPlanDate />;
       case 'pol_rbi_date':
-        return <POLRBIDate />;
+        return <POLPlanDate />;
       case 'pol_plan_date':
         return <POLPlanDate />;
       case 'cof':

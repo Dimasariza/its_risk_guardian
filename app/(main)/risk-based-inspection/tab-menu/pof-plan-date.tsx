@@ -7,6 +7,7 @@ import DFExternalCorrosion from './pof-rbi-date/external-corrosion/df-external-c
 import DFAlkalineCorrosion from './pof-rbi-date/alkaline/df-alkaline';
 import POFValue from './pof-rbi-date/value/pof-value';
 import { useSelector } from 'react-redux';
+import POLPlanDate from './pol-plan-date/pol-plan-date';
 
 function POFPlanDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
@@ -59,10 +60,19 @@ function POFPlanDate() {
     }
   };
 
+  const data = useSelector((state: any) => state.Reducer);
   return (
     <>
-      <TabMenu model={items} />
-      {tabMenuView()}
+      {
+        data.menu.comp_componentType == "Pressure Relief Device" 
+        ? <POLPlanDate/>
+        : <div>
+          <TabMenu model={items} />
+          {tabMenuView()}
+        </div>
+      }
+      {/* <TabMenu model={items} />
+      {tabMenuView()} */}
     </>
   );
 }

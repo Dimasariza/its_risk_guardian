@@ -1,25 +1,32 @@
 import InputTypeText from '@/fragments/input-type-text';
-import { getAlkaline, getExternalCorrosion, getThinning, getValue } from '@/service/calculation/pofRBIDate-service';
-import { useEffect, useState } from 'react';
+import { getAlkaline, getExternalCorrosion, getThinning, getValue, updateValue } from '@/service/calculation/pofRBIDate-service';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GenericFailureFrequency from './genericFailureFreq';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import { calculateAlkaline } from '@/function/calcRBIAlkalineValue';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { gffTableValue } from './gffTableValue';
+import { Toast } from 'primereact/toast';
 
 function POFValue() {
   const [failureFrequency, setFailureFrequency] = useState<any>()
   const [value, setValue] = useState<any>({})
+  const [error, setError] = useState<any>({});
   const [generalData, setGeneralData] = useState({})
   const [thinning, setThinning] = useState({})
   const [exCor, setExCor] = useState()
   const [alkaline, setAlkaline] = useState({})
 
   const data = useSelector((state: any) => state.Reducer);
+  const toast = useRef<any>(null);
+  let {edit, undoEdit} = useSelector((state: any) => state.EditReducer);
+
+  const componentId = data.menu?.comp_id
 
   useEffect(() => {
-    const componentId = data.menu?.comp_id
+    edit = true
+
     if (!componentId) return 
 
     GeneralDataService.fetchData(componentId)
@@ -49,6 +56,27 @@ function POFValue() {
     })
   }, [data]);
 
+  
+  useEffect(() => {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
+      updateValue(value, componentId)
+      .then((res) => {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data Updated',
+          detail: `Your general data has been updated`
+        });
+      })
+      .catch((err: any) => {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Data Failed to Update',
+          detail: `Failed to updated your data`
+        });
+      })
+    } 
+  }, [edit, failureFrequency])
+
   const {
     shellBaseDF,
     headBaseDF,
@@ -69,6 +97,8 @@ function POFValue() {
 
   return (
     <>
+      <Toast ref={toast}  position="bottom-right" />
+
       <section className="p-3">
         <div className='flex flex-wrap lg:column-gap-3 mt-4'>
           <InputTypeText props={{
@@ -77,6 +107,7 @@ function POFValue() {
             placeholder: 'Management System Factor',
             label: 'Management System Factor',
             autoFocus: true,
+            disabled: !edit
           }} value={value} setValue={setValue} />
         </div>
         <div className='mt-5'>

@@ -6,9 +6,75 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 
-function InspectionEffectivenessTable() {
+export const inspection: any = [
+    {
+        id: "inspection001",
+        inspection: "A",
+        eff: "Highly Effective",
+        intrusive: [
+            <span>For the total weld area:</span>, <br />,
+            <span>100% WFMT/ACFM with UT follow-up of relevant indications.</span>
+        ],
+        nonIntrusive: [
+            <span>For the total weld area:</span>, <br />,
+            <span>100% automated or manual ultrasonic scanning.</span>
+        ],
+    },
+    {
+        id: "inspection002",
+        inspection: "B",
+        eff: "Usually Effective",
+        intrusive: [
+            <span>For selected welds / weld area:</span>, <br />,
+            <span>&gt;75% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
+        ],
+        nonIntrusive: [
+            <span>For selected welds / weld area:</span>, <br />,
+            <span>&gt;75% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
+        ],
+    },
+    {
+        id: "inspection003",
+        inspection: "C",
+        eff: "Fairly Effective",
+        intrusive: [
+            <span>For selected welds / weld area:</span>, <br />,
+            <span>&gt;35% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
+        ],
+        nonIntrusive: [
+            <span>For selected welds / weld area:</span>, <br />,
+            <span>&gt;35% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
+        ],
+    },
+    {
+        id: "inspection004",
+        inspection: "D",
+        eff: "Poorly Effective",
+        intrusive: [
+            <span>For selected welds / weld area:</span>, <br />,
+            <span>&gt;10% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
+        ],
+        nonIntrusive: [
+            <span>For selected welds / weld area:</span>, <br />,
+            <span>&gt;10% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
+        ],
+    },
+    {
+        id: "inspection005",
+        inspection: "E",
+        eff: "Ineffective",
+        intrusive: [
+            <span>Ineffective inspection technique/plan was utilized</span>
+        ],
+        nonIntrusive: [
+            <span>Ineffective inspection technique/plan was utilized</span>
+        ],
+    },
+]
+
+
+function InspectionEffectivenessTable({inspectionSelected, setInspectionSelected}: any) {
     const [visible, setVisible] = useState<boolean>(false);
-    const [inspectionSelected, setInspectionSelected] = useState()
 
     const footerContent = (
         <div className="flex gap-2 justify-content-end">
@@ -23,72 +89,6 @@ function InspectionEffectivenessTable() {
             severity="success" />
         </div>
     );
-
-    const inspection: any = [
-        {
-            id: "inspection001",
-            inspection: "A",
-            eff: "Highly Effective",
-            intrusive: [
-                <span>For the total weld area:</span>, <br />,
-                <span>100% WFMT/ACFM with UT follow-up of relevant indications.</span>
-            ],
-            nonIntrusive: [
-                <span>For the total weld area:</span>, <br />,
-                <span>100% automated or manual ultrasonic scanning.</span>
-            ],
-        },
-        {
-            id: "inspection002",
-            inspection: "B",
-            eff: "Usually Effective",
-            intrusive: [
-                <span>For selected welds / weld area:</span>, <br />,
-                <span>&gt;75% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
-            ],
-            nonIntrusive: [
-                <span>For selected welds / weld area:</span>, <br />,
-                <span>&gt;75% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
-            ],
-        },
-        {
-            id: "inspection003",
-            inspection: "C",
-            eff: "Fairly Effective",
-            intrusive: [
-                <span>For selected welds / weld area:</span>, <br />,
-                <span>&gt;35% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
-            ],
-            nonIntrusive: [
-                <span>For selected welds / weld area:</span>, <br />,
-                <span>&gt;35% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
-            ],
-        },
-        {
-            id: "inspection004",
-            inspection: "D",
-            eff: "Poorly Effective",
-            intrusive: [
-                <span>For selected welds / weld area:</span>, <br />,
-                <span>&gt;10% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
-            ],
-            nonIntrusive: [
-                <span>For selected welds / weld area:</span>, <br />,
-                <span>&gt;10% WFMT/ACFM with UT follow-up of all relevant indications.</span> 
-            ],
-        },
-        {
-            id: "inspection005",
-            inspection: "E",
-            eff: "Ineffective",
-            intrusive: [
-                <span>Ineffective inspection technique/plan was utilized</span>
-            ],
-            nonIntrusive: [
-                <span>Ineffective inspection technique/plan was utilized</span>
-            ],
-        },
-    ]
 
     return (
         <>

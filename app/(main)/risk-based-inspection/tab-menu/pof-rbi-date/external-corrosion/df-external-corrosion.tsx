@@ -1,9 +1,9 @@
 import InputCalendarYear from '@/fragments/input-year-range';
 import InputTypeText from '@/fragments/input-type-text';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import InputYearRange from '@/fragments/input-year-range';
-import { getExternalCorrosion, getThinning } from '@/service/calculation/pofRBIDate-service';
+import { getExternalCorrosion, getThinning, updateExCor } from '@/service/calculation/pofRBIDate-service';
 import { inputs } from './inputs';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import OperatingTempTableRef from './operatingTempTableRef';
@@ -11,6 +11,7 @@ import { calculateExCor } from '@/function/calcRBIExCorValue';
 import IGeneralData from '@/types/IGeneralData';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import IRBIThinning from '@/types/IRBIThinning';
+import { Toast } from 'primereact/toast';
 
 function DFExternalCorrosion() {
   const [value, setValue] = useState<any>({});
@@ -19,9 +20,23 @@ function DFExternalCorrosion() {
   const [thinning, setThinning] = useState<IRBIThinning | any>({});
 
   const data = useSelector((state: any) => state.Reducer);
-  const edit = useSelector((state: any) => state.EditReducer);
+  const toast = useRef<any>(null);
+  let {edit, undoEdit} = useSelector((state: any) => state.EditReducer);
+
+  const handleOnChange = (name: string, e: any) => {
+    switch(name) {
+      case "rbiExCor_tMinMM":
+        setValue((prev: any) => ({...prev, rbiExCor_tMinInch: (e.target.value * 0.03937).toFixed(4)}))
+        break;
+      case "rbiExCor_tMinInch":
+        setValue((prev: any) => ({...prev, rbiExCor_tMinMM: (e.target.value / 0.03937).toFixed(4)}))
+        break;
+    }
+  }
 
   useEffect(() => {
+    edit = true
+
     const componentId = data.menu.comp_id;
     if (componentId) {
       getExternalCorrosion(componentId).then((res: any) => {
@@ -33,6 +48,27 @@ function DFExternalCorrosion() {
       });
     }
   }, [data]);
+
+  const componentId = data.menu?.comp_id;
+  useEffect(() => {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
+      updateExCor(value, componentId)
+      .then((res) => {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data Updated',
+          detail: `Your general data has been updated`
+        });
+      })
+      .catch((err: any) => {
+        toast.current.show({
+          severity: 'error',
+          summary: 'Data Failed to Update',
+          detail: `Failed to updated your data`
+        });
+      })
+    } 
+  }, [edit])
 
   const {
     thicknessInch,
@@ -66,14 +102,23 @@ function DFExternalCorrosion() {
 
   return (
     <>
+      <Toast ref={toast}  position="bottom-right" />
+
       <section className="grid m-2">
 
         <div className='flex flex-wrap lg:column-gap-5 mt-4'>
           {inputs.map((props: any, key: number) => {
             if (props.type == 'number' || props.type == 'text') {
-              return <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
+              return <InputTypeText 
+                props={{...props, disabled: !edit}} 
+                key={key} 
+                value={value} 
+                setValue={setValue} 
+                errorMessage={error[props.name]} 
+                handleOnChange={handleOnChange}
+              />;
             } else if (props.type == 'year-range') {
-              return <InputYearRange props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
+              return <InputYearRange props={{...props, disabled: !edit}} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />;
             }
           })}
         </div>

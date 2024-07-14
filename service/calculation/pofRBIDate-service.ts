@@ -31,10 +31,22 @@ export async function getExternalCorrosion(id: string) {
   return await POFRBIDate.getItem(id, 'ex_cor');
 }
 
+export async function updateExCor(value: any, id: string) {
+  return await POFRBIDate.updateItem(value, id, 'ex_cor');
+}
+
 export async function getAlkaline(id: string) {
   return await POFRBIDate.getItem(id, 'alkaline');
 }
 
+export async function updateAlkaline(value: any, id: string) {
+  return await POFRBIDate.updateItem(value, id, 'alkaline');
+}
+
 export async function getValue(id: string) {
   return await POFRBIDate.getItem(id, 'value');
+}
+
+export async function updateValue(value: any, id: string) {
+  return await POFRBIDate.updateItem(value, id, 'value');
 }

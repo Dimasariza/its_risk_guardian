@@ -1,7 +1,7 @@
 'use client';
 
 import { TabMenu } from 'primereact/tabmenu';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import POFValue from './pof-rbi-date/value/pof-value';
 import DFThinning from './pof-rbi-date/thinning/df-thinning';
 import DFExternalCorrosion from './pof-rbi-date/external-corrosion/df-external-corrosion';
@@ -16,6 +16,8 @@ import InputValueOnly from '@/fragments/inputValueOnly';
 import InspectionConfidenceFactor from './prd pof/inspectionConfidenceFactor';
 import InitiatingEventFrequencies from './prd pof/initiatingEventFrequencies';
 import ClassProtectedEquipment from './prd pof/classForProtectedEquipment';
+import COFPV from './cof/cofPV';
+import POLPlanDate from './pol-plan-date/pol-plan-date';
 
 const inputs = [
   {
@@ -118,6 +120,10 @@ function POFRBIDate() {
     }
   };
 
+  const toast = useRef<any>(null);
+
+  const data = useSelector((state: any) => state.Reducer);
+
   return (
     <>
       {/* <div className='flex flex-wrap lg:column-gap-5 mt-5'>
@@ -142,11 +148,15 @@ function POFRBIDate() {
       </div>
 
       <InputValueOnly label="" value={null} /> */}
+      {
+        data.menu.comp_componentType == "Pressure Relief Device" 
+        ? <POLPlanDate/>
+        : <div>
+          <TabMenu model={items} />
+          {tabMenuView()}
+        </div>
+      }
 
-
-      
-      <TabMenu model={items} />
-      {tabMenuView()}
     </>
   );
 }
