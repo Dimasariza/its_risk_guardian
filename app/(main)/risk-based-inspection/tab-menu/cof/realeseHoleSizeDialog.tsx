@@ -5,9 +5,8 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 
-function ReleaseHoleSize() {
+function ReleaseHoleSize({cofValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false)
-    const [selectedProduct, setSelectedProduct] = useState(null);
     const [editRelease, setEditRelease] = useState(false)
     const [holeSizeValue, setHoleSizeValue] = useState<any>({
         d1: 0.25,
@@ -42,7 +41,7 @@ function ReleaseHoleSize() {
             id: 'holeSize004',
             size: 'Rupture',
             range: '6',
-            release: 'd4 = min[D, 16]',
+            release: 'd4 = min[D, 406]',
             holeSizeValue: "d4"
         },
     ]
@@ -89,13 +88,13 @@ function ReleaseHoleSize() {
                 onHide={() => {if (!visible) return; setVisible(false); }}
                 footer={footerContent}
             >
-                <DataTable value={holeSizes.map((i, id) => ({...i, no: id + 1}))} selectionMode={"single"} selection={selectedProduct} 
-                onSelectionChange={(e: any) => setSelectedProduct(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
-                    <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
+                <DataTable 
+                value={holeSizes.map((i, id) => ({...i, no: id + 1}))} 
+                tableStyle={{ minWidth: '50rem' }}>
                     <Column field="no" header="Release Hole Number"></Column>
                     <Column field="size" header="Release Hole Size"></Column>
-                    <Column field="range" header="Range of Hole Diameter (inch)"></Column>
-                    <Column field="release" body={releaseBodyTemplate} header="Release Hole Diameter, dn (inch)"></Column>
+                    <Column field="range" header="Range of Hole Diameter (mm)"></Column>
+                    <Column field="release" body={releaseBodyTemplate} header="Release Hole Diameter, dn (mm)"></Column>
                 </DataTable>
             </Dialog>
         </>

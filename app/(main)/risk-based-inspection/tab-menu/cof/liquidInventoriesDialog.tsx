@@ -6,7 +6,7 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 
-function LiquidInventories() {
+function LiquidInventories({cofValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 

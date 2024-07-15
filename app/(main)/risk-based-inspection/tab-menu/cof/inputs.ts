@@ -25,16 +25,6 @@ const inputs: any = [
       label: 'Mass Inventory',
       className: 'w-max'
     },
-    // {
-    //   name: 'r',
-    //   type: 'text',
-    //   placeholder: 'AIT (°R)',
-    //   label: 'AIT (°R)',
-    //   required: true,
-    //   disabled: true,
-    //   autoFocus: false,
-    //   className: 'w-max'
-    // },
 ];
 
 export {inputs, representativeFluidList};

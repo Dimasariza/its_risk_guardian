@@ -3,9 +3,9 @@
 import { TabMenu } from 'primereact/tabmenu';
 import { useState } from 'react';
 import DFThinning from './pof-rbi-date/thinning/df-thinning';
-import DFExternalCorrosion from './pof-rbi-date/external-corrosion/df-external-corrosion';
-import DFAlkalineCorrosion from './pof-rbi-date/alkaline/df-alkaline';
-import POFValue from './pof-rbi-date/value/pof-value';
+import DFExternalCorrosion from './pof-rbi-date/external-corrosion/dfExternalCorrosion';
+import DFAlkalineCorrosion from './pof-rbi-date/alkaline/dfAlkaline';
+import POFValue from './pof-rbi-date/value/pofValue';
 import { useSelector } from 'react-redux';
 import POLPlanDate from './pol-plan-date/pol-plan-date';
 

@@ -5,7 +5,7 @@ import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
 import { useState } from "react";
 
-function PhaseOfFluid() {
+function PhaseOfFluid({cofValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false)
     const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -56,7 +56,7 @@ function PhaseOfFluid() {
             </div>
             <Dialog header="Phase of Fluid" 
                 visible={visible} 
-                style={{ width: '50vw' }} 
+                style={{ width: '90%' }}
                 onHide={() => {if (!visible) return; setVisible(false); }}
                 footer={footerContent}
             >

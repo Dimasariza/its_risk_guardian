@@ -4,7 +4,7 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { useEffect, useRef, useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
-import damageFactor from './damage-factor';
+import damageFactor from './damageFactor';
 import { useDispatch, useSelector } from 'react-redux';
 import validate from './validate';
 import { EditData } from '@/redux/action/action';

@@ -23,7 +23,7 @@ function COF() {
       {/* {
         data.menu.comp_componentType == "Pressure Vessel" && <COFPV toast={toast}/>
       } */}
-      <COFPV />
+      <COFPV toast={toast} />
     </section>
   );
 }
