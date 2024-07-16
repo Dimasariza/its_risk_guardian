@@ -122,19 +122,19 @@ function POFValue() {
               },
               {
                 label: "Shell Governing thinning damage factor",
-                value: shellBaseDF?.toFixed(4)
+                value: Number(shellBaseDF)?.toFixed(4)
               },
               {
                 label: "Head Governing thinning damage factor",
-                value: headBaseDF?.toFixed(4)
+                value: Number(headBaseDF)?.toFixed(4)
               },
               {
                 label: "Shell Governing External damage factor",
-                value: rbiShellSection?.toFixed(4)
+                value: Number(rbiShellSection)?.toFixed(4)
               },
               {
                 label: "Head Governing External damage factor",
-                value: rbiHeadSection?.toFixed(4)
+                value: Number(rbiHeadSection)?.toFixed(4)
               },
               {
                 label: "Shell Total Value damage factor",

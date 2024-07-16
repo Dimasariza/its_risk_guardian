@@ -134,111 +134,111 @@ function DFExternalCorrosion() {
               },
               {
                 label: "Thickness (mm)",
-                value: thicknessMM?.toFixed(4)
+                value: Number(thicknessMM)?.toFixed(4)
               },
               {
                 label: "Thickness (Inch)",
-                value: thicknessInch?.toFixed(4)
+                value: Number(thicknessInch)?.toFixed(4)
               },
               {
                 label: "Corrosion Rate (CRb)",
-                value: baseCRb?.toFixed(4)
+                value: Number(baseCRb)?.toFixed(4)
               },             
               {
                 label: "Final Corrosion Rate (Cr)",
-                value: finalCR?.toFixed(4)
+                value: Number(finalCR)?.toFixed(4)
               },
               {
                 label: "Time in Service Age (Tk)",
-                value: age?.toFixed(4)
+                value: Number(age)?.toFixed(4)
               },
               {
                 label: "Time in Service Age (Coat)",
-                value: ageCoat?.toFixed(4)
+                value: Number(ageCoat)?.toFixed(4)
               },
               {
                 label: "Time in Service Age",
-                value: timeInService?.toFixed(4)
+                value: Number(timeInService)?.toFixed(4)
               },
               {
                 label: "Adjusment coat",
-                value: adjCoat?.toFixed(4)
+                value: Number(adjCoat)?.toFixed(4)
               },
               {
                 label: "Shell Art Plan Date",
-                value: shellArt?.toFixed(4)
+                value: Number(shellArt)?.toFixed(4)
               },
               {
                 label: "Head Art Plan Date",
-                value: headArt?.toFixed(4)
+                value: Number(headArt)?.toFixed(4)
               },
               {
                 label: "Flow Stress",
-                value: flowStress?.toFixed(4)
+                value: Number(flowStress)?.toFixed(4)
               },
               {
                 label: "Shell Strength Ratio",
-                value: shellStrengthRatio?.toFixed(4)
+                value: Number(shellStrengthRatio)?.toFixed(4)
               },
               {
                 label: "Head Strength Ratio",
-                value: headStrengthRatio?.toFixed(4)
+                value: Number(headStrengthRatio)?.toFixed(4)
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
-                value: inspectionI1?.toFixed(4)
+                value: Number(inspectionI1)?.toFixed(4)
               },
               {
                 label: "Inspection Effectiveness Factor (I2)",
-                value: inspectionI2?.toFixed(4)
+                value: Number(inspectionI2)?.toFixed(4)
               },
               {
                 label: "Inspection Effectiveness Factor (I3)",
-                value: inspectionI3?.toFixed(4)
+                value: Number(inspectionI3)?.toFixed(4)
               },
               {
                 label: "Posterior Probability (P1)",
-                value: posteriorP1?.toFixed(4)
+                value: Number(posteriorP1)?.toFixed(4)
               },
               {
                 label: "Posterior Probability (P2)",
-                value: posteriorP2?.toFixed(4)
+                value: Number(posteriorP2)?.toFixed(4)
               },
               {
                 label: "Posterior Probability (P3)",
-                value: posteriorP3?.toFixed(4)
+                value: Number(posteriorP3)?.toFixed(4)
               },
               {
                 label: "Shell Plan Date β1",
-                value: shellPlanBeta1?.toFixed(4)
+                value: Number(shellPlanBeta1)?.toFixed(4)
               },
               {
                 label: "Shell Plan Date β2",
-                value: shellPlanBeta2?.toFixed(4)
+                value: Number(shellPlanBeta2)?.toFixed(4)
               },
               {
                 label: "Shell Plan Date β3",
-                value: shellPlanBeta3?.toFixed(4)
+                value: Number(shellPlanBeta3)?.toFixed(4)
               },
               {
                 label: "Head Plan Date β1",
-                value: headPlanBeta1?.toFixed(4)
+                value: Number(headPlanBeta1)?.toFixed(4)
               },
               {
                 label: "Head Plan Date β2",
-                value: headPlanBeta2?.toFixed(4)
+                value: Number(headPlanBeta2)?.toFixed(4)
               },
               {
                 label: "Head Plan Date β3",
-                value: headPlanBeta3?.toFixed(4)
+                value: Number(headPlanBeta3)?.toFixed(4)
               },
               {
                 label: "Shell Base Damage Factor",
-                value: planShellSection?.toFixed(4)
+                value: Number(planShellSection)?.toFixed(4)
               },
               {
                 label: "Head Base Damage Factor",
-                value: planHeadSection?.toFixed(4)
+                value: Number(planHeadSection)?.toFixed(4)
               },
             ].map(({label, value}: any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label}/>)
           }

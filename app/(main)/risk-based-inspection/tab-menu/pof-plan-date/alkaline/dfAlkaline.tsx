@@ -134,11 +134,11 @@ function DFAlkalineCorrosion() {
               },
               {
                 label: "Shell DF ACSCC",
-                value: shellPWHT.toFixed(4)
+                value: Number(shellPWHT)?.toFixed(4)
               },
               {
                 label: "Head DF ACSCC",
-                value: headPWHT.toFixed(4)
+                value: Number(headPWHT)?.toFixed(4)
               }
             ].map(({value, label}: any) => <InputValueOnly label={label} value={value || "-"} key={label} />)
           }

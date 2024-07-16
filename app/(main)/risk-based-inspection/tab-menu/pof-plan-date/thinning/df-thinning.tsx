@@ -131,79 +131,79 @@ function DFThinning() {
             },
             {
               label: "Shell Art",
-              value: shellArt?.toFixed(4)
+              value: Number(shellArt)?.toFixed(4)
             },
             {
               label: "Head Art",
-              value: headArt?.toFixed(4)
+              value: Number(headArt)?.toFixed(4)
             },
             {
               label: "Flow Stress",
-              value: flowStress?.toFixed(4)
+              value: Number(flowStress)?.toFixed(4)
             },
             {
               label: "Shell Strength Ratio",
-              value: shellStrengthRatio?.toFixed(4)
+              value: Number(shellStrengthRatio)?.toFixed(4)
             },
             {
               label: "Head Strength Ratio",
-              value: headStrengthRatio?.toFixed(4)
+              value: Number(headStrengthRatio)?.toFixed(4)
             },
             {
               label: "Inspection Effectiveness 1",
-              value: inspEffectiveness1?.toFixed(4)
+              value: Number(inspEffectiveness1)?.toFixed(4)
             },
             {
               label: "Inspection Effectiveness 2",
-              value: inspEffectiveness2?.toFixed(4)
+              value: Number(inspEffectiveness2)?.toFixed(4)
             },
             {
               label: "Inspection Effectiveness 3",
-              value: inspEffectiveness3?.toFixed(4)
+              value: Number(inspEffectiveness3)?.toFixed(4)
             },
             {
               label: "Posterior Probability 1",
-              value: postProbability1?.toFixed(4)
+              value: Number(postProbability1)?.toFixed(4)
             },
             {
               label: "Posterior Probability 2",
-              value: postProbability2?.toFixed(4)
+              value: Number(postProbability2)?.toFixed(4)
             },
             {
               label: "Posterior Probability 3",
-              value: postProbability3?.toFixed(4)
+              value: Number(postProbability3)?.toFixed(4)
             },
             {
               label: "Shell Section β1",
-              value: shellSectionB1?.toFixed(4)
+              value: Number(shellSectionB1)?.toFixed(4)
             },
             {
               label: "Shell Section β2",
-              value: shellSectionB2?.toFixed(4)
+              value: Number(shellSectionB2)?.toFixed(4)
             },
             {
               label: "Shell Section β3",
-              value: shellSectionB3?.toFixed(4)
+              value: Number(shellSectionB3)?.toFixed(4)
             },
             {
               label: "Head Section β1",
-              value: headSectionB1?.toFixed(4)
+              value: Number(headSectionB1)?.toFixed(4)
             },
             {
               label: "Head Section β2",
-              value: headSectionB2?.toFixed(4)
+              value: Number(headSectionB2)?.toFixed(4)
             },
             {
               label: "Head Section β3",
-              value: headSectionB3?.toFixed(4)
+              value: Number(headSectionB3)?.toFixed(4)
             },
             {
               label: "Shell Section Base DF",
-              value: shellBaseDF?.toFixed(4)
+              value: Number(shellBaseDF)?.toFixed(4)
             },
             {
               label: "Head Section Base DF",
-              value: headBaseDF?.toFixed(4)
+              value: Number(headBaseDF)?.toFixed(4)
             },
           ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
         }
