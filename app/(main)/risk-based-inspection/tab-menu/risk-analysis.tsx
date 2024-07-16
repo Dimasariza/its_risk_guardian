@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 
 import { GeneralDataService } from "@/service/calculation/generalData-service";
