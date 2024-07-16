@@ -30,6 +30,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
     const lastInspDateObj: Date | any = new Date(gData_lastInspection);
     const planDateObj: Date | any = new Date(planThinning_planDate);
 
+    console.log(planThinning_planDate)
+
     const age: number | null= planDateObj?.getFullYear() - lastInspDateObj?.getFullYear() || null;
 
     const shellArt: number | null = planThinning_corrosionRate * age! / gData_shellMinimumThicknessMM || null;

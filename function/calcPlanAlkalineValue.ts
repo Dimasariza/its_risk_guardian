@@ -4,10 +4,10 @@ import IPlanThinning from "@/types/IPlanThinning"
 import { calculateThinning } from "./calcPlanThinningValue"
 
 export const calculateAlkaline = ({
-    generalData, 
-    thinning, 
-    exCor = null, 
-    alkaline
+        generalData, 
+        thinning, 
+        exCor = null, 
+        alkaline
     }: any) => {
 
     const { 

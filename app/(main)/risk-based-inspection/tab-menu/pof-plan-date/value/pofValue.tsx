@@ -80,7 +80,6 @@ function POFValue() {
   const {
     shellBaseDF,
     headBaseDF,
-    age,
     planShellSection,
     planHeadSection,
     shellPWHT,
@@ -91,7 +90,6 @@ function POFValue() {
     exCor,
     alkaline
   })
-
   const shellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
   const headTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
 
