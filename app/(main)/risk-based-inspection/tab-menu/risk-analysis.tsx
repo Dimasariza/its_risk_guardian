@@ -205,12 +205,7 @@ const chartProps: any = {
   })
 }
 
-{/* <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "2rem" }}></i> */}
- 
-
 function RiskAnalysis() {
-
-
 
   const riskPlotting = (probabilityRange: number, consequenceRange: number) => {
     const probability = [
@@ -357,9 +352,9 @@ function RiskAnalysis() {
     headPWHT: PlanheadPWHT
   } = PlancalculateAlkaline({
     generalData,
-    thinning: rbiThinning,
-    exCor: rbiExCor,
-    alkaline: rbiAlkaline
+    thinning: planThinning,
+    exCor: planExCor,
+    alkaline: planAlkaline
   })
 
   const RBIshellTotal = Math.max(RBIshellBaseDF!, rbiShellSection!) + RBIshellPWHT

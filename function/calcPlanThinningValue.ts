@@ -38,11 +38,11 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
 
     const headArt: number | null = planThinning_corrosionRate * age! / gData_headMinimumThicknessMM || null;
 
-    const flowStress: number | null = (gData_yieldStrength + gData_tensileStrength) / 2 * gData_jointEfficiency * 1.1 || null;
+    const flowStress: number | null = (Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2 * gData_jointEfficiency * 1.1 || null;
 
-    const shellStrengthRatio: number  = (gData_allowableStressKpa * gData_jointEfficiency) / flowStress! * Math.max(gData_headTreqMM, gData_headTreqMM) / gData_shellMinimumThicknessMM;
+    const shellStrengthRatio: number  = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_shellMinimumThicknessMM;
 
-    const headStrengthRatio: number = (gData_allowableStressKpa * gData_jointEfficiency) / flowStress! * Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM;
+    const headStrengthRatio: number = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_headMinimumThicknessMM;
 
     const inspEffectiveness1: number | null = prior[0].medium * (conditional[0].a ** planThinning_nInspA) * (conditional[0].b ** planThinning_nInspB) * (conditional[0].c ** planThinning_nInspC) * (conditional[0].d ** planThinning_nInspD) || null;
     const inspEffectiveness2: number | null = prior[1].medium * (conditional[1].a ** planThinning_nInspA) * (conditional[1].b ** planThinning_nInspB) * (conditional[1].c ** planThinning_nInspC) * (conditional[1].d ** planThinning_nInspD) || null;

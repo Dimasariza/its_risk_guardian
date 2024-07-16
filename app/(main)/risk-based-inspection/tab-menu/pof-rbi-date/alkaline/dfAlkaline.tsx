@@ -62,8 +62,7 @@ function DFAlkalineCorrosion() {
   }, [data]);
 
   useEffect(() => {
-    edit = true
-    if(!edit && !undoEdit) {
+    if(Object.keys(error).length === 0 && !edit && !undoEdit) {
       updateAlkaline({
         ...value
         // inspection: inspectionSelected

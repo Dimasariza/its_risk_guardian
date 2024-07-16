@@ -237,11 +237,12 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const addedFluidMassLarge = 180 * Math.min(releaseRateWnLarge, wMax) 
     const addedFluidMassRupture = 180 * Math.min(releaseRateWnRupture, wMax) 
 
-    const availableMassSmall = Math.min((cof_massComponent + addedFluidMassSmall), cof_massInventory)
-    const availableMassMedium = Math.min((cof_massComponent + addedFluidMassMedium), cof_massInventory)
-    const availableMassLarge = Math.min((cof_massComponent + addedFluidMassLarge), cof_massInventory)
-    const availableMassRupture = Math.min((cof_massComponent + addedFluidMassRupture), cof_massInventory)
-
+    
+    const availableMassSmall = Math.min(Number(cof_massComponent) + Number(addedFluidMassSmall), cof_massInventory)
+    const availableMassMedium = Math.min(Number(cof_massComponent) + Number(addedFluidMassMedium), cof_massInventory)
+    const availableMassLarge = Math.min(Number(cof_massComponent) + Number(addedFluidMassLarge), cof_massInventory)
+    const availableMassRupture = Math.min(Number(cof_massComponent) + Number(addedFluidMassRupture), cof_massInventory)
+    
     const timeRequiredSmall = C3 / releaseRateWnSmall
     const timeRequiredMedium = C3 / releaseRateWnMedium
     const timeRequiredLarge = C3 / releaseRateWnLarge
@@ -409,7 +410,7 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
 
     const CA_NonFlamable = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
 
-    const finalConsequenceM = Math.max(CA_ComponentDamage, Math.max(CA_PersonalInjuries, CA_ToxInjuries, CA_NonFlamable)) 
+    const finalConsequenceM = Math.max(Number(CA_ComponentDamage), Math.max(Number(CA_PersonalInjuries), Number(CA_ToxInjuries), Number(CA_NonFlamable))) 
 
     return {
         getIdealGasHeatRatio: kRatio / (kRatio - constantR),

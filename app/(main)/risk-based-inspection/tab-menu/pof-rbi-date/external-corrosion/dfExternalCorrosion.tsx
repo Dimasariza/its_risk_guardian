@@ -100,8 +100,6 @@ function DFExternalCorrosion() {
     rbiHeadSection
   } = calculateExCor(generalData, thinning, value);
 
-  console.log(thicknessMM)
-
   return (
     <>
       <Toast ref={toast}  position="bottom-right" />

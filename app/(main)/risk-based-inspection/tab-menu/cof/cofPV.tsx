@@ -217,6 +217,7 @@ function COFPV({toast}: any) {
         impact: value.impact
     })
 
+
     return (
         <>
         <div className="flex w-full lg:gap-8 md:gap-3 sm:gap-2">
@@ -367,7 +368,7 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(availableMassSmall)?.toFixed(4)
+                        value: availableMassSmall?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
