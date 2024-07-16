@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import InputTypeText from '@/fragments/input-type-text';
-import { getAlkaline, getExternalCorrosion, getThinning, updateAlkaline } from '@/service/calculation/pofRBIDate-service';
+import { getAlkaline, getExternalCorrosion, getThinning, updateAlkaline } from '@/service/calculation/pofPlanDate-service';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
@@ -11,10 +11,10 @@ import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { Checkbox } from 'primereact/checkbox';
 import BaseDamageFactorTable from './baseDamageFactor';
 import InspectionEffectivenessTable, { inspection } from './inspectionEffectivenessTable';
-import { calculateThinning } from '@/function/calcRBIThinningValue';
+import { calculateThinning } from '@/function/calcPlanThinningValue';
 import IGeneralData from '@/types/IGeneralData';
-import IRBIThinning from '@/types/IRBIThinning';
-import { calculateAlkaline } from '@/function/calcRBIAlkalineValue';
+import IPlanThinning from '@/types/IPlanThinning';
+import { calculateAlkaline } from '@/function/calcPlanAlkalineValue';
 import { Toast } from 'primereact/toast';
 
 function DFAlkalineCorrosion() {
@@ -37,11 +37,11 @@ function DFAlkalineCorrosion() {
     if (!componentId) return 
     getAlkaline(componentId).then((res: any) => {
       setValue(res);
-      setInspectionSelected(inspection.find((i: any) => i.id == res.rbiAlkaline_inspection))
+      setInspectionSelected(inspection.find((i: any) => i.id == res.planAlkaline_inspection))
       setChecked((prev: any) => ({
         ...prev, 
-        rbiAlkaline_headPwht: res.rbiAlkaline_headPwht,
-        rbiAlkaline_shellPwht: res.rbiAlkaline_shellPwht
+        planAlkaline_headPwht: res.planAlkaline_headPwht,
+        planAlkaline_shellPwht: res.planAlkaline_shellPwht
       }))
     });
 
@@ -117,11 +117,11 @@ function DFAlkalineCorrosion() {
           <div className='gap-5 flex flex-column'>
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Shell subjects to PWHT</span>
-              <Checkbox name='rbiAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={checked.rbiAlkaline_shellPwht}></Checkbox>
+              <Checkbox name='planAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, planAlkaline_shellPwht: e.checked}))} checked={checked.planAlkaline_shellPwht}></Checkbox>
             </div>
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Head subjects to PWHT</span>
-              <Checkbox name='rbiAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, rbiAlkaline_headPwht: e.checked}))} checked={checked.rbiAlkaline_headPwht}></Checkbox>
+              <Checkbox name='planAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, planAlkaline_headPwht: e.checked}))} checked={checked.planAlkaline_headPwht}></Checkbox>
             </div>
           </div>
         </div>

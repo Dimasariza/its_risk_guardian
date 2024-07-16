@@ -1,3 +1,4 @@
+import { CofService } from "@/service/calculation/cofService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -5,7 +6,7 @@ import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
 import { useState } from "react";
 
-function AdjusmentToFlamable({mitigation, setMitigation, cofValue}: any) {
+function AdjusmentToFlamable({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false)
 
     const footerContent = (
@@ -14,7 +15,31 @@ function AdjusmentToFlamable({mitigation, setMitigation, cofValue}: any) {
           onClick={() => setVisible(false)} 
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
-          onClick={() => setVisible(false)} 
+          onClick={() => {
+            if(!value?.mitigation) {
+                return toast.current.show({
+                    severity: 'error',
+                    summary: 'No Item Selected',
+                    detail: `Please select mitigation item`
+                });
+            }
+            setVisible(false)
+            CofService.editData({...value, cof_adjToFlamable: value?.mitigation.id})
+            .then(res => {
+                toast.current.show({
+                    severity: 'success',
+                    summary: 'Data Updated',
+                    detail: `You update General Data`
+                });
+            })
+            .catch((e: any) => {
+                toast.current.show({
+                  severity: 'error',
+                  summary: 'Data Failed to Updated',
+                  detail: `Damage mechanism not updated`
+                });
+            })
+          }} 
           severity="success" />
         </div>
     );
@@ -32,8 +57,8 @@ function AdjusmentToFlamable({mitigation, setMitigation, cofValue}: any) {
                 onHide={() => {if (!visible) return; setVisible(false); }}
                 footer={footerContent}
             >
-                <DataTable value={liquidPhase} selectionMode={"single"} selection={mitigation} 
-                onSelectionChange={(e: any) => setMitigation(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
+                <DataTable value={adjMitigation} selectionMode={"single"} selection={value?.mitigation} 
+                onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, mitigation: e.value}))} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
                     <Column field="mitigation" header="Mitigation System"></Column>
                     <Column field="adjusment" header="Consequence Area Adjustemnet"></Column>
@@ -46,7 +71,7 @@ function AdjusmentToFlamable({mitigation, setMitigation, cofValue}: any) {
 
 export default AdjusmentToFlamable;
 
-const liquidPhase = [
+const adjMitigation = [
     {
         id: 'mitigation1001',
         mitigation: 'Inventory blowdown , couple with isolation system classification B or higher',
@@ -73,4 +98,4 @@ const liquidPhase = [
     },
 ]
 
-export {liquidPhase}
+export {adjMitigation}

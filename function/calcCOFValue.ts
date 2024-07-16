@@ -1,3 +1,5 @@
+import { amoniaAndChlorine } from "@/app/(main)/risk-based-inspection/tab-menu/cof/amoniaAndChlorine";
+import { damageTable } from "@/app/(main)/risk-based-inspection/tab-menu/cof/damageDialog";
 import IGeneralData from "@/types/IGeneralData";
 
 interface ICofCalculation {
@@ -180,8 +182,17 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
         cof_detectionSystem,
         cof_isolationSystem,
         cof_flamableCons,
-        cof_damageCons
-    } = cofValue
+        cof_damageCons,
+        failureFreq
+    } = cofValue || {}
+
+    const {
+        sizeSmall,
+        sizeMedium,
+        sizeLarge,
+        sizeRupture,
+        total
+    } = failureFreq || {}
 
     const basedOnDNSmallmm = ((Math.PI * cof_releaseHoleSizeD1 ** 2)) / 4
     const basedOnDNSmallm = basedOnDNSmallmm / 1000
@@ -195,6 +206,9 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const C2 = 1
     const C3 = 4536 // kg
     const C4 = 2.205 // 1/kg
+    const C5 = 25.2
+    const C9 = 0.123
+    const C10 = 9.744
     const Gc = 1
     const Cd = 0.9
     const Ps = gData_operatingPressure * 14.5037738 * 6.895
@@ -255,6 +269,148 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const energyEfficiencyLarge = 4 * Math.log10(C4 * releaseMassLarge) - 15
     const energyEfficiencyRupture = 4 * Math.log10(C4 * releaseMassRupture) - 15
 
+    const { 
+        CAINLGA: d_CAINLGA, 
+        CAINLGB: d_CAINLGB, 
+        CAILGA: d_CAILGA, 
+        CAILGB: d_CAILGB, 
+        IAINLGA: d_IAINLGA, 
+        IAINLGB: d_IAINLGB, 
+        IAILGA: d_IAILGA, 
+        IAILGB: d_IAILGB 
+    } = cofValue?.damage?.data || {}
+    const CAAINL_C_Small = d_CAINLGA * ((adjReleaseRateSmall ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_C_Medium = d_CAINLGA * ((adjReleaseRateMedium ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_C_Large = d_CAINLGA * ((adjReleaseRateLarge ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_C_Rupture = d_CAINLGA * ((adjReleaseRateRupture ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    
+    const CAAIL_C_Small = d_CAILGA * ((adjReleaseRateSmall ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_C_Medium = d_CAILGA * ((adjReleaseRateMedium ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_C_Large = d_CAILGA * ((adjReleaseRateLarge ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_C_Rupture = d_CAILGA * ((adjReleaseRateRupture ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const IAAINL_C_Small = (d_IAINLGA * releaseMassSmall ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    const IAAINL_C_Medium = (d_IAINLGA * releaseMassMedium ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    const IAAINL_C_Large = (d_IAINLGA * releaseMassLarge ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    const IAAINL_C_Rupture = (d_IAINLGA * releaseMassRupture ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+
+    const IAAIL_C_Small = (d_IAILGA * releaseMassSmall ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    const IAAIL_C_Medium = (d_IAILGA * releaseMassMedium ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    const IAAIL_C_Large = (d_IAILGA * releaseMassLarge ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    const IAAIL_C_Rupture = (d_IAILGA * releaseMassRupture ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+
+    const { 
+        CAINLGA: f_CAINLGA, 
+        CAINLGB: f_CAINLGB, 
+        CAILGA: f_CAILGA, 
+        CAILGB: f_CAILGB, 
+        IAINLGA: f_IAINLGA, 
+        IAINLGB: f_IAINLGB, 
+        IAILGA: f_IAILGA, 
+        IAILGB: f_IAILGB 
+    } = cofValue?.flamable?.data || {}
+
+    const CAAINL_P_Small = f_CAINLGA * ((adjReleaseRateSmall ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_P_Medium = f_CAINLGA * ((adjReleaseRateMedium ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_P_Large = f_CAINLGA * ((adjReleaseRateLarge ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_P_Rupture = f_CAINLGA * ((adjReleaseRateRupture ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+    
+    const CAAIL_P_Small = f_CAILGA * ((adjReleaseRateSmall ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_P_Medium = f_CAILGA * ((adjReleaseRateMedium ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_P_Large = f_CAILGA * ((adjReleaseRateLarge ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_P_Rupture = f_CAILGA * ((adjReleaseRateRupture ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const IAAINL_P_Small = (f_IAINLGA * releaseMassSmall ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    const IAAINL_P_Medium = (f_IAINLGA * releaseMassMedium ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    const IAAINL_P_Large = (f_IAINLGA * releaseMassLarge ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    const IAAINL_P_Rupture = (f_IAINLGA * releaseMassRupture ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+
+    const IAAIL_P_Small = (f_IAILGA * releaseMassSmall ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    const IAAIL_P_Medium = (f_IAILGA * releaseMassMedium ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    const IAAIL_P_Large = (f_IAILGA * releaseMassLarge ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    const IAAIL_P_Rupture = (f_IAILGA * releaseMassRupture ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+
+    const factICSmall = Math.min((adjReleaseRateSmall / C5), 1)
+    const factICMedium = Math.min((adjReleaseRateMedium / C5), 1)
+    const factICLarge = Math.min((adjReleaseRateLarge / C5), 1)
+    const factICRupture = Math.min((adjReleaseRateRupture / C5), 1)
+
+    const factAIt = 0
+
+    const CAAILcmdSmall = (IAAIL_C_Small * factICSmall) + (CAAIL_C_Small * (1 - factICSmall))
+    const CAAILcmdMedium = (IAAIL_C_Medium * factICMedium) + (CAAIL_C_Medium * (1 - factICMedium))
+    const CAAILcmdLarge = (IAAIL_C_Large * factICLarge) + (CAAIL_C_Large * (1 - factICLarge))
+    const CAAILcmdRupture = (IAAIL_C_Rupture * factICRupture) + (CAAIL_C_Rupture * (1 - factICRupture))
+
+    const CAAILinjSmall = (IAAIL_P_Small * factICSmall) + (CAAIL_P_Small * (1 - factICSmall))
+    const CAAILinjMedium = (IAAIL_P_Medium * factICMedium) + (CAAIL_P_Medium * (1 - factICMedium))
+    const CAAILinjLarge = (IAAIL_P_Large * factICLarge) + (CAAIL_P_Large * (1 - factICLarge))
+    const CAAILinjRupture = (IAAIL_P_Rupture * factICRupture) + (CAAIL_P_Rupture * (1 - factICRupture))
+
+    const CAAINLcmdSmall = (IAAINL_C_Small * factICSmall) + (CAAINL_C_Small * (1 - factICSmall))
+    const CAAINLcmdMedium = (IAAINL_C_Medium * factICMedium) + (CAAINL_C_Medium * (1 - factICMedium))
+    const CAAINLcmdLarge = (IAAINL_C_Large * factICLarge) + (CAAINL_C_Large * (1 - factICLarge))
+    const CAAINLcmdRupture = (IAAINL_C_Rupture * factICRupture) + (CAAINL_C_Rupture * (1 - factICRupture))
+
+    const CAAINLinjSmall = (IAAINL_P_Small * factICSmall) + (CAAINL_P_Small * (1 - factICSmall))
+    const CAAINLinjMedium = (IAAINL_P_Medium * factICMedium) + (CAAINL_P_Medium * (1 - factICMedium))
+    const CAAINLinjLarge = (IAAINL_P_Large * factICLarge) + (CAAINL_P_Large * (1 - factICLarge))
+    const CAAINLinjRupture = (IAAINL_P_Rupture * factICRupture) + (CAAINL_P_Rupture * (1 - factICRupture))
+
+    const CAFlamCmdSmall = (CAAILcmdSmall * factAIt) + (CAAINLcmdSmall * (1 - factAIt))
+    const CAFlamCmdMedium = (CAAILcmdMedium * factAIt) + (CAAINLcmdMedium * (1 - factAIt))
+    const CAFlamCmdLarge = (CAAILcmdLarge * factAIt) + (CAAINLcmdLarge * (1 - factAIt))
+    const CAFlamCmdRupture = (CAAILcmdRupture * factAIt) + (CAAINLcmdRupture * (1 - factAIt))
+
+    const CAFlamInjSmall = (CAAILinjSmall * factAIt) + (CAAINLinjSmall * (1 - factAIt))
+    const CAFlamInjMedium = (CAAILinjMedium * factAIt) + (CAAINLinjMedium * (1 - factAIt))
+    const CAFlamInjLarge = (CAAILinjLarge * factAIt) + (CAAINLinjLarge * (1 - factAIt))
+    const CAFlamInjRupture = (CAAILinjRupture * factAIt) + (CAAINLinjRupture * (1 - factAIt))
+
+    const CA_ComponentDamage = ((sizeSmall * CAFlamCmdSmall) + (sizeMedium * CAFlamCmdMedium) + (sizeLarge * CAFlamCmdLarge) + (sizeRupture * CAFlamCmdRupture)) / total
+    const CA_PersonalInjuries = ((sizeSmall * CAFlamInjSmall) + (sizeMedium * CAFlamInjMedium) + (sizeLarge * CAFlamInjLarge) + (sizeRupture * CAFlamInjRupture)) / total
+
+    const durationToxicSmall = Math.min(3600, (releaseMassSmall / releaseRateWnSmall), (60 * leakDuration?.[0]?.value))
+    const durationToxicMedium = Math.min(3600, (releaseMassMedium / releaseRateWnMedium), (60 * leakDuration?.[1]?.value))
+    const durationToxicLarge = Math.min(3600, (releaseMassLarge / releaseRateWnLarge), (60 * leakDuration?.[2]?.value))
+    const durationToxicRupture = Math.min(3600, (releaseMassRupture / releaseRateWnRupture), (60 * leakDuration?.[2]?.value))
+
+    const C1mfracTox = 0.0004
+    const toxicReleaseRateSmall = releaseRateWnSmall * C1mfracTox
+    const toxicReleaseRateMedium = releaseRateWnMedium * C1mfracTox
+    const toxicReleaseRateLarge = releaseRateWnLarge * C1mfracTox
+    const toxicReleaseRateRupture = releaseRateWnRupture * C1mfracTox
+
+    const toxicReleaseMassSmall = releaseMassSmall * C1mfracTox
+    const toxicReleaseMassMedium = releaseMassMedium * C1mfracTox
+    const toxicReleaseMassLarge = releaseMassLarge * C1mfracTox
+    const toxicReleaseMassRupture = releaseMassRupture * C1mfracTox
+
+    const {chlorineE: cESmall, chlorineF: cFSmall}: any = amoniaAndChlorine.find((i: any) => i.duration == leakDuration?.[0].value) || {}
+    const {chlorineE: cEMedium, chlorineF: cFMedium}: any = amoniaAndChlorine.find((i: any) => i.duration == leakDuration?.[1].value) || {}
+    const {chlorineE: cELarge, chlorineF: cFLarge}: any = amoniaAndChlorine.find((i: any) => i.duration == leakDuration?.[2].value) || {}
+    const {chlorineE: cERupture, chlorineF: cFRupture}: any = amoniaAndChlorine.find((i: any) => i.duration == leakDuration?.[2].value) || {}
+    const toxicConsAreqSmall =  cESmall * toxicReleaseRateSmall  ** cFSmall
+    const toxicConsAreqMedium =  cEMedium * toxicReleaseRateMedium  ** cFMedium
+    const toxicConsAreqLarge =  cELarge * toxicReleaseRateLarge  ** cFLarge
+    const toxicConsAreqRupture =  cERupture * toxicReleaseRateRupture  ** cFRupture
+
+    const forSteamSmall = C9 * adjReleaseRateSmall
+    const forSteamMedium = C9 * adjReleaseRateMedium
+    const forSteamLarge = (C10 * releaseMassLarge) ** 0.6384
+    const forSteamRupture = (C10 *  releaseMassRupture) ** 0.6384
+
+    const forAcidCausticSmall = (0 * factICSmall) + (forSteamSmall * (1 - factICSmall))
+    const forAcidCausticMedium = (forSteamLarge * factICLarge) + (0 * (1 - factICMedium))
+    const forAcidCausticLarge = (0 * factICLarge) + (forSteamLarge * (1 - factICLarge))
+    const forAcidCausticRupture = (forSteamRupture * factICRupture) + (0 * (1 - factICRupture))
+
+    const CA_ToxInjuries = ((sizeSmall * toxicConsAreqSmall) + (sizeMedium * toxicConsAreqMedium) + (sizeLarge * toxicConsAreqLarge) + (sizeRupture * toxicConsAreqRupture)) / total
+
+    const CA_NonFlamable = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
+
+    const finalConsequenceM = Math.max(CA_ComponentDamage, Math.max(CA_PersonalInjuries, CA_ToxInjuries, CA_NonFlamable)) 
+
     return {
         getIdealGasHeatRatio: kRatio / (kRatio - constantR),
         basedOnDNSmallmm,
@@ -297,5 +453,92 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
         energyEfficiencyMedium,
         energyEfficiencyLarge,
         energyEfficiencyRupture,
+        CAAINL_C_Small,
+        CAAINL_C_Medium,
+        CAAINL_C_Large,
+        CAAINL_C_Rupture,
+        CAAIL_C_Small,
+        CAAIL_C_Medium,
+        CAAIL_C_Large,
+        CAAIL_C_Rupture,
+        IAAINL_C_Small,
+        IAAINL_C_Medium,
+        IAAINL_C_Large,
+        IAAINL_C_Rupture,
+        IAAIL_C_Small,
+        IAAIL_C_Medium,
+        IAAIL_C_Large,
+        IAAIL_C_Rupture,
+        CAAINL_P_Small,
+        CAAINL_P_Medium,
+        CAAINL_P_Large,
+        CAAINL_P_Rupture,
+        CAAIL_P_Small,
+        CAAIL_P_Medium,
+        CAAIL_P_Large,
+        CAAIL_P_Rupture,
+        IAAINL_P_Small,
+        IAAINL_P_Medium,
+        IAAINL_P_Large,
+        IAAINL_P_Rupture,
+        IAAIL_P_Small,
+        IAAIL_P_Medium,
+        IAAIL_P_Large,
+        IAAIL_P_Rupture,
+        factICSmall,
+        factICMedium,
+        factICLarge,
+        factICRupture,
+        CAAILcmdSmall,
+        CAAILcmdMedium,
+        CAAILcmdLarge,
+        CAAILcmdRupture,
+        CAAILinjSmall,
+        CAAILinjMedium,
+        CAAILinjLarge,
+        CAAILinjRupture,
+        CAAINLcmdSmall,
+        CAAINLcmdMedium,
+        CAAINLcmdLarge,
+        CAAINLcmdRupture,
+        CAAINLinjSmall,
+        CAAINLinjMedium,
+        CAAINLinjLarge,
+        CAAINLinjRupture,
+        CAFlamCmdSmall,
+        CAFlamCmdMedium,
+        CAFlamCmdLarge,
+        CAFlamCmdRupture,
+        CAFlamInjSmall,
+        CAFlamInjMedium,
+        CAFlamInjLarge,
+        CAFlamInjRupture,
+        CA_ComponentDamage,
+        CA_PersonalInjuries,
+        durationToxicSmall,
+        durationToxicMedium,
+        durationToxicLarge,
+        durationToxicRupture,
+        toxicReleaseRateSmall,
+        toxicReleaseRateMedium,
+        toxicReleaseRateLarge,
+        toxicReleaseRateRupture,
+        toxicReleaseMassSmall,
+        toxicReleaseMassMedium,
+        toxicReleaseMassLarge,
+        toxicReleaseMassRupture,
+        toxicConsAreqSmall,
+        toxicConsAreqMedium,
+        toxicConsAreqLarge,
+        toxicConsAreqRupture,
+        forSteamSmall,
+        forSteamMedium,
+        forSteamLarge,
+        forSteamRupture,
+        forAcidCausticSmall,
+        forAcidCausticMedium,
+        forAcidCausticLarge,
+        forAcidCausticRupture,
+        finalConsequenceM
     }
 }

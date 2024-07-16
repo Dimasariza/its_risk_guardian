@@ -46,7 +46,7 @@ export const isolation = [
     },
 ]
 
-function DetectionAndIsolation({impact, setImpact, cofValue, toast}: any) {
+function DetectionAndIsolation({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const footerContent = (
@@ -57,7 +57,10 @@ function DetectionAndIsolation({impact, setImpact, cofValue, toast}: any) {
           <Button label="Save" icon="pi pi-times" 
           onClick={() => {
             setVisible(false)
-            CofService.editData({...cofValue, cof_detectionSystem: impact.cof_detectionSystem.id, cof_isolationSystem: impact.cof_isolationSystem.id})
+            CofService.editData({...value, 
+                cof_detectionSystem: value?.impact?.cof_detectionSystem.id, 
+                cof_isolationSystem: value?.impact?.cof_isolationSystem.id
+            })
             .then(res => {
                 toast.current.show({
                     severity: 'success',
@@ -89,8 +92,15 @@ function DetectionAndIsolation({impact, setImpact, cofValue, toast}: any) {
                 style={{ width: '50vw' }} 
                 onHide={() => {if (!visible) return; setVisible(false); }}
             >
-                <DataTable value={detection} selectionMode={"single"} selection={impact.cof_detectionSystem} 
-                onSelectionChange={(e: any) => setImpact((prev: any) => ({...prev, cof_detectionSystem: e.value}))} 
+                <DataTable value={detection} selectionMode={"single"} selection={value?.impact?.cof_detectionSystem} 
+                onSelectionChange={(e: any) => setValue((prev: any) => ({
+                        ...prev, 
+                        impact: {
+                            ...value.impact,
+                            cof_detectionSystem: e.value
+                        }
+                    })
+                )} 
                 dataKey="id" 
                 tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
@@ -98,8 +108,15 @@ function DetectionAndIsolation({impact, setImpact, cofValue, toast}: any) {
                     <Column field="classification" header="Detection Classification"></Column>
                 </DataTable>
 
-                <DataTable value={isolation} selectionMode={"single"} selection={impact.cof_isolationSystem} 
-                onSelectionChange={(e: any) => setImpact((prev: any) => ({...prev, cof_isolationSystem: e.value}))} 
+                <DataTable value={isolation} selectionMode={"single"} selection={value?.impact?.cof_isolationSystem} 
+                onSelectionChange={(e: any) => setValue((prev: any) => ({
+                        ...prev, 
+                        impact: {
+                            ...value.impact,
+                            cof_isolationSystem: e.value
+                        }
+                    })
+                )} 
                 dataKey="id" 
                 tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>

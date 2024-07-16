@@ -8,7 +8,7 @@ import { InputSwitch } from "primereact/inputswitch";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function DamageDialog({damage, setDamage, cofValue, toast}: any) {
+function DamageDialog({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false);
     
     const footerContent = (
@@ -18,7 +18,7 @@ function DamageDialog({damage, setDamage, cofValue, toast}: any) {
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
           onClick={() => {
-            if(!damage) {
+            if(!value?.damage) {
                 return toast.current.show({
                     severity: 'error',
                     summary: 'No Item Selected',
@@ -26,7 +26,7 @@ function DamageDialog({damage, setDamage, cofValue, toast}: any) {
                 });
             }
             setVisible(false)
-            CofService.editData({...cofValue, cof_damageCons: damage.id})
+            CofService.editData({...value, cof_damageCons: value?.damage.id})
             .then(res => {
                 toast.current.show({
                     severity: 'success',
@@ -111,9 +111,9 @@ function DamageDialog({damage, setDamage, cofValue, toast}: any) {
             >
                 <DataTable value={damageTable} 
                 selectionMode={"single"} 
-                selection={damage} 
+                selection={value?.damage} 
                 headerColumnGroup={headerGroup}
-                onSelectionChange={(e: any) => setDamage(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
+                onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, damage: e.value}))} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
 
                     <Column field="fluid"></Column>

@@ -1,3 +1,4 @@
+import { CofService } from "@/service/calculation/cofService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -5,46 +6,41 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 
-function ReleaseHoleSize({cofValue, toast}: any) {
+export const holeSizes = [
+    {
+        id: 'holeSize001',
+        size: 'Small',
+        range: '0 - 1/4',
+        release: 'd1 = 0.25',
+        holeSizeValue: "cof_releaseHoleSizeD1"
+    },
+    {
+        id: 'holeSize002',
+        size: 'Medium',
+        range: '>1/4 - 2',
+        release: 'd2 = 1',
+        holeSizeValue: "cof_releaseHoleSizeD2"
+    },
+    {
+        id: 'holeSize003',
+        size: 'Large',
+        range: '2 - 6',
+        release: 'd3 = 4',
+        holeSizeValue: "cof_releaseHoleSizeD3"
+    },
+    {
+        id: 'holeSize004',
+        size: 'Rupture',
+        range: '6',
+        release: 'd4 = min[D, 406]',
+        holeSizeValue: "cof_releaseHoleSizeD4"
+    },
+]
+
+
+function ReleaseHoleSize({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false)
     const [editRelease, setEditRelease] = useState(false)
-    const [holeSizeValue, setHoleSizeValue] = useState<any>({
-        d1: 0.25,
-        d2: 1,
-        d3: 4,
-        d4: 406
-    });
-
-    const holeSizes = [
-        {
-            id: 'holeSize001',
-            size: 'Small',
-            range: '0 - 1/4',
-            release: 'd1 = 0.25',
-            holeSizeValue: "d1"
-        },
-        {
-            id: 'holeSize002',
-            size: 'Medium',
-            range: '>1/4 - 2',
-            release: 'd2 = 1',
-            holeSizeValue: "d2"
-        },
-        {
-            id: 'holeSize003',
-            size: 'Large',
-            range: '2 - 6',
-            release: 'd3 = 4',
-            holeSizeValue: "d3"
-        },
-        {
-            id: 'holeSize004',
-            size: 'Rupture',
-            range: '6',
-            release: 'd4 = min[D, 406]',
-            holeSizeValue: "d4"
-        },
-    ]
     
     const footerContent = (
         <div className="flex justify-content-between">
@@ -58,8 +54,23 @@ function ReleaseHoleSize({cofValue, toast}: any) {
                 severity="danger" />
                 <Button label="Save" icon="pi pi-times" 
                 onClick={() => {
-                    setVisible(false)
                     setEditRelease(false)
+                    setVisible(false)
+                    CofService.editData(value)
+                    .then(res => {
+                        toast.current.show({
+                            severity: 'success',
+                            summary: 'Data Updated',
+                            detail: `You update General Data`
+                        });
+                    })
+                    .catch((e: any) => {
+                        toast.current.show({
+                            severity: 'error',
+                            summary: 'Data Failed to Updated',
+                            detail: `Damage mechanism not updated`
+                        });
+                    })
                 }} 
                 severity="success" />
             </div>
@@ -70,8 +81,8 @@ function ReleaseHoleSize({cofValue, toast}: any) {
         if(!editRelease) {
             return rowData.release
         }
-        return <InputText value={holeSizeValue[rowData.holeSizeValue]} onChange={(e) => { 
-            setHoleSizeValue((prev: any) => ({...prev, [rowData.holeSizeValue]: e.target.value}))
+        return <InputText value={value[rowData.holeSizeValue]} onChange={(e) => { 
+            setValue((prev: any) => ({...prev, [rowData.holeSizeValue]: e.target.value}))
         }} />
     }
 
@@ -89,7 +100,7 @@ function ReleaseHoleSize({cofValue, toast}: any) {
                 footer={footerContent}
             >
                 <DataTable 
-                value={holeSizes.map((i, id) => ({...i, no: id + 1}))} 
+                value={holeSizes.map((i: any, id: number) => ({...i, no: id + 1}))} 
                 tableStyle={{ minWidth: '50rem' }}>
                     <Column field="no" header="Release Hole Number"></Column>
                     <Column field="size" header="Release Hole Size"></Column>

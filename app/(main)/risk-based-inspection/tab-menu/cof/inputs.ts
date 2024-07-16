@@ -11,7 +11,7 @@ const representativeFluidList = {
 
 const inputs: any = [
     {
-      name: 'massComponent',
+      name: 'cof_massComponent',
       type: 'text',
       placeholder: 'Mass Component',
       label: 'Mass Component',
@@ -19,10 +19,17 @@ const inputs: any = [
       className: 'w-max'
     },
     {
-      name: 'massInventory',
+      name: 'cof_massInventory',
       type: 'text',
       placeholder: 'Mass Inventory',
       label: 'Mass Inventory',
+      className: 'w-max'
+    },    
+    {
+      name: 'C1mfracTox',
+      type: 'text',
+      placeholder: 'C1 mfrac Toxic',
+      label: 'C1 mfrac Toxic',
       className: 'w-max'
     },
 ];

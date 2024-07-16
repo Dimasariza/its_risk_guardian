@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "primereact/button";
 import { CofService } from "@/service/calculation/cofService";
 
-function RepresentativeFluidDialog({fluidSelected, setFluidSelected, cofValue, toast}: any) {
+function RepresentativeFluidDialog({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const headerGroup = (
@@ -44,7 +44,7 @@ function RepresentativeFluidDialog({fluidSelected, setFluidSelected, cofValue, t
           <Button label="Save" icon="pi pi-times" 
           onClick={() => {
             setVisible(false)
-            CofService.editData({...cofValue, cof_representativeFluid: fluidSelected.id})
+            CofService.editData({...value, cof_representativeFluid: value.fluidSelected.id})
             .then(res => {
                 toast.current.show({
                     severity: 'success',
@@ -78,12 +78,12 @@ function RepresentativeFluidDialog({fluidSelected, setFluidSelected, cofValue, t
                 <DataTable 
                         value={representativeFluidNodes} 
                         selectionMode={"single"} 
-                        selection={fluidSelected} 
+                        selection={value?.fluidSelected} 
                         scrollable 
                         scrollHeight="700px" 
                         headerColumnGroup={headerGroup} 
                         tableStyle={{ minWidth: '50rem' }} 
-                        onSelectionChange={(e: any) => setFluidSelected(e.value)} dataKey="id"
+                        onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, fluidSelected: e.value}))} dataKey="id"
                     >
                     <Column selectionMode="single"></Column>
                     <Column field="fluid" body={(e) => e.fluid ? <>{e.fluid}</> : <div className="">---</div>}></Column>

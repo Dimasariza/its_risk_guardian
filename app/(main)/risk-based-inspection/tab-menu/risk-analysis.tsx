@@ -1,51 +1,58 @@
 'use client';
 
+import { GeneralDataService } from "@/service/calculation/generalData-service";
+import { getAlkaline, getExternalCorrosion, getThinning, getValue } from "@/service/calculation/pofRBIDate-service";
 import { axisClasses, ChartsLegend, LineChart, lineElementClasses } from "@mui/x-charts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { gffTableValue } from "./pof-rbi-date/value/gffTableValue";
+import { calculateAlkaline } from "@/function/calcPlanAlkalineValue";
+import { calculateCOF } from "@/function/calcCOFValue";
+import IGeneralData from "@/types/IGeneralData";
 
 const riskMatrix: any = [
   {
     title: 'Shell Section',
     data: [
       [
-        { value: 5, noBorder: true },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "", color: 'bg-orange-500' },
-        { value: "", color: 'bg-orange-500' },
-        { value: "", color: 'bg-red-600' },
-        { value: "", color: 'bg-red-600' },
+        { row:5, column: "0", value: 5, noBorder: true },
+        { row:5, column: "A", value: "", color: 'bg-yellow-500' },
+        { row:5, column: "B", value: "", color: 'bg-orange-500' },
+        { row:5, column: "C", value: "", color: 'bg-orange-500' },
+        { row:5, column: "D", value: "", color: 'bg-red-600' },
+        { row:5, column: "E", value: "", color: 'bg-red-600' },
       ],
       [
-        { value: 4, noBorder: true },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "৹", color: 'bg-orange-500' },
-        { value: "", color: 'bg-orange-500' },
-        { value: "", color: 'bg-red-600' },
+        { row:4, column: "0", value: 4, noBorder: true },
+        { row:4, column: "A", value: "", color: 'bg-yellow-500' },
+        { row:4, column: "B", value: "", color: 'bg-yellow-500' },
+        { row:4, column: "C", value: <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>, color: 'bg-orange-500' },
+        { row:4, column: "D", value: "", color: 'bg-orange-500' },
+        { row:4, column: "E", value: "", color: 'bg-red-600' },
       ],
       [
-        { value: 3, noBorder: true },
-        { value: "", color: 'bg-green-400' },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "•", color: 'bg-yellow-500' },
-        { value: "", color: 'bg-orange-500' },
-        { value: "", color: 'bg-orange-500' },
+        { row:3, column: "0", value: 3, noBorder: true },
+        { row:3, column: "A", value: "", color: 'bg-green-400' },
+        { row:3, column: "B", value: "", color: 'bg-yellow-500' },
+        { row:3, column: "C", value: <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "2rem" }}></i>, color: 'bg-yellow-500' },
+        { row:3, column: "D", value: "", color: 'bg-orange-500' },
+        { row:3, column: "E", value: "", color: 'bg-orange-500' },
       ],
       [
-        { value: 2, noBorder: true },
-        { value: "", color: 'bg-green-400' },
-        { value: "", color: 'bg-green-400' },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "", color: 'bg-orange-500' },
+        { row:2, column: "0", value: 2, noBorder: true },
+        { row:2, column: "A", value: "", color: 'bg-green-400' },
+        { row:2, column: "B", value: "", color: 'bg-green-400' },
+        { row:2, column: "C", value: "", color: 'bg-yellow-500' },
+        { row:2, column: "D", value: "", color: 'bg-yellow-500' },
+        { row:2, column: "E", value: "", color: 'bg-orange-500' },
       ],
       [
-        { value: 1, noBorder: true },
-        { value: "", color: 'bg-green-400' },
-        { value: "", color: 'bg-green-400' },
-        { value: "", color: 'bg-green-400' },
-        { value: "", color: 'bg-yellow-500' },
-        { value: "", color: 'bg-yellow-500' },
+        { row:1, column: "0", value: 1, noBorder: true },
+        { row:1, column: "A", value: "", color: 'bg-green-400' },
+        { row:1, column: "B", value: "", color: 'bg-green-400' },
+        { row:1, column: "C", value: "", color: 'bg-green-400' },
+        { row:1, column: "D", value: "", color: 'bg-yellow-500' },
+        { row:1, column: "E", value: "", color: 'bg-yellow-500' },
       ],
       [
         { value: "", noBorder: true },
@@ -62,8 +69,8 @@ const riskMatrix: any = [
     data: [
       [
         { value: 5, noBorder: true },
-        { value: "•", color: 'bg-yellow-500' },
-        { value: "৹", color: 'bg-orange-500' },
+        { value: "", color: 'bg-yellow-500' },
+        { value: "", color: 'bg-orange-500' },
         { value: "", color: 'bg-orange-500' },
         { value: "", color: 'bg-red-600' },
         { value: "", color: 'bg-red-600' },
@@ -177,7 +184,11 @@ const chartProps: any = {
   })
 }
 
+{/* <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "2rem" }}></i> */}
+{/* <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i> */}
+
 function RiskAnalysis() {
+
   const [value, setValue] = useState<any>({
     shellRangeDate: [3, 7],
     headRangeDate: [2, 5],
@@ -187,12 +198,128 @@ function RiskAnalysis() {
     headXAxis: [2, 16]
   });
 
-  const shellRangeDate = [null, ...value.shellRangeDate];
-  const headRangeDate = [null, ...value.headRangeDate];
-  const shellXAxis = [0, ...value.shellXAxis, 25];
-  const headXAxis = [0, ...value.headXAxis, 25];
-  const shellRiskTarget = shellXAxis.map(_ => value.shellRiskTarget); 		
-  const headRiskTarget = headXAxis.map(_ => value.headRiskTarget); 		
+  const riskPlotting = (probabilityRange: number, consequenceRange: number) => {
+    const probability = [
+      {
+        category: 1,
+        range: probabilityRange <= 1,
+      },
+      {
+        category: 2,
+        range: probabilityRange > 1 && probabilityRange <= 10,
+      },
+      {
+        category: 3,
+        range: probabilityRange > 10 && probabilityRange <= 100,
+      },
+      {
+        category: 4,
+        range: probabilityRange > 100 && probabilityRange <= 1000,
+      },
+      {
+        category: 5,
+        range: probabilityRange >= 1000,
+      },
+    ].find(({range}: any) => range)
+
+    const consequence = [
+      {
+        category: "A",
+        range: consequenceRange <= 9.29,
+      },
+      {
+        category: "B",
+        range: consequenceRange > 9.29 && consequenceRange <= 92.9,
+      },
+      {
+        category: "C",
+        range: consequenceRange > 92.9 && consequenceRange <= 929,
+      },
+      {
+        category: "D",
+        range: consequenceRange > 929 && consequenceRange <= 9290,
+      },
+      {
+        category: "E",
+        range: consequenceRange >= 9290,
+      },
+    ].find(({range}: any) => range)
+
+    return { probability, consequence }
+  }
+
+  console.log(riskPlotting(9.2384, 758.9777))
+
+  const [pofValue, setPofValue] = useState();
+  const [generalData, setGeneralData] = useState<IGeneralData | any>({})
+  const [rbiThinning, setRBIThinning] = useState({})
+  const [rbiExCor, setRBIExCor] = useState({})
+  const [rbiAlkaline, setRBIAlkaline] = useState({})
+  const data = useSelector((state: any) => state.Reducer);
+  const componentId = data.menu?.comp_id
+  
+  useEffect(() => {
+    if (!componentId) return 
+
+    GeneralDataService.fetchData(componentId)
+    .then((res: any) => {
+      setGeneralData(res)
+    })
+
+    getAlkaline(componentId).then((res: any) => {
+      setRBIAlkaline(res);
+    });
+
+    getThinning(componentId)
+    .then((res: any) => {
+      setRBIThinning(res)
+    })
+
+    getExternalCorrosion(componentId)
+    .then((res: any) => {
+      setRBIExCor(res)
+    })
+
+    getValue(componentId)
+    .then((res) => {
+      setPofValue(res)
+      const failureFreq = gffTableValue.find(i => i.id == res.planValue_failureFrequency)
+    })
+  }, [data]);
+
+  const {
+    shellBaseDF,
+    headBaseDF,
+    age,
+    planShellSection,
+    planHeadSection,
+    shellPWHT,
+    headPWHT
+  } = calculateAlkaline({
+    generalData,
+    thinning: rbiThinning,
+    exCor: rbiExCor,
+    alkaline: rbiAlkaline
+  })
+
+  const RBIshellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
+  const RBIheadTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
+
+  const {
+    finalConsequenceM
+  } = calculateCOF({
+      generalData, 
+      fluidSelected: value?.fluidSelected,
+      cofValue: value,
+      impact: value?.impact
+  })
+
+  const shellRangeDate = [null, ...value?.shellRangeDate];
+  const headRangeDate = [null, ...value?.headRangeDate];
+  const shellXAxis = [0, ...value?.shellXAxis, 25];
+  const headXAxis = [0, ...value?.headXAxis, 25];
+  const shellRiskTarget = shellXAxis.map(_ => value?.shellRiskTarget); 		
+  const headRiskTarget = headXAxis.map(_ => value?.headRiskTarget); 		
 
   return (
     <section className="p-4">
@@ -241,11 +368,11 @@ function RiskAnalysis() {
                       <span>Medium Low</span>
                     </div>
                     <div className="p-1">
-                      <div style={{fontSize: "2rem"}} >•</div>
+                      <div style={{fontSize: "2rem"}} ><i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i></div>
                       <span>RBI Date</span>
                     </div>
                     <div className="p-1">
-                      <div style={{fontSize: "2rem"}} >৹</div>
+                      <div style={{fontSize: "2rem"}} ><i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i></div>
                       <span>Plan Date</span>
                     </div>
                   </div>

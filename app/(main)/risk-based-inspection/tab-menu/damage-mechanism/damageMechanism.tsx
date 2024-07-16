@@ -7,7 +7,6 @@ import { Checkbox } from 'primereact/checkbox';
 import damageFactor from './damageFactor';
 import { useDispatch, useSelector } from 'react-redux';
 import validate from './validate';
-import { EditData } from '@/redux/action/action';
 import { damageMechanismService } from '@/service/calculation/damageMechanism-service';
 import { Toast } from 'primereact/toast';
 

@@ -7,7 +7,7 @@ import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function FlamableDialog({flamable, setFlamable, cofValue, toast}: any) {
+function FlamableDialog({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const footerContent = (
@@ -17,7 +17,7 @@ function FlamableDialog({flamable, setFlamable, cofValue, toast}: any) {
           severity="danger" />
           <Button label="Save" icon="pi pi-times" 
           onClick={() => {
-            if(!flamable) {
+            if(!value?.flamable) {
                 return toast.current.show({
                     severity: 'error',
                     summary: 'No Item Selected',
@@ -25,7 +25,7 @@ function FlamableDialog({flamable, setFlamable, cofValue, toast}: any) {
                 });
             }
             setVisible(false)
-            CofService.editData({...cofValue, cof_flamableCons: flamable.id})
+            CofService.editData({...value, cof_flamableCons: value.flamable.id})
             .then(res => {
                 toast.current.show({
                     severity: 'success',
@@ -110,9 +110,12 @@ function FlamableDialog({flamable, setFlamable, cofValue, toast}: any) {
             >
                 <DataTable value={flamableTable} 
                 selectionMode={"single"} 
-                selection={flamable} 
-                headerColumnGroup={headerGroup}
-                onSelectionChange={(e: any) => setFlamable(e.value)} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
+                selection={value.flamable} 
+                headerColumnGroup={headerGroup} 
+                onSelectionChange={(e: any) => setValue((prev: any) => ({
+                        ...prev,
+                        flamable: e.value
+                    }))} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
 
                     <Column field="fluid"></Column>

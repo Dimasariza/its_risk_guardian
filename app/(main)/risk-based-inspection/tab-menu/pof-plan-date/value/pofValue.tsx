@@ -1,13 +1,13 @@
 import InputTypeText from '@/fragments/input-type-text';
-import { getAlkaline, getExternalCorrosion, getThinning, getValue, updateValue } from '@/service/calculation/pofRBIDate-service';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GenericFailureFrequency from './genericFailureFreq';
 import InputValueOnly from '@/fragments/inputValueOnly';
-import { calculateAlkaline } from '@/function/calcRBIAlkalineValue';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { gffTableValue } from './gffTableValue';
 import { Toast } from 'primereact/toast';
+import { calculateAlkaline } from '@/function/calcPlanAlkalineValue';
+import { getAlkaline, getExternalCorrosion, getThinning, getValue, updateValue } from '@/service/calculation/pofPlanDate-service';
 
 function POFValue() {
   const [failureFrequency, setFailureFrequency] = useState<any>()
@@ -51,7 +51,7 @@ function POFValue() {
     getValue(componentId)
     .then((res) => {
       setValue(res)
-      const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
+      const failureFreq = gffTableValue.find(i => i.id == res.planValue_failureFrequency)
       setFailureFrequency(failureFreq)
     })
   }, [data]);
@@ -81,8 +81,8 @@ function POFValue() {
     shellBaseDF,
     headBaseDF,
     age,
-    rbiShellSection,
-    rbiHeadSection,
+    planShellSection,
+    planHeadSection,
     shellPWHT,
     headPWHT
   } = calculateAlkaline({
@@ -92,8 +92,8 @@ function POFValue() {
     alkaline
   })
 
-  const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
-  const headTotal = Math.max(headBaseDF!, rbiHeadSection!) + headPWHT
+  const shellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
+  const headTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
 
   return (
     <>
@@ -102,7 +102,7 @@ function POFValue() {
       <section className="p-3">
         <div className='flex flex-wrap lg:column-gap-3 mt-4'>
           <InputTypeText props={{
-            name: 'rbiValue_FMS',
+            name: 'planValue_FMS',
             type: 'text',
             placeholder: 'Management System Factor',
             label: 'Management System Factor',
@@ -130,11 +130,11 @@ function POFValue() {
               },
               {
                 label: "Shell Governing External damage factor",
-                value: rbiShellSection?.toFixed(4)
+                value: planShellSection?.toFixed(4)
               },
               {
                 label: "Head Governing External damage factor",
-                value: rbiHeadSection?.toFixed(4)
+                value: planHeadSection?.toFixed(4)
               },
               {
                 label: "Shell Total Value damage factor",
@@ -146,11 +146,11 @@ function POFValue() {
               },
               {
                 label: "Shell Section Probability of Failure",
-                value: (failureFrequency?.total * shellTotal * value.rbiValue_FMS).toFixed(6)
+                value: (failureFrequency?.total * shellTotal * value.planValue_FMS).toFixed(6)
               },
               {
                 label: "Head Section Probability of Failure",
-                value: (failureFrequency?.total * headTotal * value.rbiValue_FMS).toFixed(6)
+                value: (failureFrequency?.total * headTotal * value.planValue_FMS).toFixed(6)
               },
             ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
           }

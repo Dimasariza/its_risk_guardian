@@ -1,8 +1,8 @@
 import { inputs } from "./inputs";
 import RepresentativeFluidDialog, { representativeFluidNodes } from "./representativeFluidDialog";
 import InputValueOnly from "@/fragments/inputValueOnly";
-import PhaseOfFluid from "./phaseOfFluidDialog";
-import LiquidInventories from "./liquidInventoriesDialog";
+import PhaseOfFluid, { liquidPhase } from "./phaseOfFluidDialog";
+import LiquidInventories, { liquidInventories } from "./liquidInventoriesDialog";
 import DetectionAndIsolation, { detection, isolation } from "./detectionAndIsolation";
 import FlamableDialog, { flamableTable } from "./flamableDialog";
 import DamageDialog, { damageTable } from "./damageDialog";
@@ -13,22 +13,18 @@ import { useSelector } from "react-redux";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { calculateCOF } from "@/function/calcCOFValue";
 import { CofService } from "@/service/calculation/cofService";
-import AdjusmentToFlamable from "./adjustmentToFlamable";
+import AdjusmentToFlamable, { adjMitigation } from "./adjustmentToFlamable";
+import { getValue } from "@/service/calculation/pofRBIDate-service";
+import { gffTableValue } from "../pof-rbi-date/value/gffTableValue";
+import AmoniaChlorineDialog from "./amoniaAndChlorine";
 
 function COFPV({toast}: any) {
     const [value, setValue] = useState<any>({});
-    const [fluidSelected, setFluidSelected] = useState<any>({});
-    const [impact, setImpact] = useState<any>({
-        cof_detectionSystem: null,
-        cof_isolationSystem: null
-    });
-    const [damage, setDamage] = useState<any>({});
-    const [flamable, setFlamable] = useState<any>({});
 
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<any>({});
     const data = useSelector((state: any) => state.Reducer);
-    let { edit } = useSelector((state: any) => state.EditReducer);
+    let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
     const componentId = data.menu?.comp_id
     useEffect(() => {
@@ -42,16 +38,48 @@ function COFPV({toast}: any) {
 
         CofService.fetchData(componentId)
         .then(res => {
-            setValue(res)
-            setFluidSelected(representativeFluidNodes.find((i: any) => i.id == res.cof_representativeFluid))
-            setImpact({
-                cof_detectionSystem: detection.find((i: any) => i.id == res.cof_detectionSystem),
-                cof_isolationSystem: isolation.find((i: any) => i.id == res.cof_isolationSystem)
+            setValue({
+                ...res,
+                fluidSelected: representativeFluidNodes.find((i: any) => i.id == res.cof_representativeFluid),
+                impact: {
+                    cof_detectionSystem: detection.find((i: any) => i.id == res.cof_detectionSystem),
+                    cof_isolationSystem: isolation.find((i: any) => i.id == res.cof_isolationSystem),
+                },
+                flamable: flamableTable.find((i: any) => i.id == res.cof_flamableCons),
+                damage: damageTable.find((i: any) => i.id == res.cof_damageCons),
+                phase: liquidPhase.find((i: any) => i.id == res.cof_phaseOfFluid),
+                inventories: liquidInventories.find((i: any) => i.id == res.cof_liquidInventories),
+                mitigation: adjMitigation.find((i: any) => i.id == res.cof_adjToFlamable),
+                amoniaChloride: {}
             })
-            setFlamable(flamableTable.find((i: any) => i.id == res.cof_flamableCons))
-            setDamage(damageTable.find((i: any) => i.id == res.cof_damageCons))
+        })
+
+        getValue(componentId)
+        .then((res) => {
+          const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
+          setValue((prev: any) => ({...prev, failureFreq}))
         })
     }, [data]);
+
+    useEffect(() => {
+        if(Object.keys(error).length === 0 && !edit && !undoEdit) {
+        CofService.editData(value)
+        .then(res => {
+            toast.current.show({
+            severity: 'success',
+            summary: 'Data Updated',
+            detail: `You update General Data`
+            });
+        })
+        .catch((e: any) => {
+            toast.current.show({
+            severity: 'error',
+            summary: 'Data Failed to Updated',
+            detail: `Damage mechanism not updated`
+            });
+        })
+        } 
+    }, [edit])
 
     const {
         getIdealGasHeatRatio,
@@ -95,11 +123,98 @@ function COFPV({toast}: any) {
         energyEfficiencyMedium,
         energyEfficiencyLarge,
         energyEfficiencyRupture,
+        CAAINL_C_Small,
+        CAAINL_C_Medium,
+        CAAINL_C_Large,
+        CAAINL_C_Rupture,
+        CAAIL_C_Small,
+        CAAIL_C_Medium,
+        CAAIL_C_Large,
+        CAAIL_C_Rupture,
+        IAAINL_C_Small,
+        IAAINL_C_Medium,
+        IAAINL_C_Large,
+        IAAINL_C_Rupture,
+        IAAIL_C_Small,
+        IAAIL_C_Medium,
+        IAAIL_C_Large,
+        IAAIL_C_Rupture,
+        CAAINL_P_Small,
+        CAAINL_P_Medium,
+        CAAINL_P_Large,
+        CAAINL_P_Rupture,
+        CAAIL_P_Small,
+        CAAIL_P_Medium,
+        CAAIL_P_Large,
+        CAAIL_P_Rupture,
+        IAAINL_P_Small,
+        IAAINL_P_Medium,
+        IAAINL_P_Large,
+        IAAINL_P_Rupture,
+        IAAIL_P_Small,
+        IAAIL_P_Medium,
+        IAAIL_P_Large,
+        IAAIL_P_Rupture,
+        factICSmall,
+        factICMedium,
+        factICLarge,
+        factICRupture,
+        CAAILcmdSmall,
+        CAAILcmdMedium,
+        CAAILcmdLarge,
+        CAAILcmdRupture,
+        CAAILinjSmall,
+        CAAILinjMedium,
+        CAAILinjLarge,
+        CAAILinjRupture,
+        CAAINLcmdSmall,
+        CAAINLcmdMedium,
+        CAAINLcmdLarge,
+        CAAINLcmdRupture,
+        CAAINLinjSmall,
+        CAAINLinjMedium,
+        CAAINLinjLarge,
+        CAAINLinjRupture,
+        CAFlamCmdSmall,
+        CAFlamCmdMedium,
+        CAFlamCmdLarge,
+        CAFlamCmdRupture,
+        CAFlamInjSmall,
+        CAFlamInjMedium,
+        CAFlamInjLarge,
+        CAFlamInjRupture,
+        CA_ComponentDamage,
+        CA_PersonalInjuries,
+        durationToxicSmall,
+        durationToxicMedium,
+        durationToxicLarge,
+        durationToxicRupture,
+        toxicReleaseRateSmall,
+        toxicReleaseRateMedium,
+        toxicReleaseRateLarge,
+        toxicReleaseRateRupture,
+        toxicReleaseMassSmall,
+        toxicReleaseMassMedium,
+        toxicReleaseMassLarge,
+        toxicReleaseMassRupture,
+        toxicConsAreqSmall,
+        toxicConsAreqMedium,
+        toxicConsAreqLarge,
+        toxicConsAreqRupture,
+        forSteamSmall,
+        forSteamMedium,
+        forSteamLarge,
+        forSteamRupture,
+        forAcidCausticSmall,
+        forAcidCausticMedium,
+        forAcidCausticLarge,
+        forAcidCausticRupture,
+        finalConsequenceM
     } = calculateCOF({
         generalData, 
-        fluidSelected,
+        fluidSelected: value.fluidSelected,
         cofValue: value,
-        impact
+        impact: value.impact
     })
 
     return (
@@ -111,14 +226,15 @@ function COFPV({toast}: any) {
                 ))}
             </div>
             <div className="flex flex-wrap gap-5 mt-5">
-                <RepresentativeFluidDialog fluidSelected={fluidSelected} setFluidSelected={setFluidSelected} cofValue={value} toast={toast} />
-                <PhaseOfFluid cofValue={value} toast={toast}/>
-                <ReleaseHoleSize cofValue={value} toast={toast}/>
-                <LiquidInventories cofValue={value} toast={toast}/>
-                <DetectionAndIsolation impact={impact} setImpact={setImpact} cofValue={value} toast={toast} />
-                <AdjusmentToFlamable cofValue={value} toast={toast}/>
-                <FlamableDialog flamable={flamable} setFlamable={setFlamable} cofValue={value} toast={toast}/>
-                <DamageDialog damage={damage} setDamage={setDamage} cofValue={value} toast={toast} />
+                <RepresentativeFluidDialog value={value} setValue={setValue} toast={toast} />
+                <PhaseOfFluid value={value} setValue={setValue} toast={toast}/>
+                <ReleaseHoleSize value={value} setValue={setValue} toast={toast}/>
+                <LiquidInventories value={value} setValue={setValue} toast={toast}/>
+                <DetectionAndIsolation value={value} setValue={setValue} toast={toast} />
+                <AdjusmentToFlamable value={value} setValue={setValue} toast={toast}/>
+                <FlamableDialog value={value} setValue={setValue} toast={toast}/>
+                <DamageDialog value={value} setValue={setValue} toast={toast} />
+                <AmoniaChlorineDialog value={value} setValue={setValue} toast={toast}/>
             </div>
         </div>
 
@@ -127,33 +243,33 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "AIT (°C)",
-                        value: fluidSelected?.ait || "-"
+                        value: (value.fluidSelected?.ait.toFixed(4))
                     },
                     {
                         label: "AIT (°F)",
-                        value: (fluidSelected?.ait * 1.8 + 32).toFixed(3) || "-"
+                        value: (value.fluidSelected?.ait * 1.8 + 32).toFixed(3)
                     },
                     {
                         label: "AIT (K)",
-                        value: fluidSelected?.ait + 273 || "-"
+                        value: value.fluidSelected?.ait + 273
                     },
                     {
                         label: "AIT (°R)",
-                        value: fluidSelected?.ait * 4 / 5 || "-"
+                        value: value.fluidSelected?.ait * 4 / 5 
                     },
                     {
                         label: "Ideal Gas Spesific Heat Ratio",
-                        value:  getIdealGasHeatRatio!?.toFixed(4) || "-"
+                        value:  getIdealGasHeatRatio!?.toFixed(4) 
                     },
                     {
                         label: "Final consequence area (m²)",
-                        value:  ""
+                        value:  finalConsequenceM?.toFixed(4)
                     },
                     {
                         label: "Final consequence area (ft²)",
-                        value:  ""
+                        value:  (finalConsequenceM! * 10.7639104).toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
 
@@ -289,7 +405,7 @@ function COFPV({toast}: any) {
                         label: "Rupture Release Hole Size",
                         value: timeRequiredRupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>      
         
@@ -313,7 +429,7 @@ function COFPV({toast}: any) {
                         label: "Rupture Release Hole Size",
                         value: adjReleaseRateRupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>      
         
@@ -337,7 +453,7 @@ function COFPV({toast}: any) {
                         label: "Rupture Release Hole Size",
                         value: adjReleaseRateRupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>      
         
@@ -361,7 +477,7 @@ function COFPV({toast}: any) {
                         label: "Rupture Release Hole Size",
                         value: leakDurationRupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
         
@@ -385,7 +501,7 @@ function COFPV({toast}: any) {
                         label: "Rupture Release Hole Size",
                         value: releaseMassRupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>      
         
@@ -409,202 +525,499 @@ function COFPV({toast}: any) {
                         label: "Rupture Release Hole Size",
                         value: energyEfficiencyRupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>      
         
-        <h5>Component damage consequence areas for Auto-Ignition Likely, Continous Release (AIL-CONT), CAAIL-CONT</h5>
+        <h5>Component damage Auto-Ignition Not Likely, Continous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: CAAINL_C_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: CAAINL_C_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: CAAINL_C_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: CAAINL_C_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
 
-        <h5>Component damage consequence areas for Auto-Ignition Likely, Continous Release (AIL-CONT), CAAIL-CONT</h5>
+        <h5>Component damage Auto-Ignition Likely, Continous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: CAAIL_C_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: CAAIL_C_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: CAAIL_C_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: CAAIL_C_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div> 
+
+        <h5>Component damage Auto-ignition Not Likely, Instaneous Release</h5>
+        <div className="flex flex-wrap">
+            {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: IAAINL_C_Small?.toFixed(4)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: IAAINL_C_Medium?.toFixed(4)
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: IAAINL_C_Large?.toFixed(4)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: IAAINL_C_Rupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>      
         
-        <h5>Component damage consequence areas for Auto-ignition Not Likely, Instaneous Release, (AINL-INST), CAAINL-INST</h5>
+        <h5>Component damage Auto-Ignition Likely, Instataneous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: IAAIL_C_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: IAAIL_C_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: IAAIL_C_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: IAAIL_C_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
 
-        <h5>Component damage consequence areas for Auto-Ignition Likely, Instataneous Release (AIL-INST), CAAIL-INST</h5>
+        <h5>Personal Injury Auto-Ignition Not Likely, Continous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: CAAINL_P_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: CAAINL_P_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: CAAINL_P_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: CAAINL_P_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
 
-        <h5>Personnel injury consequence areas for Auto-ignition Not Likely, Continous Release (AINL-CONT)</h5>
+        <h5>Personal Injury Auto-Ignition Likely, Continous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: CAAIL_P_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: CAAIL_P_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: CAAIL_P_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: CAAIL_P_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
-        </div>
+        </div> 
 
-        <h5>Personnel injury consequence areas for Auto-ignition Likely, Continous Release (AIL-CONT)</h5>
+        <h5>Personal Injury Auto-ignition Not Likely, Instaneous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: IAAINL_P_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: IAAINL_P_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: IAAINL_P_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: IAAINL_P_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
-        </div>
-
-        <h5>Personnel injury consequence areas for Auto-ignition Not Likely, Instataneous Release (AINL-INST)</h5>
+        </div>      
+        
+        <h5>Personal Injury Auto-Ignition Likely, Instataneous Release</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: IAAIL_P_Small?.toFixed(4)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: IAAIL_P_Medium?.toFixed(4)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: IAAIL_P_Large?.toFixed(4)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: IAAIL_P_Rupture?.toFixed(4)
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
 
-        <h5>Personnel injury consequence areas for Auto-ignition Likely, Instataneous Release (AIL-INST)</h5>
+        <h5>IC blending factor</h5>
         <div className="flex flex-wrap">
             {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: ""
+                        value: factICSmall
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: ""
+                        value: factICMedium
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: ""
+                        value: factICLarge
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: ""
+                        value: factICRupture
                     },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={value || "-"} key={key}/>)
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
         </div>
 
+        <h5>Continuous/instantaneous blended consequence area</h5>
+        <div className="flex flex-wrap">
+            {
+                [
+                    {
+                        label: "(CAAIL cmd) Small Release Hole Size",
+                        value: CAAILcmdSmall?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL cmd) Medium Release Hole Size",
+                        value: CAAILcmdMedium?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL cmd) Large Release Hole Size",
+                        value: CAAILcmdLarge?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL cmd) Rupture Release Hole Size",
+                        value: CAAILcmdRupture?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL inj) Small Release Hole Size",
+                        value: CAAILinjSmall?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL inj) Medium Release Hole Size",
+                        value: CAAILinjMedium?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL inj) Large Release Hole Size",
+                        value: CAAILinjLarge?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAIL inj) Rupture Release Hole Size",
+                        value: CAAILinjRupture?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL cmd) Small Release Hole Size",
+                        value: CAAINLcmdSmall?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL cmd) Medium Release Hole Size",
+                        value: CAAINLcmdMedium?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL cmd) Large Release Hole Size",
+                        value: CAAINLcmdLarge?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL cmd) Rupture Release Hole Size",
+                        value: CAAINLcmdRupture?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL inj) Small Release Hole Size",
+                        value: CAAINLinjSmall?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL inj) Medium Release Hole Size",
+                        value: CAAINLinjMedium?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL inj) Large Release Hole Size",
+                        value: CAAINLinjLarge?.toFixed(4)
+                    },
+                    {
+                        label: "(CAAINL inj) Rupture Release Hole Size",
+                        value: CAAINLinjRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+
+        <h5>AIT blended consequence areas</h5>
+        <div className="flex flex-wrap">
+            {
+                [
+                    {
+                        label: "(CAflam cmd) Small Release Hole Size",
+                        value: CAFlamCmdSmall?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam cmd) Medium Release Hole Size",
+                        value: CAFlamCmdMedium?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam cmd) Large Release Hole Size",
+                        value: CAFlamCmdLarge?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam cmd) Rupture Release Hole Size",
+                        value: CAFlamCmdRupture?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam inj) Small Release Hole Size",
+                        value: CAFlamInjSmall?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam inj) Medium Release Hole Size",
+                        value: CAFlamInjMedium?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam inj) Large Release Hole Size",
+                        value: CAFlamInjLarge?.toFixed(4)
+                    },
+                    {
+                        label: "(CAflam inj) Rupture Release Hole Size",
+                        value: CAFlamInjRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+
+        {/* <h5>CONSEQUENCE AREA</h5>
+        <div className="flex flex-wrap">
+            {
+                [
+                    {
+                        label: "COMPONENT DAMAGE",
+                        value: CA_ComponentDamage?.toFixed(4)
+                        
+                    },
+                    {
+                        label: "PERSONNEL INJURY",
+                        value: CA_PersonalInjuries?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div> */}
+
+        <h5>Effective duration of the toxic release</h5>
+        <div className="flex flex-wrap">
+        {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: durationToxicSmall?.toFixed(4)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: durationToxicMedium?.toFixed(4)  
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: durationToxicLarge?.toFixed(4)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: durationToxicRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+
+        <h5>Toxic release Raste</h5>
+        <div className="flex flex-wrap">
+        {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: toxicReleaseRateSmall?.toFixed(5)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: toxicReleaseRateMedium?.toFixed(5)  
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: toxicReleaseRateLarge?.toFixed(5)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: toxicReleaseRateRupture?.toFixed(5)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+
+        <h5>Toxic release Mass</h5>
+        <div className="flex flex-wrap">
+        {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: toxicReleaseMassSmall?.toFixed(4)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: toxicReleaseMassMedium?.toFixed(4)  
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: toxicReleaseMassLarge?.toFixed(4)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: toxicReleaseMassRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>        
+        
+        <h5>Toxic consequence area</h5>
+        <div className="flex flex-wrap">
+        {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: toxicConsAreqSmall?.toFixed(4)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: toxicConsAreqMedium?.toFixed(4)  
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: toxicConsAreqLarge?.toFixed(4)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: toxicConsAreqRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+        
+        <h5>FOR STEAM</h5>
+        <div className="flex flex-wrap">
+        {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: forSteamSmall?.toFixed(4)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: forSteamMedium?.toFixed(4)
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: forSteamLarge?.toFixed(4)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: forSteamRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+        
+        <h5>FOR ACIDS AND CAUSTIC</h5>
+        <div className="flex flex-wrap">
+        {
+                [
+                    {
+                        label: "Small Release Hole Size",
+                        value: forAcidCausticSmall?.toFixed(4)
+                    },
+                    {
+                        label: "Medium Release Hole Size",
+                        value: forAcidCausticMedium?.toFixed(4)
+                    },
+                    {
+                        label: "Large Release Hole Size",
+                        value: forAcidCausticLarge?.toFixed(4)
+                    },
+                    {
+                        label: "Rupture Release Hole Size",
+                        value: forAcidCausticRupture?.toFixed(4)
+                    },
+                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ !isNaN(value) ? value : "-" } key={key}/>)
+            }
+        </div>
+        
         </>
     )
 }

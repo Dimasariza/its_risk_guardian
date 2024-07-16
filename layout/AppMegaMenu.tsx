@@ -1,8 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { MegaMenu } from 'primereact/megamenu';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { EditData, EditDone } from '@/redux/action/action';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 
