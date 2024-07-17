@@ -27,6 +27,17 @@ function DFThinning() {
   const toast = useRef<any>(null);
   let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
+  const handleOnChange = (name: string, e: any) => {
+    switch(name) {
+      case "planThinning_tMinMM":
+        setThinning((prev: any) => ({...prev, planThinning_tMinInch: (e.target.value * 0.03937).toFixed(4)}))
+        break;
+      case "planThinning_tMinInch":
+        setThinning((prev: any) => ({...prev, planThinning_tMinMM: (e.target.value / 0.03937).toFixed(4)}))
+        break;
+    }
+  }
+
   const componentId = data.menu?.comp_id;
   useEffect(() => {
     edit = true
@@ -98,9 +109,10 @@ function DFThinning() {
       <div className='flex flex-wrap lg:column-gap-3 mt-4'>
         {inputs.map((props: any, key: number) => {
           if (props.type == 'text') {
-            return <InputTypeText props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
+            return <InputTypeText props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} 
+            handleOnChange={handleOnChange} />;
           } else if (props.type == 'calendar') {
-            return <InputCalendar props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
+            return <InputCalendar props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]}  />;
           } else if (props.type == 'drop-down') {
             return <InputDropDown props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
           } 

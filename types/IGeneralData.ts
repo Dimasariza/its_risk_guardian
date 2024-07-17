@@ -6,10 +6,18 @@ export default interface IGeneralData {
     gData_shapeType: string
     gData_geometryData: string
     gData_code: string
-    gData_designPressure: number
-    gData_designTemperature: number
-    gData_operatingPressure: number
-    gData_operatingTemperature: number
+    gData_designPressureBar: number
+    gData_designPressurePsi: number
+    gData_designTemperatureC: number
+    gData_designTemperatureK: number
+    gData_designTemperatureR: number
+    gData_designTemperatureF: number
+    gData_operatingPressureBar: number
+    gData_operatingPressurePsi: number
+    gData_operatingTemperatureC: number
+    gData_operatingTemperatureR: number
+    gData_operatingTemperatureF: number
+    gData_operatingTemperatureK: number
     gData_dimensionLength: number
     gData_dimensionWidth: number
     gData_vesselVolumeLB: number
@@ -20,7 +28,8 @@ export default interface IGeneralData {
     gData_tensileStrength: number
     gData_corrosionAllowanceMM: number
     gData_corrosionAllowanceInch: number
-    gData_yearBuilt: number
+    gData_startingDate: Date
+    // gData_yearBuilt: number
     gData_material: string
     gData_lastInspection: string
     gData_outerDiameterMM: number

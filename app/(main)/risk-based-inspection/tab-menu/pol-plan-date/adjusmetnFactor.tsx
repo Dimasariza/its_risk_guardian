@@ -78,12 +78,12 @@ function AdjusmentFactorTable() {
             modal onHide={() => {if (!visible) return; setVisible(false); }} footer={footerContent}>
                 <DataTable 
                     value={environtment} 
-                    cellSelection 
                     selectionMode="single" 
                     selection={selectedCell}
                     onSelectionChange={(e: any) => setSelectedCell(e.value)}
                 >
-                    <Column field="env" header="Environment Modifier" className="p-disabled" ></Column>
+                    <Column selectionMode="single"></Column>
+                    <Column field="env" header="Environment Modifier" className="" ></Column>
                     <Column field="pofod" header="Adjustment to POFOD η parameter"></Column>
                     <Column field="pol" header="Adjustment to POL η parameter"></Column>
                 </DataTable>

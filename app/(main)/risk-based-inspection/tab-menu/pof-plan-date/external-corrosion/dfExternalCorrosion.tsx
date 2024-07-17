@@ -130,7 +130,7 @@ function DFExternalCorrosion() {
             [
               {
                 label: "Age",
-                value: age
+                value: Number(age).toFixed(4)
               },
               {
                 label: "Thickness (mm)",

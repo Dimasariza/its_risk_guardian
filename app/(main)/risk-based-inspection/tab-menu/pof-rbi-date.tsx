@@ -18,6 +18,7 @@ import InitiatingEventFrequencies from './prd pof/initiatingEventFrequencies';
 import ClassProtectedEquipment from './prd pof/classForProtectedEquipment';
 import COFPV from './cof/cofPV';
 import POLPlanDate from './pol-plan-date/pol-plan-date';
+import POFRBIDatePRD from './pof-rbi-date/pofPrd/pofRBIDatePRD';
 
 const inputs = [
   {
@@ -150,7 +151,7 @@ function POFRBIDate() {
       <InputValueOnly label="" value={null} /> */}
       {
         data.menu.comp_componentType == "Pressure Relief Device" 
-        ? <POLPlanDate/>
+        ? <POFRBIDatePRD/>
         : <div>
           <TabMenu model={items} />
           {tabMenuView()}

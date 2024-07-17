@@ -100,6 +100,7 @@ function DFExternalCorrosion() {
     rbiHeadSection
   } = calculateExCor(generalData, thinning, value);
 
+
   return (
     <>
       <Toast ref={toast}  position="bottom-right" />
@@ -130,7 +131,7 @@ function DFExternalCorrosion() {
             [
               {
                 label: "Age",
-                value: age
+                value: Number(age).toFixed(4)
               },
               {
                 label: "Thickness (mm)",
@@ -240,7 +241,7 @@ function DFExternalCorrosion() {
                 label: "Head Base Damage Factor",
                 value: Number(rbiHeadSection)?.toFixed(4)
               },
-            ].map(({label, value}: any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label}/>)
+            ].map(({label, value}: any) => <InputValueOnly label={label} value={!Number.isNaN(value) ? value : "-"} key={label}/>)
           }
         </div>
       </section>

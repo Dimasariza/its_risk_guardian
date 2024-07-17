@@ -13,7 +13,8 @@ export const calculateAlkaline = ({
     const { 
         age,
         shellBaseDF,
-        headBaseDF
+        headBaseDF,
+        ageTimeInServiceTk
     } = calculateThinning(generalData as IGeneralData, thinning as IPlanThinning)
 
     const {
@@ -21,8 +22,8 @@ export const calculateAlkaline = ({
         planHeadSection
     } = calculateExCor(generalData, thinning, exCor)
     
-    const shellPWHT = alkaline?.planAlkaline_numOfInspection * Math.max(age!, 1) ** 1.1
-    const headPWHT = alkaline?.planAlkaline_numOfInspection * Math.max(age!, 1) ** 1.1
+    const shellPWHT = alkaline?.planAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
+    const headPWHT = alkaline?.planAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
     
     return {
         shellBaseDF,
@@ -31,6 +32,7 @@ export const calculateAlkaline = ({
         planShellSection,
         planHeadSection,
         shellPWHT,
-        headPWHT
+        headPWHT,
+        ageTimeInServiceTk
     }
 }

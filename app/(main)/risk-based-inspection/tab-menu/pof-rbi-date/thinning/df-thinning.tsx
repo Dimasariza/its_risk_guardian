@@ -27,6 +27,17 @@ function DFThinning() {
   const toast = useRef<any>(null);
   let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
+  const handleOnChange = (name: string, e: any) => {
+    switch(name) {
+      case "rbiThinning_tMinMM":
+        setThinning((prev: any) => ({...prev, rbiThinning_tMinInch: (e.target.value * 0.03937).toFixed(4)}))
+        break;
+      case "rbiThinning_tMinInch":
+        setThinning((prev: any) => ({...prev, rbiThinning_tMinMM: (e.target.value / 0.03937).toFixed(4)}))
+        break;
+    }
+  }
+
   const componentId = data.menu?.comp_id;
   useEffect(() => {
     edit = true
@@ -98,7 +109,8 @@ function DFThinning() {
       <div className='flex flex-wrap lg:column-gap-3 mt-4'>
         {inputs.map((props: any, key: number) => {
           if (props.type == 'text') {
-            return <InputTypeText props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
+            return <InputTypeText props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} 
+            handleOnChange={handleOnChange} />;
           } else if (props.type == 'calendar') {
             return <InputCalendar props={{...props, disabled: !edit}} key={key} value={thinning} setValue={setThinning} errorMessage={error[props.name]} />;
           } else if (props.type == 'drop-down') {
@@ -119,7 +131,7 @@ function DFThinning() {
             },
             {
               label: "Age",
-              value: age
+              value: Number(age).toFixed(4)
             },
             {
               label: "T min (Inch)",
@@ -131,11 +143,11 @@ function DFThinning() {
             },
             {
               label: "Shell Art",
-              value: Number(shellArt)?.toFixed(4)
+              value: Number(shellArt)?.toFixed(6)
             },
             {
               label: "Head Art",
-              value: Number(headArt)?.toFixed(4)
+              value: Number(headArt)?.toFixed(6)
             },
             {
               label: "Flow Stress",

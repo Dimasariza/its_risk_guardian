@@ -15,7 +15,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         gData_jointEfficiency,
         gData_allowableStressKpa,
         gData_shellMinimumThicknessMM,
-        gData_headMinimumThicknessMM
+        gData_headMinimumThicknessMM,
+        gData_startingDate
     } = generalData as IGeneralData;
 
     const {
@@ -28,21 +29,24 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
     } = thinning as IPlanThinning;
 
     const lastInspDateObj: Date | any = new Date(gData_lastInspection);
+    const startingDateObj: Date | any = new Date(gData_startingDate);
     const planDateObj: Date | any = new Date(planThinning_planDate);
 
-    console.log(planThinning_planDate)
+    const age: number | null = Math.abs(planDateObj - startingDateObj) * 3.168E-11|| null;
 
-    const age: number | null= planDateObj?.getFullYear() - lastInspDateObj?.getFullYear() || null;
+    const ageTimeInServiceTk = Math.abs(planDateObj - lastInspDateObj) * 3.16865E-11 || null;
 
-    const shellArt: number | null = planThinning_corrosionRate * age! / gData_shellMinimumThicknessMM || null;
+    const shellArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!.toFixed(3))! / gData_shellMinimumThicknessMM || null;
 
-    const headArt: number | null = planThinning_corrosionRate * age! / gData_headMinimumThicknessMM || null;
+    const headArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!.toFixed(3))! / gData_headMinimumThicknessMM || null;
 
     const flowStress: number | null = (Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2 * gData_jointEfficiency * 1.1 || null;
 
-    const shellStrengthRatio: number  = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_shellMinimumThicknessMM;
+    const shellStrengthRatioReal: number  = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_shellMinimumThicknessMM;
+    const shellStrengthRatio: number = Number(shellStrengthRatioReal.toFixed(3))
 
-    const headStrengthRatio: number = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_headMinimumThicknessMM;
+    const headStrengthRatioReal: number = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_headMinimumThicknessMM;
+    const headStrengthRatio: number = Number(headStrengthRatioReal.toFixed(3))
 
     const inspEffectiveness1: number | null = prior[0].medium * (conditional[0].a ** planThinning_nInspA) * (conditional[0].b ** planThinning_nInspB) * (conditional[0].c ** planThinning_nInspC) * (conditional[0].d ** planThinning_nInspD) || null;
     const inspEffectiveness2: number | null = prior[1].medium * (conditional[1].a ** planThinning_nInspA) * (conditional[1].b ** planThinning_nInspB) * (conditional[1].c ** planThinning_nInspC) * (conditional[1].d ** planThinning_nInspD) || null;
@@ -93,7 +97,9 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         headSectionB2,
         headSectionB3,
         shellBaseDF,
-        headBaseDF
+        headBaseDF,
+        startingDateObj,
+        ageTimeInServiceTk
     }
 }
 

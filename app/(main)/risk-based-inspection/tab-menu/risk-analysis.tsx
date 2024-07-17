@@ -335,7 +335,8 @@ function RiskAnalysis() {
     rbiShellSection,
     rbiHeadSection,
     shellPWHT: RBIshellPWHT,
-    headPWHT: RBIheadPWHT
+    headPWHT: RBIheadPWHT,
+    ageTimeInServiceTk: RBIAgeTimeInServiceTk
   } = RBIcalculateAlkaline({
     generalData,
     thinning: rbiThinning,
@@ -349,13 +350,16 @@ function RiskAnalysis() {
     planShellSection,
     planHeadSection,
     shellPWHT: PlanshellPWHT,
-    headPWHT: PlanheadPWHT
+    headPWHT: PlanheadPWHT,
+    ageTimeInServiceTk: planAgeTimeInServiceTk
   } = PlancalculateAlkaline({
     generalData,
     thinning: planThinning,
     exCor: planExCor,
     alkaline: planAlkaline
   })
+
+  console.log(RBIAgeTimeInServiceTk, planAgeTimeInServiceTk)
 
   const RBIshellTotal = Math.max(RBIshellBaseDF!, rbiShellSection!) + RBIshellPWHT
   const RBIheadTotal = Math.max(RBIheadBaseDF!, rbiHeadSection!) + RBIheadPWHT
@@ -377,39 +381,41 @@ function RiskAnalysis() {
   const planShellPlotting =  riskPlotting(PlanshellTotal, finalConsequenceM!)
 
   const iconPlotting = (row: number, column: string, title: string, value: string) => {
-    if( 
-      rbiHeadPlotting.consequence?.category == column 
-      && rbiHeadPlotting.probability?.category == row
-      && title == "Head Section")
-    return [value, <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>]
-    else if(
-      rbiShellPlotting.consequence?.category == column 
-      && rbiShellPlotting.probability?.category == row
-      && title == "Shell Section"
-    )
-    return [value, <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>]
-    else if(
-      planHeadPlotting.consequence?.category == column 
-      && planHeadPlotting.probability?.category == row
-      && title == "Head Section"
-    )
-    return [value, <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>]
-    else if(
-      planShellPlotting.consequence?.category == column 
-      && planShellPlotting.probability?.category == row
-      && title == "Shell Section"
-    )
-    return [value, <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>]
-    return value
+    if(title == "Head Section") {
+      return [
+        rbiHeadPlotting.consequence?.category == column 
+        && rbiHeadPlotting.probability?.category == row
+        && <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        
+        planHeadPlotting.consequence?.category == column 
+        && planHeadPlotting.probability?.category == row
+        && <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+
+        value
+      ]
+    }
+    else if(title == "Shell Section") {
+      return [
+        rbiShellPlotting.consequence?.category == column 
+        && rbiShellPlotting.probability?.category == row
+        && <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        
+        planShellPlotting.consequence?.category == column 
+        && planShellPlotting.probability?.category == row
+        && <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        
+        value
+      ]
+    }
   }
 
   const [value, setValue] = useState<any>({
-    shellRangeDate: [3, 7],
-    headRangeDate: [2, 5],
-    shellRiskTarget: 5.71,
-    headRiskTarget: 4.71,
-    shellXAxis: [3, 12],
-    headXAxis: [2, 16]
+    shellRangeDate: [5, 7], // change blue box relative to y axis in shell
+    headRangeDate: [2, 6], // change green box relative to y axis in head
+    shellRiskTarget: 3.71, // change orange line position in shell
+    headRiskTarget: 3.71, // change orange line position in head
+    shellXAxis: [5, 10], // change green box relative to x axis in shell 
+    headXAxis: [2, 16] // change green box relative to x axis in head
   });
 
   const shellRangeDate = [null, ...value?.shellRangeDate];

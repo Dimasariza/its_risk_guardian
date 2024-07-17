@@ -14,7 +14,8 @@ export const calculateAlkaline = ({
     const { 
         age,
         shellBaseDF,
-        headBaseDF
+        headBaseDF,
+        ageTimeInServiceTk
     } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning)
 
     const {
@@ -22,8 +23,8 @@ export const calculateAlkaline = ({
         rbiHeadSection
     } = calculateExCor(generalData, thinning, exCor)
     
-    const shellPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(age!, 1) ** 1.1
-    const headPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(age!, 1) ** 1.1
+    const shellPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
+    const headPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
     
     return {
         shellBaseDF,
@@ -32,6 +33,7 @@ export const calculateAlkaline = ({
         rbiShellSection,
         rbiHeadSection,
         shellPWHT,
-        headPWHT
+        headPWHT,
+        ageTimeInServiceTk
     }
 }

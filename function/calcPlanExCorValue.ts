@@ -12,20 +12,23 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     const {
         age,
-        planDateObj
+        planDateObj,
+        startingDateObj,
+        lastInspDateObj
     } = calculateThinning(generalData, thinning)
 
     const {
-        gData_operatingTemperature,
+        gData_operatingTemperatureC,
         gData_headMinimumThicknessInch,
         gData_headMinimumThicknessMM,
-        gData_yearBuilt,
+        gData_startingDate,
         gData_shellMinimumThicknessMM,
         gData_yieldStrength,
         gData_tensileStrength,
         gData_jointEfficiency,
         gData_allowableStressKpa,
-        gData_shellTreqMM
+        gData_shellTreqMM,
+        gData_headTreqMM
     } = generalData;
 
     const {
@@ -36,17 +39,17 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
     } = thinning
 
     let baseCRb;
-    if( !temperatureList.includes(gData_operatingTemperature) ) {
+    if( !temperatureList.includes(gData_operatingTemperatureC) ) {
         baseCRb = interpolationTemperature(generalData)
     }
 
     const finalCR = baseCRb! * (Math.max(exCor?.planExCor_equationDesign, exCor?.planExCor_interface))
 
-    const ageCoat = planDateObj?.getFullYear() - gData_yearBuilt
+    const ageCoat = Math.abs(planDateObj - startingDateObj) * 3.8052E-10 || null
 
-    const adjCoat = Math.min(5, ageCoat) - Math.min(5, ageCoat - age!)
+    const adjCoat = Math.min(5, ageCoat!) - Math.min(5, ageCoat! - age!)
 
-    const timeInService = age! - adjCoat
+    const timeInService: number = Math.abs(planDateObj - lastInspDateObj) * 3.169E-11
 
     const shellArt = finalCR * timeInService / gData_shellMinimumThicknessMM
 
@@ -56,7 +59,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     const shellStrengthRatio = ((gData_allowableStressKpa * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
 
-    const headStrengthRatio = ((gData_allowableStressKpa * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_headMinimumThicknessMM)
+    const headStrengthRatio = ((gData_allowableStressKpa * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
 
     const inspectionI1 = prior[0].medium * ((conditional[0].a) ** planThinning_nInspA) * ((conditional[0].b) ** planThinning_nInspB) * ((conditional[0].c) ** planThinning_nInspC) * ((conditional[0].d) ** planThinning_nInspD)
     
@@ -118,13 +121,13 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 }
 
 const interpolationTemperature = (generalData: IGeneralData) => {
-    const { gData_operatingTemperature } = generalData;
-    const indexInterpolation = temperatureList.findIndex(i => gData_operatingTemperature < i)
+    const { gData_operatingTemperatureC } = generalData;
+    const indexInterpolation = temperatureList.findIndex(i => gData_operatingTemperatureC < i)
     const x1 = temperatureInterpolation[indexInterpolation - 1].operating
     const x2 = temperatureInterpolation[indexInterpolation].operating
 
     const y1 = temperatureInterpolation[indexInterpolation - 1].arid
     const y2 = temperatureInterpolation[indexInterpolation].arid
 
-    return y1 + (((gData_operatingTemperature - x1) / (x2 - x1)) * (y2 - y1))
+    return y1 + (((gData_operatingTemperatureC - x1) / (x2 - x1)) * (y2 - y1))
 }

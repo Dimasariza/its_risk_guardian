@@ -38,11 +38,6 @@ function DFAlkalineCorrosion() {
     getAlkaline(componentId).then((res: any) => {
       setValue(res);
       setInspectionSelected(inspection.find((i: any) => i.id == res.rbiAlkaline_inspection))
-      setChecked((prev: any) => ({
-        ...prev, 
-        rbiAlkaline_headPwht: res.rbiAlkaline_headPwht,
-        rbiAlkaline_shellPwht: res.rbiAlkaline_shellPwht
-      }))
     });
 
     GeneralDataService.fetchData(componentId)
@@ -116,11 +111,11 @@ function DFAlkalineCorrosion() {
           <div className='gap-5 flex flex-column'>
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Shell subjects to PWHT</span>
-              <Checkbox name='rbiAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={checked.rbiAlkaline_shellPwht}></Checkbox>
+              <Checkbox name='rbiAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={value.rbiAlkaline_shellPwht}></Checkbox>
             </div>
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Head subjects to PWHT</span>
-              <Checkbox name='rbiAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, rbiAlkaline_headPwht: e.checked}))} checked={checked.rbiAlkaline_headPwht}></Checkbox>
+              <Checkbox name='rbiAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_headPwht: e.checked}))} checked={value.rbiAlkaline_headPwht}></Checkbox>
             </div>
           </div>
         </div>

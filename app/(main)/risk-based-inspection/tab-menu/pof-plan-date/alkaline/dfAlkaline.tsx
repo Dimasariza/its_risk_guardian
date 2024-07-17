@@ -19,7 +19,6 @@ import { Toast } from 'primereact/toast';
 
 function DFAlkalineCorrosion() {
   const [value, setValue] = useState<any>({});
-  const [checked, setChecked] = useState<any>({})
   const [error, setError] = useState<any>({});
   const [generalData, setGeneralData] = useState<any>({})
   const [thinning, setThinning] = useState<any>({})
@@ -38,11 +37,6 @@ function DFAlkalineCorrosion() {
     getAlkaline(componentId).then((res: any) => {
       setValue(res);
       setInspectionSelected(inspection.find((i: any) => i.id == res.planAlkaline_inspection))
-      setChecked((prev: any) => ({
-        ...prev, 
-        planAlkaline_headPwht: res.planAlkaline_headPwht,
-        planAlkaline_shellPwht: res.planAlkaline_shellPwht
-      }))
     });
 
     GeneralDataService.fetchData(componentId)
@@ -116,11 +110,11 @@ function DFAlkalineCorrosion() {
           <div className='gap-5 flex flex-column'>
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Shell subjects to PWHT</span>
-              <Checkbox name='planAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, planAlkaline_shellPwht: e.checked}))} checked={checked.planAlkaline_shellPwht}></Checkbox>
+              <Checkbox name='planAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, planAlkaline_shellPwht: e.checked}))} checked={value.planAlkaline_shellPwht}></Checkbox>
             </div>
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Head subjects to PWHT</span>
-              <Checkbox name='planAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setChecked((prev: any) => ({...prev, planAlkaline_headPwht: e.checked}))} checked={checked.planAlkaline_headPwht}></Checkbox>
+              <Checkbox name='planAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, planAlkaline_headPwht: e.checked}))} checked={value.planAlkaline_headPwht}></Checkbox>
             </div>
           </div>
         </div>

@@ -157,11 +157,11 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     if(!Object.keys(generalData).length) return {}
 
     const {
-        gData_operatingTemperature,
-        gData_operatingPressure
+        gData_operatingTemperatureC,
+        gData_operatingPressureBar
     } = generalData;
 
-    const gData_operatingTempOnF = (gData_operatingTemperature * 9 / 5) + 32
+    const gData_operatingTempOnF = (gData_operatingTemperatureC * 9 / 5) + 32
     const gData_operatingTempOnK = (gData_operatingTempOnF - 32) * 5 / 9 + 273.15
 
     const { constant_a, constant_b, constant_c , constant_d, mw } = fluidSelected || {};
@@ -211,7 +211,7 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const C10 = 9.744
     const Gc = 1
     const Cd = 0.9
-    const Ps = gData_operatingPressure * 14.5037738 * 6.895
+    const Ps = gData_operatingPressureBar * 14.5037738 * 6.895
     const idealGasHeatRatio = 1.1995
     const universalGasConstant = 8.314
 
