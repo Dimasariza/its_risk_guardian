@@ -83,8 +83,8 @@ function POFValue() {
     age,
     rbiShellSection,
     rbiHeadSection,
-    shellPWHT,
-    headPWHT
+    shellTotal,
+    headTotal
   } = calculateAlkaline({
     generalData,
     thinning,
@@ -92,8 +92,8 @@ function POFValue() {
     alkaline
   })
 
-  const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
-  const headTotal = Math.max(headBaseDF!, rbiHeadSection!) + headPWHT
+  // const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
+  // const headTotal = Math.max(headBaseDF!, rbiHeadSection!) + headPWHT
 
   return (
     <>

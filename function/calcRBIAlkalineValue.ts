@@ -25,7 +25,10 @@ export const calculateAlkaline = ({
     
     const shellPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
     const headPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
-    
+
+    const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
+    const headTotal = Math.max(headBaseDF!, rbiHeadSection!) + headPWHT
+
     return {
         shellBaseDF,
         headBaseDF,
@@ -34,6 +37,8 @@ export const calculateAlkaline = ({
         rbiHeadSection,
         shellPWHT,
         headPWHT,
-        ageTimeInServiceTk
+        ageTimeInServiceTk,
+        shellTotal,
+        headTotal
     }
 }

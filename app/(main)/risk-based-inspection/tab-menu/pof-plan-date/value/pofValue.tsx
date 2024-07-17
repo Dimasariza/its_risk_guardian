@@ -82,16 +82,17 @@ function POFValue() {
     headBaseDF,
     planShellSection,
     planHeadSection,
-    shellPWHT,
-    headPWHT
+    shellTotal,
+    headTotal
   } = calculateAlkaline({
     generalData,
     thinning,
     exCor,
     alkaline
   })
-  const shellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
-  const headTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
+
+  // const shellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
+  // const headTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
 
   return (
     <>

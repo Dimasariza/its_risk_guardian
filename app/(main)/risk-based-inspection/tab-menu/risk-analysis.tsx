@@ -305,38 +305,33 @@ function RiskAnalysis() {
 
     CofService.fetchData(componentId)
     .then(res => {
-        setCofValue({
-            ...res,
-            fluidSelected: representativeFluidNodes.find((i: any) => i.id == res.cof_representativeFluid),
-            impact: {
-                cof_detectionSystem: detection.find((i: any) => i.id == res.cof_detectionSystem),
-                cof_isolationSystem: isolation.find((i: any) => i.id == res.cof_isolationSystem),
-            },
-            flamable: flamableTable.find((i: any) => i.id == res.cof_flamableCons),
-            damage: damageTable.find((i: any) => i.id == res.cof_damageCons),
-            phase: liquidPhase.find((i: any) => i.id == res.cof_phaseOfFluid),
-            inventories: liquidInventories.find((i: any) => i.id == res.cof_liquidInventories),
-            mitigation: adjMitigation.find((i: any) => i.id == res.cof_adjToFlamable),
-            amoniaChloride: {}
-        })  
+      setCofValue({
+          ...res,
+          fluidSelected: representativeFluidNodes.find((i: any) => i.id == res.cof_representativeFluid),
+          impact: {
+              cof_detectionSystem: detection.find((i: any) => i.id == res.cof_detectionSystem),
+              cof_isolationSystem: isolation.find((i: any) => i.id == res.cof_isolationSystem),
+          },
+          flamable: flamableTable.find((i: any) => i.id == res.cof_flamableCons),
+          damage: damageTable.find((i: any) => i.id == res.cof_damageCons),
+          phase: liquidPhase.find((i: any) => i.id == res.cof_phaseOfFluid),
+          inventories: liquidInventories.find((i: any) => i.id == res.cof_liquidInventories),
+          mitigation: adjMitigation.find((i: any) => i.id == res.cof_adjToFlamable),
+          amoniaChloride: {}
+      })  
         getRBIValue(componentId)
         .then((res) => {
           const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
-          setCofValue((prev: any) => ({...prev, failureFreq}))
+          setCofValue((prev: any) => ({...res ,...prev, failureFreq}))
         })
-
     })
 
   }, []);
 
   const {
-    shellBaseDF: RBIshellBaseDF,
-    headBaseDF: RBIheadBaseDF,
-    rbiShellSection,
-    rbiHeadSection,
-    shellPWHT: RBIshellPWHT,
-    headPWHT: RBIheadPWHT,
-    ageTimeInServiceTk: RBIAgeTimeInServiceTk
+    ageTimeInServiceTk: RBIAgeTimeInServiceTk,
+    shellTotal: RBIShellTotal,
+    headTotal: RBIHeadTotal
   } = RBIcalculateAlkaline({
     generalData,
     thinning: rbiThinning,
@@ -345,26 +340,15 @@ function RiskAnalysis() {
   })
 
   const {
-    shellBaseDF: PlanshellBaseDF,
-    headBaseDF: PlanheadBaseDF,
-    planShellSection,
-    planHeadSection,
-    shellPWHT: PlanshellPWHT,
-    headPWHT: PlanheadPWHT,
-    ageTimeInServiceTk: planAgeTimeInServiceTk
+    ageTimeInServiceTk: planAgeTimeInServiceTk,
+    shellTotal: PlanShellTotal,
+    headTotal: PlanHeadTotal
   } = PlancalculateAlkaline({
     generalData,
     thinning: planThinning,
     exCor: planExCor,
     alkaline: planAlkaline
   })
-
-  console.log(RBIAgeTimeInServiceTk, planAgeTimeInServiceTk)
-
-  const RBIshellTotal = Math.max(RBIshellBaseDF!, rbiShellSection!) + RBIshellPWHT
-  const RBIheadTotal = Math.max(RBIheadBaseDF!, rbiHeadSection!) + RBIheadPWHT
-  const PlanshellTotal = Math.max(PlanshellBaseDF!, planShellSection!) + PlanshellPWHT
-  const PlanheadTotal = Math.max(PlanheadBaseDF!, planHeadSection!) + PlanheadPWHT
 
   const {
     finalConsequenceM
@@ -375,10 +359,10 @@ function RiskAnalysis() {
       impact: cofValue?.impact
   })
 
-  const rbiHeadPlotting =  riskPlotting(RBIheadTotal, finalConsequenceM!)
-  const rbiShellPlotting =  riskPlotting(RBIshellTotal, finalConsequenceM!)
-  const planHeadPlotting =  riskPlotting(PlanheadTotal, finalConsequenceM!)
-  const planShellPlotting =  riskPlotting(PlanshellTotal, finalConsequenceM!)
+  const rbiHeadPlotting =  riskPlotting(RBIHeadTotal, finalConsequenceM!)
+  const rbiShellPlotting =  riskPlotting(RBIShellTotal, finalConsequenceM!)
+  const planHeadPlotting =  riskPlotting(PlanHeadTotal, finalConsequenceM!)
+  const planShellPlotting =  riskPlotting(PlanShellTotal, finalConsequenceM!)
 
   const iconPlotting = (row: number, column: string, title: string, value: string) => {
     if(title == "Head Section") {
@@ -409,14 +393,30 @@ function RiskAnalysis() {
     }
   }
 
+  const RBIShellRisk: any = Number(cofValue.failureFreq?.total * RBIShellTotal * cofValue.rbiValue_FMS)
+  const RBIHeadRisk: any = Number(cofValue.failureFreq?.total * RBIHeadTotal * cofValue.rbiValue_FMS)
+  const PlanShellRisk: any = Number(cofValue.failureFreq?.total * PlanShellTotal * cofValue.rbiValue_FMS)
+  const PlanHeadRisk: any = Number(cofValue.failureFreq?.total * PlanHeadTotal * cofValue.rbiValue_FMS)
+
   const [value, setValue] = useState<any>({
-    shellRangeDate: [5, 7], // change blue box relative to y axis in shell
-    headRangeDate: [2, 6], // change green box relative to y axis in head
+    shellRangeDate: [0, 0], // change blue box relative to y axis in shell
+    headRangeDate: [0, 0], // change green box relative to y axis in head
     shellRiskTarget: 3.71, // change orange line position in shell
     headRiskTarget: 3.71, // change orange line position in head
-    shellXAxis: [5, 10], // change green box relative to x axis in shell 
-    headXAxis: [2, 16] // change green box relative to x axis in head
+    shellXAxis: [10, 25], // change green box relative to x axis in shell 
+    headXAxis: [10, 25] // change green box relative to x axis in head
   });
+
+  useEffect(()=>{
+    setValue((prev: any) => ({
+      ...prev,
+      shellRangeDate: [Number(RBIShellRisk * finalConsequenceM!), Number(PlanShellRisk * finalConsequenceM!)],
+      headRangeDate: [Number(RBIHeadRisk * finalConsequenceM!), Number(PlanHeadRisk * finalConsequenceM!)],
+      shellXAxis: [RBIAgeTimeInServiceTk, planAgeTimeInServiceTk],
+      headXAxis: [RBIAgeTimeInServiceTk, planAgeTimeInServiceTk]
+    }))
+
+  }, [cofValue])
 
   const shellRangeDate = [null, ...value?.shellRangeDate];
   const headRangeDate = [null, ...value?.headRangeDate];
