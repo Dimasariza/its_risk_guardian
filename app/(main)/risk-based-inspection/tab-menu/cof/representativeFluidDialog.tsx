@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "primereact/button";
 import { CofService } from "@/service/calculation/cofService";
 
-function RepresentativeFluidDialog({value, setValue, toast}: any) {
+function RepresentativeFluidDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const headerGroup = (
@@ -44,6 +44,7 @@ function RepresentativeFluidDialog({value, setValue, toast}: any) {
           <Button label="Save" icon="pi pi-times" 
           onClick={() => {
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_representativeFluid: value.fluidSelected.id})
             .then(res => {
                 toast.current.show({

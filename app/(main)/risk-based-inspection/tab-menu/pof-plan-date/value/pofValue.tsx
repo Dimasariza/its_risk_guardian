@@ -93,6 +93,7 @@ function POFValue() {
 
   // const shellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
   // const headTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
+  const componentType = data.menu?.comp_componentType
 
   return (
     <>
@@ -120,38 +121,50 @@ function POFValue() {
                 value: failureFrequency?.total
               },
               {
-                label: "Shell Governing thinning damage factor",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing thinning damage factor`,
                 value: Number(shellBaseDF)?.toFixed(4)
               },
               {
                 label: "Head Governing thinning damage factor",
-                value: Number(headBaseDF)?.toFixed(4)
+                value: Number(headBaseDF)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Shell Governing External damage factor",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
                 value: Number(planShellSection)?.toFixed(4)
               },
               {
                 label: "Head Governing External damage factor",
-                value: Number(planHeadSection)?.toFixed(4)
+                value: Number(planHeadSection)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Shell Total Value damage factor",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Total Value damage factor`,
                 value: shellTotal.toFixed(4)
               },
               {
                 label: "Head Total Value damage factor",
-                value: headTotal.toFixed(4)
+                value: headTotal.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Shell Section Probability of Failure",
-                value: (failureFrequency?.total * shellTotal * value.planValue_FMS).toFixed(6)
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Probability of Failure`,
+                value: (failureFrequency?.total * shellTotal * value.rbiValue_FMS).toFixed(6)
               },
               {
                 label: "Head Section Probability of Failure",
-                value: (failureFrequency?.total * headTotal * value.planValue_FMS).toFixed(6)
+                value: (failureFrequency?.total * headTotal * value.rbiValue_FMS).toFixed(6),
+                notView: ["Pipe"]
               },
-            ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
+            ].map(({label, value, notView} : any) => {
+              if(!notView?.includes(componentType)) {
+                return <InputValueOnly 
+                  label={label} 
+                  value={!(value == null || Number.isNaN(value)) ? value : "-"} 
+                  key={label} 
+                />
+              }
+            })
           }
         </div>
 

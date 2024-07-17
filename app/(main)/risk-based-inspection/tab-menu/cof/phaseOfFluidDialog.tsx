@@ -7,7 +7,7 @@ import { InputSwitch } from "primereact/inputswitch";
 import { useState } from "react";
 
 
-function PhaseOfFluid({value, setValue, toast}: any) {
+function PhaseOfFluid({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false)
     
     const footerContent = (
@@ -25,6 +25,7 @@ function PhaseOfFluid({value, setValue, toast}: any) {
                 });
             }
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_phaseOfFluid: value?.phase.id})
             .then(res => {
                 toast.current.show({

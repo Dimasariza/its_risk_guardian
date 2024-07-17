@@ -105,14 +105,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_operatingPressureBar',
       type: 'text',
-      placeholder: 'Operating Pressure (Bar)',
-      label: 'Operating Pressure (Bar)',
+      placeholder: 'Operating Pressure (Bar *)',
+      label: 'Operating Pressure (Bar *)',
     },
     {
       name: 'gData_operatingPressurePsi',
       type: 'text',
-      placeholder: 'Operating Pressure (Psi)',
-      label: 'Operating Pressure (Psi)',
+      placeholder: 'Operating Pressure (Psi *)',
+      label: 'Operating Pressure (Psi *)',
     },
     {
       name: 'gData_operatingTemperatureC',

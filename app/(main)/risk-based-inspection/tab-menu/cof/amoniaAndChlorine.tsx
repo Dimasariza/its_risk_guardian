@@ -8,7 +8,7 @@ import { InputSwitch } from "primereact/inputswitch";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function AmoniaChlorineDialog({value, setValue, toast}: any) {
+function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false)
 
     const headerGroup = (
@@ -42,6 +42,7 @@ function AmoniaChlorineDialog({value, setValue, toast}: any) {
                 });
             }
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_adjToFlamable: value?.amoniaChloride.id})
             .then(res => {
                 toast.current.show({

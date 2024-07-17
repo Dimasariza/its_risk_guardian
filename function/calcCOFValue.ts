@@ -216,8 +216,9 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const universalGasConstant = 8.314
 
     const releaseRateWnSmall = ((Cd / C2) * basedOnDNSmallm * Ps) 
-    * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
-    * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
+    * (((Number(idealGasHeatRatio) * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
+    * (2 / (Number(idealGasHeatRatio) + 1)) ** ((Number(idealGasHeatRatio) + 1) / (Number(idealGasHeatRatio) - 1))) ** 0.5
+    
     const releaseRateWnMedium = ((Cd / C2) * basedOnDNMediumm * Ps) 
     * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
@@ -231,7 +232,7 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const wMax = ((Cd / C2) * basedOnDNSmallm * Ps)
     * (((idealGasHeatRatio * mw * Gc) / (universalGasConstant * gData_operatingTempOnK))
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
-
+    
     const addedFluidMassSmall = 180 * Math.min(releaseRateWnSmall, wMax) 
     const addedFluidMassMedium = 180 * Math.min(releaseRateWnMedium, wMax) 
     const addedFluidMassLarge = 180 * Math.min(releaseRateWnLarge, wMax) 
@@ -248,7 +249,8 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const timeRequiredLarge = C3 / releaseRateWnLarge
     const timeRequiredRupture = C3 / releaseRateWnRupture
 
-    const {factor}: any = reductionFactor.find((i: any) => (i.detection.includes(impact?.cof_detectionSystem?.classification) && i.isolation.includes(impact?.cof_isolationSystem?.classification))) || {}
+    const {factor}: any = reductionFactor.find((i: any) => (i.detection.includes(impact?.cof_detectionSystem?.classification) 
+    && i.isolation.includes(impact?.cof_isolationSystem?.classification))) || {}
     const adjReleaseRateSmall = releaseRateWnSmall * (1 - factor!)
     const adjReleaseRateMedium = releaseRateWnMedium * (1 - factor!)
     const adjReleaseRateLarge = releaseRateWnLarge * (1 - factor!)
@@ -406,9 +408,9 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const forAcidCausticLarge = (0 * factICLarge) + (forSteamLarge * (1 - factICLarge))
     const forAcidCausticRupture = (forSteamRupture * factICRupture) + (0 * (1 - factICRupture))
 
-    const CA_ToxInjuries = ((sizeSmall * toxicConsAreqSmall) + (sizeMedium * toxicConsAreqMedium) + (sizeLarge * toxicConsAreqLarge) + (sizeRupture * toxicConsAreqRupture)) / total
+    const CA_ToxInjuries: number = ((sizeSmall * toxicConsAreqSmall) + (sizeMedium * toxicConsAreqMedium) + (sizeLarge * toxicConsAreqLarge) + (sizeRupture * toxicConsAreqRupture)) / total
 
-    const CA_NonFlamable = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
+    const CA_NonFlamable: any = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
 
     const finalConsequenceM = Math.max(Number(CA_ComponentDamage), Math.max(Number(CA_PersonalInjuries), Number(CA_ToxInjuries), Number(CA_NonFlamable))) 
 

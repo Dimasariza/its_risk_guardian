@@ -6,7 +6,7 @@ import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
 import { useState } from "react";
 
-function AdjusmentToFlamable({value, setValue, toast}: any) {
+function AdjusmentToFlamable({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false)
 
     const footerContent = (
@@ -24,6 +24,7 @@ function AdjusmentToFlamable({value, setValue, toast}: any) {
                 });
             }
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_adjToFlamable: value?.mitigation.id})
             .then(res => {
                 toast.current.show({

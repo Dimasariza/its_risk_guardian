@@ -46,7 +46,7 @@ export const isolation = [
     },
 ]
 
-function DetectionAndIsolation({value, setValue, toast}: any) {
+function DetectionAndIsolation({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const footerContent = (
@@ -57,6 +57,7 @@ function DetectionAndIsolation({value, setValue, toast}: any) {
           <Button label="Save" icon="pi pi-times" 
           onClick={() => {
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, 
                 cof_detectionSystem: value?.impact?.cof_detectionSystem.id, 
                 cof_isolationSystem: value?.impact?.cof_isolationSystem.id

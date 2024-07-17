@@ -7,7 +7,7 @@ import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function FlamableDialog({value, setValue, toast}: any) {
+function FlamableDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const footerContent = (
@@ -25,6 +25,7 @@ function FlamableDialog({value, setValue, toast}: any) {
                 });
             }
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_flamableCons: value.flamable.id})
             .then(res => {
                 toast.current.show({

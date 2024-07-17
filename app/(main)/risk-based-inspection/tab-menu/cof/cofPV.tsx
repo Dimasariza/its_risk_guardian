@@ -17,9 +17,17 @@ import AdjusmentToFlamable, { adjMitigation } from "./adjustmentToFlamable";
 import { getValue } from "@/service/calculation/pofRBIDate-service";
 import { gffTableValue } from "../pof-rbi-date/value/gffTableValue";
 import AmoniaChlorineDialog from "./amoniaAndChlorine";
+import axios from "axios";
+
+// const requests = [url + '/itemByUser', url + '/equipmentByUser', url + '/componentByUser'].map((url) => axios.post(url, {"user_id": userId}));
+// const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((responses) => {
+//   return responses
+// });
 
 function COFPV({toast}: any) {
     const [value, setValue] = useState<any>({});
+    const [submit, setSubmit] = useState<boolean>(true)
+    const [test, setTets] = useState<any>({})
 
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<any>({});
@@ -31,9 +39,29 @@ function COFPV({toast}: any) {
         edit = true
 
         if(!componentId) return
+        console.log("test")
+        // async () => {
+        //     const [a, b] = await axios.all([GeneralDataService.fetchData(componentId), getValue(componentId)]).then(res => res)
+        //     getValue(componentId)
+        //     .then(res => setTets(res))
+        //     console.log("general data", a)
+        //     console.log("value", b)
+        // }
+        Promise.all([GeneralDataService.fetchData(componentId), getValue(componentId)])
+       .then((res) => {
+           return console.log(res)
+       })
+        // console.log(test)
         GeneralDataService.fetchData(componentId)
         .then((res: any) => {
             setGeneralData(res)
+        })
+
+        
+        getValue(componentId)
+        .then((res) => {
+          const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
+          setValue((prev: any) => ({...prev, failureFreq}))
         })
 
         CofService.fetchData(componentId)
@@ -54,12 +82,7 @@ function COFPV({toast}: any) {
             })
         })
 
-        getValue(componentId)
-        .then((res) => {
-          const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
-          setValue((prev: any) => ({...prev, failureFreq}))
-        })
-    }, [data]);
+    }, [data, submit]);
 
     useEffect(() => {
         if(Object.keys(error).length === 0 && !edit && !undoEdit) {
@@ -80,6 +103,10 @@ function COFPV({toast}: any) {
         })
         } 
     }, [edit])
+
+    const handleSubmitDialog = () => {
+        setSubmit(prev => !prev)
+    }
 
     const {
         getIdealGasHeatRatio,
@@ -217,7 +244,6 @@ function COFPV({toast}: any) {
         impact: value.impact
     })
 
-
     return (
         <>
         <div className="flex w-full lg:gap-8 md:gap-3 sm:gap-2">
@@ -227,15 +253,15 @@ function COFPV({toast}: any) {
                 ))}
             </div>
             <div className="flex flex-wrap gap-5 mt-5">
-                <RepresentativeFluidDialog value={value} setValue={setValue} toast={toast} />
-                <PhaseOfFluid value={value} setValue={setValue} toast={toast}/>
-                <ReleaseHoleSize value={value} setValue={setValue} toast={toast}/>
-                <LiquidInventories value={value} setValue={setValue} toast={toast}/>
-                <DetectionAndIsolation value={value} setValue={setValue} toast={toast} />
-                <AdjusmentToFlamable value={value} setValue={setValue} toast={toast}/>
-                <FlamableDialog value={value} setValue={setValue} toast={toast}/>
-                <DamageDialog value={value} setValue={setValue} toast={toast} />
-                <AmoniaChlorineDialog value={value} setValue={setValue} toast={toast}/>
+                <RepresentativeFluidDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <PhaseOfFluid value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <ReleaseHoleSize value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <LiquidInventories value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <DetectionAndIsolation value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <AdjusmentToFlamable value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <FlamableDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <DamageDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <AmoniaChlorineDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
             </div>
         </div>
 

@@ -38,7 +38,7 @@ export const holeSizes = [
 ]
 
 
-function ReleaseHoleSize({value, setValue, toast}: any) {
+function ReleaseHoleSize({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false)
     const [editRelease, setEditRelease] = useState(false)
     
@@ -56,6 +56,7 @@ function ReleaseHoleSize({value, setValue, toast}: any) {
                 onClick={() => {
                     setEditRelease(false)
                     setVisible(false)
+                    handleSubmitDialog()
                     CofService.editData(value)
                     .then(res => {
                         toast.current.show({

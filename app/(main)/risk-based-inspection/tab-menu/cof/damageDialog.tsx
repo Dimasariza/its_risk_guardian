@@ -8,7 +8,7 @@ import { InputSwitch } from "primereact/inputswitch";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function DamageDialog({value, setValue, toast}: any) {
+function DamageDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
     
     const footerContent = (
@@ -26,6 +26,7 @@ function DamageDialog({value, setValue, toast}: any) {
                 });
             }
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_damageCons: value?.damage.id})
             .then(res => {
                 toast.current.show({

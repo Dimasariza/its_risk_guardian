@@ -115,7 +115,7 @@ export const liquidInventories = [
         percent: "15% liquid",
     },
 ]
-function LiquidInventories({value, setValue, toast}: any) {
+function LiquidInventories({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const footerContent = (
@@ -133,6 +133,7 @@ function LiquidInventories({value, setValue, toast}: any) {
                 });
             }
             setVisible(false)
+            handleSubmitDialog()
             CofService.editData({...value, cof_liquidInventories: value?.inventories.id})
             .then(res => {
                 toast.current.show({
