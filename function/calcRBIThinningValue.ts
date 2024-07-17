@@ -8,15 +8,17 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
     const {
         gData_lastInspection,
         gData_headTreqInch,
-        gData_headTreqMM,
-        gData_shellTreqMM,
         gData_yieldStrength,
         gData_tensileStrength,
         gData_jointEfficiency,
         gData_allowableStressKpa,
+        gData_headTreqMM,
+        gData_shellTreqMM,
         gData_shellMinimumThicknessMM,
         gData_headMinimumThicknessMM,
-        gData_startingDate
+        gData_startingDate,
+        gData_designPressurePsi,
+        gData_outerDiameterMM
     } = generalData as IGeneralData;
 
     const {
@@ -36,16 +38,28 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
 
     const ageTimeInServiceTk = Math.abs(rbiDateObj - lastInspDateObj) * 3.16865E-11 || null;
 
-    const shellArt: number | null = rbiThinning_corrosionRate * Number(ageTimeInServiceTk!.toFixed(5))! / gData_shellMinimumThicknessMM || null;
+    const shellArt: number | null = rbiThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(5))! / gData_shellMinimumThicknessMM || null;
 
-    const headArt: number | null = rbiThinning_corrosionRate * Number(ageTimeInServiceTk!.toFixed(5))! / gData_headMinimumThicknessMM || null;
+    const headArt: number | null = rbiThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(5))! / gData_headMinimumThicknessMM || null;
 
-    const flowStress: number | null = (Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2 * gData_jointEfficiency * 1.1 || null;
+    const flowStress: number | null = ((Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2) 
+    * gData_jointEfficiency * 1.1 || null;
 
-    const shellStrengthRatioReal: number  = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM;
-    const shellStrengthRatio: number = Number(shellStrengthRatioReal.toFixed(3))
+    const allowableStressKpa = gData_allowableStressKpa
+    const elipticalhead = 1 
+    const allowableStressPsig = gData_allowableStressKpa / 6.89475729
 
-    const headStrengthRatioReal: number = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM;
+    const shellRequiredWallThickness = gData_shellTreqMM 
+    || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
+    const headRequiredWallThickness = gData_headTreqMM
+    
+    const shellStrengthRatioPV: number  = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
+    (Number(shellRequiredWallThickness), Number(shellRequiredWallThickness)) / gData_shellMinimumThicknessMM;
+    
+    const shellStrengthRatio: number = Number(shellStrengthRatioPV.toFixed(3))
+
+    const headStrengthRatioReal: number = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
+    (Number(headRequiredWallThickness), Number(headRequiredWallThickness)) / gData_headMinimumThicknessMM;
     const headStrengthRatio: number = Number(headStrengthRatioReal.toFixed(3))
 
     const inspEffectiveness1: number | null = prior[0].medium * (conditional[0].a ** rbiThinning_nInspA) * (conditional[0].b ** rbiThinning_nInspB) * (conditional[0].c ** rbiThinning_nInspC) * (conditional[0].d ** rbiThinning_nInspD) || null;
@@ -78,7 +92,7 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
         rbiDateObj,
         age,
         tMinInch: gData_headTreqInch,
-        tMinMM: gData_headTreqMM,
+        tMinMM: headRequiredWallThickness,
         shellArt,
         headArt,
         flowStress,
@@ -99,7 +113,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
         shellBaseDF,
         headBaseDF,
         startingDateObj,
-        ageTimeInServiceTk
+        ageTimeInServiceTk,
+        allowableStressKpa,
     }
 }
 

@@ -100,6 +100,7 @@ function DFExternalCorrosion() {
     rbiHeadSection
   } = calculateExCor(generalData, thinning, value);
 
+  const componentType = data.menu?.comp_componentType
 
   return (
     <>
@@ -166,24 +167,26 @@ function DFExternalCorrosion() {
                 value: Number(adjCoat)?.toFixed(4)
               },
               {
-                label: "Shell Art RBI Date",
+                label: `${["Pipe"].includes(componentType) ? "" : "Art RBI Date"} Art`,
                 value: Number(shellArt)?.toFixed(4)
               },
               {
                 label: "Head Art RBI Date",
-                value: Number(headArt)?.toFixed(4)
+                value: Number(headArt)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
                 label: "Flow Stress",
                 value: Number(flowStress)?.toFixed(4)
               },
               {
-                label: "Shell Strength Ratio",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
                 value: Number(shellStrengthRatio)?.toFixed(4)
               },
               {
                 label: "Head Strength Ratio",
-                value: Number(headStrengthRatio)?.toFixed(4)
+                value: Number(headStrengthRatio)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
@@ -210,38 +213,50 @@ function DFExternalCorrosion() {
                 value: Number(posteriorP3)?.toFixed(4)
               },
               {
-                label: "Shell RBI Date β1",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β1`,
                 value: Number(shellRBIBeta1)?.toFixed(4)
               },
               {
-                label: "Shell RBI Date β2",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β2`,
                 value: Number(shellRBIBeta2)?.toFixed(4)
               },
               {
-                label: "Shell RBI Date β3",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β3`,
                 value: Number(shellRBIBeta3)?.toFixed(4)
               },
               {
                 label: "Head RBI Date β1",
-                value: Number(headRBIBeta1)?.toFixed(4)
+                value: Number(headRBIBeta1)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
                 label: "Head RBI Date β2",
-                value: Number(headRBIBeta2)?.toFixed(4)
+                value: Number(headRBIBeta2)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
                 label: "Head RBI Date β3",
-                value: Number(headRBIBeta3)?.toFixed(4)
+                value: Number(headRBIBeta3)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Shell Base Damage Factor",
-                value: Number(rbiShellSection)?.toFixed(4)
+                label: `${["Pipe"].includes(componentType) ? "" : "Base Damage Factor"} Art`,
+                value: Number(rbiShellSection)?.toFixed(4),
               },
               {
                 label: "Head Base Damage Factor",
-                value: Number(rbiHeadSection)?.toFixed(4)
+                value: Number(rbiHeadSection)?.toFixed(4),
+                notView: ["Pipe"]
               },
-            ].map(({label, value}: any) => <InputValueOnly label={label} value={!Number.isNaN(value) ? value : "-"} key={label}/>)
+            ].map(({label, value, notView} : any) => {
+              if(!notView?.includes(componentType)) {
+                return <InputValueOnly 
+                  label={label} 
+                  value={!(value == null || Number.isNaN(value)) ? value : "-"} 
+                  key={label} 
+                />
+              }
+            })
           }
         </div>
       </section>

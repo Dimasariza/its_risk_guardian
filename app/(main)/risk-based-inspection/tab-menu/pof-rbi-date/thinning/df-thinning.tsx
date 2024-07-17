@@ -15,7 +15,6 @@ import { calculateThinning } from '@/function/calcRBIThinningValue';
 import IGeneralData from '@/types/IGeneralData';
 import IRBIThinning from '@/types/IRBIThinning';
 import { Toast } from 'primereact/toast';
-import * as moment from 'moment';
 import { convertDateToString } from '@/function/common';
 
 function DFThinning() {
@@ -102,6 +101,8 @@ function DFThinning() {
     headBaseDF
   } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning)
 
+  const componentType = data.menu?.comp_componentType
+
   return (
     <section className=" p-3">
       <Toast ref={toast}  position="bottom-right" />
@@ -142,24 +143,26 @@ function DFThinning() {
               value: tMinMM
             },
             {
-              label: "Shell Art",
-              value: Number(shellArt)?.toFixed(6)
+              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Art`,
+              value: Number(shellArt)?.toFixed(6),
             },
             {
               label: "Head Art",
-              value: Number(headArt)?.toFixed(6)
+              value: Number(headArt)?.toFixed(6),
+              notView: ["Pipe"]
             },
             {
               label: "Flow Stress",
               value: Number(flowStress)?.toFixed(4)
             },
             {
-              label: "Shell Strength Ratio",
+              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
               value: Number(shellStrengthRatio)?.toFixed(4)
             },
             {
               label: "Head Strength Ratio",
-              value: Number(headStrengthRatio)?.toFixed(4)
+              value: Number(headStrengthRatio)?.toFixed(4),
+              notView: ["Pipe"]
             },
             {
               label: "Inspection Effectiveness 1",
@@ -186,38 +189,50 @@ function DFThinning() {
               value: Number(postProbability3)?.toFixed(4)
             },
             {
-              label: "Shell Section β1",
+              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section β1`,
               value: Number(shellSectionB1)?.toFixed(4)
             },
             {
-              label: "Shell Section β2",
+              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section β2`,
               value: Number(shellSectionB2)?.toFixed(4)
             },
             {
-              label: "Shell Section β3",
+              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section β3`,
               value: Number(shellSectionB3)?.toFixed(4)
             },
             {
               label: "Head Section β1",
-              value: Number(headSectionB1)?.toFixed(4)
+              value: Number(headSectionB1)?.toFixed(4),
+              notView: ["Pipe"]
             },
             {
               label: "Head Section β2",
-              value: Number(headSectionB2)?.toFixed(4)
+              value: Number(headSectionB2)?.toFixed(4),
+              notView: ["Pipe"]
             },
             {
               label: "Head Section β3",
-              value: Number(headSectionB3)?.toFixed(4)
+              value: Number(headSectionB3)?.toFixed(4),
+              notView: ["Pipe"]
             },
             {
-              label: "Shell Section Base DF",
+              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Base DF`,
               value: Number(shellBaseDF)?.toFixed(4)
             },
             {
               label: "Head Section Base DF",
-              value: Number(headBaseDF)?.toFixed(4)
+              value: Number(headBaseDF)?.toFixed(4),
+              notView: ["Pipe"]
             },
-          ].map(({label, value} : any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label} />)
+          ].map(({label, value, notView} : any) => {
+            if(!notView?.includes(componentType)) {
+              return <InputValueOnly 
+                label={label} 
+                value={!(value == null || Number.isNaN(value)) ? value : "-"} 
+                key={label} 
+              />
+            }
+          })
         }
       </div>
     </section>

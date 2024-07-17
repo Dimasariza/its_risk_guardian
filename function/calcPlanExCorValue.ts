@@ -14,7 +14,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         age,
         planDateObj,
         startingDateObj,
-        lastInspDateObj
+        lastInspDateObj,
+        allowableStressKpa,
+        shellStrengthRatio
     } = calculateThinning(generalData, thinning)
 
     const {
@@ -26,7 +28,6 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         gData_yieldStrength,
         gData_tensileStrength,
         gData_jointEfficiency,
-        gData_allowableStressKpa,
         gData_shellTreqMM,
         gData_headTreqMM
     } = generalData;
@@ -57,9 +58,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     const flowStress = ((gData_yieldStrength + gData_tensileStrength) / 2) * gData_jointEfficiency * 1.1
 
-    const shellStrengthRatio = ((gData_allowableStressKpa * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
+    // const shellStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
 
-    const headStrengthRatio = ((gData_allowableStressKpa * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
+    const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
 
     const inspectionI1 = prior[0].medium * ((conditional[0].a) ** planThinning_nInspA) * ((conditional[0].b) ** planThinning_nInspB) * ((conditional[0].c) ** planThinning_nInspC) * ((conditional[0].d) ** planThinning_nInspD)
     
@@ -78,9 +79,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
     const covSf = 0.2
     const covP = 0.05
 
-    const shellPlanBeta1 = ((1 - (damageState1 * shellArt)) - shellStrengthRatio) / (((damageState1 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * shellArt)) ** 2) * (covSf ** 2)) + ((shellStrengthRatio ** 2) * (covP ** 2))) ** 0.5
-    const shellPlanBeta2 = ((1 - (damageState2 * shellArt)) - shellStrengthRatio) / (((damageState2 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * shellArt)) ** 2) * (covSf ** 2)) + ((shellStrengthRatio ** 2) * (covP ** 2))) ** 0.5
-    const shellPlanBeta3 = ((1 - (damageState3 * shellArt)) - shellStrengthRatio) / (((damageState3 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) + ((shellStrengthRatio ** 2) * (covP ** 2))) ** 0.5
+    const shellPlanBeta1 = ((1 - (damageState1 * shellArt)) - Number(shellStrengthRatio)) / (((damageState1 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
+    const shellPlanBeta2 = ((1 - (damageState2 * shellArt)) - Number(shellStrengthRatio)) / (((damageState2 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
+    const shellPlanBeta3 = ((1 - (damageState3 * shellArt)) - Number(shellStrengthRatio)) / (((damageState3 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
 
     const headPlanBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
     const headPlanBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5

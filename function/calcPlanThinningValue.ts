@@ -16,7 +16,9 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         gData_allowableStressKpa,
         gData_shellMinimumThicknessMM,
         gData_headMinimumThicknessMM,
-        gData_startingDate
+        gData_startingDate,
+        gData_designPressurePsi,
+        gData_outerDiameterMM
     } = generalData as IGeneralData;
 
     const {
@@ -36,17 +38,28 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
 
     const ageTimeInServiceTk = Math.abs(planDateObj - lastInspDateObj) * 3.16865E-11 || null;
 
-    const shellArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!.toFixed(3))! / gData_shellMinimumThicknessMM || null;
+    const shellArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(3))! / gData_shellMinimumThicknessMM || null;
 
-    const headArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!.toFixed(3))! / gData_headMinimumThicknessMM || null;
+    const headArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(3))! / gData_headMinimumThicknessMM || null;
 
-    const flowStress: number | null = (Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2 * gData_jointEfficiency * 1.1 || null;
+    const flowStress: number | null = (Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2 
+    * gData_jointEfficiency * 1.1 || null;
 
-    const shellStrengthRatioReal: number  = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_shellMinimumThicknessMM;
-    const shellStrengthRatio: number = Number(shellStrengthRatioReal.toFixed(3))
+    const allowableStressKpa = gData_allowableStressKpa
+    
+    const elipticalhead = 1 
+    const allowableStressPsig = (gData_allowableStressKpa * 1000) / 6894.76
+    const shellRequiredWallThickness = gData_shellTreqMM || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
 
-    const headStrengthRatioReal: number = (Number(gData_allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max(Number(gData_headTreqMM), Number(gData_headTreqMM)) / gData_headMinimumThicknessMM;
-    const headStrengthRatio: number = Number(headStrengthRatioReal.toFixed(3))
+    const headRequiredWallThickness = gData_headTreqMM
+
+    const shellStrengthRatioPV: number  = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
+    (Number(shellRequiredWallThickness), Number(shellRequiredWallThickness)) / gData_shellMinimumThicknessMM;
+    const shellStrengthRatio: number = Number(shellStrengthRatioPV.toFixed(3))
+
+    const headStrengthRatioPV: number = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
+    (Number(headRequiredWallThickness), Number(headRequiredWallThickness)) / gData_headMinimumThicknessMM;
+    const headStrengthRatio: number = Number(headStrengthRatioPV.toFixed(3))
 
     const inspEffectiveness1: number | null = prior[0].medium * (conditional[0].a ** planThinning_nInspA) * (conditional[0].b ** planThinning_nInspB) * (conditional[0].c ** planThinning_nInspC) * (conditional[0].d ** planThinning_nInspD) || null;
     const inspEffectiveness2: number | null = prior[1].medium * (conditional[1].a ** planThinning_nInspA) * (conditional[1].b ** planThinning_nInspB) * (conditional[1].c ** planThinning_nInspC) * (conditional[1].d ** planThinning_nInspD) || null;
@@ -78,7 +91,7 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         planDateObj,
         age,
         tMinInch: gData_headTreqInch,
-        tMinMM: gData_headTreqMM,
+        tMinMM: headRequiredWallThickness,
         shellArt,
         headArt,
         flowStress,
@@ -99,7 +112,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         shellBaseDF,
         headBaseDF,
         startingDateObj,
-        ageTimeInServiceTk
+        ageTimeInServiceTk,
+        allowableStressKpa
     }
 }
 

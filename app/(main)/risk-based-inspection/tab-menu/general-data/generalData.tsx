@@ -189,35 +189,50 @@ function GeneralData() {
     } 
   }, [error])
 
+  const componentType = data.menu?.comp_componentType
+
   return (
     <>
       <section className="p-4">
         <Toast ref={toast}  position="bottom-right" />
-
+ 
         <h5>GENERAL SPECIFICATION OF PRESSURE VESSEL</h5>
         <div className="flex flex-wrap column-gap-5 lg:column-gap-6">
-          {inputsGeneralSpec.map((props: any, key: number) => {
-            if (props.type == 'text' || props.type == 'number') {
-              return <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
-            } else if (props.type == 'calendar') {
-              return <InputCalendar props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
-            } 
-          })}
+          {
+            inputsGeneralSpec.map((props: any, key: number) => {
+              if(props?.notView?.includes(componentType)) return
+              else if (props.type == 'text' || props.type == 'number' && props.notView != componentType) {
+                return <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
+              } else if (props.type == 'calendar' && props.notView != componentType) {
+                return <InputCalendar props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
+              } 
+            })
+          }
         </div>
 
-        <h5>SHELL CALCULATION</h5>
-        <div className="flex flex-wrap lg:column-gap-6">
-          {inputsShellCalc.map((props: any, key: number) => (
-            <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
-          ))}
-        </div>
+        {
+          componentType == "Pressure Vessel" &&
+          <div>
+            <h5>SHELL CALCULATION</h5>
+            <div className="flex flex-wrap lg:column-gap-6">
+              {inputsShellCalc.map((props: any, key: number) => (
+               <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
+              ))}
+            </div>
+          </div>
+        }
 
-        <h5>HEAD CALCULATION</h5>
-        <div className="flex flex-wrap lg:column-gap-6">
-          {inputsHeadCalc.map((props: any, key: number) => (
-            <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
-          ))}
-        </div>
+        {
+          componentType == "Pressure Vessel" &&
+          <div>
+            <h5>HEAD CALCULATION</h5>
+            <div className="flex flex-wrap lg:column-gap-6">
+              {inputsHeadCalc.map((props: any, key: number) => (
+                 <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error?.[props.name]} />
+              ))}
+            </div>
+          </div>
+        }
       </section>
     </>
   );

@@ -89,6 +89,8 @@ function DFAlkalineCorrosion() {
     alkaline: value
   })
 
+  const componentType = data.menu?.comp_componentType
+
   return (
     <>
       <Toast ref={toast}  position="bottom-right" />
@@ -109,14 +111,19 @@ function DFAlkalineCorrosion() {
             <InspectionEffectivenessTable inspectionSelected={inspectionSelected} setInspectionSelected={setInspectionSelected} />
           </div>
           <div className='gap-5 flex flex-column'>
-            <div style={{width: "20rem"}} className='flex justify-content-between'>
-              <span>Shell subjects to PWHT</span>
-              <Checkbox name='rbiAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={value.rbiAlkaline_shellPwht}></Checkbox>
-            </div>
+            {
+              <div style={{width: "20rem"}} className='flex justify-content-between'>
+                <span>{`${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`} subjects to PWHT</span>
+                <Checkbox name='rbiAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={value.rbiAlkaline_shellPwht}></Checkbox>
+              </div>
+            }
+            {
+            !["Pipe"].includes(componentType) &&
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Head subjects to PWHT</span>
               <Checkbox name='rbiAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_headPwht: e.checked}))} checked={value.rbiAlkaline_headPwht}></Checkbox>
             </div>
+            }
           </div>
         </div>
         <div className='flex w-full flex-wrap mt-5'>
@@ -127,14 +134,23 @@ function DFAlkalineCorrosion() {
                 value: age
               },
               {
-                label: "Shell DF ACSCC",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`,
                 value: Number(shellPWHT).toFixed(4)
               },
               {
                 label: "Head DF ACSCC",
-                value: Number(headPWHT).toFixed(4)
+                value: Number(headPWHT).toFixed(4),
+                notView: ["Pipe"]
               }
-            ].map(({value, label}: any) => <InputValueOnly label={label} value={value || "-"} key={label} />)
+            ].map(({label, value, notView} : any) => {
+              if(!notView?.includes(componentType)) {
+                return <InputValueOnly 
+                  label={label} 
+                  value={!(value == null || Number.isNaN(value)) ? value : "-"} 
+                  key={label} 
+                />
+              }
+            })
           }
         </div>
       </section>

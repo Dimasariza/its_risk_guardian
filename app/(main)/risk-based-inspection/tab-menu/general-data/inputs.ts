@@ -9,8 +9,8 @@ const inputsGeneralSpec = [
     {
       name: 'gData_startingDate',
       type: 'calendar',
-      placeholder: 'Starting Date / Built', 
-      label: 'Starting Date / Built',
+      placeholder: 'Starting Date / Built (*)', 
+      label: 'Starting Date / Built (*)',
     },
     {
       name: 'gData_service',
@@ -171,20 +171,20 @@ const inputsGeneralSpec = [
     {
       name: 'gData_jointEfficiency',
       type: 'text',
-      placeholder: 'Joint Efficiency',
-      label: 'Joint Efficiency (Head/Sheel)',
+      placeholder: 'Joint Efficiency (*)',
+      label: 'Joint Efficiency (Head/Sheel *)',
     },
     {
       name: 'gData_yieldStrength',
       type: 'text',
-      placeholder: 'Yield Strength',
-      label: 'Yield Strength',
+      placeholder: 'Yield Strength (Kpa *)',
+      label: 'Yield Strength (Kpa *)',
     },
     {
       name: 'gData_tensileStrength',
       type: 'text',
-      placeholder: 'Tensile Strength',
-      label: 'Tensile Strength',
+      placeholder: 'Tensile Strength (Kpa *)',
+      label: 'Tensile Strength (Kpa *)',
     },
     {
       name: 'gData_corrosionAllowanceMM',
@@ -198,12 +198,6 @@ const inputsGeneralSpec = [
       placeholder: 'Corrosion Allowance (inch)',
       label: 'Corrosion Allowance (inch)',
     },
-    // {
-    //   name: 'gData_yearBuilt',
-    //   type: 'number',
-    //   placeholder: 'Year Built',
-    //   label: 'Year Built',
-    // },
     {
       name: 'gData_material',
       type: 'text',
@@ -213,8 +207,8 @@ const inputsGeneralSpec = [
     {
       name: 'gData_lastInspection',
       type: 'calendar',
-      placeholder: 'Last Inspection',
-      label: 'Last Inspection',
+      placeholder: 'Last Inspection (*)',
+      label: 'Last Inspection (*)',
     },
     {
       name: 'gData_nominalThicknessMM',
@@ -243,14 +237,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_allowableStressPsig',
       type: 'text',
-      placeholder: 'Allowable Stress (psig)',
-      label: 'Allowable Stress (psig)',
+      placeholder: 'Allowable Stress (psig *)',
+      label: 'Allowable Stress (psig *)',
     },
     {
       name: 'gData_allowableStressBar',
       type: 'text',
-      placeholder: 'Allowable Stress (bar)',
-      label: 'Allowable Stress (bar)',
+      placeholder: 'Allowable Stress (bar *)',
+      label: 'Allowable Stress (bar *)',
     },
     {
       name: 'gData_allowableStressKpa',
@@ -264,6 +258,34 @@ const inputsGeneralSpec = [
       placeholder: 'Efficiency',
       label: 'Efficiency',
     },
+    {
+      name: 'gData_shellMinimumThicknessMM',
+      type: 'text',
+      placeholder: 'Minimum Thickness (mm *)',
+      label: 'Minimum Thickness (mm *)',
+      notView: ["Pressure Vessel"]
+    },
+    {
+      name: 'gData_shellMinimumThicknessInch',
+      type: 'text',
+      placeholder: 'Minimum Thickness (inch *)',
+      label: 'Minimum Thickness (inch *)',
+      notView: ["Pressure Vessel"]
+    },
+    {
+      name: 'gData_shellTreqInch',
+      type: 'text',
+      placeholder: 'T Requirement (inch *)',
+      label: 'T Requirement (Inch *)',
+      notView: ["Pressure Vessel"]
+    },
+    {
+      name: 'gData_shellTreqMM',
+      type: 'text',
+      placeholder: 'T Requirement (mm *)',
+      label: 'T Requirement (mm *)',
+      notView: ["Pressure Vessel"]
+    },
   ];
 
   const inputsShellCalc = [
@@ -276,14 +298,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_shellMinimumThicknessMM',
       type: 'text',
-      placeholder: 'Minimum Thickness (mm)',
-      label: 'Minimum Thickness (mm)',
+      placeholder: 'Minimum Thickness (mm *)',
+      label: 'Minimum Thickness (mm *)',
     },
     {
       name: 'gData_shellMinimumThicknessInch',
       type: 'text',
-      placeholder: 'Minimum Thickness (inch)',
-      label: 'Minimum Thickness (inch)',
+      placeholder: 'Minimum Thickness (inch *)',
+      label: 'Minimum Thickness (inch *)',
     },
     {
       name: 'gData_shellCorrosionRateMM',
@@ -300,14 +322,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_shellTreqInch',
       type: 'text',
-      placeholder: 'T Requirement (inch)',
-      label: 'T Requirement (Inch)',
+      placeholder: 'T Requirement (inch *)',
+      label: 'T Requirement (Inch *)',
     },
     {
       name: 'gData_shellTreqMM',
       type: 'text',
-      placeholder: 'T Requirement (mm)',
-      label: 'T Requirement (mm)',
+      placeholder: 'T Requirement (mm *)',
+      label: 'T Requirement (mm *)',
     },
     {
       name: 'gData_shellMAWP',
@@ -351,14 +373,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_headTreqInch',
       type: 'text',
-      placeholder: 'T Requirement (inch)',
-      label: 'T Requirement (Inchi)',
+      placeholder: 'T Requirement (inch *)',
+      label: 'T Requirement (Inch *)',
     },
     {
       name: 'gData_headTreqMM',
       type: 'text',
-      placeholder: 'T Requirement (mm)',
-      label: 'T Requirement (mm)',
+      placeholder: 'T Requirement (mm *)',
+      label: 'T Requirement (mm *)',
     },
     {
       name: 'gData_headMAWP',

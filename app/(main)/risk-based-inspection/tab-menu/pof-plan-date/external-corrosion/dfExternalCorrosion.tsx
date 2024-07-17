@@ -100,6 +100,8 @@ function DFExternalCorrosion() {
     planHeadSection
   } = calculateExCor(generalData, thinning, value);
 
+  const componentType = data.menu?.comp_componentType
+
   return (
     <>
       <Toast ref={toast}  position="bottom-right" />
@@ -126,7 +128,7 @@ function DFExternalCorrosion() {
           <OperatingTempTableRef />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
-          {
+        {
             [
               {
                 label: "Age",
@@ -165,24 +167,26 @@ function DFExternalCorrosion() {
                 value: Number(adjCoat)?.toFixed(4)
               },
               {
-                label: "Shell Art Plan Date",
+                label: `${["Pipe"].includes(componentType) ? "" : "Art RBI Date"} Art`,
                 value: Number(shellArt)?.toFixed(4)
               },
               {
-                label: "Head Art Plan Date",
-                value: Number(headArt)?.toFixed(4)
+                label: "Head Art RBI Date",
+                value: Number(headArt)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
                 label: "Flow Stress",
                 value: Number(flowStress)?.toFixed(4)
               },
               {
-                label: "Shell Strength Ratio",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
                 value: Number(shellStrengthRatio)?.toFixed(4)
               },
               {
                 label: "Head Strength Ratio",
-                value: Number(headStrengthRatio)?.toFixed(4)
+                value: Number(headStrengthRatio)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
@@ -209,38 +213,50 @@ function DFExternalCorrosion() {
                 value: Number(posteriorP3)?.toFixed(4)
               },
               {
-                label: "Shell Plan Date β1",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β1`,
                 value: Number(shellPlanBeta1)?.toFixed(4)
               },
               {
-                label: "Shell Plan Date β2",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β2`,
                 value: Number(shellPlanBeta2)?.toFixed(4)
               },
               {
-                label: "Shell Plan Date β3",
+                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β3`,
                 value: Number(shellPlanBeta3)?.toFixed(4)
               },
               {
-                label: "Head Plan Date β1",
-                value: Number(headPlanBeta1)?.toFixed(4)
+                label: "Head RBI Date β1",
+                value: Number(headPlanBeta1)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Head Plan Date β2",
-                value: Number(headPlanBeta2)?.toFixed(4)
+                label: "Head RBI Date β2",
+                value: Number(headPlanBeta2)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Head Plan Date β3",
-                value: Number(headPlanBeta3)?.toFixed(4)
+                label: "Head RBI Date β3",
+                value: Number(headPlanBeta3)?.toFixed(4),
+                notView: ["Pipe"]
               },
               {
-                label: "Shell Base Damage Factor",
-                value: Number(planShellSection)?.toFixed(4)
+                label: `${["Pipe"].includes(componentType) ? "" : "Base Damage Factor"} Art`,
+                value: Number(planShellSection)?.toFixed(4),
               },
               {
                 label: "Head Base Damage Factor",
-                value: Number(planHeadSection)?.toFixed(4)
+                value: Number(planHeadSection)?.toFixed(4),
+                notView: ["Pipe"]
               },
-            ].map(({label, value}: any) => <InputValueOnly label={label} value={!(value == null || Number.isNaN(value)) ? value : "-"} key={label}/>)
+            ].map(({label, value, notView} : any) => {
+              if(!notView?.includes(componentType)) {
+                return <InputValueOnly 
+                  label={label} 
+                  value={!(value == null || Number.isNaN(value)) ? value : "-"} 
+                  key={label} 
+                />
+              }
+            })
           }
         </div>
       </section>

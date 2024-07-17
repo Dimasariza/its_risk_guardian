@@ -89,7 +89,8 @@ function POFValue() {
     generalData,
     thinning,
     exCor,
-    alkaline
+    alkaline,
+    pofValue: value
   })
 
   // const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
