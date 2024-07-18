@@ -13,80 +13,134 @@ function InitiatingEventFrequencies() {
             <Button label="Cancel" icon="pi pi-check" 
             onClick={() => setVisible(false)} 
             severity="danger" />
+              <Button label="Save" icon="pi pi-times" severity="success" />
+
         </div>
     );
 
-    const headerGroup = (
-        <ColumnGroup>
-            <Row>
-                <Column header="" rowSpan={3} style={{ width: '3rem' }}/>
-                <Column header="pH of Water" rowSpan={3} style={{width: "10rem"}}/>
-                <Column header="Susceptibility to Cracking as a Function of CO3 Concentration in Water" colSpan={3} />
-            </Row>
-            <Row>
-                <Column header="PWHT, Possible Cold Working" />
-                <Column header="No PWHT, Possible Cold Working"  colSpan={2}/>
-            </Row>
-            <Row>
-                <Column header="CO3 All Concentration" />
-                <Column header="CO3 < 100 ppm" />
-                <Column header="CO3 ≥ 100 ppm" />
-            </Row>
-        </ColumnGroup>
-    );
-
-    const suscepbility = [
+    const eventFreq = [
         {
-            id: "ph001",
-            ph: "<7.5",
-            co3All: "None",
-            co3Under100: "None",
-            co3Over100: "None",
+            id: "eventfreq001",
+            overPress: "Fire",
+            event: "1 per 250 years",
+            ef: 0.004,
+            drrf: 0.1,
         },
         {
-            id: "ph002",
-            ph: "≥ 7.5 to 8.0",
-            co3All: "None",
-            co3Under100: "Low",
-            co3Over100: "Medium",
+            id: "eventfreq002",
+            overPress: "Loss of Cooling Water Utility",
+            event: "1 per 10 years",
+            ef: 0.1,
+            drrf: 1,
         },
         {
-            id: "ph003",
-            ph: "≥ 8.0 to 9.0",
-            co3All: "None",
-            co3Under100: "Low",
-            co3Over100: "High",
+            id: "eventfreq003",
+            overPress: "Electrical Power Supply failure",
+            event: "1 per 12.5 years",
+            ef: 0.08,
+            drrf: 1,
         },
         {
-            id: "ph004",
-            ph: "≥ 9.0",
-            co3All: "None",
-            co3Under100: "High",
-            co3Over100: "High",
+            id: "eventfreq004",
+            overPress: "Blocked Discharge with Administrative Controls in Place (see Note 1)",
+            event: "1 per 100 Years",
+            ef: 0.01,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq005",
+            overPress: "Blocked Discharge without Administrative Controls (See Note 1)",
+            event: "1 per 10 years",
+            ef: 0.1,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq006",
+            overPress: "Control Valve Failure, Initiating event is same direction as CV normal fail position (i.e. Fail safe)",
+            event: "1 per 10 years",
+            ef: 0.1,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq007",
+            overPress: "Control Valve Failure, Initiating event is opposite direction as CV normal fail position (i.e., fail opposite)",
+            event: "1 per 50 years",
+            ef: 0.02,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq008",
+            overPress: "Runaway Chemical Reaction",
+            event: "1 per year",
+            ef: 1,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq009",
+            overPress: "Heat Exchanger Tube Rupture",
+            event: "1 per 1000 years ",
+            ef: 0.001,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq010",
+            overPress: "Tower P/A or Reflux Pump Failures",
+            event: "1 per 5 years",
+            ef: 0.2,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq011",
+            overPress: "Thermal Relief with Administrative Controls in Place (see Note 1)",
+            event: "1 per 100 Years",
+            ef: 0.01,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq012",
+            overPress: "Thermal Relief without Administrative Controls (see Note 1)",
+            event: "1 per 10 Years",
+            ef: 0.1,
+            drrf: 1,
+        },
+        {
+            id: "eventfreq013",
+            overPress: "Liquid Overfilling with Administrative Controls in Place (see Note 1)",
+            event: "1 per 100 Years",
+            ef: 0.01,
+            drrf: 0.1,
+        },
+        {
+            id: "eventfreq014",
+            overPress: "Liquid Overfilling without Administrative Controls (see Note 1)",
+            event: "1 per 10 Years",
+            ef: 0.1,
+            drrf: 0.1,
         },
     ]
+    
     return (
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-                <label htmlFor="">PRD Service Severity</label>
+                <label htmlFor="">Initiating Event Frequency</label>
                 <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
             </div>
-            <Dialog header="Categories of PRD Service Severity (Fail Case Only)" visible={visible} style={{ width: '80%' }} maximizable
+            <Dialog header="Initiating Event Frequency" visible={visible} style={{ width: '80%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  
                 footer={footerContent}
                 >
                 <div>
                 <DataTable 
-                    value={suscepbility.map((i: any, no: number) => ({...i, no: no + 1 + "."}))} 
+                    value={eventFreq.map((i: any, no: number) => ({...i, no: no + 1 + "."}))} 
                     scrollable 
                     tableStyle={{ minWidth:  '50rem' }} 
+                    selectionMode={"single"} 
                 >
-                    <Column field="" header="Service Severity"></Column>
-                    <Column field="" header="Characteristic MTTF"></Column>
-                    <Column field="co3All" header="Characteristic of Failure"></Column>
-                    <Column field="co3Under100" header="Expected Stream Characterization"></Column>
-                    <Column field="co3Over100" header="Typical Temperature"></Column>
-                    <Column field="co3Over100" header="Examples of Service"></Column>
+                    <Column selectionMode="single"></Column>
+                    <Column field="overPress" header="OverPressurre Demand Case"></Column>
+                    <Column field="event" header="Event Frequency"></Column>
+                    <Column field="ef" header="EF"></Column>
+                    <Column field="drrf" header="DRRF"></Column>
                 </DataTable>
                 </div>
             </Dialog>

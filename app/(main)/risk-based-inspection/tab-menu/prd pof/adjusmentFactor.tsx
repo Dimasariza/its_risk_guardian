@@ -6,92 +6,90 @@ import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function AdjusmentFactor() {
-    const [visible, setVisible] = useState<boolean>(false);
+function AdjusmentFactorDialog() {
+    const [visible, setVisible] = useState(false);
+
+    const environtment = [
+        {
+            id: 'environtment001',
+            env: 'Operating Temperatur 200<T<500⁰F',
+            pofod: 1,
+            pol: 0.8
+        },    
+        {
+            id: 'environtment002',
+            env: 'Operating Temperatur >500⁰F',
+            pofod: 1,
+            pol: 0.6
+        },   
+        {
+            id: 'environtment003',
+            env: 'Operating Ratio >90% for spring-loaded PRVs or >95% for pilot-operated PRVs',
+            pofod: 1,
+            pol: 0.5
+        },   
+        {
+            id: 'environtment004',
+            env: 'Installed Piping Vibration',
+            pofod: 1,
+            pol: 0.8
+        }, 
+        {
+            id: 'environtment005',
+            env: 'Pulsating or Cyclical service, such as Downstream of Positive Displacement Rotating Equipment',
+            pofod: 1,
+            pol: 0.8
+        }, 
+        {
+            id: 'environtment006',
+            env: 'History of Excessive Actuation in Service (greater than 5 times per year)',
+            pofod: 0.5,
+            pol: 0.5 ** 2
+        }, 
+        {
+            id: 'environtment007',
+            env: 'History of Chatter',
+            pofod: 0.5,
+            pol: 0.5
+        },    
+    ]
+
+    const handleSubmit = () => {
+        return <></>
+    }
+
     const footerContent = (
-        <div className="flex gap-2 justify-content-end">
-            <Button label="Cancel" icon="pi pi-check" 
-            onClick={() => setVisible(false)} 
-            severity="danger" />
+        <div>
+          <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
+          <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
         </div>
     );
 
-    const headerGroup = (
-        <ColumnGroup>
-            <Row>
-                <Column header="" rowSpan={3} style={{ width: '3rem' }}/>
-                <Column header="pH of Water" rowSpan={3} style={{width: "10rem"}}/>
-                <Column header="Susceptibility to Cracking as a Function of CO3 Concentration in Water" colSpan={3} />
-            </Row>
-            <Row>
-                <Column header="PWHT, Possible Cold Working" />
-                <Column header="No PWHT, Possible Cold Working"  colSpan={2}/>
-            </Row>
-            <Row>
-                <Column header="CO3 All Concentration" />
-                <Column header="CO3 < 100 ppm" />
-                <Column header="CO3 ≥ 100 ppm" />
-            </Row>
-        </ColumnGroup>
-    );
+    const [selectedCell, setSelectedCell] = useState(null);
 
-    const suscepbility = [
-        {
-            id: "ph001",
-            ph: "<7.5",
-            co3All: "None",
-            co3Under100: "None",
-            co3Over100: "None",
-        },
-        {
-            id: "ph002",
-            ph: "≥ 7.5 to 8.0",
-            co3All: "None",
-            co3Under100: "Low",
-            co3Over100: "Medium",
-        },
-        {
-            id: "ph003",
-            ph: "≥ 8.0 to 9.0",
-            co3All: "None",
-            co3Under100: "Low",
-            co3Over100: "High",
-        },
-        {
-            id: "ph004",
-            ph: "≥ 9.0",
-            co3All: "None",
-            co3Under100: "High",
-            co3Over100: "High",
-        },
-    ]
     return (
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
-                <label htmlFor="">PRD Service Severity</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <label htmlFor="">Environment adjustment Factors</label>
+                <Button label="Show Table" onClick={() => { setVisible(true) }} />
             </div>
-            <Dialog header="Categories of PRD Service Severity (Fail Case Only)" visible={visible} style={{ width: '80%' }} maximizable
-                modal onHide={() => {if (!visible) return; setVisible(false); }}  
-                footer={footerContent}
-                >
-                <div>
+
+            <Dialog header="Environment adjustment Factors" visible={visible} style={{ width: '90%' }} maximizable
+            modal onHide={() => {if (!visible) return; setVisible(false); }} footer={footerContent}>
                 <DataTable 
-                    value={suscepbility.map((i: any, no: number) => ({...i, no: no + 1 + "."}))} 
-                    scrollable 
-                    tableStyle={{ minWidth:  '50rem' }} 
+                    value={environtment} 
+                    selectionMode="single" 
+                    selection={selectedCell}
+                    onSelectionChange={(e: any) => setSelectedCell(e.value)}
                 >
-                    <Column field="" header="Service Severity"></Column>
-                    <Column field="" header="Characteristic MTTF"></Column>
-                    <Column field="co3All" header="Characteristic of Failure"></Column>
-                    <Column field="co3Under100" header="Expected Stream Characterization"></Column>
-                    <Column field="co3Over100" header="Typical Temperature"></Column>
-                    <Column field="co3Over100" header="Examples of Service"></Column>
+                    <Column selectionMode="single"></Column>
+                    <Column field="env" header="Environment Modifier" className="" ></Column>
+                    <Column field="pofod" header="Adjustment to POFOD η parameter"></Column>
+                    <Column field="pol" header="Adjustment to POL η parameter"></Column>
                 </DataTable>
-                </div>
             </Dialog>
         </>
     )
 }
 
-export default AdjusmentFactor;
+export default AdjusmentFactorDialog;

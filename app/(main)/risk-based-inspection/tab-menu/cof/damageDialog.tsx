@@ -114,7 +114,8 @@ function DamageDialog({value, setValue, toast, handleSubmitDialog = () => {}}: a
                 selectionMode={"single"} 
                 selection={value?.damage} 
                 headerColumnGroup={headerGroup}
-                onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, damage: e.value}))} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
+                onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, damage: e.value}))} 
+                dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
 
                     <Column field="fluid"></Column>

@@ -9,16 +9,14 @@ import DFAlkalineCorrosion from './pof-rbi-date/alkaline/dfAlkaline';
 import InputTypeText from '@/fragments/input-type-text';
 import InputCalendar from '@/fragments/input-calendar';
 import { useSelector } from 'react-redux';
-import FluidServiceSeverity from './prd pof/fluidServiceSeverity';
-import WeibulParameters from './prd pof/defaultWeibulParameters';
 import AdjusmentFactor from './prd pof/adjusmentFactor';
 import InputValueOnly from '@/fragments/inputValueOnly';
 import InspectionConfidenceFactor from './prd pof/inspectionConfidenceFactor';
 import InitiatingEventFrequencies from './prd pof/initiatingEventFrequencies';
-import ClassProtectedEquipment from './prd pof/classForProtectedEquipment';
+import ClassProtectedEquipment from './prd pof/inspectionEffectiveness';
 import COFPV from './cof/cofPV';
 import POLPlanDate from './pol-plan-date/pol-plan-date';
-import POFRBIDatePRD from './pof-rbi-date/pofPrd/pofRBIDatePRD';
+import POFRBIDatePRD from './prd pof/pofRBIDatePRD';
 
 const inputs = [
   {
