@@ -234,13 +234,13 @@ const LandingPage = () => {
               {
                 name: 'Ir. Dwi Priyanta, MSE',
                 title: 'Supervisor',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+                desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
                 imgSrc: 'Pak DP.jpg'
               },
               {
                 name: 'Dr. Nurhadi Siswantoro, ST., MT.',
                 title: 'Supervisor',
-                desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+                desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
                 imgSrc: 'Pak Nur.jpg'
               },
               {
