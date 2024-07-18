@@ -8,6 +8,7 @@ import DFThinning from './pof-plan-date/thinning/df-thinning';
 import DFExternalCorrosion from './pof-plan-date/external-corrosion/dfExternalCorrosion';
 import DFAlkalineCorrosion from './pof-plan-date/alkaline/dfAlkaline';
 import POFValue from './pof-plan-date/value/pofValue';
+import POFRBIDatePRD from './prd pof/pofRBIDatePRD';
 
 function POFPlanDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
@@ -18,7 +19,6 @@ function POFPlanDate() {
       label: 'DF Thinning',
       disabled: edit,
       command: () => {
-
         setTabActive('df_thinning');
       }
     },
@@ -65,7 +65,7 @@ function POFPlanDate() {
     <>
       {
         data.menu.comp_componentType == "Pressure Relief Device" 
-        ? <POLPlanDate/>
+        ? <POFRBIDatePRD/>
         : <div>
           <TabMenu model={items} />
           {tabMenuView()}

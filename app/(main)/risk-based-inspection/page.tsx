@@ -18,6 +18,7 @@ import POLRBIDate from './tab-menu/pol-rbi-date/pol-rbi-date';
 import { EditData, EditDone } from '@/redux/action/action';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import POFRBIDatePRD from './tab-menu/prd pof/pofRBIDatePRD';
 
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
@@ -110,9 +111,9 @@ function RiskBasedInspection() {
       case 'pof_plan_date':
         return <POFPlanDate />;
       case 'pol_rbi_date':
-        return <POLPlanDate />;
+        return <POFRBIDatePRD />;
       case 'pol_plan_date':
-        return <POLPlanDate />;
+        return <POFRBIDatePRD />;
       case 'cof':
         return <COF />;
       case 'risk_analysis':

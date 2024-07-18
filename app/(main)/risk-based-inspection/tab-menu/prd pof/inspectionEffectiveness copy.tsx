@@ -49,7 +49,7 @@ function ClassProtectedDialogs  () {
             description: "One or more active damage mechanisms present without any recent inspection history. Limited inspection indicating high damage susceptibility",
         },
     ]
-    
+
     return (
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
@@ -79,4 +79,4 @@ function ClassProtectedDialogs  () {
     )
 }
 
-export default ClassProtectedDialogs    ;
+export default ClassProtectedDialogs;

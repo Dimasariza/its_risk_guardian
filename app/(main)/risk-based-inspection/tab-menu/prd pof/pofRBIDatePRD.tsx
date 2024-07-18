@@ -61,7 +61,7 @@ function POFRBIDatePRD() {
                             value: ""
                         },
                         {
-                            label: "Time prior (P prd Prior)",
+                            label: "Time prior (P PRD Prior)",
                             value: ""
                         },
                         {
