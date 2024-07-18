@@ -232,6 +232,18 @@ const LandingPage = () => {
           <div className="grid justify-content-center mt-8 align-content-center">
             {[
               {
+                name: 'Ir. Dwi Priyanta, MSE',
+                title: 'Supervisor',
+                desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+                imgSrc: 'Pak DP.jpg'
+              },
+              {
+                name: 'Dr. Nurhadi Siswantoro, ST., MT.',
+                title: 'Supervisor',
+                desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
+                imgSrc: 'Pak Nur.jpg'
+              },
+              {
                 name: 'Ahmad Akbar Rivai',
                 title: 'Asset Integrity Engineer',
                 desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
@@ -239,13 +251,13 @@ const LandingPage = () => {
               },
               {
                 name: 'Amirta Mega Prastiwi',
-                title: 'Digital Marine Operation and Maintenance',
+                title: 'Asset Integrity Engineer',
                 desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
                 imgSrc: 'Amirta Mega.png'
               },
               {
                 name: 'Hesti Rahmawati',
-                title: 'Marine Engineering Department FTK-ITS',
+                title: 'Asset Integrity Engineer',
                 desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!',
                 imgSrc: 'Hesti.png'
               }
