@@ -106,13 +106,13 @@ function AssetRegister() {
                     <ComponentDialog />
                 </div>
 
-                <TreeTable value={nodes} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
+                {/* <TreeTable value={nodes} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
                     <Column field="name" header="Name" expander sortable></Column>
                     <Column field="location" header="Location" sortable></Column>
                     <Column field="createdAt" header="Created" body={({data}) => dateTemplate(data.createdAt)} sortable></Column>
                     <Column field="updatedAt" header="Last Updated" body={({data}) => dateTemplate(data.createdAt)} sortable></Column>
                     <Column field="updatedAt" header="Action" body={({data}) => actionTemplate(data)}></Column>
-                </TreeTable>
+                </TreeTable> */}
                 {/* <TabMenu model={items} />
                 {tabMenuView()} */}
             </Card>
