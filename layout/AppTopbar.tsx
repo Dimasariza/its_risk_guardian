@@ -57,6 +57,11 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
         <i className="pi pi-bars" />
       </button>
 
+      <div className='flex w-full justify-content-center'>
+        {/* <Avatar image={`${process.env.DB_URL}/file/${data.user?.user_picture}`} size="large" style={{ backgroundColor: '#9c27b0', color: '#ffffff' }} shape="circle" className="ml-2" /> */}
+        <img src={`${process.env.PUBLIC_URL}/layout/images/ITS.png`} width="50px" height={'50px'} alt="logo" />
+      </div>
+
       <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
         <i className="pi pi-ellipsis-v" />
       </button>
