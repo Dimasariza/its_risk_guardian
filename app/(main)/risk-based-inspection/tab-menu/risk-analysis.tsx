@@ -33,7 +33,7 @@ import { adjMitigation } from "./cof/adjustmentToFlamable";
 
 const riskMatrix: any = [
   {
-    title: 'Shell Section',
+    title: 'Shell Section Risk Diagram',
     data: [
       [
         { row:5, column: "0", value: 5, noBorder: true },
@@ -76,17 +76,18 @@ const riskMatrix: any = [
         { row:1, column: "E", value: "", color: 'bg-yellow-500' },
       ],
       [
-        { value: "", noBorder: true },
-        { value: "A", noBorder: true },
-        { value: "B", noBorder: true },
-        { value: "C", noBorder: true },
-        { value: "D", noBorder: true },
-        { value: "E", noBorder: true },
+        { row:0, column: "0", value: "", noBorder: true },
+        { row:0, column: "A", value: "A", noBorder: true },
+        { row:0, column: "B", value: "B", noBorder: true },
+        { row:0, column: "C", value: "C", noBorder: true },
+        { row:0, column: "D", value: "D", noBorder: true },
+        { row:0, column: "E", value: "E", noBorder: true },
       ]
     ]
   },
   {
-    title: 'Head Section',
+    title: 'Head Section Risk Diagram',
+    notview: ["Pipe"],
     data: [
       [
         { row:5, column: "0", value: 5, noBorder: true },
@@ -129,12 +130,12 @@ const riskMatrix: any = [
         { row:1, column: "E", value: "", color: 'bg-yellow-500' },
       ],
       [
-        { value: "", noBorder: true },
-        { value: "A", noBorder: true },
-        { value: "B", noBorder: true },
-        { value: "C", noBorder: true },
-        { value: "D", noBorder: true },
-        { value: "E", noBorder: true },
+        { row:0, column: "0", value: "", noBorder: true },
+        { row:0, column: "A", value: "A", noBorder: true },
+        { row:0, column: "B", value: "B", noBorder: true },
+        { row:0, column: "C", value: "C", noBorder: true },
+        { row:0, column: "D", value: "D", noBorder: true },
+        { row:0, column: "E", value: "E", noBorder: true },
       ]
     ]
   }
@@ -268,7 +269,6 @@ function RiskAnalysis() {
   const data = useSelector((state: any) => state.Reducer);
   const componentId = data.menu?.comp_id
 
-  
   useEffect(() => {
     GeneralDataService.fetchData(componentId)
     .then((res: any) => {
@@ -326,7 +326,7 @@ function RiskAnalysis() {
         })
     })
 
-  }, []);
+  }, [data]);
 
   const {
     ageTimeInServiceTk: RBIAgeTimeInServiceTk,
@@ -365,7 +365,7 @@ function RiskAnalysis() {
   const planShellPlotting =  riskPlotting(PlanShellTotal, finalConsequenceM!)
 
   const iconPlotting = (row: number, column: string, title: string, value: string) => {
-    if(title == "Head Section") {
+    if(title == "Head Section Risk Diagram") {
       return [
         rbiHeadPlotting.consequence?.category == column 
         && rbiHeadPlotting.probability?.category == row
@@ -378,7 +378,7 @@ function RiskAnalysis() {
         value
       ]
     }
-    else if(title == "Shell Section") {
+    else if(title == "Shell Section Risk Diagram") {
       return [
         rbiShellPlotting.consequence?.category == column 
         && rbiShellPlotting.probability?.category == row
@@ -425,17 +425,25 @@ function RiskAnalysis() {
   const shellRiskTarget = shellXAxis.map(_ => value?.shellRiskTarget); 		
   const headRiskTarget = headXAxis.map(_ => value?.headRiskTarget); 		
 
+  const componentType = data.menu?.comp_componentType
+  const notView = ["Pipe"]
+
   return (
     <section className="p-4">
       <div className="grid">
         {
-          riskMatrix.map(({ title, data }: any, matrixKey: number) => (
+          riskMatrix.map(({ title, data, notview }: any, matrixKey: number) => (
+           !notview?.includes(componentType) &&
             <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6" key={matrixKey}>
               <div className="card mb-0">
                 <div className="flex justify-content-center mb-3 mr-8">
                   <div style={{transform: "rotate(-90deg)", height: "1rem", position: "relative", top: "15rem", left: "2rem"}}>Probability</div>
                   <div>
-                    <span className="flex text-500 font-medium mb-3 w-full justify-content-center ml-5">{title}</span>
+                    <span className="flex text-500 font-medium mb-3 w-full justify-content-center ml-5">
+                      { 
+                        notView.includes(componentType) ? "Risk Diagram" : title
+                      }
+                    </span>
                     {
                       data.map((item: any, id_1: number) => (
                         <div className="flex justify-content-center" key={id_1}>
@@ -491,7 +499,7 @@ function RiskAnalysis() {
         <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6">
           <div className="card mb-0">
             <div className="flex flex-column w-full justify-content-center align-items-center">
-              <div>Shell Curva RBI date VS Plan date</div>
+              <div> {notView?.includes(componentType) ? "" : "Shell"} Curva RBI date VS Plan date</div>
 
               <LineChart
                 {...chartProps}
@@ -507,24 +515,27 @@ function RiskAnalysis() {
           </div>
         </div>
 
-        <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6">
-          <div className="card mb-0">
-            <div className="flex flex-column w-full justify-content-center align-items-center">
-              <div>Head Curva RBI date VS Plan date</div>
+        {
+          !notView?.includes(componentType) &&
+          <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6">
+            <div className="card mb-0">
+              <div className="flex flex-column w-full justify-content-center align-items-center">
+                <div>Head Curva RBI date VS Plan date</div>
 
-              <LineChart
-                {...chartProps}
-                series={[
-                  { data: headRiskTarget, label: 'Risk Target', curve: "linear", color: "#ff7f0e", id: "RiskTarget" },
-                  { data: headRangeDate, label: 'Range Date', curve: "linear", color: "yellow", id: "PlanDate" },
-                  { data: [], label: 'RBI date', color: "green", id: "RbiDate" },
-                  { data: [10], label: 'PlanDate', color: "blue", id: "RiskTarget2" },
-                ]}
-                xAxis={[{ data: headXAxis, tickMinStep: 5 }]}
-              />
+                <LineChart
+                  {...chartProps}
+                  series={[
+                    { data: headRiskTarget, label: 'Risk Target', curve: "linear", color: "#ff7f0e", id: "RiskTarget" },
+                    { data: headRangeDate, label: 'Range Date', curve: "linear", color: "yellow", id: "PlanDate" },
+                    { data: [], label: 'RBI date', color: "green", id: "RbiDate" },
+                    { data: [10], label: 'PlanDate', color: "blue", id: "RiskTarget2" },
+                  ]}
+                  xAxis={[{ data: headXAxis, tickMinStep: 5 }]}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     </section>
   );
