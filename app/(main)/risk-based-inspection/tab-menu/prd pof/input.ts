@@ -7,7 +7,7 @@ const inputs = [
         className: ''
     },
     {
-        name: 'rbi_typicalTemp',
+        name: 'rbi_typicalTempF',
         type: 'text',
         placeholder: 'Typical Temperature (°F)',
         label: 'Typical Temperature (°F)',
@@ -30,15 +30,8 @@ const inputs = [
     {
         name: 'rbi_rbiDate',
         type: 'text',
-        placeholder: 'Discharge Location',
-        label: 'Discharge Location',
-        className: ''
-    },
-    {
-        name: 'rbi_lastInspection',
-        type: 'calendar',
-        placeholder: 'Last Inspection',
-        label: 'Last Inspection',
+        placeholder: 'RBI Date',
+        label: 'RBI Date',
         className: ''
     },
 ]
