@@ -167,26 +167,26 @@ function DFExternalCorrosion() {
                 value: Number(adjCoat)?.toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Art RBI Date"} Art`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Art RBI Date`,
                 value: Number(shellArt)?.toFixed(4)
               },
               {
                 label: "Head Art RBI Date",
                 value: Number(headArt)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
                 label: "Flow Stress",
                 value: Number(flowStress)?.toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
                 value: Number(shellStrengthRatio)?.toFixed(4)
               },
               {
                 label: "Head Strength Ratio",
                 value: Number(headStrengthRatio)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
@@ -213,40 +213,40 @@ function DFExternalCorrosion() {
                 value: Number(posteriorP3)?.toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β1`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} RBI Date β1`,
                 value: Number(shellRBIBeta1)?.toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β2`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} RBI Date β2`,
                 value: Number(shellRBIBeta2)?.toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} RBI Date β3`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} RBI Date β3`,
                 value: Number(shellRBIBeta3)?.toFixed(4)
               },
               {
                 label: "Head RBI Date β1",
                 value: Number(headRBIBeta1)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
                 label: "Head RBI Date β2",
                 value: Number(headRBIBeta2)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
                 label: "Head RBI Date β3",
                 value: Number(headRBIBeta3)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Base Damage Factor"} Art`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Damage Factor`,
                 value: Number(rbiShellSection)?.toFixed(4),
               },
               {
-                label: "Head Base Damage Factor",
+                label: "Head Damage Factor",
                 value: Number(rbiHeadSection)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
             ].map(({label, value, viewonly} : any) => {
               if(!viewonly?.includes(componentType)) {

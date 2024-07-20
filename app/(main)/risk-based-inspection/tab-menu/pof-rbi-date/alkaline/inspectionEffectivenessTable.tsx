@@ -106,7 +106,8 @@ function InspectionEffectivenessTable({inspectionSelected, setInspectionSelected
                     scrollable 
                     selectionMode={"single"} 
                     selection={inspectionSelected} 
-                    onSelectionChange={(e: any) => setInspectionSelected(e.value)} dataKey="id"
+                    onSelectionChange={(e: any) => setInspectionSelected(e.value)} 
+                    dataKey="id"
                     tableStyle={{ minWidth:  '50rem' }} 
                 >
                     <Column selectionMode="single"></Column>

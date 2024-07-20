@@ -13,12 +13,12 @@ import POFPlanDate from './tab-menu/pof-plan-date';
 import POFRBIDate from './tab-menu/pof-rbi-date';
 import { useDispatch, useSelector } from 'react-redux';
 import Recomendation from './tab-menu/recomendation/recomendation';
-import POLPlanDate from './tab-menu/pol-plan-date/pol-plan-date';
-import POLRBIDate from './tab-menu/pol-rbi-date/pol-rbi-date';
 import { EditData, EditDone } from '@/redux/action/action';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import POFRBIDatePRD from './tab-menu/prd pof/pofRBIDatePRD';
+import POFRBIDatePRD from './tab-menu/pof prd/rbi/pofRBIDatePRD';
+import POLRBIDatePRD from './tab-menu/pol prd/rbi/polRBIDatePRD';
+import POLPlanDatePRD from './tab-menu/pol prd/plan/polPlanDatePRD';
 
 function RiskBasedInspection() {
   const [tabActive, setTabActive] = useState<string>('general_data');
@@ -29,7 +29,7 @@ function RiskBasedInspection() {
 
   const items = [
     {
-      label: 'General Data',
+      label: 'Operating Data',
       disabled: edit,
       command: () => {
         setTabActive('general_data');
@@ -111,9 +111,9 @@ function RiskBasedInspection() {
       case 'pof_plan_date':
         return <POFPlanDate />;
       case 'pol_rbi_date':
-        return <POFRBIDatePRD />;
+        return <POLRBIDatePRD />;
       case 'pol_plan_date':
-        return <POFRBIDatePRD />;
+        return <POLPlanDatePRD />;
       case 'cof':
         return <COF />;
       case 'risk_analysis':

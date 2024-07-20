@@ -8,27 +8,25 @@ import InputCalendar from "@/fragments/input-calendar";
 import InputDropDown from "@/fragments/input-drop-down";
 import inputs from "./input";
 import { useSelector } from "react-redux";
-import ServiceSeverityDialog, { severity } from "./serviceSeverity";
-import AdjusmentFactorDialog, { adjFactorEnvirontment } from "./adjusmentFactor";
-import InspectionEffectiveness, { effectivenessPofRBI } from "./inspectionEffectiveness";
-import InspectionConfidenceFactor, { confidenceFactors } from "./inspectionConfidenceFactor";
-import InitiatingEventFrequencies, { eventFreq } from "./initiatingEventFrequencies";
-import ClassProtectedDialogs, { protectedEquipment } from "./inspectionEffectiveness copy";
-import { getPOFPRDRBI, updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
+import ServiceSeverityDialog, { severity } from "./dialog/serviceSeverity";
+import AdjusmentFactorDialog, { adjFactorEnvirontment } from "./dialog/adjusmentFactor";
+import InspectionEffectiveness, { effectivenessPofPlan } from "./dialog/inspectionEffectiveness";
+import InspectionConfidenceFactor, { confidenceFactors } from "./dialog/inspectionConfidenceFactor";
+import { eventFreq } from "./dialog/initiatingEventFrequencies";
+import { protectedEquipment } from "./dialog/classProtected";
 import { Toast } from "primereact/toast";
 import IGeneralData from "@/types/IGeneralData";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
-import { calcPRDPOFValue } from "@/function/calcPRDPOFValue";
 import { convertDateToString } from "@/function/common";
-import * as formulajs from '@formulajs/formulajs'
-
+import { calcPRDPOFPlan } from "@/function/calcPRDPOFPlan";
+import { getPOLPRDPlan, updatePOLPRDPlan } from "@/service/calculation/polPRDService";
 
 export const adjusmentFactor = [
-    { name: 'Conventional valves', number: 0.75, id: "adjFactor001" },
+    { name: 'Conventional valves', number: 1.25, id: "adjFactor001" },
     { name: 'All other cases', number: 1, id: "adjFactor002" },
 ];
 
-function POFRBIDatePRD() {
+function POLPlanDatePRD() {
     const [value, setValue] = useState<any>({});
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<IGeneralData|any>({})
@@ -43,31 +41,31 @@ function POFRBIDatePRD() {
         edit = true;
         Promise.all([
             GeneralDataService.fetchData(componentId),
-            getPOFPRDRBI(componentId)
+            getPOLPRDPlan(componentId)
         ])
-        .then(([generalData, PRDPofRbi]: any) => {
+        .then(([generalData, PRDPofPlan]: any) => {
             setGeneralData(generalData)
-            const { rbi_adjusmentFactor, rbi_envAdjusmentFactor, rbi_inspEffectiveness, rbi_serviceSeverity, rbi_confidenceFactor, rbi_eventFreqFire, rbi_eventFreqOverFilling, rbi_protectedEquipment} = PRDPofRbi
+            const { plan_adjusmentFactor, plan_envAdjusmentFactor, plan_inspEffectiveness, plan_serviceSeverity, plan_confidenceFactor, plan_eventFreqFire, plan_eventFreqOverFilling, plan_protectedEquipment} = PRDPofPlan
             setValue({
-                ...PRDPofRbi,
-                rbi_rbiDate: new Date(PRDPofRbi.rbi_rbiDate),
-                severity: severity.find((i) => i.id == rbi_serviceSeverity),
-                adjFactor: adjusmentFactor.find((i) => i.id == rbi_adjusmentFactor),
-                weibullParameter: adjFactorEnvirontment.find((i) => i.id == rbi_envAdjusmentFactor),
-                inspEffectiveness: effectivenessPofRBI.find((i) => i.id == rbi_inspEffectiveness),
-                confidence: confidenceFactors.find((i) => i.id == rbi_confidenceFactor),
-                eventFire: eventFreq.find((i) => i.id == rbi_eventFreqFire),
-                eventOverFilling: eventFreq.find((i) => i.id == rbi_eventFreqOverFilling),
-                protected: protectedEquipment.find((i) => i.id == rbi_protectedEquipment),
+                ...PRDPofPlan,
+                plan_planDate: new Date(PRDPofPlan.plan_planDate),
+                severity: severity.find((i) => i.id == plan_serviceSeverity),
+                adjFactor: adjusmentFactor.find((i) => i.id == plan_adjusmentFactor),
+                weibullParameter: adjFactorEnvirontment.find((i) => i.id == plan_envAdjusmentFactor),
+                inspEffectiveness: effectivenessPofPlan.find((i) => i.id == plan_inspEffectiveness),
+                confidence: confidenceFactors.find((i) => i.id == plan_confidenceFactor),
+                eventFire: eventFreq.find((i) => i.id == plan_eventFreqFire),
+                eventOverFilling: eventFreq.find((i) => i.id == plan_eventFreqOverFilling),
+                protected: protectedEquipment.find((i) => i.id == plan_protectedEquipment),
             })
         })
     }, [data])
 
     useEffect(() => {
         if(Object.keys(error).length === 0 && !edit && !undoEdit) {
-            updatePOFPRDRBI({
+            updatePOLPRDPlan({
                 ...value,
-                rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
+                plan_planDate: convertDateToString(value.plan_planDate)
             }, componentId)
             .then(res => {
                 toast.current.show({
@@ -95,13 +93,8 @@ function POFRBIDatePRD() {
         muUpd,
         finalUpdateValue,
         pofodShouladj,
-        DRFire,
-        DROverfilling,
-        mawp,
-        protectedEq,
-        pofFire,
-        pofOverFilling,
-    } = calcPRDPOFValue(generalData, value)
+        fSet
+    } = calcPRDPOFPlan(generalData, value, "pol")
 
     return (
         <section className="p-3">
@@ -123,10 +116,10 @@ function POFRBIDatePRD() {
                     value={value.adjFactor} 
                     disabled={!edit}
                     onChange={(e) => {
-                        const adjFactor = adjusmentFactor.find((i: any) => i.id == e.value.id)
+                        const adjFactor = adjusmentFactor.find((i: any) => i.id == e?.value?.id)
                         setValue((prev: any) => ({
                             ...prev, 
-                            rbi_adjusmentFactor: adjFactor?.id,
+                            plan_adjusmentFactor: adjFactor?.id,
                             adjFactor
                         }))
                     }} 
@@ -141,15 +134,6 @@ function POFRBIDatePRD() {
                 <AdjusmentFactorDialog value={value} setValue={setValue} toast={toast}/>
                 <InspectionEffectiveness value={value} setValue={setValue} toast={toast}/>
                 <InspectionConfidenceFactor value={value} setValue={setValue} toast={toast}/>
-                <InitiatingEventFrequencies value={value} setValue={setValue} toast={toast} name={{
-                        db: "rbi_eventFreqFire",
-                        fe: "eventFire"
-                    }}/>
-                <InitiatingEventFrequencies value={value} setValue={setValue} toast={toast} name={{
-                        db: "rbi_eventFreqOverFilling",
-                        fe: "eventOverFilling"
-                    }}/>
-                <ClassProtectedDialogs value={value} setValue={setValue} toast={toast}/>
             </div>
             <div className='flex w-full flex-wrap mt-5'>
                 {
@@ -159,7 +143,7 @@ function POFRBIDatePRD() {
                             value: Number(ageTimeInServiceTk)?.toFixed(4)
                         },
                         {
-                            label: "Time prior (P PRD Prior)",
+                            label: "Prior Probability of Leakage",
                             value: Number(timePrior)?.toFixed(4)
                         },
                         {
@@ -183,34 +167,14 @@ function POFRBIDatePRD() {
                             value: Number(finalUpdateValue)?.toFixed(4)
                         },
                         {
-                            label: "POFOD Should be adjust",
-                            value: Number(pofodShouladj)?.toFixed(4)
+                            label: "F Set",
+                            value: Number(fSet)?.toFixed(4)
                         },
                         {
-                            label: "Demand Rate Place (Fire)",
-                            value: Number(DRFire)?.toFixed(4)
+                            label: "Plan Date Value",
+                            value: Number(fSet * finalUpdateValue)?.toFixed(4)
                         },
-                        {
-                            label: "Demand Rate Place (Overfilling)",
-                            value: Number(DROverfilling)?.toFixed(4)
-                        },
-                        {
-                            label: "MAWP",
-                            value: Number(mawp)?.toFixed(4)
-                        },
-                        {
-                            label: "POF of Protected Equipment",
-                            value: Number(protectedEq)?.toFixed(4)
-                        },
-                        {
-                            label: "POF Fire",
-                            value: Number(pofFire)?.toFixed(4)
-                        },
-                        {
-                            label: "POF Overfilling",
-                            value: Number(pofOverFilling)?.toFixed(4)
-                        },
-                    ].map(({label, value} : any, key) => <InputValueOnly label={label} value={value} key={label + key}/>)
+                    ].map(({label, value} : any, key) => <InputValueOnly label={label} value={ isNaN(Number(value)) ? "-" : value } key={label + key}/>)
                 }
             </div>
 
@@ -218,4 +182,4 @@ function POFRBIDatePRD() {
     )
 }
 
-export default POFRBIDatePRD;
+export default POLPlanDatePRD;

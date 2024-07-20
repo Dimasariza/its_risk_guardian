@@ -1,11 +1,9 @@
 import { convertDateToString } from "@/function/common";
-import { updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
+import { updatePOLPRDPlan } from "@/service/calculation/polPRDService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import { ColumnGroup } from "primereact/columngroup";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { Row } from "primereact/row";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -117,9 +115,9 @@ function InitiatingEventFrequencies({value, setValue, toast, name}: any) {
     const componentId = data.menu?.comp_id
 
     const handleSubmit = () => {
-        updatePOFPRDRBI({
+        updatePOLPRDPlan({
             ...value,
-            rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
+            plan_planDate: convertDateToString(value.plan_planDate)
         }, componentId)
             .then(res => {
                 toast.current.show({
@@ -164,10 +162,11 @@ function InitiatingEventFrequencies({value, setValue, toast, name}: any) {
                     sortMode="single"
                     selection={value?.[name.fe]}
                     onSelectionChange={(e: any) => {
+                        
                         setValue((prev: any) => ({
                             ...prev, 
-                            [name.fe]: e.value,
-                            [name.db]: e.value.id
+                            [name.fe]: e?.value,
+                            [name.db]: e?.value?.id
                         }))
                     }}
                 >

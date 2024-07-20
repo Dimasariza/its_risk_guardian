@@ -3,12 +3,12 @@
 import { TabMenu } from 'primereact/tabmenu';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import POLPlanDate from './pol-plan-date/pol-plan-date';
 import DFThinning from './pof-plan-date/thinning/df-thinning';
 import DFExternalCorrosion from './pof-plan-date/external-corrosion/dfExternalCorrosion';
 import DFAlkalineCorrosion from './pof-plan-date/alkaline/dfAlkaline';
 import POFValue from './pof-plan-date/value/pofValue';
-import POFRBIDatePRD from './prd pof/pofRBIDatePRD';
+import POFRBIDatePRD from './pof prd/rbi/pofRBIDatePRD';
+import POFPlanDatePRD from './pof prd/plan/pofPlanDatePRD';
 
 function POFPlanDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
@@ -65,14 +65,12 @@ function POFPlanDate() {
     <>
       {
         data.menu.comp_componentType == "Pressure Relief Device" 
-        ? <POFRBIDatePRD/>
+        ? <POFPlanDatePRD />
         : <div>
           <TabMenu model={items} />
           {tabMenuView()}
         </div>
       }
-      {/* <TabMenu model={items} />
-      {tabMenuView()} */}
     </>
   );
 }

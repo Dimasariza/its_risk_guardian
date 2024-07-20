@@ -1,5 +1,5 @@
 import { convertDateToString } from "@/function/common";
-import { updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
+import { updatePOLPRDRBI } from "@/service/calculation/polPRDService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -47,7 +47,7 @@ function ClassProtectedDialogs({value, setValue, toast}: any) {
     const componentId = data.menu?.comp_id
 
     const handleSubmit = () => {
-        updatePOFPRDRBI({
+        updatePOLPRDRBI({
             ...value,
             rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
         }, componentId)
@@ -94,10 +94,11 @@ function ClassProtectedDialogs({value, setValue, toast}: any) {
                     sortMode="single"
                     selection={value.protected}
                     onSelectionChange={(e: any) => {
+                        
                         setValue((prev: any) => ({
                             ...prev, 
-                            protected: e.value,
-                            rbi_protectedEquipment: e.value.id
+                            protected: e?.value,
+                            rbi_protectedEquipment: e?.value?.id
                         }))
                     }}
                 >

@@ -1,5 +1,5 @@
 import { convertDateToString } from "@/function/common";
-import { updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
+import { updatePOLPRDPlan } from "@/service/calculation/polPRDService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
@@ -114,9 +114,9 @@ function ServiceSeverityDialog({value, setValue, toast}: any) {
     const componentId = data.menu?.comp_id
 
     const handleSubmit = () => {
-        updatePOFPRDRBI({
+        updatePOLPRDPlan({
             ...value,
-            rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
+            plan_planDate: convertDateToString(value.plan_planDate)
         }, componentId)
             .then(res => {
                 toast.current.show({
@@ -160,11 +160,10 @@ function ServiceSeverityDialog({value, setValue, toast}: any) {
                     onSelectionChange={(e: any) => {
                         setValue((prev: any) => ({
                             ...prev, 
-                            severity: e.value,
-                            rbi_serviceSeverity: e.value.id
+                            severity: e?.value,
+                            plan_serviceSeverity: e?.value?.id
                         }))
                     }}
-                    // tableStyle={{width: "800px"}}
                 >
                     <Column selectionMode="single"></Column>
                     <Column field="service_severity" bodyStyle={{width: "1rem"}}></Column>

@@ -237,7 +237,6 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const addedFluidMassMedium = 180 * Math.min(releaseRateWnMedium, wMax) 
     const addedFluidMassLarge = 180 * Math.min(releaseRateWnLarge, wMax) 
     const addedFluidMassRupture = 180 * Math.min(releaseRateWnRupture, wMax) 
-
     
     const availableMassSmall = Math.min(Number(cof_massComponent) + Number(addedFluidMassSmall), cof_massInventory)
     const availableMassMedium = Math.min(Number(cof_massComponent) + Number(addedFluidMassMedium), cof_massInventory)

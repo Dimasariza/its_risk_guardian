@@ -407,13 +407,21 @@ function RiskAnalysis() {
     headXAxis: [10, 25] // change green box relative to x axis in head
   });
 
+  const shellRBIY = isNaN(Number(RBIShellRisk * finalConsequenceM!)) ? 0 : Number(RBIShellRisk * finalConsequenceM!)  
+  const shellPlanY = isNaN(Number(PlanShellRisk * finalConsequenceM!)) ? 0 : Number(PlanShellRisk * finalConsequenceM!)  
+  const headRBIY = isNaN(Number(RBIHeadRisk * finalConsequenceM!)) ? 0 : Number(RBIHeadRisk * finalConsequenceM!)  
+  const headPlanY = isNaN(Number(PlanHeadRisk * finalConsequenceM!)) ? 0 : Number(PlanHeadRisk * finalConsequenceM!) 
+  
+  const shellRBIX = isNaN(Number(RBIAgeTimeInServiceTk!)) ? 0 : Number(RBIAgeTimeInServiceTk!)
+  const shellPlanX = isNaN(Number(planAgeTimeInServiceTk!)) ? 0 : Number(planAgeTimeInServiceTk!)
+
   useEffect(()=>{
     setValue((prev: any) => ({
       ...prev,
-      shellRangeDate: [Number(RBIShellRisk * finalConsequenceM!), Number(PlanShellRisk * finalConsequenceM!)],
-      headRangeDate: [Number(RBIHeadRisk * finalConsequenceM!), Number(PlanHeadRisk * finalConsequenceM!)],
-      shellXAxis: [RBIAgeTimeInServiceTk, planAgeTimeInServiceTk],
-      headXAxis: [RBIAgeTimeInServiceTk, planAgeTimeInServiceTk]
+      shellRangeDate: [shellPlanY, shellRBIY],
+      headRangeDate: [headPlanY, headRBIY],
+      shellXAxis: [shellRBIX, shellPlanX],
+      headXAxis: [shellRBIX, shellPlanX]
     }))
 
   }, [cofValue])
@@ -507,7 +515,7 @@ function RiskAnalysis() {
                   { data: shellRiskTarget, label: 'Risk Target', curve: "linear", color: "#ff7f0e", id: "RiskTarget" },
                   { data: shellRangeDate, label: 'Range Date', curve: "linear", color: "yellow", id: "PlanDate" },
                   { data: [], label: 'RBI date', color: "green", id: "RbiDate" },
-                  { data: [10], label: 'PlanDate', color: "blue", id: "RiskTarget2" },
+                  { data: [10], label: 'PlanDate', color: "cyan", id: "RiskTarget2" },
                 ]}
                 xAxis={[{ data: shellXAxis, tickMinStep: 5 }]}
               />
@@ -528,7 +536,7 @@ function RiskAnalysis() {
                     { data: headRiskTarget, label: 'Risk Target', curve: "linear", color: "#ff7f0e", id: "RiskTarget" },
                     { data: headRangeDate, label: 'Range Date', curve: "linear", color: "yellow", id: "PlanDate" },
                     { data: [], label: 'RBI date', color: "green", id: "RbiDate" },
-                    { data: [10], label: 'PlanDate', color: "blue", id: "RiskTarget2" },
+                    { data: [10], label: 'PlanDate', color: "cyan", id: "RiskTarget2" },
                   ]}
                   xAxis={[{ data: headXAxis, tickMinStep: 5 }]}
                 />

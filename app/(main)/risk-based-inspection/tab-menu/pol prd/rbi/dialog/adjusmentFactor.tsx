@@ -1,11 +1,9 @@
 import { convertDateToString } from "@/function/common";
-import { updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
+import { updatePOLPRDRBI } from "@/service/calculation/polPRDService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import { ColumnGroup } from "primereact/columngroup";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { Row } from "primereact/row";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -59,8 +57,9 @@ function AdjusmentFactorDialog({value, setValue, toast}: any) {
 
     const data = useSelector((state: any) => state.Reducer);
     const componentId = data.menu?.comp_id
+
     const handleSubmit = () => {
-        updatePOFPRDRBI({
+        updatePOLPRDRBI({
             ...value,
             rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
         }, componentId)
@@ -84,7 +83,7 @@ function AdjusmentFactorDialog({value, setValue, toast}: any) {
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
-          <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+          <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
         </div>
     );
 
@@ -92,7 +91,7 @@ function AdjusmentFactorDialog({value, setValue, toast}: any) {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Environment adjustment Factors</label>
-                <Button label="Show Table" onClick={() => { setVisible(true) }} />
+                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
             </div>
 
             <Dialog header="Environment adjustment Factors" visible={visible} style={{ width: '90%' }} maximizable
@@ -102,10 +101,11 @@ function AdjusmentFactorDialog({value, setValue, toast}: any) {
                     selectionMode="single" 
                     selection={value.weibullParameter}
                     onSelectionChange={(e: any) => {
+                        
                         setValue((prev: any) => ({
                             ...prev, 
-                            weibullParameter: e.value,
-                            rbi_envAdjusmentFactor: e.value.id
+                            weibullParameter: e?.value,
+                            rbi_envAdjusmentFactor: e?.value?.id
                         }))
                     }}
                 >

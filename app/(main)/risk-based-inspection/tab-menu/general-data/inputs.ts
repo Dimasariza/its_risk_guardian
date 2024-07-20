@@ -51,8 +51,8 @@ const inputsGeneralSpec = [
     {
       name: 'gData_setPressurePsig',
       type: 'text',
-      placeholder: 'Set Pressure (Psig)',
-      label: 'Set Pressure (Psig)',
+      placeholder: 'Set Pressure (Psig *)',
+      label: 'Set Pressure (Psig *)',
     },
     {
       name: 'gData_reliefingTemperatureF',
@@ -63,8 +63,8 @@ const inputsGeneralSpec = [
     {
       name: 'gData_allowableOverPress',
       type: 'text',
-      placeholder: 'Allowable Over Pressure (%)',
-      label: 'Allowable Over Pressure (%)',
+      placeholder: 'Allowable Over Pressure (% *)',
+      label: 'Allowable Over Pressure (% *)',
     },
     {
       name: 'gData_designPressureBar',
