@@ -1,3 +1,5 @@
+import { convertDateToString } from "@/function/common";
+import { updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
@@ -5,51 +7,77 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-function InspectionConfidenceFactor() {
+export const confidenceFactors = [
+    {
+        id: "factor001",
+        result: "Pass",
+        ineffective: 0,
+        fairly: 0.5,
+        usually: 0.7,
+        highly: 0.9,
+    },
+    {
+        id: "factor002",
+        result: "Fail",
+        ineffective: 0,
+        fairly: 0.7,
+        usually: 0.95,
+        highly: 0.95,
+    },
+    {
+        id: "factor003",
+        result: "No Leak",
+        ineffective: 0,
+        fairly: 0.5,
+        usually: 0.7,
+        highly: 0.9,
+    },
+    {
+        id: "factor004",
+        result: "Leak",
+        ineffective: 0,
+        fairly: 0.7,
+        usually: 0.95,
+        highly: 0.95,
+    },
+]
+
+function InspectionConfidenceFactor({value, setValue, toast}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+        
+    const data = useSelector((state: any) => state.Reducer);
+    const componentId = data.menu?.comp_id
+
+    const handleSubmit = () => {
+        updatePOFPRDRBI({
+            ...value,
+            rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
+        }, componentId)
+            .then(res => {
+                toast.current.show({
+                    severity: 'success',
+                    summary: 'Data Updated',
+                    detail: `You update General Data`
+                });
+                setVisible(false)
+            })
+            .catch((e: any) => {
+                toast.current.show({
+                    severity: 'error',
+                    summary: 'Data Failed to Updated',
+                    detail: `Damage mechanism not updated`
+                });
+        })
+    }
+
     const footerContent = (
-        <div className="flex gap-2 justify-content-end">
-            <Button label="Cancel" icon="pi pi-check" 
-            onClick={() => setVisible(false)} 
-            severity="danger" />
+        <div>
+          <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
+          <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
         </div>
     );
-
-    const suscepbility = [
-        {
-            id: "ph001",
-            result: "Pass",
-            ineffective: "None",
-            fairly: "None",
-            usually: "None",
-            highly: "None",
-        },
-        {
-            id: "ph002",
-            result: "Fail",
-            ineffective: "None",
-            fairly: "Low",
-            usually: "Medium",
-            highly: "Medium",
-        },
-        {
-            id: "ph003",
-            result: "No Leak",
-            ineffective: "None",
-            fairly: "Low",
-            usually: "High",
-            highly: "High",
-        },
-        {
-            id: "ph004",
-            result: "Leak",
-            ineffective: "None",
-            fairly: "High",
-            usually: "High",
-            highly: "High",
-        },
-    ]
 
     const headerGroup = (
         <ColumnGroup>
@@ -66,7 +94,6 @@ function InspectionConfidenceFactor() {
             </Row>
         </ColumnGroup>
     );
-
     return (
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
@@ -79,16 +106,25 @@ function InspectionConfidenceFactor() {
                 >
                 <div>
                 <DataTable 
-                    value={suscepbility.map((i: any, no: number) => ({...i, no: no + 1 + "."}))} 
+                    value={confidenceFactors} 
+                    selection={value.confidence}
                     scrollable 
                     tableStyle={{ minWidth:  '50rem' }} 
                     headerColumnGroup={headerGroup}
                     selectionMode={"single"} 
+                    sortMode="single"
+                    onSelectionChange={(e: any) => {
+                        setValue((prev: any) => ({
+                            ...prev, 
+                            confidence: e.value,
+                            rbi_confidenceFactor: e.value.id
+                        }))
+                    }}
                     // onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, damage: e.value}))} 
                 >
                     <Column selectionMode="single"></Column>
                     <Column field="result"></Column>
-                    <Column field="ineffective"></Column>
+                    <Column field="ineffective" body={ () => "No Credit" }></Column>
                     <Column field="fairly"></Column>
                     <Column field="usually"></Column>
                     <Column field="highly"></Column>

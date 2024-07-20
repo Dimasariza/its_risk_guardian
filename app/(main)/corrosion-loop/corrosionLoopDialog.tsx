@@ -30,12 +30,12 @@ function CorrosionLoopDialog({assetDetails} : any) {
 
     const footerContent = (
         <div>
-        <Button label="Cancel" icon="pi pi-check" onClick={() => {
+        <Button label="Cancel" icon="pi pi-times" onClick={() => {
             setVisible(false)
             setSource([])
             setTarget([])
             }} severity="danger" />
-        <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
+        <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
         </div>
     );
 

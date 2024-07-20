@@ -127,7 +127,7 @@ function POFValue() {
               {
                 label: "Head Governing thinning damage factor",
                 value: Number(headBaseDF)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
@@ -136,7 +136,7 @@ function POFValue() {
               {
                 label: "Head Governing External damage factor",
                 value: Number(planHeadSection)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Total Value damage factor`,
@@ -145,7 +145,7 @@ function POFValue() {
               {
                 label: "Head Total Value damage factor",
                 value: headTotal.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Probability of Failure`,
@@ -154,10 +154,10 @@ function POFValue() {
               {
                 label: "Head Section Probability of Failure",
                 value: (failureFrequency?.total * headTotal * value.rbiValue_FMS).toFixed(6),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
-            ].map(({label, value, notView} : any) => {
-              if(!notView?.includes(componentType)) {
+            ].map(({label, value, viewonly} : any) => {
+              if(!viewonly?.includes(componentType)) {
                 return <InputValueOnly 
                   label={label} 
                   value={!(value == null || Number.isNaN(value)) ? value : "-"} 

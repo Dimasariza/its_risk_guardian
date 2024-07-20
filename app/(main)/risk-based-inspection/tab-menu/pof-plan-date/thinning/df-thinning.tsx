@@ -150,7 +150,7 @@ function DFThinning() {
             {
               label: "Head Art",
               value: Number(headArt)?.toFixed(6),
-              notView: ["Pipe"]
+              viewonly: ["Pipe"]
             },
             {
               label: "Flow Stress",
@@ -163,7 +163,7 @@ function DFThinning() {
             {
               label: "Head Strength Ratio",
               value: Number(headStrengthRatio)?.toFixed(4),
-              notView: ["Pipe"]
+              viewonly: ["Pipe"]
             },
             {
               label: "Inspection Effectiveness 1",
@@ -204,17 +204,17 @@ function DFThinning() {
             {
               label: "Head Section β1",
               value: Number(headSectionB1)?.toFixed(4),
-              notView: ["Pipe"]
+              viewonly: ["Pipe"]
             },
             {
               label: "Head Section β2",
               value: Number(headSectionB2)?.toFixed(4),
-              notView: ["Pipe"]
+              viewonly: ["Pipe"]
             },
             {
               label: "Head Section β3",
               value: Number(headSectionB3)?.toFixed(4),
-              notView: ["Pipe"]
+              viewonly: ["Pipe"]
             },
             {
               label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Base DF`,
@@ -223,10 +223,10 @@ function DFThinning() {
             {
               label: "Head Section Base DF",
               value: Number(headBaseDF)?.toFixed(4),
-              notView: ["Pipe"]
+              viewonly: ["Pipe"]
             },
-          ].map(({label, value, notView} : any) => {
-            if(!notView?.includes(componentType)) {
+          ].map(({label, value, viewonly} : any) => {
+            if(!viewonly?.includes(componentType)) {
               return <InputValueOnly 
                 label={label} 
                 value={!(value == null || Number.isNaN(value)) ? value : "-"} 

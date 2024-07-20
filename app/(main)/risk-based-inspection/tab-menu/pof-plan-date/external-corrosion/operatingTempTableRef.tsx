@@ -11,7 +11,7 @@ function OperatingTempTableRef() {
     const [visible, setVisible] = useState<boolean>(false);
     const footerContent = (
         <div className="flex gap-2 justify-content-end">
-            <Button label="Cancel" icon="pi pi-check" 
+            <Button label="Cancel" icon="pi pi-times" 
             onClick={() => setVisible(false)} 
             severity="danger" />
         </div>

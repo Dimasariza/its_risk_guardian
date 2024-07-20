@@ -13,5 +13,6 @@ export function componentNavigation(data1: any, data2: any, dataId: string) {
 }
 
 export function convertDateToString(date: Date) {
+  // console.log(date.getFullYear(), date.getMonth(), date.getDate())
   return String(Number(date.getFullYear()) + '-' + Number((date.getMonth() + 1)) + '-' + Number(date.getDate()))
 }

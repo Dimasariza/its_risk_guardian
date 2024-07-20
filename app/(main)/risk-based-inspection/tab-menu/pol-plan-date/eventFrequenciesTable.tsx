@@ -88,8 +88,8 @@ function EventFrequenciesTable() {
 
     const footerContent = (
         <div>
-          <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
-          <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
+          <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
+          <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
         </div>
     );
 

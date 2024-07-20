@@ -46,13 +46,13 @@ function ReleaseHoleSize({value, setValue, toast, handleSubmitDialog = () => {}}
         <div className="flex justify-content-between">
           <Button label="" text onClick={() => {if(!editRelease) setEditRelease(true); else setEditRelease(false)}}  severity="danger" />
             <div>
-                <Button label="Cancel" icon="pi pi-check" 
+                <Button label="Cancel" icon="pi pi-times" 
                 onClick={() => {
                     setVisible(false)
                     setEditRelease(false)
                 }} 
                 severity="danger" />
-                <Button label="Save" icon="pi pi-times" 
+                <Button label="Save" icon="pi pi-check" 
                 onClick={() => {
                     setEditRelease(false)
                     setVisible(false)

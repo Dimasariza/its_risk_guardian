@@ -5,9 +5,9 @@ const url = process.env.DB_URL;
 export const MenuItemService = {
   async getAllAssets(userId: string) {
     const requests = [url + '/itemByUser', url + '/equipmentByUser', url + '/componentByUser'].map((url) => axios.post(url, {"user_id": userId}));
-    const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((responses) => {
-      return responses
-    });
+    const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((res) => res);
+
+    const random = (Math.random() + 1).toString(36).substring(7)
 
     const standAloneComp: any[] = [];
     const menuItem = items.data?.map((item: any) => {
@@ -39,7 +39,14 @@ export const MenuItemService = {
     });
 
     return menuItem 
-    ? [...menuItem, ...standAloneComp.map((c) => ({ ...c, label: c.comp_nameOfComponent }))]
+    ? [ 
+        {
+          label: "",
+          items: [
+            ...menuItem, ...standAloneComp.map((c) => ({ ...c, label: c.comp_nameOfComponent }))
+          ]
+        }
+      ]
     : []
   }
 };

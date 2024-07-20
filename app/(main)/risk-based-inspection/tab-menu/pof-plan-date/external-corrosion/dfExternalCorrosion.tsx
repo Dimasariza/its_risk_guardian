@@ -173,7 +173,7 @@ function DFExternalCorrosion() {
               {
                 label: "Head Art RBI Date",
                 value: Number(headArt)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: "Flow Stress",
@@ -186,7 +186,7 @@ function DFExternalCorrosion() {
               {
                 label: "Head Strength Ratio",
                 value: Number(headStrengthRatio)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: "Inspection Effectiveness Factor (I1)",
@@ -227,17 +227,17 @@ function DFExternalCorrosion() {
               {
                 label: "Head RBI Date β1",
                 value: Number(headPlanBeta1)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: "Head RBI Date β2",
                 value: Number(headPlanBeta2)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: "Head RBI Date β3",
                 value: Number(headPlanBeta3)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
               {
                 label: `${["Pipe"].includes(componentType) ? "" : "Base Damage Factor"} Art`,
@@ -246,10 +246,10 @@ function DFExternalCorrosion() {
               {
                 label: "Head Base Damage Factor",
                 value: Number(planHeadSection)?.toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               },
-            ].map(({label, value, notView} : any) => {
-              if(!notView?.includes(componentType)) {
+            ].map(({label, value, viewonly} : any) => {
+              if(!viewonly?.includes(componentType)) {
                 return <InputValueOnly 
                   label={label} 
                   value={!(value == null || Number.isNaN(value)) ? value : "-"} 

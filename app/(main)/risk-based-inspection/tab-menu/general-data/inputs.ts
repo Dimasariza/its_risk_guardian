@@ -263,28 +263,28 @@ const inputsGeneralSpec = [
       type: 'text',
       placeholder: 'Minimum Thickness (mm *)',
       label: 'Minimum Thickness (mm *)',
-      notView: ["Pressure Vessel"]
+      viewonly: ["Pressure Vessel"]
     },
     {
       name: 'gData_shellMinimumThicknessInch',
       type: 'text',
       placeholder: 'Minimum Thickness (inch *)',
       label: 'Minimum Thickness (inch *)',
-      notView: ["Pressure Vessel"]
+      viewonly: ["Pressure Vessel"]
     },
     {
       name: 'gData_shellTreqInch',
       type: 'text',
       placeholder: 'T Requirement (inch *)',
       label: 'T Requirement (Inch *)',
-      notView: ["Pressure Vessel"]
+      viewonly: ["Pressure Vessel"]
     },
     {
       name: 'gData_shellTreqMM',
       type: 'text',
       placeholder: 'T Requirement (mm *)',
       label: 'T Requirement (mm *)',
-      notView: ["Pressure Vessel"]
+      viewonly: ["Pressure Vessel"]
     },
   ];
 

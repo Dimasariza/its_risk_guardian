@@ -140,10 +140,10 @@ function DFAlkalineCorrosion() {
               {
                 label: "Head DF ACSCC",
                 value: Number(headPWHT).toFixed(4),
-                notView: ["Pipe"]
+                viewonly: ["Pipe"]
               }
-            ].map(({label, value, notView} : any) => {
-              if(!notView?.includes(componentType)) {
+            ].map(({label, value, viewonly} : any) => {
+              if(!viewonly?.includes(componentType)) {
                 return <InputValueOnly 
                   label={label} 
                   value={!(value == null || Number.isNaN(value)) ? value : "-"} 

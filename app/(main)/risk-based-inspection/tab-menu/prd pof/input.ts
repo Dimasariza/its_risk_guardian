@@ -29,7 +29,7 @@ const inputs = [
     },
     {
         name: 'rbi_rbiDate',
-        type: 'text',
+        type: 'calendar',
         placeholder: 'RBI Date',
         label: 'RBI Date',
         className: ''

@@ -87,7 +87,7 @@ const riskMatrix: any = [
   },
   {
     title: 'Head Section Risk Diagram',
-    notview: ["Pipe"],
+    viewonly: ["Pressure Vessel"],
     data: [
       [
         { row:5, column: "0", value: 5, noBorder: true },
@@ -426,14 +426,14 @@ function RiskAnalysis() {
   const headRiskTarget = headXAxis.map(_ => value?.headRiskTarget); 		
 
   const componentType = data.menu?.comp_componentType
-  const notView = ["Pipe"]
+  const viewonlyForAll = ["Pressure Vessel"]
 
   return (
     <section className="p-4">
       <div className="grid">
         {
-          riskMatrix.map(({ title, data, notview }: any, matrixKey: number) => (
-           !notview?.includes(componentType) &&
+          riskMatrix.map(({ title, data, viewonly }: any, matrixKey: number) => (
+           (viewonly?.includes(componentType) || !viewonly) &&
             <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6" key={matrixKey}>
               <div className="card mb-0">
                 <div className="flex justify-content-center mb-3 mr-8">
@@ -441,7 +441,7 @@ function RiskAnalysis() {
                   <div>
                     <span className="flex text-500 font-medium mb-3 w-full justify-content-center ml-5">
                       { 
-                        notView.includes(componentType) ? "Risk Diagram" : title
+                        !viewonlyForAll?.includes(componentType) ? "Risk Diagram" : title
                       }
                     </span>
                     {
@@ -499,7 +499,7 @@ function RiskAnalysis() {
         <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6">
           <div className="card mb-0">
             <div className="flex flex-column w-full justify-content-center align-items-center">
-              <div> {notView?.includes(componentType) ? "" : "Shell"} Curva RBI date VS Plan date</div>
+              <div> {!viewonlyForAll?.includes(componentType) ? "" : "Shell"} Curva RBI date VS Plan date</div>
 
               <LineChart
                 {...chartProps}
@@ -516,7 +516,7 @@ function RiskAnalysis() {
         </div>
 
         {
-          !notView?.includes(componentType) &&
+          viewonlyForAll?.includes(componentType) &&
           <div className="col-6 sm:col-12 md:col-12 lg:col-12 xl:col-6">
             <div className="card mb-0">
               <div className="flex flex-column w-full justify-content-center align-items-center">

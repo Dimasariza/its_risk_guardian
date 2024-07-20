@@ -39,17 +39,14 @@ function COFPV({toast}: any) {
         edit = true
 
         if(!componentId) return
-        console.log("test")
         // async () => {
         //     const [a, b] = await axios.all([GeneralDataService.fetchData(componentId), getValue(componentId)]).then(res => res)
         //     getValue(componentId)
         //     .then(res => setTets(res))
-        //     console.log("general data", a)
-        //     console.log("value", b)
         // }
         Promise.all([GeneralDataService.fetchData(componentId), getValue(componentId)])
        .then((res) => {
-           return console.log(res)
+        //    return console.log(res)
        })
         // console.log(test)
         GeneralDataService.fetchData(componentId)
@@ -246,13 +243,13 @@ function COFPV({toast}: any) {
 
     return (
         <>
-        <div className="flex w-full lg:gap-8 md:gap-3 sm:gap-2">
+        <div className="flex w-full lg:gap-5 md:gap-2 sm:gap-1 flex-column">
             <div className='flex flex-wrap flex-column lg:mr-5 mt-5'>
                 {inputs.map((props: any, key: number) => (
                     <InputTypeText props={{...props, disabled: !edit}} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
                 ))}
             </div>
-            <div className="flex flex-wrap gap-5 mt-5">
+            <div className="flex flex-wrap gap-2">
                 <RepresentativeFluidDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
                 <PhaseOfFluid value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
                 <ReleaseHoleSize value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>

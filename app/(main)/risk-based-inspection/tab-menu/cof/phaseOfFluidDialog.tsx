@@ -12,10 +12,10 @@ function PhaseOfFluid({value, setValue, toast, handleSubmitDialog = () => {}}: a
     
     const footerContent = (
         <div>
-          <Button label="Cancel" icon="pi pi-check" 
+          <Button label="Cancel" icon="pi pi-times" 
           onClick={() => setVisible(false)} 
           severity="danger" />
-          <Button label="Save" icon="pi pi-times" 
+          <Button label="Save" icon="pi pi-check" 
           onClick={() => {
             if(!value?.phase) {
                 return toast.current.show({

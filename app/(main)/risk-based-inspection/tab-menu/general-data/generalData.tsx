@@ -200,10 +200,10 @@ function GeneralData() {
         <div className="flex flex-wrap column-gap-5 lg:column-gap-6">
           {
             inputsGeneralSpec.map((props: any, key: number) => {
-              if(props?.notView?.includes(componentType)) return
-              else if (props.type == 'text' || props.type == 'number' && props.notView != componentType) {
+              if(props?.viewonly?.includes(componentType)) return
+              else if (props.type == 'text' || props.type == 'number' && props.viewonly != componentType) {
                 return <InputTypeText props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
-              } else if (props.type == 'calendar' && props.notView != componentType) {
+              } else if (props.type == 'calendar' && props.viewonly != componentType) {
                 return <InputCalendar props={{...props, disabled: !edit }} key={key} value={value} setValue={setValue} handleOnChange={handleOnChange} errorMessage={error[props.name]} />;
               } 
             })

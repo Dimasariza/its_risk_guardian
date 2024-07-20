@@ -30,6 +30,8 @@ export default interface IGeneralData {
     gData_corrosionAllowanceInch: number
     gData_startingDate: Date
     // gData_yearBuilt: number
+    gData_allowableOverPress: number
+    gData_setPressurePsig: number
     gData_material: string
     gData_lastInspection: string
     gData_outerDiameterMM: number

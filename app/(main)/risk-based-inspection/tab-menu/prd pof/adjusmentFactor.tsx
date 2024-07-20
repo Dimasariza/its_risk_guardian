@@ -1,3 +1,5 @@
+import { convertDateToString } from "@/function/common";
+import { updatePOFPRDRBI } from "@/service/calculation/pofPRDService";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
@@ -5,67 +7,86 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-function AdjusmentFactorDialog() {
+export const adjFactorEnvirontment = [
+    {
+        id: 'adjEnvirontment001',
+        env: 'Operating Temperatur 200<T<500⁰F',
+        pofod: 1,
+        pol: 0.8
+    },    
+    {
+        id: 'adjEnvirontment002',
+        env: 'Operating Temperatur >500⁰F',
+        pofod: 1,
+        pol: 0.6
+    },   
+    {
+        id: 'adjEnvirontment003',
+        env: 'Operating Ratio >90% for spring-loaded PRVs or >95% for pilot-operated PRVs',
+        pofod: 1,
+        pol: 0.5
+    },   
+    {
+        id: 'adjEnvirontment004',
+        env: 'Installed Piping Vibration',
+        pofod: 1,
+        pol: 0.8
+    }, 
+    {
+        id: 'adjEnvirontment005',
+        env: 'Pulsating or Cyclical service, such as Downstream of Positive Displacement Rotating Equipment',
+        pofod: 1,
+        pol: 0.8
+    }, 
+    {
+        id: 'adjEnvirontment006',
+        env: 'History of Excessive Actuation in Service (greater than 5 times per year)',
+        pofod: 0.5,
+        pol: 0.5 ** 2
+    }, 
+    {
+        id: 'adjEnvirontment007',
+        env: 'History of Chatter',
+        pofod: 0.5,
+        pol: 0.5
+    },    
+]
+
+function AdjusmentFactorDialog({value, setValue, toast}: any) {
     const [visible, setVisible] = useState(false);
 
-    const environtment = [
-        {
-            id: 'environtment001',
-            env: 'Operating Temperatur 200<T<500⁰F',
-            pofod: 1,
-            pol: 0.8
-        },    
-        {
-            id: 'environtment002',
-            env: 'Operating Temperatur >500⁰F',
-            pofod: 1,
-            pol: 0.6
-        },   
-        {
-            id: 'environtment003',
-            env: 'Operating Ratio >90% for spring-loaded PRVs or >95% for pilot-operated PRVs',
-            pofod: 1,
-            pol: 0.5
-        },   
-        {
-            id: 'environtment004',
-            env: 'Installed Piping Vibration',
-            pofod: 1,
-            pol: 0.8
-        }, 
-        {
-            id: 'environtment005',
-            env: 'Pulsating or Cyclical service, such as Downstream of Positive Displacement Rotating Equipment',
-            pofod: 1,
-            pol: 0.8
-        }, 
-        {
-            id: 'environtment006',
-            env: 'History of Excessive Actuation in Service (greater than 5 times per year)',
-            pofod: 0.5,
-            pol: 0.5 ** 2
-        }, 
-        {
-            id: 'environtment007',
-            env: 'History of Chatter',
-            pofod: 0.5,
-            pol: 0.5
-        },    
-    ]
-
+    const data = useSelector((state: any) => state.Reducer);
+    const componentId = data.menu?.comp_id
     const handleSubmit = () => {
-        return <></>
+        updatePOFPRDRBI({
+            ...value,
+            rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
+        }, componentId)
+            .then(res => {
+                toast.current.show({
+                    severity: 'success',
+                    summary: 'Data Updated',
+                    detail: `You update General Data`
+                });
+                setVisible(false)
+            })
+            .catch((e: any) => {
+                toast.current.show({
+                    severity: 'error',
+                    summary: 'Data Failed to Updated',
+                    detail: `Damage mechanism not updated`
+            });
+        })
     }
 
     const footerContent = (
         <div>
-          <Button label="Cancel" icon="pi pi-check" onClick={() => setVisible(false)} severity="danger" />
-          <Button label="Save" icon="pi pi-times" onClick={handleSubmit} severity="success" />
+          <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
+          <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
         </div>
     );
-
-    const [selectedCell, setSelectedCell] = useState(null);
 
     return (
         <>
@@ -77,10 +98,16 @@ function AdjusmentFactorDialog() {
             <Dialog header="Environment adjustment Factors" visible={visible} style={{ width: '90%' }} maximizable
             modal onHide={() => {if (!visible) return; setVisible(false); }} footer={footerContent}>
                 <DataTable 
-                    value={environtment} 
+                    value={adjFactorEnvirontment} 
                     selectionMode="single" 
-                    selection={selectedCell}
-                    onSelectionChange={(e: any) => setSelectedCell(e.value)}
+                    selection={value.weibullParameter}
+                    onSelectionChange={(e: any) => {
+                        setValue((prev: any) => ({
+                            ...prev, 
+                            weibullParameter: e.value,
+                            rbi_envAdjusmentFactor: e.value.id
+                        }))
+                    }}
                 >
                     <Column selectionMode="single"></Column>
                     <Column field="env" header="Environment Modifier" className="" ></Column>
