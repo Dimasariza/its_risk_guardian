@@ -28,7 +28,6 @@ function Profile() {
 
   useEffect(() => {
     setValue((prev: any) => ({...prev, ...data.user}))
-    console.log(data)
   }, [])
 
   const containerClass = classNames('layout-wrapper', {

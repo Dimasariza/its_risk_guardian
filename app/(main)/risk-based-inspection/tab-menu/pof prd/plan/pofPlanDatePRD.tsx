@@ -46,7 +46,6 @@ function POFPlanDatePRD() {
         .then(([generalData, PRDPofPlan]: any) => {
             setGeneralData(generalData)
             const { plan_adjusmentFactor, plan_envAdjusmentFactor, plan_inspEffectiveness, plan_serviceSeverity, plan_confidenceFactor, plan_eventFreqFire, plan_eventFreqOverFilling, plan_protectedEquipment} = PRDPofPlan
-            console.log(PRDPofPlan)
             setValue({
                 ...PRDPofPlan,
                 plan_planDate: new Date(PRDPofPlan.plan_planDate),
@@ -101,9 +100,6 @@ function POFPlanDatePRD() {
         pofFire,
         pofOverFilling,
     } = calcPRDPOFPlan(generalData, value)
-
-    console.log("pof fire", pofFire?.toPrecision(4))
-    console.log("pof over", pofOverFilling?.toPrecision(4))
 
     return (
         <section className="p-3">

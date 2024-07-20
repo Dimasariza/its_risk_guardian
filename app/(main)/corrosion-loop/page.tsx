@@ -13,8 +13,6 @@ import { FileUploadUploadEvent } from "primereact/fileupload";
 import CorrosionLoopDialog from "./corrosionLoopDialog";
 import { CorrosionLoopService } from "@/service/corrosionLoopService";
 
-const url = process.env.DB_URL + '/file/';
-
 function CorrosionLoop() {
     const [assetDetails, setAssetDetails] = useState<any>();
     const [uploadedFile, setUploadedFile] = useState<FileUploadUploadEvent>()
@@ -22,21 +20,30 @@ function CorrosionLoop() {
 
     const { data } = useSelector((state: any) => state.AuthReducer);
     const user = data.user.user_id
-console.log(url + user)
+
     useEffect(() => {
-        AssetComponentService.fetchDataByUser(data.user.user_id)
-        .then(res => {
-            setAssetDetails(res.data)
-        })
-        CorrosionLoopService.getByUser(user)
-        .then(res => {
-            setCorrosionLoop(res.data)
+        Promise.all([
+            AssetComponentService.fetchDataByUser(user),
+            CorrosionLoopService.getByUser(user)
+        ])
+        .then(([component, corrosionLoop]) => {
+            setAssetDetails(component.data)
+            setCorrosionLoop(corrosionLoop.data)
         })
     }, [uploadedFile])
 
     const dateTemplate = (date: Date) => {
-        const dateObj = new Date(date)
-        return dateObj.toDateString();
+        return new Date(date).toDateString();
+    }
+
+    const onDoneUpload = (e: FileUploadUploadEvent) => {
+        setUploadedFile(e)
+        const { data } = JSON.parse(e.xhr.response)
+
+        CorrosionLoopService.editData({
+            ...corrosionLoop,
+            cl_fileId: data?.file_id
+        }, user)
     }
 
     return (
@@ -45,14 +52,12 @@ console.log(url + user)
                 <CorrosionLoopDialog assetDetails={assetDetails} />
                 {
                     corrosionLoop?.cl_fileId 
-                    ? <div className="flex justify-content-center">
-                        <div className="w-5">
-                        <Image src={url + corrosionLoop.cl_fileId} alt="Image" width="100%" preview />
+                    ?   <div className="flex justify-content-center">
+                            <div className="w-5">
+                            <Image src={process.env.DB_URL + '/file/' + corrosionLoop.cl_fileId} alt="Image" width="100%" preview />
+                            </div>
                         </div>
-                    </div>
-                    : <InputFileUpload path_folder="file" icon="pi-file" fileType="File" doneUpload={(e: FileUploadUploadEvent) => {
-                        setUploadedFile(e)
-                    }}/>
+                    :   <InputFileUpload path_folder="file" icon="pi-file" fileType="File" doneUpload={onDoneUpload}/>
                 }
                 <DataTable value={assetDetails} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
                     <Column field="comp_tagOfComponent" header="Tag"></Column>

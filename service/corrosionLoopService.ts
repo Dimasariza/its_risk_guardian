@@ -2,8 +2,8 @@ import axios from "axios";
 
 const url = process.env.DB_URL + '/corrosion_loop';
 export const CorrosionLoopService = {
-  async postData(value: any) {
-    const res = await axios.post(url + "/" + value.rbiSQ_componentId, value);
+  async postData(value: any, id: string) {
+    const res = await axios.post(url + "/" + id, value);
     return await res;
   },
   async fetchData(id: string) {
@@ -12,8 +12,8 @@ export const CorrosionLoopService = {
     const { data } = await res;
     return data.data ?? {};
   },
-  async editData(data: any) {
-    const res = await axios.put(url + '/' + data.rbiSQ_componentId, data);
+  async editData(data: any, id: string) {
+    const res = await axios.put(url + '/' + id, data);
     return await res;
   },
   async getByUser(id: string) {

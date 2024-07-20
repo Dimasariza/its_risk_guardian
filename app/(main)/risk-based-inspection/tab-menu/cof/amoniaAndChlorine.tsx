@@ -64,7 +64,6 @@ function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () =
     );
 
     const handleSelectCell = (cell: DataTableCellClickEvent<any>) => {
-        console.log(value)
         return ""
     }   
 

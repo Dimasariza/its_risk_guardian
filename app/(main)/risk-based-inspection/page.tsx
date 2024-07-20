@@ -137,7 +137,6 @@ function RiskBasedInspection() {
         disabled: !edit,
         tooltip: 'Save',
         command: () => {
-          console.log()
           dispatch(EditDone());
         }
       },

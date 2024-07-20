@@ -57,10 +57,11 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
         <i className="pi pi-bars" />
       </button>
 
-      <div className={classNames('flex w-8 ', {
+      <div className={classNames('flex w-8 h-full align-items-center', {
         'justify-content-center': !layoutState.profileSidebarVisible
       })}>
-        <img src={`${process.env.PUBLIC_URL}/layout/images/ITS.png`} width="50px" height={'50px'} alt="logo" />
+        <img src={`${process.env.PUBLIC_URL}/layout/images/ITS.png`} width="50px" height={'50px'} alt="logo" className='mx-1' />
+        <img src={`${process.env.PUBLIC_URL}/layout/images/DMOM.png`} width="180px" height={'80px'} alt="logo" className='mx-1'/>
       </div>
 
       <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
