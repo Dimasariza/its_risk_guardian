@@ -20,12 +20,11 @@ const AppMenu = () => {
   const user = data.user.user_id
 
   useEffect(() => {
-    console.log(pathname)
-    if(pathname == "/risk-based-inspection/") {
+    // if(pathname == "/risk-based-inspection/") {
       MenuItemService.getAllAssets(user).then((res) => {
         setMenuItems(res);
       });
-    }
+    // }
 
     if(pathname == "/corrosion-loop/") {
       AssetComponentService.fetchDataByUser(user)
