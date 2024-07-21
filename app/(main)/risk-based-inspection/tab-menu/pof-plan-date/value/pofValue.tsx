@@ -13,6 +13,7 @@ function POFValue() {
   const [failureFrequency, setFailureFrequency] = useState<any>()
   const [value, setValue] = useState<any>({})
   const [error, setError] = useState<any>({});
+  const [onSubmit, setOnSubmit] = useState<boolean>(false);
   const [generalData, setGeneralData] = useState({})
   const [thinning, setThinning] = useState({})
   const [exCor, setExCor] = useState()
@@ -54,7 +55,10 @@ function POFValue() {
 
   useEffect(() => {
     if(Object.keys(error).length === 0 && !edit && !undoEdit) {
-      updateValue(value, componentId)
+      updateValue({
+        ...value,
+        planValue_failureFrequency: failureFrequency.id
+      }, componentId)
       .then((res) => {
         toast.current.show({
           severity: 'success',
@@ -70,7 +74,7 @@ function POFValue() {
         });
       })
     } 
-  }, [edit])
+  }, [edit, onSubmit])
 
   const {
     shellBaseDF,
@@ -104,7 +108,7 @@ function POFValue() {
           }} value={value} setValue={setValue} />
         </div>
         <div className='mt-5'>
-          <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} />
+          <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} setOnSubmit={setOnSubmit} />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
           {
@@ -114,40 +118,40 @@ function POFValue() {
                 value: failureFrequency?.total
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing thinning damage factor`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Governing thinning damage factor`,
                 value: Number(shellBaseDF)?.toFixed(4)
               },
               {
                 label: "Head Governing thinning damage factor",
                 value: Number(headBaseDF)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
                 value: Number(planShellSection)?.toFixed(4)
               },
               {
                 label: "Head Governing External damage factor",
                 value: Number(planHeadSection)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Total Value damage factor`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Total Value damage factor`,
                 value: shellTotal.toFixed(4)
               },
               {
                 label: "Head Total Value damage factor",
                 value: headTotal.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Probability of Failure`,
-                value: (failureFrequency?.total * shellTotal * value.rbiValue_FMS).toFixed(6)
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Section Probability of Failure`,
+                value: (failureFrequency?.total * shellTotal * value.planValue_FMS).toFixed(6)
               },
               {
                 label: "Head Section Probability of Failure",
-                value: (failureFrequency?.total * headTotal * value.rbiValue_FMS).toFixed(6),
-                viewonly: ["Pipe"]
+                value: (failureFrequency?.total * headTotal * value.planValue_FMS).toFixed(6),
+                viewonly: ["Pipe", "Tank"]
               },
             ].map(({label, value, viewonly} : any) => {
               if(!viewonly?.includes(componentType)) {

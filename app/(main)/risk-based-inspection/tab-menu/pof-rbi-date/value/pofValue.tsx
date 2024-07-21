@@ -13,6 +13,7 @@ function POFValue() {
   const [failureFrequency, setFailureFrequency] = useState<any>()
   const [value, setValue] = useState<any>({})
   const [error, setError] = useState<any>({});
+  const [onSubmit, setOnSubmit] = useState<boolean>(false);
   const [generalData, setGeneralData] = useState({})
   const [thinning, setThinning] = useState({})
   const [exCor, setExCor] = useState()
@@ -28,38 +29,36 @@ function POFValue() {
     edit = true
 
     if (!componentId) return 
-
-    GeneralDataService.fetchData(componentId)
-    .then((res: any) => {
-      setGeneralData(res)
-    })
-
-    getAlkaline(componentId).then((res: any) => {
-      setAlkaline(res);
-    });
-
-    getThinning(componentId)
-    .then((res: any) => {
-      setThinning(res)
-    })
-
-    getExternalCorrosion(componentId)
-    .then((res: any) => {
-      setExCor(res)
-    })
-
-    getValue(componentId)
-    .then((res) => {
-      setValue(res)
-      const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
+    Promise.all([
+      GeneralDataService.fetchData(componentId),
+      getAlkaline(componentId),
+      getThinning(componentId),
+      getExternalCorrosion(componentId),
+      getValue(componentId)
+    ])
+    .then(([
+      generalData,
+      alkaline,
+      thinning,
+      exCor,
+      pofValue
+    ]) => {
+      setGeneralData(generalData)
+      setAlkaline(alkaline);
+      setThinning(thinning)
+      setExCor(exCor)
+      setValue(pofValue)
+      const failureFreq = gffTableValue.find(i => i.id == pofValue.rbiValue_failureFrequency)
       setFailureFrequency(failureFreq)
     })
   }, [data]);
-
   
   useEffect(() => {
     if(Object.keys(error).length === 0 && !edit && !undoEdit) {
-      updateValue(value, componentId)
+      updateValue({
+        ...value,
+        rbiValue_failureFrequency: failureFrequency.id
+      }, componentId)
       .then((res) => {
         toast.current.show({
           severity: 'success',
@@ -75,12 +74,11 @@ function POFValue() {
         });
       })
     } 
-  }, [edit])
+  }, [edit, onSubmit])
 
   const {
     shellBaseDF,
     headBaseDF,
-    ageTimeInServiceTk,
     rbiShellSection,
     rbiHeadSection,
     shellTotal,
@@ -111,7 +109,7 @@ function POFValue() {
           }} value={value} setValue={setValue} />
         </div>
         <div className='mt-5'>
-          <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} />
+          <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} setOnSubmit={setOnSubmit} />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
           {
@@ -121,40 +119,40 @@ function POFValue() {
                 value: failureFrequency?.total
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing thinning damage factor`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Governing thinning damage factor`,
                 value: Number(shellBaseDF)?.toFixed(4)
               },
               {
                 label: "Head Governing thinning damage factor",
                 value: Number(headBaseDF)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
                 value: Number(rbiShellSection)?.toPrecision(4)
               },
               {
                 label: "Head Governing External damage factor",
                 value: Number(rbiHeadSection)?.toPrecision(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Total Value damage factor`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Total Value damage factor`,
                 value: shellTotal.toFixed(4)
               },
               {
                 label: "Head Total Value damage factor",
                 value: headTotal.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Probability of Failure`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Section Probability of Failure`,
                 value: (failureFrequency?.total * shellTotal * value.rbiValue_FMS).toFixed(6)
               },
               {
                 label: "Head Section Probability of Failure",
                 value: (failureFrequency?.total * headTotal * value.rbiValue_FMS).toFixed(6),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               },
             ].map(({label, value, viewonly} : any) => {
               if(!viewonly?.includes(componentType)) {

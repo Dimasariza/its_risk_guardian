@@ -17,6 +17,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
         lastInspDateObj,
         allowableStressKpa,
         shellStrengthRatio,
+        headStrengthRatio,
         ageTimeInServiceTk
     } = calculateThinning(generalData, thinning)
 
@@ -60,7 +61,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
 
     // const shellStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
 
-    const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
+    // const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
 
     const inspectionI1 = prior[0].medium * ((conditional[0].a) ** rbiThinning_nInspA) * ((conditional[0].b) ** rbiThinning_nInspB) * ((conditional[0].c) ** rbiThinning_nInspC) * ((conditional[0].d) ** rbiThinning_nInspD)
     
@@ -83,9 +84,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
     const shellRBIBeta2 = ((1 - (damageState2 * shellArt)) - Number(shellStrengthRatio)) / (((damageState2 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
     const shellRBIBeta3 = ((1 - (damageState3 * shellArt)) - Number(shellStrengthRatio)) / (((damageState3 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
 
-    const headRBIBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
-    const headRBIBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
-    const headRBIBeta3 = ((1 - (damageState3 * headArt)) - headStrengthRatio) / (((damageState3 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
+    const headRBIBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio!) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio! ** 2) * (covP ** 2))) ** 0.5
+    const headRBIBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio!) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio! ** 2) * (covP ** 2))) ** 0.5
+    const headRBIBeta3 = ((1 - (damageState3 * headArt)) - headStrengthRatio!) / (((damageState3 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio! ** 2) * (covP ** 2))) ** 0.5
 
     const rbiShellSection = ((posteriorP1 * (ncdf(-shellRBIBeta1))) + (posteriorP2 * (ncdf(-shellRBIBeta2))) + (posteriorP3 * (ncdf(-shellRBIBeta3)))) / 0.000156
     const rbiHeadSection = ((posteriorP1 * (ncdf(-headRBIBeta1))) + (posteriorP2 * (ncdf(-headRBIBeta2))) + (posteriorP3 * (ncdf(-headRBIBeta3)))) / 

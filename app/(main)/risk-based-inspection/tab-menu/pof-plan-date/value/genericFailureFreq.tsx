@@ -7,7 +7,7 @@ import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
 
-function GenericFailureFrequency({failureFrequency, setFailureFrequency}: any) {
+function GenericFailureFrequency({failureFrequency, setFailureFrequency, setOnSubmit}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const headerGroup = (
@@ -40,7 +40,10 @@ function GenericFailureFrequency({failureFrequency, setFailureFrequency}: any) {
           }} 
           severity="danger" />
           <Button label="Save" icon="pi pi-check" 
-          onClick={() => setVisible(false)} 
+          onClick={() => {
+            setVisible(false)
+            setOnSubmit((prev: boolean) => !prev)
+          }} 
           severity="success" />
         </div>
     );

@@ -112,12 +112,12 @@ function DFAlkalineCorrosion() {
           <div className='gap-5 flex flex-column'>
             {
               <div style={{width: "20rem"}} className='flex justify-content-between'>
-                <span>{`${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`} subjects to PWHT</span>
+                <span>{`${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} DF ACSCC`} subjects to PWHT</span>
                 <Checkbox name='planAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, planAlkaline_shellPwht: e.checked}))} checked={value.planAlkaline_shellPwht}></Checkbox>
               </div>
             }
             {
-              !["Pipe"].includes(componentType) &&
+              !["Pipe", "Tank"].includes(componentType) &&
               <div style={{width: "20rem"}} className='flex justify-content-between'>
                 <span>Head subjects to PWHT</span>
                 <Checkbox name='planAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, planAlkaline_headPwht: e.checked}))} checked={value.planAlkaline_headPwht}></Checkbox>
@@ -133,13 +133,13 @@ function DFAlkalineCorrosion() {
                 value: Number(ageTimeInServiceTk).toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} DF ACSCC`,
                 value: Number(shellPWHT)?.toFixed(4)
               },
               {
                 label: "Head DF ACSCC",
                 value: Number(headPWHT)?.toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               }
             ].map(({label, value, viewonly} : any) => {
               if(!viewonly?.includes(componentType)) {

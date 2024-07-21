@@ -78,7 +78,7 @@ function DFExternalCorrosion() {
     finalCR,
     ageCoat,
     adjCoat,
-    timeInService,
+    ageTimeInServiceTk,
     shellArt,
     headArt,
     flowStress,
@@ -160,7 +160,7 @@ function DFExternalCorrosion() {
               },
               {
                 label: "Time in Service Age",
-                value: Number(timeInService)?.toFixed(4)
+                value: Number(ageTimeInServiceTk)?.toFixed(4)
               },
               {
                 label: "Adjusment coat",

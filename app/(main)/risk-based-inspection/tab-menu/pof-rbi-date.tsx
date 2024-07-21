@@ -12,6 +12,8 @@ import POFRBIDatePRD from './pof prd/rbi/pofRBIDatePRD';
 function POFRBIDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
   let { edit } = useSelector((state: any) => state.EditReducer);
+  const data = useSelector((state: any) => state.Reducer);
+  const componentType = data.menu?.comp_componentType
 
   const items = [
     {
@@ -30,7 +32,7 @@ function POFRBIDate() {
     },
     {
       label: 'DF Alkaline',
-      disabled: edit,
+      disabled: edit || componentType == "Tank",
       command: () => {
         setTabActive('df_alkaline');
       }
@@ -59,12 +61,12 @@ function POFRBIDate() {
     }
   };
 
-  const data = useSelector((state: any) => state.Reducer);
+
 
   return (
     <>
       {
-        data.menu.comp_componentType == "Pressure Relief Device" 
+        componentType == "Pressure Relief Device" 
         ? <POFRBIDatePRD/>
         : <div>
           <TabMenu model={items} />

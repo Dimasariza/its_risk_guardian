@@ -144,26 +144,26 @@ function DFThinning() {
               value: tMinMM
             },
             {
-              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Art`,
+              label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Art`,
               value: Number(shellArt)?.toFixed(6),
             },
             {
               label: "Head Art",
               value: Number(headArt)?.toFixed(6),
-              viewonly: ["Pipe"]
+              viewonly: ["Pipe", "Tank"]
             },
             {
               label: "Flow Stress",
               value: Number(flowStress)?.toFixed(4)
             },
             {
-              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
+              label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Strength Ratio`,
               value: Number(shellStrengthRatio)?.toFixed(4)
             },
             {
               label: "Head Strength Ratio",
               value: Number(headStrengthRatio)?.toFixed(4),
-              viewonly: ["Pipe"]
+              viewonly: ["Pipe", "Tank"]
             },
             {
               label: "Inspection Effectiveness 1",
@@ -190,40 +190,40 @@ function DFThinning() {
               value: Number(postProbability3)?.toFixed(4)
             },
             {
-              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section β1`,
+              label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Section β1`,
               value: Number(shellSectionB1)?.toFixed(4)
             },
             {
-              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section β2`,
+              label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Section β2`,
               value: Number(shellSectionB2)?.toFixed(4)
             },
             {
-              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section β3`,
+              label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Section β3`,
               value: Number(shellSectionB3)?.toFixed(4)
             },
             {
               label: "Head Section β1",
               value: Number(headSectionB1)?.toFixed(4),
-              viewonly: ["Pipe"]
+              viewonly: ["Pipe", "Tank"]
             },
             {
               label: "Head Section β2",
               value: Number(headSectionB2)?.toFixed(4),
-              viewonly: ["Pipe"]
+              viewonly: ["Pipe", "Tank"]
             },
             {
               label: "Head Section β3",
               value: Number(headSectionB3)?.toFixed(4),
-              viewonly: ["Pipe"]
+              viewonly: ["Pipe", "Tank"]
             },
             {
-              label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Section Base DF`,
+              label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Section Base DF`,
               value: Number(shellBaseDF)?.toFixed(4)
             },
             {
               label: "Head Section Base DF",
               value: Number(headBaseDF)?.toFixed(4),
-              viewonly: ["Pipe"]
+              viewonly: ["Pipe", "Tank"]
             },
           ].map(({label, value, viewonly} : any) => {
             if(!viewonly?.includes(componentType)) {

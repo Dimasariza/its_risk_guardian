@@ -38,16 +38,16 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
 
     const ageTimeInServiceTk = Math.abs(planDateObj - lastInspDateObj) / 3.1556E+10 || null; // 3.1536E+10
 
-    const shellArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(3))! / gData_shellMinimumThicknessMM || null;
+    const shellArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(2))! / gData_shellMinimumThicknessMM || null;
 
-    const headArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(3))! / gData_headMinimumThicknessMM || null;
+    const headArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(2))! / gData_headMinimumThicknessMM || null;
 
     const flowStress: number | null = (Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2 
     * gData_jointEfficiency * 1.1 || null;
 
     const allowableStressKpa = gData_allowableStressKpa
     const elipticalhead = 1 
-    const allowableStressPsig = (gData_allowableStressKpa * 1000) / 6894.76
+    const allowableStressPsig = gData_allowableStressKpa / 6.89475729
     
     const shellRequiredWallThickness = gData_headTreqMM // change to head 
     || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))

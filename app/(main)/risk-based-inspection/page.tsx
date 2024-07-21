@@ -16,7 +16,6 @@ import Recomendation from './tab-menu/recomendation/recomendation';
 import { EditData, EditDone } from '@/redux/action/action';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import POFRBIDatePRD from './tab-menu/pof prd/rbi/pofRBIDatePRD';
 import POLRBIDatePRD from './tab-menu/pol prd/rbi/polRBIDatePRD';
 import POLPlanDatePRD from './tab-menu/pol prd/plan/polPlanDatePRD';
 

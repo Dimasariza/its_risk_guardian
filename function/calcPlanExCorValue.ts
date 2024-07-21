@@ -16,7 +16,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         startingDateObj,
         lastInspDateObj,
         allowableStressKpa,
-        shellStrengthRatio
+        shellStrengthRatio,
+        headStrengthRatio,
+        ageTimeInServiceTk
     } = calculateThinning(generalData, thinning)
 
     const {
@@ -50,17 +52,15 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     const adjCoat = Math.min(5, ageCoat!) - Math.min(5, ageCoat! - age!)
 
-    const timeInService: number = Math.abs(planDateObj - lastInspDateObj) * 3.169E-11
+    const shellArt = finalCR * ageTimeInServiceTk! / gData_shellMinimumThicknessMM
 
-    const shellArt = finalCR * timeInService / gData_shellMinimumThicknessMM
-
-    const headArt = finalCR * timeInService / gData_headMinimumThicknessMM
+    const headArt = finalCR * ageTimeInServiceTk! / gData_headMinimumThicknessMM
 
     const flowStress = ((gData_yieldStrength + gData_tensileStrength) / 2) * gData_jointEfficiency * 1.1
 
     // const shellStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
 
-    const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
+    // const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
 
     const inspectionI1 = prior[0].medium * ((conditional[0].a) ** planThinning_nInspA) * ((conditional[0].b) ** planThinning_nInspB) * ((conditional[0].c) ** planThinning_nInspC) * ((conditional[0].d) ** planThinning_nInspD)
     
@@ -89,9 +89,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
     + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) 
     + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
 
-    const headPlanBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
-    const headPlanBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
-    const headPlanBeta3 = ((1 - (damageState3 * headArt)) - headStrengthRatio) / (((damageState3 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
+    const headPlanBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio!) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio! ** 2) * (covP ** 2))) ** 0.5
+    const headPlanBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio!) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio! ** 2) * (covP ** 2))) ** 0.5
+    const headPlanBeta3 = ((1 - (damageState3 * headArt)) - headStrengthRatio!) / (((damageState3 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio! ** 2) * (covP ** 2))) ** 0.5
 
     const planShellSection = ((posteriorP1 * (ncdf(-shellPlanBeta1))) + (posteriorP2 * (ncdf(-shellPlanBeta2))) + (posteriorP3 * (ncdf(-shellPlanBeta3)))) / 0.000156
     const planHeadSection = ((posteriorP1 * (ncdf(-headPlanBeta1))) + (posteriorP2 * (ncdf(-headPlanBeta2))) + (posteriorP3 * (ncdf(-headPlanBeta3)))) / 0.000156
@@ -104,7 +104,6 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         finalCR,
         ageCoat,
         adjCoat,
-        timeInService,
         shellArt,
         headArt,
         flowStress,
@@ -123,7 +122,8 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         headPlanBeta2,
         headPlanBeta3,
         planShellSection,
-        planHeadSection
+        planHeadSection,
+        ageTimeInServiceTk
     }
 }
 

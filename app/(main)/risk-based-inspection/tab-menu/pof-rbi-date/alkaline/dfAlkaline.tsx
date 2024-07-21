@@ -19,7 +19,7 @@ import { Toast } from 'primereact/toast';
 
 function DFAlkalineCorrosion() {
   const [value, setValue] = useState<any>({});
-  const [checked, setChecked] = useState<any>({})
+  const [submit, setSubmit] = useState<any>({})
   const [error, setError] = useState<any>({});
   const [generalData, setGeneralData] = useState<any>({})
   const [thinning, setThinning] = useState<any>({})
@@ -35,33 +35,29 @@ function DFAlkalineCorrosion() {
     edit = true
 
     if (!componentId) return 
-    getAlkaline(componentId).then((res: any) => {
-      setValue(res);
-      setInspectionSelected(inspection.find((i: any) => i.id == res.rbiAlkaline_inspection))
-    });
-
-    GeneralDataService.fetchData(componentId)
-    .then((res: any) => {
-      setGeneralData(res)
-    })
-
-    getThinning(componentId)
-    .then((res: any) => {
-      setThinning(res)
-    })
-
-    getExternalCorrosion(componentId)
-    .then((res: any) => {
-      setExCor(res)
+    Promise.all([
+      GeneralDataService.fetchData(componentId),
+      getAlkaline(componentId),
+      getThinning(componentId),
+      getExternalCorrosion(componentId)
+    ])
+    .then(([
+      generalData,
+      alkaline,
+      thinning,
+      exCor
+    ]) => {
+      setGeneralData(generalData)
+      setValue(alkaline);
+      setInspectionSelected(inspection.find((i: any) => i.id == alkaline.rbiAlkaline_inspection))
+      setThinning(thinning)
+      setExCor(exCor)
     })
   }, [data]);
 
   useEffect(() => {
     if(Object.keys(error).length === 0 && !edit && !undoEdit) {
-      updateAlkaline({
-        ...value
-        // inspection: inspectionSelected
-      }, componentId)
+      updateAlkaline(value, componentId)
       .then((res) => {
         toast.current.show({
           severity: 'success',
@@ -77,7 +73,7 @@ function DFAlkalineCorrosion() {
         });
       })
     } 
-  }, [edit])
+  }, [edit, submit])
 
   const {
     ageTimeInServiceTk,
@@ -108,17 +104,17 @@ function DFAlkalineCorrosion() {
           <div className='flex gap-2 flex-column'>
             <SuscepbilityCrackingTable />
             <BaseDamageFactorTable />
-            <InspectionEffectivenessTable inspectionSelected={inspectionSelected} setInspectionSelected={setInspectionSelected} />
+            <InspectionEffectivenessTable inspectionSelected={inspectionSelected} setInspectionSelected={setInspectionSelected} setSubmit={setSubmit} />
           </div>
           <div className='gap-5 flex flex-column'>
             {
               <div style={{width: "20rem"}} className='flex justify-content-between'>
-                <span>{`${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`} subjects to PWHT</span>
+                <span>{`${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} DF ACSCC`} subjects to PWHT</span>
                 <Checkbox name='rbiAlkaline_shellPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_shellPwht: e.checked}))} checked={value.rbiAlkaline_shellPwht}></Checkbox>
               </div>
             }
             {
-            !["Pipe"].includes(componentType) &&
+            !["Pipe", "Tank"].includes(componentType) &&
             <div style={{width: "20rem"}} className='flex justify-content-between'>
               <span>Head subjects to PWHT</span>
               <Checkbox name='rbiAlkaline_headPwht' disabled={!edit} onChange={(e: any) => setValue((prev: any) => ({...prev, rbiAlkaline_headPwht: e.checked}))} checked={value.rbiAlkaline_headPwht}></Checkbox>
@@ -134,13 +130,13 @@ function DFAlkalineCorrosion() {
                 value: Number(ageTimeInServiceTk).toFixed(4)
               },
               {
-                label: `${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} DF ACSCC`,
                 value: Number(shellPWHT).toFixed(4)
               },
               {
                 label: "Head DF ACSCC",
                 value: Number(headPWHT).toFixed(4),
-                viewonly: ["Pipe"]
+                viewonly: ["Pipe", "Tank"]
               }
             ].map(({label, value, viewonly} : any) => {
               if(!viewonly?.includes(componentType)) {

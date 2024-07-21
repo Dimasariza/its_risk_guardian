@@ -303,8 +303,8 @@ function RiskAnalysis() {
       ...prev,
       shellRangeDate: [shellPlanY, shellRBIY],
       headRangeDate: [headPlanY, headRBIY],
-      shellXAxis: [shellRBIX, shellPlanX],
-      headXAxis: [shellRBIX, shellPlanX]
+      shellXAxis: [shellPlanX, shellRBIX],
+      headXAxis: [shellPlanX, shellRBIX]
     }))
 
   }, [cofValue])

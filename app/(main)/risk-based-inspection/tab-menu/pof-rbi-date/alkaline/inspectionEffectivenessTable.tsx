@@ -73,7 +73,7 @@ export const inspection: any = [
 ]
 
 
-function InspectionEffectivenessTable({inspectionSelected, setInspectionSelected}: any) {
+function InspectionEffectivenessTable({inspectionSelected, setInspectionSelected, setSubmit}: any) {
     const [visible, setVisible] = useState<boolean>(false);
 
     const footerContent = (
@@ -85,6 +85,7 @@ function InspectionEffectivenessTable({inspectionSelected, setInspectionSelected
             onClick={
                 () => {
                     setVisible(false)
+                    setSubmit((prev: boolean) => !prev)
                 }} 
             severity="success" />
         </div>

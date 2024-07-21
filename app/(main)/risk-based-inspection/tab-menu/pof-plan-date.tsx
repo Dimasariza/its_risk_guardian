@@ -14,6 +14,9 @@ function POFPlanDate() {
   const [tabActive, setTabActive] = useState<string>('df_thinning');
   const { edit } = useSelector((state: any) => state.EditReducer);
 
+  const data = useSelector((state: any) => state.Reducer);
+  const componentType = data.menu?.comp_componentType
+
   const items = [
     {
       label: 'DF Thinning',
@@ -31,7 +34,7 @@ function POFPlanDate() {
     },
     {
       label: 'DF Alkaline',
-      disabled: edit,
+      disabled: edit || componentType == "Tank",
       command: () => {
         setTabActive('df_alkaline');
       }
@@ -60,11 +63,10 @@ function POFPlanDate() {
     }
   };
 
-  const data = useSelector((state: any) => state.Reducer);
   return (
     <>
       {
-        data.menu.comp_componentType == "Pressure Relief Device" 
+        componentType == "Pressure Relief Device" 
         ? <POFPlanDatePRD />
         : <div>
           <TabMenu model={items} />
