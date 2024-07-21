@@ -54,38 +54,16 @@ export const adjFactorEnvirontment = [
     },    
 ]
 
-function AdjusmentFactorDialog({value, setValue, toast}: any) {
+function AdjusmentFactorDialog({value, setValue, setOnSubmit}: any) {
     const [visible, setVisible] = useState(false);
-
-    const data = useSelector((state: any) => state.Reducer);
-    const componentId = data.menu?.comp_id
-
-    const handleSubmit = () => {
-        updatePOFPRDRBI({
-            ...value,
-            rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
-        }, componentId)
-            .then(res => {
-                toast.current.show({
-                    severity: 'success',
-                    summary: 'Data Updated',
-                    detail: `You update General Data`
-                });
-                setVisible(false)
-            })
-            .catch((e: any) => {
-                toast.current.show({
-                    severity: 'error',
-                    summary: 'Data Failed to Updated',
-                    detail: `Damage mechanism not updated`
-            });
-        })
-    }
 
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
-          <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
+          <Button label="Save" icon="pi pi-check" onClick={() => {
+                setOnSubmit((prev: boolean) => !prev)
+                setVisible(false)
+          }} severity="success" />
         </div>
     );
 

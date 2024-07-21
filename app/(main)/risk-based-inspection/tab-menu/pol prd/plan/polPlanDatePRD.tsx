@@ -21,6 +21,7 @@ import { calcPRDPOFPlan } from "@/function/calcPRDPOFPlan";
 import { getPOLPRDPlan, updatePOLPRDPlan } from "@/service/calculation/polPRDService";
 import GenericFailureFrequency from "../../pof-plan-date/value/genericFailureFreq";
 import InputCalendar from "@/app/(main)/uikit/input-calendar";
+import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 
 export const adjusmentFactor = [
     { name: 'Conventional valves', number: 1.25, id: "adjFactor001" },
@@ -32,6 +33,7 @@ function POLPlanDatePRD() {
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<IGeneralData|any>({})
     const [onSubmit, setOnSubmit] = useState(false);
+    const [failureFrequency, setFailureFrequency] = useState<any>({});
 
     let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
@@ -60,6 +62,7 @@ function POLPlanDatePRD() {
                 eventOverFilling: eventFreq.find((i) => i.id == plan_eventFreqOverFilling),
                 protected: protectedEquipment.find((i) => i.id == plan_protectedEquipment),
             })
+            setFailureFrequency( gffTableValue.find((i) => PRDPofPlan.plan_failureFrequency == i.id ))
         })
     }, [data])
 
@@ -67,7 +70,8 @@ function POLPlanDatePRD() {
         if(Object.keys(error).length === 0 && !edit && !undoEdit) {
             updatePOLPRDPlan({
                 ...value,
-                plan_planDate: convertDateToString(value.plan_planDate)
+                plan_planDate: convertDateToString(value.plan_planDate),
+                plan_failureFrequency: failureFrequency.id
             }, componentId)
             .then(res => {
                 toast.current.show({
@@ -133,9 +137,9 @@ function POLPlanDatePRD() {
             <div className='flex flex-wrap gap-2 mt-3'>
                 <ServiceSeverityDialog value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
                 <AdjusmentFactorDialog value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
-                {/* <InspectionEffectiveness value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
-                <InspectionConfidenceFactor value={value} setValue={setValue} setOnSubmit={setOnSubmit}/> */}
-                {/* <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} /> */}
+                <InspectionEffectiveness value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <InspectionConfidenceFactor value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} setOnSubmit={setOnSubmit} />
             </div>
             <div className='flex w-full flex-wrap mt-5'>
                 {

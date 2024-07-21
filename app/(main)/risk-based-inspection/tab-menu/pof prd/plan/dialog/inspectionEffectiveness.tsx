@@ -60,38 +60,16 @@ export const effectivenessPofPlan = [
     },
 ]
 
-function InspectionEffectiveness({value, setValue, toast}: any) {
+function InspectionEffectiveness({value, setValue, setOnSubmit}: any) {
     const [visible, setVisible] = useState<boolean>(false);
-    
-    const data = useSelector((state: any) => state.Reducer);
-    const componentId = data.menu?.comp_id
-
-    const handleSubmit = () => {
-        updatePOFPRDPlan({
-            ...value,
-            plan_planDate: convertDateToString(value.plan_planDate)
-        }, componentId)
-            .then(res => {
-                toast.current.show({
-                    severity: 'success',
-                    summary: 'Data Updated',
-                    detail: `You update General Data`
-                });
-                setVisible(false)
-            })
-            .catch((e: any) => {
-                toast.current.show({
-                    severity: 'error',
-                    summary: 'Data Failed to Updated',
-                    detail: `Damage mechanism not updated`
-                });
-        })
-    }
 
     const footerContent = (
         <div>
           <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
-          <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
+          <Button label="Save" icon="pi pi-check" onClick={() => {
+                setOnSubmit((prev: boolean) => !prev)
+                setVisible(false)
+          }} severity="success" />
         </div>
     );
 

@@ -20,6 +20,8 @@ import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { convertDateToString } from "@/function/common";
 import { calcPRDPOFRBI } from "@/function/calcPRDPOFRBI";
 import InputCalendar from "@/app/(main)/uikit/input-calendar";
+import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
+import GenericFailureFrequency from "../../pof-rbi-date/value/genericFailureFreq";
 
 export const adjusmentFactor = [
     { name: 'Conventional valves', number: 0.75, id: "adjFactor001" },
@@ -30,6 +32,8 @@ function POFRBIDatePRD() {
     const [value, setValue] = useState<any>({});
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<IGeneralData|any>({})
+    const [onSubmit, setOnSubmit] = useState(false);
+    const [failureFrequency, setFailureFrequency] = useState<any>({});
 
     let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
@@ -58,6 +62,7 @@ function POFRBIDatePRD() {
                 eventOverFilling: eventFreq.find((i) => i.id == rbi_eventFreqOverFilling),
                 protected: protectedEquipment.find((i) => i.id == rbi_protectedEquipment),
             })
+            setFailureFrequency( gffTableValue.find((i) => PRDPofRbi.rbi_failureFrequency == i.id ))
         })
     }, [data])
 
@@ -65,7 +70,8 @@ function POFRBIDatePRD() {
         if(Object.keys(error).length === 0 && !edit && !undoEdit) {
             updatePOFPRDRBI({
                 ...value,
-                rbi_rbiDate: convertDateToString(value.rbi_rbiDate)
+                rbi_rbiDate: convertDateToString(value.rbi_rbiDate),
+                rbi_failureFrequency: failureFrequency.id
             }, componentId)
             .then(res => {
                 toast.current.show({
@@ -82,7 +88,7 @@ function POFRBIDatePRD() {
                 });
             })
         } 
-    }, [edit])
+    }, [edit, onSubmit])
 
     const {
         ageTimeInServiceTk,
@@ -135,19 +141,20 @@ function POFRBIDatePRD() {
                 />
             </div>
             <div className='flex flex-wrap gap-2 mt-3'>
-                <ServiceSeverityDialog value={value} setValue={setValue} toast={toast}/>
-                <AdjusmentFactorDialog value={value} setValue={setValue} toast={toast}/>
-                <InspectionEffectiveness value={value} setValue={setValue} toast={toast}/>
-                <InspectionConfidenceFactor value={value} setValue={setValue} toast={toast}/>
-                <InitiatingEventFrequencies value={value} setValue={setValue} toast={toast} name={{
+                <ServiceSeverityDialog value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <AdjusmentFactorDialog value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <InspectionEffectiveness value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <InspectionConfidenceFactor value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <InitiatingEventFrequencies value={value} setValue={setValue} setOnSubmit={setOnSubmit} name={{
                         db: "rbi_eventFreqFire",
                         fe: "eventFire"
                     }}/>
-                <InitiatingEventFrequencies value={value} setValue={setValue} toast={toast} name={{
+                <InitiatingEventFrequencies value={value} setValue={setValue} setOnSubmit={setOnSubmit} name={{
                         db: "rbi_eventFreqOverFilling",
                         fe: "eventOverFilling"
                     }}/>
-                <ClassProtectedDialogs value={value} setValue={setValue} toast={toast}/>
+                <ClassProtectedDialogs value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} setOnSubmit={setOnSubmit} />
             </div>
             <div className='flex w-full flex-wrap mt-5'>
                 {
