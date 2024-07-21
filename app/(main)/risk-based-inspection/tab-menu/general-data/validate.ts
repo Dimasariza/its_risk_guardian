@@ -1,12 +1,18 @@
 const validate = (formValue: any) => {
-    const errors: any = {};
-    // if (!formValue.gData_tagNumber) {
-    //   errors.gData_tagNumber = 'General data tag number is required!';
-    // } else if (formValue.gData_tagNumber.length < 4) {
-    //   errors.gData_tagNumber = 'General data tag number must be more than 4 characters';
-    // }
-  
-    return errors;
-  };
-  
-  export default validate;
+  const {
+    gData_setPressurePsig
+  } = formValue
+
+  const errors: any = {};
+  const regex = new RegExp(/^-?\d+(\.\d{1,10})?$/)
+
+  const numberOrFloatMsg = 'Value must be a number or decimal type. Use dot (.) to separate number.'
+
+  if (gData_setPressurePsig && !regex.test(gData_setPressurePsig)) {
+    errors.gData_setPressurePsig = numberOrFloatMsg;
+  } 
+
+  return errors;
+};
+
+export default validate;

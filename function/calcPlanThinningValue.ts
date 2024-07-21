@@ -1,7 +1,7 @@
 import { conditional, prior } from "@/app/(main)/risk-based-inspection/tab-menu/pof-plan-date/thinning/probabilityTable";
 import IGeneralData from "@/types/IGeneralData";
-import ncdf from "./cumulativeDistribution";
 import IPlanThinning from "@/types/IPlanThinning";
+import * as formulaJs from '@formulajs/formulajs'
 
 export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThinning) => {
     if(!Object?.keys(generalData).length || !Object?.keys(thinning).length ) return {}
@@ -34,9 +34,9 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
     const startingDateObj: Date | any = new Date(gData_startingDate);
     const planDateObj: Date | any = new Date(planThinning_planDate);
 
-    const age: number | null = Math.abs(planDateObj - startingDateObj) * 3.168E-11|| null;
+    const age: number | null = Math.abs(planDateObj - startingDateObj) / 3.1556E+10 || null;
 
-    const ageTimeInServiceTk = Math.abs(planDateObj - lastInspDateObj) * 3.16865E-11 || null;
+    const ageTimeInServiceTk = Math.abs(planDateObj - lastInspDateObj) / 3.1556E+10 || null; // 3.1536E+10
 
     const shellArt: number | null = planThinning_corrosionRate * Number(ageTimeInServiceTk!?.toFixed(3))! / gData_shellMinimumThicknessMM || null;
 
@@ -46,11 +46,11 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
     * gData_jointEfficiency * 1.1 || null;
 
     const allowableStressKpa = gData_allowableStressKpa
-    
     const elipticalhead = 1 
     const allowableStressPsig = (gData_allowableStressKpa * 1000) / 6894.76
-    const shellRequiredWallThickness = gData_shellTreqMM || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
-
+    
+    const shellRequiredWallThickness = gData_headTreqMM // change to head 
+    || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
     const headRequiredWallThickness = gData_headTreqMM
 
     const shellStrengthRatioPV: number  = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
@@ -69,21 +69,43 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
     const postProbability2: number | null = inspEffectiveness2! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
     const postProbability3: number | null = inspEffectiveness3! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
 
-    const shellSectionB1: number | null = ((1 - (parameterBCoef.damageState1 * shellArt!)) - shellStrengthRatio) / (((parameterBCoef.damageState1 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState1 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
+    const shellSectionB1: number | null = ((1 - (parameterBCoef.damageState1 * shellArt!)) - shellStrengthRatio) 
+    / (((parameterBCoef.damageState1 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) 
+    + (((1 - (parameterBCoef.damageState1 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) 
+    + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
 
-    const shellSectionB2: number | null = ((1 - (parameterBCoef.damageState2 * shellArt!)) - shellStrengthRatio) / (((parameterBCoef.damageState2 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState2 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
+    const shellSectionB2: number | null = ((1 - (parameterBCoef.damageState2 * shellArt!)) - shellStrengthRatio) 
+    / (((parameterBCoef.damageState2 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) 
+    + (((1 - (parameterBCoef.damageState2 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) 
+    + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
 
-    const shellSectionB3: number | null = ((1 - (parameterBCoef.damageState3 * shellArt!)) - shellStrengthRatio) / (((parameterBCoef.damageState3 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState3 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
+    const shellSectionB3: number | null = ((1 - (parameterBCoef.damageState3 * shellArt!)) - shellStrengthRatio) 
+    / (((parameterBCoef.damageState3 ** 2) * (shellArt! ** 2) * (parameterBCoef.thinning ** 2)) 
+    + (((1 - (parameterBCoef.damageState3 * shellArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) 
+    + ((shellStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
 
-    const headSectionB1: number | null = ((1 - (parameterBCoef.damageState1 * headArt!)) - headStrengthRatio) / (((parameterBCoef.damageState1 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState1 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((headStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
+    const headSectionB1: number | null = ((1 - (parameterBCoef.damageState1 * headArt!)) - headStrengthRatio) 
+    / (((parameterBCoef.damageState1 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) 
+    + (((1 - (parameterBCoef.damageState1 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) 
+    + ((headStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
 
-    const headSectionB2: number | null = ((1 - (parameterBCoef.damageState2 * headArt!)) - headStrengthRatio) / (((parameterBCoef.damageState2 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState2 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((headStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
+    const headSectionB2: number | null = ((1 - (parameterBCoef.damageState2 * headArt!)) - headStrengthRatio) 
+    / (((parameterBCoef.damageState2 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) 
+    + (((1 - (parameterBCoef.damageState2 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) 
+    + ((headStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
 
-    const headSectionB3: number | null = ((1 - (parameterBCoef.damageState3 * headArt!)) - headStrengthRatio) / (((parameterBCoef.damageState3 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) + (((1 - (parameterBCoef.damageState3 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) + ((headStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
+    const headSectionB3: number | null = ((1 - (parameterBCoef.damageState3 * headArt!)) - headStrengthRatio) 
+    / (((parameterBCoef.damageState3 ** 2) * (headArt! ** 2) * (parameterBCoef.thinning ** 2)) 
+    + (((1 - (parameterBCoef.damageState3 * headArt!)) ** 2) * (parameterBCoef.flowStress) ** 2) 
+    + ((headStrengthRatio ** 2) * (parameterBCoef.pressure ** 2))) ** 0.5 || null;
 
-    const shellBaseDF = ((postProbability1! * (ncdf(-shellSectionB1!))) + (postProbability2! * (ncdf(-shellSectionB2!))) + (postProbability3! * (ncdf(-shellSectionB3!)))) / 0.000156;
+    const shellBaseDF = ((postProbability1! * (formulaJs.NORM.S.DIST(-shellSectionB1!, true))) 
+    + (postProbability2! * (formulaJs.NORM.S.DIST(-shellSectionB2!, true))) 
+    + (postProbability3! * (formulaJs.NORM.S.DIST(-shellSectionB3!, true)))) / 0.000156;
 
-    const headBaseDF = ((postProbability1! * (ncdf(-headSectionB1!))) + (postProbability2! * (ncdf(-headSectionB2!))) + (postProbability3! * (ncdf(-headSectionB3!)))) / 0.000156;
+    const headBaseDF = ((postProbability1! * (formulaJs.NORM.S.DIST(-headSectionB1!, true))) 
+    + (postProbability2! * (formulaJs.NORM.S.DIST(-headSectionB2!, true))) + (postProbability3! 
+        * (formulaJs.NORM.S.DIST(-headSectionB3!, true)))) / 0.000156;
 
     return {
         lastInspection: gData_lastInspection,

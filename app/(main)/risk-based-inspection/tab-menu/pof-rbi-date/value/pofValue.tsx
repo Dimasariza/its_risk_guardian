@@ -1,13 +1,13 @@
-import InputTypeText from '@/fragments/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { getAlkaline, getExternalCorrosion, getThinning, getValue, updateValue } from '@/service/calculation/pofRBIDate-service';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GenericFailureFrequency from './genericFailureFreq';
-import InputValueOnly from '@/fragments/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
 import { calculateAlkaline } from '@/function/calcRBIAlkalineValue';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
-import { gffTableValue } from './gffTableValue';
 import { Toast } from 'primereact/toast';
+import { gffTableValue } from '@/public/tableBasedOnAPI/gffTableValue';
 
 function POFValue() {
   const [failureFrequency, setFailureFrequency] = useState<any>()
@@ -80,7 +80,7 @@ function POFValue() {
   const {
     shellBaseDF,
     headBaseDF,
-    age,
+    ageTimeInServiceTk,
     rbiShellSection,
     rbiHeadSection,
     shellTotal,
@@ -93,8 +93,6 @@ function POFValue() {
     pofValue: value
   })
 
-  // const shellTotal = Math.max(shellBaseDF!, rbiShellSection!) + shellPWHT
-  // const headTotal = Math.max(headBaseDF!, rbiHeadSection!) + headPWHT
   const componentType = data.menu?.comp_componentType
 
   return (
@@ -133,11 +131,11 @@ function POFValue() {
               },
               {
                 label: `${["Pipe"].includes(componentType) ? "" : "Shell"} Governing External damage factor`,
-                value: Number(rbiShellSection)?.toFixed(4)
+                value: Number(rbiShellSection)?.toPrecision(4)
               },
               {
                 label: "Head Governing External damage factor",
-                value: Number(rbiHeadSection)?.toFixed(4),
+                value: Number(rbiHeadSection)?.toPrecision(4),
                 viewonly: ["Pipe"]
               },
               {

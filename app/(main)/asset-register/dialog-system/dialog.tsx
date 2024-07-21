@@ -1,6 +1,6 @@
 'use client';
 
-import InputTypeText from '@/fragments/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { AssetEquipmentService } from '@/service/assets/equipment-service';
 import { AssetItemService } from '@/service/assets/item-service';
 import { IAssetEquipment } from '@/types/assetEquipment';

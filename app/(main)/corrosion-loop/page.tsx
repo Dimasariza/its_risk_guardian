@@ -1,6 +1,6 @@
 "use client"
 
-import InputFileUpload from "@/fragments/input-file";
+import InputFileUpload from "@/app/(main)/uikit/input-file";
 import { AssetComponentService } from "@/service/assets/component-service";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
@@ -12,11 +12,12 @@ import { useSelector } from "react-redux";
 import { FileUploadUploadEvent } from "primereact/fileupload";
 import CorrosionLoopDialog from "./corrosionLoopDialog";
 import { CorrosionLoopService } from "@/service/corrosionLoopService";
+import UpdateImageDialog from "./updateImage";
 
 function CorrosionLoop() {
     const [assetDetails, setAssetDetails] = useState<any>();
-    const [uploadedFile, setUploadedFile] = useState<FileUploadUploadEvent>()
     const [corrosionLoop, setCorrosionLoop] = useState<any>()
+    const [reload, setReload] = useState<boolean>(false)
 
     const { data } = useSelector((state: any) => state.AuthReducer);
     const user = data.user.user_id
@@ -30,20 +31,25 @@ function CorrosionLoop() {
             setAssetDetails(component.data)
             setCorrosionLoop(corrosionLoop.data)
         })
-    }, [uploadedFile])
+    }, [reload])
 
     const dateTemplate = (date: Date) => {
         return new Date(date).toDateString();
     }
 
-    const onDoneUpload = (e: FileUploadUploadEvent) => {
-        setUploadedFile(e)
-        const { data } = JSON.parse(e.xhr.response)
+    const onDoneUpload = (e: FileUploadUploadEvent | null = null) => {
+        let data;
+        if(e) {
+            ({ data } = JSON.parse(e?.xhr?.response)) 
+        }
 
         CorrosionLoopService.editData({
             ...corrosionLoop,
             cl_fileId: data?.file_id
         }, user)
+        .then(res => {
+            setReload((prev) => !prev)
+        })
     }
 
     return (
@@ -54,7 +60,8 @@ function CorrosionLoop() {
                     corrosionLoop?.cl_fileId 
                     ?   <div className="flex justify-content-center">
                             <div className="w-5">
-                            <Image src={process.env.DB_URL + '/file/' + corrosionLoop.cl_fileId} alt="Image" width="100%" preview />
+                                <Image src={process.env.DB_URL + '/file/' + corrosionLoop.cl_fileId} alt="Image" width="100%" preview />
+                                <UpdateImageDialog onDoneUpload={onDoneUpload}/>
                             </div>
                         </div>
                     :   <InputFileUpload path_folder="file" icon="pi-file" fileType="File" doneUpload={onDoneUpload}/>

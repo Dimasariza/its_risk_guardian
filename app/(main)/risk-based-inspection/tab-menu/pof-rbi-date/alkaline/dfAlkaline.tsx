@@ -1,12 +1,12 @@
 /* eslint-disable */
 
-import InputTypeText from '@/fragments/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { getAlkaline, getExternalCorrosion, getThinning, updateAlkaline } from '@/service/calculation/pofRBIDate-service';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import SuscepbilityCrackingTable from './suscepbilityCrackingTable';
-import InputValueOnly from '@/fragments/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { Checkbox } from 'primereact/checkbox';
 import BaseDamageFactorTable from './baseDamageFactor';
@@ -80,7 +80,7 @@ function DFAlkalineCorrosion() {
   }, [edit])
 
   const {
-    age,
+    ageTimeInServiceTk,
     shellPWHT,
     headPWHT
   } = calculateAlkaline({
@@ -131,7 +131,7 @@ function DFAlkalineCorrosion() {
             [
               {
                 label: "Age",
-                value: age
+                value: Number(ageTimeInServiceTk).toFixed(4)
               },
               {
                 label: `${["Pipe"].includes(componentType) ? "" : "Shell"} DF ACSCC`,

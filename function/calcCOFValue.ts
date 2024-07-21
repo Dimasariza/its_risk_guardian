@@ -1,5 +1,4 @@
 import { amoniaAndChlorine } from "@/app/(main)/risk-based-inspection/tab-menu/cof/amoniaAndChlorine";
-import { damageTable } from "@/app/(main)/risk-based-inspection/tab-menu/cof/damageDialog";
 import IGeneralData from "@/types/IGeneralData";
 
 interface ICofCalculation {
@@ -194,13 +193,15 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
         total
     } = failureFreq || {}
 
-    const basedOnDNSmallmm = ((Math.PI * cof_releaseHoleSizeD1 ** 2)) / 4
+    const PI = 3.142
+
+    const basedOnDNSmallmm = ((PI * cof_releaseHoleSizeD1 ** 2)) / 4
     const basedOnDNSmallm = basedOnDNSmallmm / 1000
-    const basedOnDNMediummm = ((Math.PI * cof_releaseHoleSizeD2 ** 2)) / 4
+    const basedOnDNMediummm = ((PI * cof_releaseHoleSizeD2 ** 2)) / 4
     const basedOnDNMediumm = basedOnDNMediummm / 1000
-    const basedOnDNLargemm = ((Math.PI * cof_releaseHoleSizeD3 ** 2)) / 4
+    const basedOnDNLargemm = ((PI * cof_releaseHoleSizeD3 ** 2)) / 4
     const basedOnDNLargem = basedOnDNLargemm / 1000
-    const basedOnDNRupturemm = ((Math.PI * cof_releaseHoleSizeD4 ** 2)) / 4
+    const basedOnDNRupturemm = ((PI * cof_releaseHoleSizeD4 ** 2)) / 4
     const basedOnDNRupturem = basedOnDNRupturemm / 1000
 
     const C2 = 1
@@ -212,7 +213,7 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const Gc = 1
     const Cd = 0.9
     const Ps = gData_operatingPressureBar * 14.5037738 * 6.895
-    const idealGasHeatRatio = 1.1995
+    const idealGasHeatRatio = 1.19953997
     const universalGasConstant = 8.314
 
     const releaseRateWnSmall = ((Cd / C2) * basedOnDNSmallm * Ps) 
@@ -412,6 +413,8 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const CA_NonFlamable: any = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
 
     const finalConsequenceM = Math.max(Number(CA_ComponentDamage), Math.max(Number(CA_PersonalInjuries), Number(CA_ToxInjuries), Number(CA_NonFlamable))) 
+
+    // console.log(failureFreq)
 
     return {
         getIdealGasHeatRatio: kRatio / (kRatio - constantR),

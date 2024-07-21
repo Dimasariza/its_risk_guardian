@@ -1,13 +1,13 @@
 import { inputs } from "./inputs";
 import RepresentativeFluidDialog, { representativeFluidNodes } from "./representativeFluidDialog";
-import InputValueOnly from "@/fragments/inputValueOnly";
+import InputValueOnly from "@/app/(main)/uikit/inputValueOnly";
 import PhaseOfFluid, { liquidPhase } from "./phaseOfFluidDialog";
 import LiquidInventories, { liquidInventories } from "./liquidInventoriesDialog";
 import DetectionAndIsolation, { detection, isolation } from "./detectionAndIsolation";
 import FlamableDialog, { flamableTable } from "./flamableDialog";
 import DamageDialog, { damageTable } from "./damageDialog";
 import ReleaseHoleSize from "./realeseHoleSizeDialog";
-import InputTypeText from "@/fragments/input-type-text";
+import InputTypeText from "@/app/(main)/uikit/input-type-text";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
@@ -15,69 +15,48 @@ import { calculateCOF } from "@/function/calcCOFValue";
 import { CofService } from "@/service/calculation/cofService";
 import AdjusmentToFlamable, { adjMitigation } from "./adjustmentToFlamable";
 import { getValue } from "@/service/calculation/pofRBIDate-service";
-import { gffTableValue } from "../pof-rbi-date/value/gffTableValue";
 import AmoniaChlorineDialog from "./amoniaAndChlorine";
-import axios from "axios";
-
-// const requests = [url + '/itemByUser', url + '/equipmentByUser', url + '/componentByUser'].map((url) => axios.post(url, {"user_id": userId}));
-// const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((responses) => {
-//   return responses
-// });
+import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 
 function COFPV({toast}: any) {
     const [value, setValue] = useState<any>({});
     const [submit, setSubmit] = useState<boolean>(true)
-    const [test, setTets] = useState<any>({})
-
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<any>({});
     const data = useSelector((state: any) => state.Reducer);
     let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
     const componentId = data.menu?.comp_id
+
     useEffect(() => {
         edit = true
-
         if(!componentId) return
-        // async () => {
-        //     const [a, b] = await axios.all([GeneralDataService.fetchData(componentId), getValue(componentId)]).then(res => res)
-        //     getValue(componentId)
-        //     .then(res => setTets(res))
-        // }
-        Promise.all([GeneralDataService.fetchData(componentId), getValue(componentId)])
-       .then((res) => {
-        //    return console.log(res)
+        Promise.all([
+            GeneralDataService.fetchData(componentId), 
+            getValue(componentId),
+            CofService.fetchData(componentId)
+        ])
+       .then(([generalData, pofValue, cofValue]) => {
+           setGeneralData(generalData)
+           
+           const failureFreq = gffTableValue.find(i => i.id == pofValue.rbiValue_failureFrequency)
+
+           setValue({
+               ...cofValue,
+               failureFreq,
+               fluidSelected: representativeFluidNodes.find((i: any) => i.id == cofValue.cof_representativeFluid),
+               impact: {
+                   cof_detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
+                   cof_isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
+               },
+               flamable: flamableTable.find((i: any) => i.id == cofValue.cof_flamableCons),
+               damage: damageTable.find((i: any) => i.id == cofValue.cof_damageCons),
+               phase: liquidPhase.find((i: any) => i.id == cofValue.cof_phaseOfFluid),
+               inventories: liquidInventories.find((i: any) => i.id == cofValue.cof_liquidInventories),
+               mitigation: adjMitigation.find((i: any) => i.id == cofValue.cof_adjToFlamable),
+               amoniaChloride: {}
+           })
        })
-        // console.log(test)
-        GeneralDataService.fetchData(componentId)
-        .then((res: any) => {
-            setGeneralData(res)
-        })
-
-        
-        getValue(componentId)
-        .then((res) => {
-          const failureFreq = gffTableValue.find(i => i.id == res.rbiValue_failureFrequency)
-          setValue((prev: any) => ({...prev, failureFreq}))
-        })
-
-        CofService.fetchData(componentId)
-        .then(res => {
-            setValue({
-                ...res,
-                fluidSelected: representativeFluidNodes.find((i: any) => i.id == res.cof_representativeFluid),
-                impact: {
-                    cof_detectionSystem: detection.find((i: any) => i.id == res.cof_detectionSystem),
-                    cof_isolationSystem: isolation.find((i: any) => i.id == res.cof_isolationSystem),
-                },
-                flamable: flamableTable.find((i: any) => i.id == res.cof_flamableCons),
-                damage: damageTable.find((i: any) => i.id == res.cof_damageCons),
-                phase: liquidPhase.find((i: any) => i.id == res.cof_phaseOfFluid),
-                inventories: liquidInventories.find((i: any) => i.id == res.cof_liquidInventories),
-                mitigation: adjMitigation.find((i: any) => i.id == res.cof_adjToFlamable),
-                amoniaChloride: {}
-            })
-        })
 
     }, [data, submit]);
 
@@ -207,8 +186,6 @@ function COFPV({toast}: any) {
         CAFlamInjMedium,
         CAFlamInjLarge,
         CAFlamInjRupture,
-        CA_ComponentDamage,
-        CA_PersonalInjuries,
         durationToxicSmall,
         durationToxicMedium,
         durationToxicLarge,
@@ -241,6 +218,7 @@ function COFPV({toast}: any) {
         impact: value.impact
     })
 
+    // console.log(finalConsequenceM)
     return (
         <>
         <div className="flex w-full lg:gap-5 md:gap-2 sm:gap-1 flex-column">

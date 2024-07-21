@@ -105,7 +105,7 @@ export default function InputFileUpload({path_folder = "file", fileType = "Image
 
     return (
         <div>
-            <Toast ref={toast}></Toast>
+            <Toast ref={toast} position='bottom-right'></Toast>
 
             <Tooltip target=".custom-choose-btn" content="Choose" position="bottom" />
             <Tooltip target=".custom-upload-btn" content="Upload" position="bottom" />

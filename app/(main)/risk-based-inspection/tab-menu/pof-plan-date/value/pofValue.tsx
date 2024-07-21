@@ -1,13 +1,13 @@
-import InputTypeText from '@/fragments/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GenericFailureFrequency from './genericFailureFreq';
-import InputValueOnly from '@/fragments/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
-import { gffTableValue } from './gffTableValue';
 import { Toast } from 'primereact/toast';
 import { calculateAlkaline } from '@/function/calcPlanAlkalineValue';
 import { getAlkaline, getExternalCorrosion, getThinning, getValue, updateValue } from '@/service/calculation/pofPlanDate-service';
+import { gffTableValue } from '@/public/tableBasedOnAPI/gffTableValue';
 
 function POFValue() {
   const [failureFrequency, setFailureFrequency] = useState<any>()
@@ -28,35 +28,30 @@ function POFValue() {
     edit = true
 
     if (!componentId) return 
-
-    GeneralDataService.fetchData(componentId)
-    .then((res: any) => {
-      setGeneralData(res)
-    })
-
-    getAlkaline(componentId).then((res: any) => {
-      setAlkaline(res);
-    });
-
-    getThinning(componentId)
-    .then((res: any) => {
-      setThinning(res)
-    })
-
-    getExternalCorrosion(componentId)
-    .then((res: any) => {
-      setExCor(res)
-    })
-
-    getValue(componentId)
-    .then((res) => {
-      setValue(res)
-      const failureFreq = gffTableValue.find(i => i.id == res.planValue_failureFrequency)
+    Promise.all([
+      GeneralDataService.fetchData(componentId),
+      getAlkaline(componentId),
+      getThinning(componentId),
+      getExternalCorrosion(componentId),
+      getValue(componentId),
+    ])
+    .then(([
+      generalData,
+      alkaline,
+      thinning,
+      exCor,
+      pofValue
+    ]) => {
+      setGeneralData(generalData)
+      setAlkaline(alkaline)
+      setThinning(thinning)
+      setExCor(exCor)
+      setValue(pofValue)
+      const failureFreq = gffTableValue.find(i => i.id == pofValue.planValue_failureFrequency)
       setFailureFrequency(failureFreq)
     })
   }, [data]);
 
-  
   useEffect(() => {
     if(Object.keys(error).length === 0 && !edit && !undoEdit) {
       updateValue(value, componentId)
@@ -91,8 +86,6 @@ function POFValue() {
     alkaline
   })
 
-  // const shellTotal = Math.max(shellBaseDF!, planShellSection!) + shellPWHT
-  // const headTotal = Math.max(headBaseDF!, planHeadSection!) + headPWHT
   const componentType = data.menu?.comp_componentType
 
   return (

@@ -94,7 +94,6 @@ function ClassProtectedDialogs({value, setValue, toast}: any) {
                     sortMode="single"
                     selection={value.protected}
                     onSelectionChange={(e: any) => {
-                        
                         setValue((prev: any) => ({
                             ...prev, 
                             protected: e?.value,

@@ -5,7 +5,6 @@ const inputs = [
       type: 'text',
       placeholder: 'Ph',
       label: 'Ph',
-      autofocus: true,
       className: 'col'
     },
     {

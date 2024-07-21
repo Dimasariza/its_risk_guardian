@@ -1,13 +1,12 @@
 /* eslint-disable */
 
-import InputCalendar from '@/fragments/input-calendar';
-import InputDropDown from '@/fragments/input-drop-down';
-import InputTypeText from '@/fragments/input-type-text';
+import InputDropDown from '@/app/(main)/uikit/input-drop-down';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import CorrosionRateDialog from './corrosionRateDialog';
-import InputValueOnly from '@/fragments/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
 import InspectionEffectivenessTable from './inspectionEfectivenessTableRef';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import IGeneralData from '@/types/IGeneralData';
@@ -17,6 +16,7 @@ import { convertDateToString } from '@/function/common';
 import { getThinning, updateThinning } from '@/service/calculation/pofPlanDate-service';
 import { calculateThinning } from '@/function/calcPlanThinningValue';
 import IPlanThinning from '@/types/IPlanThinning';
+import InputCalendar from '@/app/(main)/uikit/input-calendar';
 
 function DFThinning() {
   const [thinning, setThinning] = useState<IRBIThinning | any>({});

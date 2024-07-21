@@ -79,9 +79,15 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
     const covSf = 0.2
     const covP = 0.05
 
-    const shellPlanBeta1 = ((1 - (damageState1 * shellArt)) - Number(shellStrengthRatio)) / (((damageState1 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
-    const shellPlanBeta2 = ((1 - (damageState2 * shellArt)) - Number(shellStrengthRatio)) / (((damageState2 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
-    const shellPlanBeta3 = ((1 - (damageState3 * shellArt)) - Number(shellStrengthRatio)) / (((damageState3 ** 2) * (shellArt ** 2) * (covDt ** 2)) + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
+    const shellPlanBeta1 = ((1 - (damageState1 * shellArt)) - Number(shellStrengthRatio)) / (((damageState1 ** 2) * (shellArt ** 2) * (covDt ** 2)) 
+    + (((1 - (damageState1 * shellArt)) ** 2) * (covSf ** 2)) 
+    + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
+    const shellPlanBeta2 = ((1 - (damageState2 * shellArt)) - Number(shellStrengthRatio)) / (((damageState2 ** 2) * (shellArt ** 2) * (covDt ** 2)) 
+    + (((1 - (damageState2 * shellArt)) ** 2) * (covSf ** 2)) 
+    + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
+    const shellPlanBeta3 = ((1 - (damageState3 * shellArt)) - Number(shellStrengthRatio)) / (((damageState3 ** 2) * (shellArt ** 2) * (covDt ** 2)) 
+    + (((1 - (damageState3 * shellArt)) ** 2) * (covSf ** 2)) 
+    + ((Number(shellStrengthRatio) ** 2) * (covP ** 2))) ** 0.5
 
     const headPlanBeta1 = ((1 - (damageState1 * headArt)) - headStrengthRatio) / (((damageState1 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState1 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5
     const headPlanBeta2 = ((1 - (damageState2 * headArt)) - headStrengthRatio) / (((damageState2 ** 2) * (headArt ** 2) * (covDt ** 2)) + (((1 - (damageState2 * headArt)) ** 2) * (covSf ** 2)) + ((headStrengthRatio ** 2) * (covP ** 2))) ** 0.5

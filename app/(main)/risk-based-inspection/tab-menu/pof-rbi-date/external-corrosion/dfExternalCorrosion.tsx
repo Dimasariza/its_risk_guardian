@@ -1,11 +1,11 @@
-import InputCalendarYear from '@/fragments/input-year-range';
-import InputTypeText from '@/fragments/input-type-text';
+import InputCalendarYear from '@/app/(main)/uikit/input-year-range';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import InputYearRange from '@/fragments/input-year-range';
+import InputYearRange from '@/app/(main)/uikit/input-year-range';
 import { getExternalCorrosion, getThinning, updateExCor } from '@/service/calculation/pofRBIDate-service';
 import { inputs } from './inputs';
-import InputValueOnly from '@/fragments/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
 import OperatingTempTableRef from './operatingTempTableRef';
 import { calculateExCor } from '@/function/calcRBIExCorValue';
 import IGeneralData from '@/types/IGeneralData';
@@ -78,7 +78,6 @@ function DFExternalCorrosion() {
     finalCR,
     ageCoat,
     adjCoat,
-    timeInService,
     shellArt,
     headArt,
     flowStress,
@@ -97,7 +96,8 @@ function DFExternalCorrosion() {
     headRBIBeta2,
     headRBIBeta3,
     rbiShellSection,
-    rbiHeadSection
+    rbiHeadSection,
+    ageTimeInServiceTk
   } = calculateExCor(generalData, thinning, value);
 
   const componentType = data.menu?.comp_componentType
@@ -152,16 +152,16 @@ function DFExternalCorrosion() {
               },
               {
                 label: "Time in Service Age (Tk)",
-                value: Number(age)?.toFixed(4)
+                value: Number(ageTimeInServiceTk)?.toFixed(4)
               },
               {
                 label: "Time in Service Age (Coat)",
                 value: Number(ageCoat)?.toFixed(4)
               },
-              {
-                label: "Time in Service Age",
-                value: Number(timeInService)?.toFixed(4)
-              },
+              // {
+              //   label: "Time in Service Age",
+              //   value: Number(ageTimeInServiceTk)?.toFixed(4)
+              // },
               {
                 label: "Adjusment coat",
                 value: Number(adjCoat)?.toFixed(4)

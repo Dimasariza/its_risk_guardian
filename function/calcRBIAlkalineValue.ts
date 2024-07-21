@@ -1,18 +1,16 @@
 import IGeneralData from "@/types/IGeneralData"
-import IRBIExCor from "@/types/IRBIExCor"
 import IRBIThinning from "@/types/IRBIThinning"
 import { calculateThinning } from "./calcRBIThinningValue"
 import { calculateExCor } from "./calcRBIExCorValue"
 
 export const calculateAlkaline = ({
-    generalData, 
-    thinning, 
-    exCor = null, 
-    alkaline
+        generalData, 
+        thinning, 
+        exCor = null, 
+        alkaline
     }: any) => {
 
     const { 
-        age,
         shellBaseDF,
         headBaseDF,
         ageTimeInServiceTk
@@ -32,7 +30,6 @@ export const calculateAlkaline = ({
     return {
         shellBaseDF,
         headBaseDF,
-        age,
         rbiShellSection,
         rbiHeadSection,
         shellPWHT,

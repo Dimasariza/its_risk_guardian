@@ -1,10 +1,10 @@
-import InputCalendarYear from '@/fragments/input-year-range';
-import InputTypeText from '@/fragments/input-type-text';
+import InputCalendarYear from '@/app/(main)/uikit/input-year-range';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import InputYearRange from '@/fragments/input-year-range';
+import InputYearRange from '@/app/(main)/uikit/input-year-range';
 import { inputs } from './inputs';
-import InputValueOnly from '@/fragments/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
 import OperatingTempTableRef from './operatingTempTableRef';
 import IGeneralData from '@/types/IGeneralData';
 import { GeneralDataService } from '@/service/calculation/generalData-service';

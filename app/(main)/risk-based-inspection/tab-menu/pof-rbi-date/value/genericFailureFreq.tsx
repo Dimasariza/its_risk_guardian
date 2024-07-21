@@ -1,3 +1,4 @@
+import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
@@ -5,7 +6,6 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
-import { gffTableValue } from "./gffTableValue";
 
 function GenericFailureFrequency({failureFrequency, setFailureFrequency}: any) {
     const [visible, setVisible] = useState<boolean>(false);

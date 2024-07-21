@@ -4,7 +4,7 @@ import { Card } from 'primereact/card';
 import { TabMenu } from 'primereact/tabmenu';
 import { useRef, useState } from 'react';
 import COF from './tab-menu/cof/cof';
-import RiskAnalysis from './tab-menu/risk-analysis';
+import RiskAnalysis from './tab-menu/risk-analysis/risk-analysis';
 import InspectionPlanning from './tab-menu/recomendation/recomendation';
 import Summary from './tab-menu/summary';
 import GeneralData from './tab-menu/general-data/generalData';

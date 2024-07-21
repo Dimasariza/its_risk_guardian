@@ -1,7 +1,7 @@
 import IGeneralData from "@/types/IGeneralData"
-import { calculateExCor } from "./calcPlanExCorValue"
 import IPlanThinning from "@/types/IPlanThinning"
 import { calculateThinning } from "./calcPlanThinningValue"
+import { calculateExCor } from "./calcPlanExCorValue"
 
 export const calculateAlkaline = ({
         generalData, 
@@ -11,7 +11,6 @@ export const calculateAlkaline = ({
     }: any) => {
 
     const { 
-        age,
         shellBaseDF,
         headBaseDF,
         ageTimeInServiceTk
@@ -31,7 +30,6 @@ export const calculateAlkaline = ({
     return {
         shellBaseDF,
         headBaseDF,
-        age,
         planShellSection,
         planHeadSection,
         shellPWHT,

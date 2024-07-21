@@ -16,7 +16,8 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
         startingDateObj,
         lastInspDateObj,
         allowableStressKpa,
-        shellStrengthRatio
+        shellStrengthRatio,
+        ageTimeInServiceTk
     } = calculateThinning(generalData, thinning)
 
     const {
@@ -51,11 +52,9 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
 
     const adjCoat = Math.min(5, ageCoat!) - Math.min(5, ageCoat! - age!)
 
-    const timeInService: number = Math.abs(rbiDateObj - lastInspDateObj) * 3.169E-11
+    const shellArt = finalCR * ageTimeInServiceTk! / gData_shellMinimumThicknessMM
 
-    const shellArt = finalCR * timeInService / gData_shellMinimumThicknessMM
-
-    const headArt = finalCR * timeInService / gData_headMinimumThicknessMM
+    const headArt = finalCR * ageTimeInServiceTk! / gData_headMinimumThicknessMM
 
     const flowStress = ((gData_yieldStrength + gData_tensileStrength) / 2) * gData_jointEfficiency * 1.1
 
@@ -100,7 +99,6 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
         finalCR,
         ageCoat,
         adjCoat,
-        timeInService,
         shellArt,
         headArt,
         flowStress,
@@ -120,6 +118,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
         headRBIBeta3,
         rbiShellSection,
         rbiHeadSection,
+        ageTimeInServiceTk
     }
 }
 

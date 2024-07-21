@@ -1,6 +1,6 @@
 'use client';
 
-import InputTypeText from '@/fragments/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input-type-text';
 import { RerenderMenu } from '@/redux/action/action';
 import { AssetComponentService } from '@/service/assets/component-service';
 import { AssetEquipmentService } from '@/service/assets/equipment-service';
@@ -14,8 +14,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import inputs from './inputs';
 import validate from './validation';
-import InputDropDown from '@/fragments/input-drop-down';
-import InputCalendar from '@/fragments/input-calendar';
 
 function ComponentDialog() {
   const emptyComponent: IAssetComponent = {

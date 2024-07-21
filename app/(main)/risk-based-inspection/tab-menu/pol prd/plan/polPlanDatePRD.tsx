@@ -1,11 +1,10 @@
 "use client"
 
-import InputValueOnly from "@/fragments/inputValueOnly";
+import InputValueOnly from "@/app/(main)/uikit/inputValueOnly";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useRef, useState } from "react";
-import InputTypeText from "@/fragments/input-type-text";
-import InputCalendar from "@/fragments/input-calendar";
-import InputDropDown from "@/fragments/input-drop-down";
+import InputTypeText from "@/app/(main)/uikit/input-type-text";
+import InputDropDown from "@/app/(main)/uikit/input-drop-down";
 import inputs from "./input";
 import { useSelector } from "react-redux";
 import ServiceSeverityDialog, { severity } from "./dialog/serviceSeverity";
@@ -20,6 +19,8 @@ import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { convertDateToString } from "@/function/common";
 import { calcPRDPOFPlan } from "@/function/calcPRDPOFPlan";
 import { getPOLPRDPlan, updatePOLPRDPlan } from "@/service/calculation/polPRDService";
+import GenericFailureFrequency from "../../pof-plan-date/value/genericFailureFreq";
+import InputCalendar from "@/app/(main)/uikit/input-calendar";
 
 export const adjusmentFactor = [
     { name: 'Conventional valves', number: 1.25, id: "adjFactor001" },
@@ -30,6 +31,7 @@ function POLPlanDatePRD() {
     const [value, setValue] = useState<any>({});
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<IGeneralData|any>({})
+    const [onSubmit, setOnSubmit] = useState(false);
 
     let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
@@ -82,7 +84,7 @@ function POLPlanDatePRD() {
                 });
             })
         } 
-    }, [edit])
+    }, [edit, onSubmit])
 
     const {
         ageTimeInServiceTk,
@@ -92,7 +94,6 @@ function POLPlanDatePRD() {
         weightedPOF,
         muUpd,
         finalUpdateValue,
-        pofodShouladj,
         fSet
     } = calcPRDPOFPlan(generalData, value, "pol")
 
@@ -130,10 +131,11 @@ function POLPlanDatePRD() {
                 />
             </div>
             <div className='flex flex-wrap gap-2 mt-3'>
-                <ServiceSeverityDialog value={value} setValue={setValue} toast={toast}/>
-                <AdjusmentFactorDialog value={value} setValue={setValue} toast={toast}/>
-                <InspectionEffectiveness value={value} setValue={setValue} toast={toast}/>
-                <InspectionConfidenceFactor value={value} setValue={setValue} toast={toast}/>
+                <ServiceSeverityDialog value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <AdjusmentFactorDialog value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                {/* <InspectionEffectiveness value={value} setValue={setValue} setOnSubmit={setOnSubmit}/>
+                <InspectionConfidenceFactor value={value} setValue={setValue} setOnSubmit={setOnSubmit}/> */}
+                {/* <GenericFailureFrequency failureFrequency={failureFrequency} setFailureFrequency={setFailureFrequency} /> */}
             </div>
             <div className='flex w-full flex-wrap mt-5'>
                 {
@@ -177,7 +179,6 @@ function POLPlanDatePRD() {
                     ].map(({label, value} : any, key) => <InputValueOnly label={label} value={ isNaN(Number(value)) ? "-" : value } key={label + key}/>)
                 }
             </div>
-
         </section>
     )
 }

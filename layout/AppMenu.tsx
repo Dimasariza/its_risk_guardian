@@ -9,6 +9,7 @@ import { MenuItemService } from '@/service/MenuItemService';
 import { useDispatch, useSelector } from 'react-redux';
 import { MenuItem } from '@/redux/action/action';
 import { usePathname } from 'next/navigation';
+import { AssetComponentService } from '@/service/assets/component-service';
 
 const AppMenu = () => {
   const pathname = usePathname();
@@ -16,15 +17,24 @@ const AppMenu = () => {
   const rerenderMenu = useSelector((state: any) => state.RerenderMenu);
   const { data } = useSelector((state: any) => state.AuthReducer);
   const dispatch = useDispatch();
+  const user = data.user.user_id
 
   useEffect(() => {
-    MenuItemService.getAllAssets(data.user.user_id).then((res) => {
-      setMenuItems(res);
-      // if(data.menu?.comp_id) {
-      //   dispatch(MenuItem(res[0]));
-      // }
-    });
-  }, [rerenderMenu]);
+    console.log(pathname)
+    if(pathname == "/risk-based-inspection/") {
+      MenuItemService.getAllAssets(user).then((res) => {
+        setMenuItems(res);
+      });
+    }
+
+    if(pathname == "/corrosion-loop/") {
+      AssetComponentService.fetchDataByUser(user)
+      .then(res => {
+        const menu = res?.data.map((item: any) => ({label: "", items: [{...item, label: item.comp_nameOfComponent}]}))
+        setMenuItems(menu)
+      })
+    }
+  }, [rerenderMenu, pathname]);
 
   
   const titleMenu = (path: string) => {
