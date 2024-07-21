@@ -71,7 +71,7 @@ function POLPlanDatePRD() {
             updatePOLPRDPlan({
                 ...value,
                 plan_planDate: convertDateToString(value.plan_planDate),
-                plan_failureFrequency: failureFrequency.id
+                plan_failureFrequency: failureFrequency?.id
             }, componentId)
             .then(res => {
                 toast.current.show({

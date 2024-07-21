@@ -57,7 +57,7 @@ function POFValue() {
     if(Object.keys(error).length === 0 && !edit && !undoEdit) {
       updateValue({
         ...value,
-        planValue_failureFrequency: failureFrequency.id
+        planValue_failureFrequency: failureFrequency?.id
       }, componentId)
       .then((res) => {
         toast.current.show({

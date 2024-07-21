@@ -71,7 +71,7 @@ function POFRBIDatePRD() {
             updatePOFPRDRBI({
                 ...value,
                 rbi_rbiDate: convertDateToString(value.rbi_rbiDate),
-                rbi_failureFrequency: failureFrequency.id
+                rbi_failureFrequency: failureFrequency?.id
             }, componentId)
             .then(res => {
                 toast.current.show({
