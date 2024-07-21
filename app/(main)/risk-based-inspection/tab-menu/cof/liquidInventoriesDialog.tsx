@@ -97,7 +97,7 @@ export const liquidInventories = [
         percent: "100% full",
     },
     {
-        id: 'inventories1008',
+        id: 'inventories1009',
         description: 'Piping ',
         types: [
             <div>PIPE-xx</div>,
@@ -106,7 +106,7 @@ export const liquidInventories = [
         percent: "100% full, calculated for Level 2 methodology",
     },
     {
-        id: 'inventories1008',
+        id: 'inventories1010',
         description: 'Reactors',
         types: [
             <div>REACTOR</div>,

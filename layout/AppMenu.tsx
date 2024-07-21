@@ -20,6 +20,7 @@ const AppMenu = () => {
   const user = data.user.user_id
 
   useEffect(() => {
+    console.log(pathname)
     // if(pathname == "/risk-based-inspection/") {
       MenuItemService.getAllAssets(user).then((res) => {
         setMenuItems(res);
