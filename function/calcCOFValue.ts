@@ -370,9 +370,6 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const CAFlamInjLarge = (CAAILinjLarge * factAIt) + (CAAINLinjLarge * (1 - factAIt))
     const CAFlamInjRupture = (CAAILinjRupture * factAIt) + (CAAINLinjRupture * (1 - factAIt))
 
-    const CA_ComponentDamage = ((sizeSmall * CAFlamCmdSmall) + (sizeMedium * CAFlamCmdMedium) + (sizeLarge * CAFlamCmdLarge) + (sizeRupture * CAFlamCmdRupture)) / total
-    const CA_PersonalInjuries = ((sizeSmall * CAFlamInjSmall) + (sizeMedium * CAFlamInjMedium) + (sizeLarge * CAFlamInjLarge) + (sizeRupture * CAFlamInjRupture)) / total
-
     const durationToxicSmall = Math.min(3600, (releaseMassSmall / releaseRateWnSmall), (60 * leakDuration?.[0]?.value))
     const durationToxicMedium = Math.min(3600, (releaseMassMedium / releaseRateWnMedium), (60 * leakDuration?.[1]?.value))
     const durationToxicLarge = Math.min(3600, (releaseMassLarge / releaseRateWnLarge), (60 * leakDuration?.[2]?.value))
@@ -409,13 +406,12 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const forAcidCausticRupture = (forSteamRupture * factICRupture) + (0 * (1 - factICRupture))
 
     const CA_ToxInjuries: number = ((sizeSmall * toxicConsAreqSmall) + (sizeMedium * toxicConsAreqMedium) + (sizeLarge * toxicConsAreqLarge) + (sizeRupture * toxicConsAreqRupture)) / total
-
     const CA_NonFlamable: any = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
+    const CA_ComponentDamage = ((sizeSmall * CAFlamCmdSmall) + (sizeMedium * CAFlamCmdMedium) + (sizeLarge * CAFlamCmdLarge) + (sizeRupture * CAFlamCmdRupture)) / total
+    const CA_PersonalInjuries = ((sizeSmall * CAFlamInjSmall) + (sizeMedium * CAFlamInjMedium) + (sizeLarge * CAFlamInjLarge) + (sizeRupture * CAFlamInjRupture)) / total
 
     const finalConsequenceM = Math.max(Number(CA_ComponentDamage), Math.max(Number(CA_PersonalInjuries), Number(CA_ToxInjuries), Number(CA_NonFlamable))) 
-
-    // console.log(failureFreq)
-
+    
     return {
         getIdealGasHeatRatio: kRatio / (kRatio - constantR),
         basedOnDNSmallmm,
