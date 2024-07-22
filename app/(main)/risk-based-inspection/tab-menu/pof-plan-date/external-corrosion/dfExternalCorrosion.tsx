@@ -152,7 +152,7 @@ function DFExternalCorrosion() {
               },
               {
                 label: "Time in Service Age (Tk)",
-                value: Number(age)?.toFixed(4)
+                value: Number(ageTimeInServiceTk)?.toFixed(4)
               },
               {
                 label: "Time in Service Age (Coat)",

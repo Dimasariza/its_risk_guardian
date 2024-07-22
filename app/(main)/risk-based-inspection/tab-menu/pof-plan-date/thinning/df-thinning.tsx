@@ -99,7 +99,8 @@ function DFThinning() {
     headSectionB2,
     headSectionB3,
     shellBaseDF,
-    headBaseDF
+    headBaseDF,
+    ageTimeInServiceTk
   } = calculateThinning(generalData as IGeneralData, thinning as IPlanThinning)
 
   const componentType = data.menu?.comp_componentType
@@ -133,7 +134,7 @@ function DFThinning() {
             },
             {
               label: "Age",
-              value: Number(age).toFixed(4)
+              value: Number(ageTimeInServiceTk).toFixed(4)
             },
             {
               label: "T min (Inch)",
