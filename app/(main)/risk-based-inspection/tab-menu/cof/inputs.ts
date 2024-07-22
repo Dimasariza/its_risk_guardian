@@ -32,6 +32,13 @@ const inputs: any = [
       label: 'C1 mfrac Toxic',
       className: 'w-max'
     },
+    {
+      name: 'cof_ps',
+      type: 'text',
+      placeholder: 'PS',
+      label: 'PS',
+      className: 'w-max'
+    },
 ];
 
 export {inputs, representativeFluidList};

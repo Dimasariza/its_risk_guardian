@@ -260,15 +260,15 @@ const inputsGeneralSpec = [
     {
       name: 'gData_shellMinimumThicknessMM',
       type: 'text',
-      placeholder: 'Minimum Thickness (mm *)',
-      label: 'Minimum Thickness (mm *)',
+      placeholder: 'Thickness (mm *)',
+      label: 'Thickness (mm *)',
       viewonly: ["Pressure Vessel"]
     },
     {
       name: 'gData_shellMinimumThicknessInch',
       type: 'text',
-      placeholder: 'Minimum Thickness (inch *)',
-      label: 'Minimum Thickness (inch *)',
+      placeholder: 'Thickness (inch *)',
+      label: 'Thickness (inch *)',
       viewonly: ["Pressure Vessel"]
     },
     {
@@ -297,14 +297,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_shellMinimumThicknessMM',
       type: 'text',
-      placeholder: 'Minimum Thickness (mm *)',
-      label: 'Minimum Thickness (mm *)',
+      placeholder: 'Thickness (mm *)',
+      label: 'Thickness (mm *)',
     },
     {
       name: 'gData_shellMinimumThicknessInch',
       type: 'text',
-      placeholder: 'Minimum Thickness (inch *)',
-      label: 'Minimum Thickness (inch *)',
+      placeholder: 'Thickness (inch *)',
+      label: 'Thickness (inch *)',
     },
     {
       name: 'gData_shellCorrosionRateMM',
@@ -348,14 +348,14 @@ const inputsGeneralSpec = [
     {
       name: 'gData_headMinimumThicknessMM',
       type: 'text',
-      placeholder: 'Minimum Thickness (mm)',
-      label: 'Minimum Thickness (mm)',
+      placeholder: 'Thickness (mm)',
+      label: 'Thickness (mm)',
     },
     {
       name: 'gData_headMinimumThicknessInch',
       type: 'text',
-      placeholder: 'Minimum Thickness (inch)',
-      label: 'Minimum Thickness (inch)',
+      placeholder: 'Thickness (inch)',
+      label: 'Thickness (inch)',
     },
     {
       name: 'gData_headCorrosionRateMM',

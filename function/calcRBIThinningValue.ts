@@ -18,7 +18,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
         gData_headMinimumThicknessMM,
         gData_startingDate,
         gData_designPressurePsi,
-        gData_outerDiameterMM
+        gData_outerDiameterMM,
+        gData_shellMinimumThicknessInch
     } = generalData as IGeneralData;
 
     const {
@@ -112,8 +113,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
         lastInspDateObj,
         rbiDateObj,
         age,
-        tMinInch: gData_headTreqInch,
-        tMinMM: headRequiredWallThickness,
+        tMinInch: gData_shellMinimumThicknessInch,
+        tMinMM: gData_shellMinimumThicknessMM,
         shellArt,
         headArt,
         flowStress,

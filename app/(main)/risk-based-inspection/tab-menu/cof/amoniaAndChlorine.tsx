@@ -15,14 +15,22 @@ function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () =
         <ColumnGroup>
             <Row>
                 <Column header="Continous Release Duration (minutes)" rowSpan={2} style={{width: "10rem"}}/>
-                <Column header="Amonia" colSpan={2} />
-                <Column header="Chlorine" colSpan={2} />
+                <Column header="Amonia"  />
+                <Column header="Chlorine" />
             </Row>
             <Row>
-                <Column header="e" />
-                <Column header="f" />
-                <Column header="e" />
-                <Column header="f" />
+                <Column header={() => {
+                    return <div className="flex justify-content-around" style={{position: "absolute", width: "40%"}}> 
+                        <div>e</div>
+                        <div>f</div>
+                    </div>
+                }} />
+                <Column header={() => {
+                    return <div className="flex justify-content-around" style={{position: "absolute", width: "40%"}}> 
+                        <div>e</div>
+                        <div>f</div>
+                    </div>
+                }} />
             </Row>
         </ColumnGroup>
     );
@@ -87,12 +95,19 @@ function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () =
                 onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, amoniaChloride: e.value}))} 
                 headerColumnGroup={headerGroup}
                 dataKey="id" tableStyle={{ minWidth: '50rem' }}>
-                    {/* <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column> */}
-                    <Column field="duration" ></Column>
-                    <Column field="amoniaE" ></Column>
-                    <Column field="amoniaF" ></Column>
-                    <Column field="chlorineE" ></Column>
-                    <Column field="chlorineF" ></Column>
+                    <Column field="duration" className="p-disabled" ></Column>
+                    <Column body={(e) => (
+                        <div className="flex justify-content-around">
+                            <span>{e.amoniaE}</span>
+                            <span>{e.amoniaF}</span>
+                        </div>
+                    )} ></Column>
+                    <Column body={(e) => (
+                        <div className="flex justify-content-around">
+                            <span>{e.chlorineE}</span>
+                            <span>{e.chlorineF}</span>
+                        </div>
+                    )} ></Column>
                 </DataTable>
             </Dialog>
         </>

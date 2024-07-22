@@ -4,7 +4,6 @@ const inputs = [
       type: 'text',
       placeholder: 'Corrosion Rate',
       label: 'Corrosion Rate',
-      autoFocus: true,
     },
     {
       name: 'planThinning_planDate',
@@ -13,16 +12,16 @@ const inputs = [
       label: 'plan Date',
     },
     {
+      name: 'planThinning_planDate',
+      type: 'calendar',
+      placeholder: 'RBI Date',
+      label: 'RBI Date',
+    },
+    {
       name: 'planThinning_tMinInch',
       type: 'text',
       placeholder: 'T min (Inch)',
       label: 'T min (inch)',
-    },
-    {
-      name: 'planThinning_tMinMM',
-      type: 'text',
-      placeholder: 'T min (mm)',
-      label: 'T min (mm)',
     },
     {
       name: 'planThinning_nInspA',
