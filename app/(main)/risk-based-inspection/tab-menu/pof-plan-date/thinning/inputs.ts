@@ -12,22 +12,20 @@ const inputs = [
       label: 'plan Date',
     },
     {
-      name: 'planThinning_planDate',
-      type: 'calendar',
-      placeholder: 'RBI Date',
-      label: 'RBI Date',
-    },
-    {
       name: 'planThinning_tMinInch',
       type: 'text',
       placeholder: 'T min (Inch)',
       label: 'T min (inch)',
+      autoFocus: false,
+      className: ''
     },
     {
-      name: 'planThinning_nInspA',
+      name: 'planThinning_tMinMM',
       type: 'text',
-      placeholder: 'Number of Inspection A',
-      label: 'Number of Inspection A',
+      placeholder: 'T min (mm)',
+      label: 'T min (mm)',
+      autoFocus: false,
+      className: ''
     },
     {
       name: 'planThinning_nInspB',
