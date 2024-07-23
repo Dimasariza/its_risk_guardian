@@ -209,11 +209,11 @@ function POFRBIDatePRD() {
                         },
                         {
                             label: "POF Fire",
-                            value: Number(pofFire)?.toPrecision(4)
+                            value: Number(pofFire)?.toExponential(4)
                         },
                         {
                             label: "POF Overfilling",
-                            value: Number(pofOverFilling)?.toPrecision(4)
+                            value: Number(pofOverFilling)?.toExponential(4)
                         },
                     ].map(({label, value} : any, key) => <InputValueOnly label={label} value={ isNaN(Number(value)) ? "-" : value } key={label + key}/>)
                 }

@@ -31,6 +31,22 @@ import { liquidInventories } from "../cof/liquidInventoriesDialog";
 import { adjMitigation } from "../cof/adjustmentToFlamable";
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 import { riskMatrix } from "./riskMatrix";
+import { getValue } from "@/service/calculation/pofRBIDate-service";
+import { getPOFPRDPlan, getPOFPRDRBI } from "@/service/calculation/pofPRDService";
+import { calcPRDPOFPlan } from "@/function/calcPRDPOFPlan";
+import { getPOLPRDPlan, getPOLPRDRBI } from "@/service/calculation/polPRDService";
+import { calcPRDPOFRBI } from "@/function/calcPRDPOFRBI";
+import { severity } from "../pof prd/rbi/dialog/serviceSeverity";
+import { adjFactorEnvirontment } from "../pof prd/rbi/dialog/adjusmentFactor";
+import { effectivenessPofRBI } from "../pof prd/rbi/dialog/inspectionEffectiveness";
+import { confidenceFactors } from "../pof prd/rbi/dialog/inspectionConfidenceFactor";
+import { eventFreq } from "../pof prd/rbi/dialog/initiatingEventFrequencies";
+import { protectedEquipment } from "../pof prd/rbi/dialog/classProtected";
+import { effectivenessPofPlan } from "../pof prd/plan/dialog/inspectionEffectiveness";
+import { adjusmentFactor as adjFactorPOLRBI } from "../pol prd/rbi/polRBIDatePRD";
+import { adjusmentFactor as adjFactorPOLPLan} from "../pol prd/plan/polPlanDatePRD";
+import { adjusmentFactor as adjFactorPOFRBI} from "../pof prd/plan/pofPlanDatePRD";
+import { adjusmentFactor as adjFactorPOFPLan} from "../pof prd/plan/pofPlanDatePRD";
 
 const chartProps: any = {
   slotProps: {
@@ -98,27 +114,27 @@ const chartProps: any = {
 }
 
 function RiskAnalysis() {
-  const riskPlotting = (probabilityRange: number, consequenceRange: number) => {
+  const riskPlotting = (probabilityRange: number, consequenceRange: number, df = true /* if false calculate based on probabilty catogery*/) => {
     const probability = [
       {
         category: 1,
-        range: probabilityRange <= 1,
+        range: probabilityRange <= (df ? 1 : 3.06E-05),
       },
       {
         category: 2,
-        range: probabilityRange > 1 && probabilityRange <= 10,
+        range: (df ? 1 : 3.06E-05) < probabilityRange && probabilityRange <= (df ? 10 : 3.06E-04),
       },
       {
         category: 3,
-        range: probabilityRange > 10 && probabilityRange <= 100,
+        range: (df ? 10 : 3.06E-04) < probabilityRange && probabilityRange <= (df ? 100 : 3.06E-03),
       },
       {
         category: 4,
-        range: probabilityRange > 100 && probabilityRange <= 1000,
+        range: (df ? 100 : 3.06E-03) < probabilityRange && probabilityRange <= (df ? 1000 : 3.06E-02),
       },
       {
         category: 5,
-        range: probabilityRange >= 1000,
+        range: probabilityRange > (df ? 1000 : 3.06E-05),
       },
     ].find(({range}: any) => range)
 
@@ -156,11 +172,17 @@ function RiskAnalysis() {
   const [planThinning, setPlanThinning] = useState({})
   const [planExCor, setPlanExCor] = useState({})
   const [planAlkaline, setPlanAlkaline] = useState({})
+  const [pofRBIPRD, setPofRBIPRD] = useState({})
+  const [pofPlanPRD, setPofPlanPRD] = useState({})
+  const [polRBIPRD, setPolRBIPRD] = useState({})
+  const [polPlanPRD, setPolPlanPRD] = useState({})
   const data = useSelector((state: any) => state.Reducer);
   const componentId = data.menu?.comp_id
 
   useEffect(() => {
     if(!componentId) return;
+
+    if(["Pressure Vessel"].includes(componentType))
     Promise.all([
       GeneralDataService.fetchData(componentId),
       getRBIThinning(componentId),
@@ -170,7 +192,7 @@ function RiskAnalysis() {
       getPlanExternalCorrosion(componentId),
       getPlanAlkaline(componentId),
       CofService.fetchData(componentId),
-      getRBIValue(componentId)
+      getValue(componentId),
     ])
     .then(([
       generalData,
@@ -181,7 +203,7 @@ function RiskAnalysis() {
       planExCor,
       planAlkaline,
       cofValue,
-      rbiValue
+      pofValue
     ]) => {
       setGeneralData(generalData)
       setRBIThinning(rbiThinning)
@@ -206,8 +228,100 @@ function RiskAnalysis() {
           amoniaChloride: {}
       })  
       
-      const failureFreq = gffTableValue.find(i => i.id == rbiValue.rbiValue_failureFrequency)
-      setCofValue((prev: any) => ({...rbiValue ,...prev, failureFreq}))
+      const failureData = pofValue.rbiValue_failureFrequency
+      const failureFreq = gffTableValue.find(i => i.id == failureData)
+      setCofValue((prev: any) => ({...pofValue ,...prev, failureFreq}))
+    })
+
+    else if (["Pressure Relief Device"].includes(componentType))
+    Promise.all([
+      GeneralDataService.fetchData(componentId),
+      getPOFPRDRBI(componentId),
+      getPOFPRDPlan(componentId),
+      getPOLPRDRBI(componentId),
+      getPOLPRDPlan(componentId),
+      CofService.fetchData(componentId),
+    ])
+    .then(([
+      generalData,
+      PRDPofRbi,
+      PRDPofPlan,
+      polRBIValue,
+      polPlanValue,
+      cofValue
+    ]) => {
+      setGeneralData(generalData)
+
+      setPofRBIPRD({
+        ...PRDPofRbi,
+        rbi_rbiDate: new Date(PRDPofRbi.rbi_rbiDate),
+        severity: severity.find((i) => i.id == PRDPofRbi.rbi_serviceSeverity),
+        adjFactor: adjFactorPOFRBI.find((i) => i.id == PRDPofRbi.rbi_adjusmentFactor),
+        weibullParameter: adjFactorEnvirontment.find((i) => i.id == PRDPofRbi.rbi_envAdjusmentFactor),
+        inspEffectiveness: effectivenessPofRBI.find((i) => i.id == PRDPofRbi.rbi_inspEffectiveness),
+        confidence: confidenceFactors.find((i) => i.id == PRDPofRbi.rbi_confidenceFactor),
+        eventFire: eventFreq.find((i) => i.id == PRDPofRbi.rbi_eventFreqFire),
+        eventOverFilling: eventFreq.find((i) => i.id == PRDPofRbi.rbi_eventFreqOverFilling),
+        protected: protectedEquipment.find((i) => i.id == PRDPofRbi.rbi_protectedEquipment),
+      })
+
+      setPolRBIPRD({
+        ...polRBIValue,
+        rbi_rbiDate: new Date(polRBIValue.rbi_rbiDate),
+        severity: severity.find((i) => i.id == polRBIValue.rbi_serviceSeverity),
+        adjFactor: adjFactorPOLRBI.find((i) => i.id == polRBIValue.rbi_adjusmentFactor),
+        weibullParameter: adjFactorEnvirontment.find((i) => i.id == polRBIValue.rbi_envAdjusmentFactor),
+        inspEffectiveness: effectivenessPofRBI.find((i) => i.id == polRBIValue.rbi_inspEffectiveness),
+        confidence: confidenceFactors.find((i) => i.id == polRBIValue.rbi_confidenceFactor),
+        eventFire: eventFreq.find((i) => i.id == polRBIValue.rbi_eventFreqFire),
+        eventOverFilling: eventFreq.find((i) => i.id == polRBIValue.rbi_eventFreqOverFilling),
+        protected: protectedEquipment.find((i) => i.id == polRBIValue.rbi_protectedEquipment),
+      })
+
+      setPofPlanPRD({
+        ...PRDPofPlan,
+        plan_planDate: new Date(PRDPofPlan.plan_planDate),
+        severity: severity.find((i) => i.id == PRDPofPlan.plan_serviceSeverity),
+        adjFactor: adjFactorPOFPLan.find((i) => i.id == PRDPofPlan.plan_adjusmentFactor),
+        weibullParameter: adjFactorEnvirontment.find((i) => i.id == PRDPofPlan.plan_envAdjusmentFactor),
+        inspEffectiveness: effectivenessPofPlan.find((i) => i.id == PRDPofPlan.plan_inspEffectiveness),
+        confidence: confidenceFactors.find((i) => i.id == PRDPofPlan.plan_confidenceFactor),
+        eventFire: eventFreq.find((i) => i.id == PRDPofPlan.plan_eventFreqFire),
+        eventOverFilling: eventFreq.find((i) => i.id == PRDPofPlan.plan_eventFreqOverFilling),
+        protected: protectedEquipment.find((i) => i.id == PRDPofPlan.plan_protectedEquipment),
+      })
+
+      setPolPlanPRD({
+        ...polPlanValue,
+        plan_planDate: new Date(polPlanValue.plan_planDate),
+        severity: severity.find((i) => i.id == polPlanValue.plan_serviceSeverity),
+        adjFactor: adjFactorPOLPLan.find((i) => i.id == polPlanValue.plan_adjusmentFactor),
+        weibullParameter: adjFactorEnvirontment.find((i) => i.id == polPlanValue.plan_envAdjusmentFactor),
+        inspEffectiveness: effectivenessPofPlan.find((i) => i.id == polPlanValue.plan_inspEffectiveness),
+        confidence: confidenceFactors.find((i) => i.id == polPlanValue.plan_confidenceFactor),
+        eventFire: eventFreq.find((i) => i.id == polPlanValue.plan_eventFreqFire),
+        eventOverFilling: eventFreq.find((i) => i.id == polPlanValue.plan_eventFreqOverFilling),
+        protected: protectedEquipment.find((i) => i.id == polPlanValue.plan_protectedEquipment),
+      })
+
+      const failureData = PRDPofRbi.rbi_failureFrequency
+      const failureFreq = gffTableValue.find(i => i.id == failureData)
+
+      setCofValue({
+        ...cofValue,
+        fluidSelected: representativeFluidNodes.find((i: any) => i.id == cofValue.cof_representativeFluid),
+        impact: {
+            cof_detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
+            cof_isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
+        },
+        flamable: flamableTable.find((i: any) => i.id == cofValue.cof_flamableCons),
+        damage: damageTable.find((i: any) => i.id == cofValue.cof_damageCons),
+        phase: liquidPhase.find((i: any) => i.id == cofValue.cof_phaseOfFluid),
+        inventories: liquidInventories.find((i: any) => i.id == cofValue.cof_liquidInventories),
+        mitigation: adjMitigation.find((i: any) => i.id == cofValue.cof_adjToFlamable),
+        amoniaChloride: {},
+        failureFreq
+      })  
     })
   }, [data]);
 
@@ -234,29 +348,62 @@ function RiskAnalysis() {
   })
 
   const {
+    pofFire: rbiPofFire,
+    pofOverFilling: rbiPofOverFilling
+  } = calcPRDPOFRBI(generalData, pofRBIPRD)
+
+  const {
+    pofFire: planPofFire,
+    pofOverFilling: planPofOverFilling
+  } = calcPRDPOFPlan(generalData, pofPlanPRD)
+
+  const {
+    fSet: rbiFset,
+    finalUpdateValue: rbiFinalUpdateValue,
+  } = calcPRDPOFRBI(generalData, polRBIPRD, "pol")
+
+  const {
+    fSet: planFset,
+    finalUpdateValue: planFinalUpdateValue
+  } = calcPRDPOFPlan(generalData, polPlanPRD, "pol")
+
+  const polRBIValue = rbiFset * rbiFinalUpdateValue
+  const polPlanValue = planFset * planFinalUpdateValue
+
+  
+  const componentType = data.menu?.comp_componentType
+  const viewonlyForAll = ["Pressure Vessel"]
+  
+  const RBIShellValue = ["Pressure Vessel"].includes(componentType) ? RBIShellTotal : rbiPofFire + rbiPofOverFilling + polRBIValue
+  const PlanShellValue = ["Pressure Vessel"].includes(componentType) ? PlanShellTotal : planPofFire + planPofOverFilling + polPlanValue
+  const RBIHeadValue = RBIHeadTotal
+  const PlanHeadValue = PlanHeadTotal
+  
+  const {
     finalConsequenceM
   } = calculateCOF({
-      generalData, 
-      fluidSelected: cofValue?.fluidSelected,
-      cofValue: cofValue,
-      impact: cofValue?.impact
+    generalData, 
+    fluidSelected: cofValue?.fluidSelected,
+    cofValue: cofValue,
+    impact: cofValue?.impact,
+    componentType
   })
 
-  const rbiHeadPlotting =  riskPlotting(RBIHeadTotal, finalConsequenceM!)
-  const rbiShellPlotting =  riskPlotting(RBIShellTotal, finalConsequenceM!)
-  const planHeadPlotting =  riskPlotting(PlanHeadTotal, finalConsequenceM!)
-  const planShellPlotting =  riskPlotting(PlanShellTotal, finalConsequenceM!)
+  const rbiHeadPlotting =  riskPlotting(RBIHeadValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
+  const rbiShellPlotting =  riskPlotting(RBIShellValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
+  const planHeadPlotting =  riskPlotting(PlanHeadValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
+  const planShellPlotting =  riskPlotting(PlanShellValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
 
   const iconPlotting = (row: number, column: string, title: string, value: string) => {
     if(title == "Head Section Risk Diagram") {
       return [
         rbiHeadPlotting.consequence?.category == column 
         && rbiHeadPlotting.probability?.category == row
-        && <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        && <i className="pi pi-circle-fill m-1" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
         
         planHeadPlotting.consequence?.category == column 
         && planHeadPlotting.probability?.category == row
-        && <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        && <i className="pi pi-star-fill m-1" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
 
         value
       ]
@@ -265,21 +412,21 @@ function RiskAnalysis() {
       return [
         rbiShellPlotting.consequence?.category == column 
         && rbiShellPlotting.probability?.category == row
-        && <i className="pi pi-circle-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        && <i className="pi pi-circle-fill m-1" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
         
         planShellPlotting.consequence?.category == column 
         && planShellPlotting.probability?.category == row
-        && <i className="pi pi-star-fill" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
+        && <i className="pi pi-star-fill m-1" style={{ color: 'slateblue', fontSize: "1.4rem" }}></i>,
         
         value
       ]
     }
   }
 
-  const RBIShellRisk: any = Number(cofValue.failureFreq?.total * RBIShellTotal * cofValue.rbiValue_FMS)
-  const RBIHeadRisk: any = Number(cofValue.failureFreq?.total * RBIHeadTotal * cofValue.rbiValue_FMS)
-  const PlanShellRisk: any = Number(cofValue.failureFreq?.total * PlanShellTotal * cofValue.rbiValue_FMS)
-  const PlanHeadRisk: any = Number(cofValue.failureFreq?.total * PlanHeadTotal * cofValue.rbiValue_FMS)
+  const RBIShellRisk: any = Number(cofValue.failureFreq?.total * RBIShellValue * cofValue.rbiValue_FMS)
+  const RBIHeadRisk: any = Number(cofValue.failureFreq?.total * RBIHeadValue * cofValue.rbiValue_FMS)
+  const PlanShellRisk: any = Number(cofValue.failureFreq?.total * PlanShellValue * cofValue.rbiValue_FMS)
+  const PlanHeadRisk: any = Number(cofValue.failureFreq?.total * PlanHeadValue * cofValue.rbiValue_FMS)
 
   const [value, setValue] = useState<any>({
     shellRangeDate: [0, 0], // change blue box relative to y axis in shell
@@ -315,9 +462,6 @@ function RiskAnalysis() {
   const headXAxis = [0, ...value?.headXAxis, 25];
   const shellRiskTarget = shellXAxis.map(_ => value?.shellRiskTarget); 		
   const headRiskTarget = headXAxis.map(_ => value?.headRiskTarget); 		
-
-  const componentType = data.menu?.comp_componentType
-  const viewonlyForAll = ["Pressure Vessel"]
 
   return (
     <section className="p-4">

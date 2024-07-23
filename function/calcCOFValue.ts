@@ -1,11 +1,13 @@
 import { amoniaAndChlorine } from "@/app/(main)/risk-based-inspection/tab-menu/cof/amoniaAndChlorine";
 import IGeneralData from "@/types/IGeneralData";
+import { useSelector } from "react-redux";
 
 interface ICofCalculation {
     generalData: IGeneralData
     fluidSelected: any
     cofValue: any,
     impact: any
+    componentType: string
 }
 
 export const totalLeakDuration = [
@@ -152,7 +154,7 @@ const reductionFactor = [
     },
 ]
 
-export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICofCalculation) => {
+export const calculateCOF = ({generalData, fluidSelected, cofValue, impact, componentType}: ICofCalculation) => {
     if(!Object.keys(generalData).length) return {}
 
     const {
@@ -182,6 +184,7 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
         cof_isolationSystem,
         cof_flamableCons,
         cof_damageCons,
+        cof_ps,
         failureFreq
     } = cofValue || {}
 
@@ -211,15 +214,14 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const C9 = 0.123
     const C10 = 9.744
     const Gc = 1
-    const Cd = 0.9
-    const Ps = gData_operatingPressureBar * 14.5037738 * 6.895
+    const Cd = componentType == "Pipe" ? 0.61 : 0.9  // 0.61 untuk pipa
+    const Ps = cof_ps ? cof_ps * 6.895 : gData_operatingPressureBar * 14.5037738 * 6.895
     const idealGasHeatRatio = 1.19953997
     const universalGasConstant = 8.314
 
     const releaseRateWnSmall = ((Cd / C2) * basedOnDNSmallm * Ps) 
     * (((Number(idealGasHeatRatio) * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
     * (2 / (Number(idealGasHeatRatio) + 1)) ** ((Number(idealGasHeatRatio) + 1) / (Number(idealGasHeatRatio) - 1))) ** 0.5
-    
     const releaseRateWnMedium = ((Cd / C2) * basedOnDNMediumm * Ps) 
     * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
@@ -230,7 +232,7 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
     
-    const wMax = ((Cd / C2) * basedOnDNSmallm * Ps)
+    const wMax = ((Cd / C2) * 0.03244 * Ps)
     * (((idealGasHeatRatio * mw * Gc) / (universalGasConstant * gData_operatingTempOnK))
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
     
@@ -405,13 +407,33 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact}: ICo
     const forAcidCausticLarge = (0 * factICLarge) + (forSteamLarge * (1 - factICLarge))
     const forAcidCausticRupture = (forSteamRupture * factICRupture) + (0 * (1 - factICRupture))
 
-    const CA_ToxInjuries: number = ((sizeSmall * toxicConsAreqSmall) + (sizeMedium * toxicConsAreqMedium) + (sizeLarge * toxicConsAreqLarge) + (sizeRupture * toxicConsAreqRupture)) / total
-    const CA_NonFlamable: any = ((sizeSmall * forAcidCausticSmall) + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) + (sizeRupture * forAcidCausticRupture)) / total
-    const CA_ComponentDamage = ((sizeSmall * CAFlamCmdSmall) + (sizeMedium * CAFlamCmdMedium) + (sizeLarge * CAFlamCmdLarge) + (sizeRupture * CAFlamCmdRupture)) / total
-    const CA_PersonalInjuries = ((sizeSmall * CAFlamInjSmall) + (sizeMedium * CAFlamInjMedium) + (sizeLarge * CAFlamInjLarge) + (sizeRupture * CAFlamInjRupture)) / total
+    const CA_ToxInjuries = ((sizeSmall * toxicConsAreqSmall) 
+    + (sizeMedium * toxicConsAreqMedium) 
+    + (sizeLarge * toxicConsAreqLarge) 
+    + (sizeRupture * toxicConsAreqRupture)) 
+    / total
+    const CA_NonFlamable = ((sizeSmall * forAcidCausticSmall) 
+    + (sizeMedium * forAcidCausticMedium) + (sizeLarge * forAcidCausticLarge) 
+    + (sizeRupture * forAcidCausticRupture)) 
+    / total
+    const CA_ComponentDamage = ((sizeSmall * CAFlamCmdSmall) 
+    + (sizeMedium * CAFlamCmdMedium) 
+    + (sizeLarge * CAFlamCmdLarge) 
+    + (sizeRupture * CAFlamCmdRupture)) 
+    / total
+    const CA_PersonalInjuries = ((sizeSmall * CAFlamInjSmall) 
+    + (sizeMedium * CAFlamInjMedium) 
+    + (sizeLarge * CAFlamInjLarge) 
+    + (sizeRupture * CAFlamInjRupture)) 
+    / total
 
-    const finalConsequenceM = Math.max(Number(CA_ComponentDamage), Math.max(Number(CA_PersonalInjuries), Number(CA_ToxInjuries), Number(CA_NonFlamable))) 
-    
+    const finalConsequenceM = Math.max(
+        Number(CA_ToxInjuries), 
+        Number(CA_NonFlamable),
+        Number(CA_ComponentDamage), 
+        Number(CA_PersonalInjuries), 
+    )
+
     return {
         getIdealGasHeatRatio: kRatio / (kRatio - constantR),
         basedOnDNSmallmm,

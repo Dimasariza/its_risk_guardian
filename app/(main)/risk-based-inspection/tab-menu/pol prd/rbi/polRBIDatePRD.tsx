@@ -24,7 +24,7 @@ import GenericFailureFrequency from "../../pof-plan-date/value/genericFailureFre
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 
 export const adjusmentFactor = [
-    { name: 'Conventional valves', number: 1.25, id: "adjFactor001" },
+    { name: 'For soft seated designs', number: 1.25, id: "adjFactor001" },
     { name: 'All other cases', number: 1, id: "adjFactor002" },
 ];
 

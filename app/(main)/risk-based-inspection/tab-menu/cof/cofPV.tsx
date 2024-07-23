@@ -14,9 +14,10 @@ import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { calculateCOF } from "@/function/calcCOFValue";
 import { CofService } from "@/service/calculation/cofService";
 import AdjusmentToFlamable, { adjMitigation } from "./adjustmentToFlamable";
-import { getValue } from "@/service/calculation/pofRBIDate-service";
 import AmoniaChlorineDialog from "./amoniaAndChlorine";
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
+import { getValue } from "@/service/calculation/pofRBIDate-service";
+import { getPOFPRDRBI } from "@/service/calculation/pofPRDService";
 
 function COFPV({toast}: any) {
     const [value, setValue] = useState<any>({});
@@ -24,6 +25,7 @@ function COFPV({toast}: any) {
     const [error, setError] = useState<any>({});
     const [generalData, setGeneralData] = useState<any>({});
     const data = useSelector((state: any) => state.Reducer);
+    const componentType = data.menu.comp_componentType
     let { edit, undoEdit } = useSelector((state: any) => state.EditReducer);
 
     const componentId = data.menu?.comp_id
@@ -33,13 +35,14 @@ function COFPV({toast}: any) {
         if(!componentId) return
         Promise.all([
             GeneralDataService.fetchData(componentId), 
-            getValue(componentId),
+            componentType == "Pressure Relief Device" ? getPOFPRDRBI(componentId) : getValue(componentId),
             CofService.fetchData(componentId)
         ])
        .then(([generalData, pofValue, cofValue]) => {
            setGeneralData(generalData)
-           
-           const failureFreq = gffTableValue.find(i => i.id == pofValue.rbiValue_failureFrequency)
+
+           const failureData = componentType == "Pressure Relief Device" ? pofValue.rbi_failureFrequency : pofValue.rbiValue_failureFrequency
+           const failureFreq = gffTableValue.find(i => i.id == failureData)
 
            setValue({
                ...cofValue,
@@ -215,16 +218,22 @@ function COFPV({toast}: any) {
         generalData, 
         fluidSelected: value.fluidSelected,
         cofValue: value,
-        impact: value.impact
+        impact: value.impact,
+        componentType
     })
-
-    // console.log(finalConsequenceM)
+    
     return (
         <>
         <div className="flex w-full lg:gap-5 md:gap-2 sm:gap-1 flex-column">
-            <div className='flex flex-wrap flex-column lg:mr-5 mt-5'>
+            <div className='flex flex-wrap lg:column-gap-3 mt-4'>
                 {inputs.map((props: any, key: number) => (
-                    <InputTypeText props={{...props, disabled: !edit}} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+                    <InputTypeText props={{
+                        ...props, 
+                        disabled: !edit || props?.notview?.includes(componentType) 
+                    }} 
+                    key={key} value={value} 
+                    setValue={setValue} 
+                    errorMessage={error[props.name]} />
                 ))}
             </div>
             <div className="flex flex-wrap gap-2">
@@ -280,36 +289,36 @@ function COFPV({toast}: any) {
             {
                 [
                     {
-                        label: "Small Release Hole Size (mm²)",
-                        value: Number(basedOnDNSmallmm)?.toFixed(4) || "_"
+                        label: `Small Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"}`,
+                        value: Number(basedOnDNSmallmm)?.toFixed(6) || "_"
                     },
                     {
                         label: "Small Release Hole Size (m²)",
-                        value: Number(basedOnDNSmallm)?.toFixed(4) || "-"
+                        value: Number(basedOnDNSmallm)?.toFixed(6) || "-"
                     },
                     {
-                        label: "Medium Release Hole Size (mm²)",
-                        value: Number(basedOnDNMediummm)?.toFixed(4) || "-"
+                        label: `Medium Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"}`,
+                        value: Number(basedOnDNMediummm)?.toFixed(6) || "-"
                     },
                     {
                         label: "Medium Release Hole Size (m²)",
-                        value: Number(basedOnDNMediumm)?.toFixed(4) || "-"
+                        value: Number(basedOnDNMediumm)?.toFixed(6) || "-"
                     },
                     {
-                        label: "Large Release Hole Size (mm²)",
-                        value: Number(basedOnDNLargemm)?.toFixed(4) || "-"
+                        label: `Large Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"} `,
+                        value: Number(basedOnDNLargemm)?.toFixed(6) || "-"
                     },
                     {
                         label: "Large Release Hole Size (m²)",
-                        value: Number(basedOnDNLargem)?.toFixed(4) || "-"
+                        value: Number(basedOnDNLargem)?.toFixed(6) || "-"
                     },
                     {
-                        label: "Rupture Release Hole Size (mm²)",
-                        value: Number(basedOnDNRupturemm)?.toFixed(4) || "-"
+                        label: `Rupture Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"} `,
+                        value: Number(basedOnDNRupturemm)?.toFixed(6) || "-"
                     },
                     {
                         label: "Rupture Release Hole Size (m²)",
-                        value: Number(basedOnDNRupturem)?.toFixed(4) || "-"
+                        value: Number(basedOnDNRupturem)?.toFixed(6) || "-"
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -321,19 +330,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size (kg/s)",
-                        value: Number(releaseRateWnSmall)?.toFixed(4) || "-"
+                        value: Number(releaseRateWnSmall)?.toFixed(6) || "-"
                     },
                     {
                         label: "Medium Release Hole Size (kg/s)",
-                        value: Number(releaseRateWnMedium)?.toFixed(4) || "-"
+                        value: Number(releaseRateWnMedium)?.toFixed(6) || "-"
                     },
                     {
                         label: "Large Release Hole Size (kg/s)",
-                        value: Number(releaseRateWnLarge)?.toFixed(4) || "-"
+                        value: Number(releaseRateWnLarge)?.toFixed(6) || "-"
                     },
                     {
                         label: "Rupture Release Hole Size (kg/s)",
-                        value: Number(releaseRateWnRupture)?.toFixed(4) || "-"
+                        value: Number(releaseRateWnRupture)?.toFixed(6) || "-"
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -345,19 +354,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(addedFluidMassSmall)?.toFixed(4) || "-"
+                        value: Number(addedFluidMassSmall)?.toFixed(6) || "-"
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(addedFluidMassMedium)?.toFixed(4) || "-"
+                        value: Number(addedFluidMassMedium)?.toFixed(6) || "-"
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(addedFluidMassLarge)?.toFixed(4) || "-"
+                        value: Number(addedFluidMassLarge)?.toFixed(6) || "-"
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(addedFluidMassRupture)?.toFixed(4) || "-"
+                        value: Number(addedFluidMassRupture)?.toFixed(6) || "-"
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -369,19 +378,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: availableMassSmall?.toFixed(4)
+                        value: availableMassSmall?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(availableMassMedium)?.toFixed(4)
+                        value: Number(availableMassMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(availableMassLarge)?.toFixed(4)
+                        value: Number(availableMassLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(availableMassRupture)?.toFixed(4)
+                        value: Number(availableMassRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -393,19 +402,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(timeRequiredSmall)?.toFixed(4)
+                        value: Number(timeRequiredSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(timeRequiredMedium)?.toFixed(4)
+                        value: Number(timeRequiredMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(timeRequiredLarge)?.toFixed(4)
+                        value: Number(timeRequiredLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(timeRequiredRupture)?.toFixed(4)
+                        value: Number(timeRequiredRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -417,19 +426,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(adjReleaseRateSmall)?.toFixed(4)
+                        value: Number(adjReleaseRateSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(adjReleaseRateMedium)?.toFixed(4)
+                        value: Number(adjReleaseRateMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(adjReleaseRateLarge)?.toFixed(4)
+                        value: Number(adjReleaseRateLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(adjReleaseRateRupture)?.toFixed(4)
+                        value: Number(adjReleaseRateRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -441,19 +450,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(adjReleaseRateSmall)?.toFixed(4)
+                        value: Number(adjReleaseRateSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(adjReleaseRateMedium)?.toFixed(4)
+                        value: Number(adjReleaseRateMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(adjReleaseRateLarge)?.toFixed(4)
+                        value: Number(adjReleaseRateLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(adjReleaseRateRupture)?.toFixed(4)
+                        value: Number(adjReleaseRateRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -465,19 +474,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(leakDurationSmall)?.toFixed(4)
+                        value: Number(leakDurationSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(leakDurationMedium)?.toFixed(4)
+                        value: Number(leakDurationMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(leakDurationLarge)?.toFixed(4)
+                        value: Number(leakDurationLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(leakDurationRupture)?.toFixed(4)
+                        value: Number(leakDurationRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -489,19 +498,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(releaseMassSmall)?.toFixed(4)
+                        value: Number(releaseMassSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(releaseMassMedium)?.toFixed(4)
+                        value: Number(releaseMassMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(releaseMassLarge)?.toFixed(4)
+                        value: Number(releaseMassLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(releaseMassRupture)?.toFixed(4)
+                        value: Number(releaseMassRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -513,19 +522,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(energyEfficiencySmall)?.toFixed(4)
+                        value: Number(energyEfficiencySmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(energyEfficiencyMedium)?.toFixed(4)
+                        value: Number(energyEfficiencyMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(energyEfficiencyLarge)?.toFixed(4)
+                        value: Number(energyEfficiencyLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(energyEfficiencyRupture)?.toFixed(4)
+                        value: Number(energyEfficiencyRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -537,19 +546,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(CAAINL_C_Small)?.toFixed(4)
+                        value: Number(CAAINL_C_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(CAAINL_C_Medium)?.toFixed(4)
+                        value: Number(CAAINL_C_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(CAAINL_C_Large)?.toFixed(4)
+                        value: Number(CAAINL_C_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(CAAINL_C_Rupture)?.toFixed(4)
+                        value: Number(CAAINL_C_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -561,19 +570,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(CAAIL_C_Small)?.toFixed(4)
+                        value: Number(CAAIL_C_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(CAAIL_C_Medium)?.toFixed(4)
+                        value: Number(CAAIL_C_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(CAAIL_C_Large)?.toFixed(4)
+                        value: Number(CAAIL_C_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(CAAIL_C_Rupture)?.toFixed(4)
+                        value: Number(CAAIL_C_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -585,19 +594,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(IAAINL_C_Small)?.toFixed(4)
+                        value: Number(IAAINL_C_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(IAAINL_C_Medium)?.toFixed(4)
+                        value: Number(IAAINL_C_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(IAAINL_C_Large)?.toFixed(4)
+                        value: Number(IAAINL_C_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(IAAINL_C_Rupture)?.toFixed(4)
+                        value: Number(IAAINL_C_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -609,19 +618,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(IAAIL_C_Small)?.toFixed(4)
+                        value: Number(IAAIL_C_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(IAAIL_C_Medium)?.toFixed(4)
+                        value: Number(IAAIL_C_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(IAAIL_C_Large)?.toFixed(4)
+                        value: Number(IAAIL_C_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(IAAIL_C_Rupture)?.toFixed(4)
+                        value: Number(IAAIL_C_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -633,19 +642,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(CAAINL_P_Small)?.toFixed(4)
+                        value: Number(CAAINL_P_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(CAAINL_P_Medium)?.toFixed(4)
+                        value: Number(CAAINL_P_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(CAAINL_P_Large)?.toFixed(4)
+                        value: Number(CAAINL_P_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(CAAINL_P_Rupture)?.toFixed(4)
+                        value: Number(CAAINL_P_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -657,19 +666,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(CAAIL_P_Small)?.toFixed(4)
+                        value: Number(CAAIL_P_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(CAAIL_P_Medium)?.toFixed(4)
+                        value: Number(CAAIL_P_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(CAAIL_P_Large)?.toFixed(4)
+                        value: Number(CAAIL_P_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(CAAIL_P_Rupture)?.toFixed(4)
+                        value: Number(CAAIL_P_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -681,19 +690,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(IAAINL_P_Small)?.toFixed(4)
+                        value: Number(IAAINL_P_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(IAAINL_P_Medium)?.toFixed(4)
+                        value: Number(IAAINL_P_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(IAAINL_P_Large)?.toFixed(4)
+                        value: Number(IAAINL_P_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(IAAINL_P_Rupture)?.toFixed(4)
+                        value: Number(IAAINL_P_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -705,19 +714,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(IAAIL_P_Small)?.toFixed(4)
+                        value: Number(IAAIL_P_Small)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(IAAIL_P_Medium)?.toFixed(4)
+                        value: Number(IAAIL_P_Medium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(IAAIL_P_Large)?.toFixed(4)
+                        value: Number(IAAIL_P_Large)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(IAAIL_P_Rupture)?.toFixed(4)
+                        value: Number(IAAIL_P_Rupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -753,67 +762,67 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "(CAAIL cmd) Small Release Hole Size",
-                        value: Number(CAAILcmdSmall)?.toFixed(4)
+                        value: Number(CAAILcmdSmall)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL cmd) Medium Release Hole Size",
-                        value: Number(CAAILcmdMedium)?.toFixed(4)
+                        value: Number(CAAILcmdMedium)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL cmd) Large Release Hole Size",
-                        value: Number(CAAILcmdLarge)?.toFixed(4)
+                        value: Number(CAAILcmdLarge)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL cmd) Rupture Release Hole Size",
-                        value: Number(CAAILcmdRupture)?.toFixed(4)
+                        value: Number(CAAILcmdRupture)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL inj) Small Release Hole Size",
-                        value: Number(CAAILinjSmall)?.toFixed(4)
+                        value: Number(CAAILinjSmall)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL inj) Medium Release Hole Size",
-                        value: Number(CAAILinjMedium)?.toFixed(4)
+                        value: Number(CAAILinjMedium)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL inj) Large Release Hole Size",
-                        value: Number(CAAILinjLarge)?.toFixed(4)
+                        value: Number(CAAILinjLarge)?.toFixed(6)
                     },
                     {
                         label: "(CAAIL inj) Rupture Release Hole Size",
-                        value: Number(CAAILinjRupture)?.toFixed(4)
+                        value: Number(CAAILinjRupture)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL cmd) Small Release Hole Size",
-                        value: Number(CAAINLcmdSmall)?.toFixed(4)
+                        value: Number(CAAINLcmdSmall)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL cmd) Medium Release Hole Size",
-                        value: Number(CAAINLcmdMedium)?.toFixed(4)
+                        value: Number(CAAINLcmdMedium)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL cmd) Large Release Hole Size",
-                        value: Number(CAAINLcmdLarge)?.toFixed(4)
+                        value: Number(CAAINLcmdLarge)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL cmd) Rupture Release Hole Size",
-                        value: Number(CAAINLcmdRupture)?.toFixed(4)
+                        value: Number(CAAINLcmdRupture)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL inj) Small Release Hole Size",
-                        value: Number(CAAINLinjSmall)?.toFixed(4)
+                        value: Number(CAAINLinjSmall)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL inj) Medium Release Hole Size",
-                        value: Number(CAAINLinjMedium)?.toFixed(4)
+                        value: Number(CAAINLinjMedium)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL inj) Large Release Hole Size",
-                        value: Number(CAAINLinjLarge)?.toFixed(4)
+                        value: Number(CAAINLinjLarge)?.toFixed(6)
                     },
                     {
                         label: "(CAAINL inj) Rupture Release Hole Size",
-                        value: Number(CAAINLinjRupture)?.toFixed(4)
+                        value: Number(CAAINLinjRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -825,35 +834,35 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "(CAflam cmd) Small Release Hole Size",
-                        value: Number(CAFlamCmdSmall)?.toFixed(4)
+                        value: Number(CAFlamCmdSmall)?.toFixed(6)
                     },
                     {
                         label: "(CAflam cmd) Medium Release Hole Size",
-                        value: Number(CAFlamCmdMedium)?.toFixed(4)
+                        value: Number(CAFlamCmdMedium)?.toFixed(6)
                     },
                     {
                         label: "(CAflam cmd) Large Release Hole Size",
-                        value: Number(CAFlamCmdLarge)?.toFixed(4)
+                        value: Number(CAFlamCmdLarge)?.toFixed(6)
                     },
                     {
                         label: "(CAflam cmd) Rupture Release Hole Size",
-                        value: Number(CAFlamCmdRupture)?.toFixed(4)
+                        value: Number(CAFlamCmdRupture)?.toFixed(6)
                     },
                     {
                         label: "(CAflam inj) Small Release Hole Size",
-                        value: Number(CAFlamInjSmall)?.toFixed(4)
+                        value: Number(CAFlamInjSmall)?.toFixed(6)
                     },
                     {
                         label: "(CAflam inj) Medium Release Hole Size",
-                        value: Number(CAFlamInjMedium)?.toFixed(4)
+                        value: Number(CAFlamInjMedium)?.toFixed(6)
                     },
                     {
                         label: "(CAflam inj) Large Release Hole Size",
-                        value: Number(CAFlamInjLarge)?.toFixed(4)
+                        value: Number(CAFlamInjLarge)?.toFixed(6)
                     },
                     {
                         label: "(CAflam inj) Rupture Release Hole Size",
-                        value: Number(CAFlamInjRupture)?.toFixed(4)
+                        value: Number(CAFlamInjRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -865,12 +874,12 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "COMPONENT DAMAGE",
-                        value: Number(CA_ComponentDamage)?.toFixed(4)
+                        value: Number(CA_ComponentDamage)?.toFixed(6)
                         
                     },
                     {
                         label: "PERSONNEL INJURY",
-                        value: Number(CA_PersonalInjuries)?.toFixed(4)
+                        value: Number(CA_PersonalInjuries)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -882,19 +891,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(durationToxicSmall)?.toFixed(4)
+                        value: Number(durationToxicSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(durationToxicMedium)?.toFixed(4)  
+                        value: Number(durationToxicMedium)?.toFixed(6)  
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(durationToxicLarge)?.toFixed(4)
+                        value: Number(durationToxicLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(durationToxicRupture)?.toFixed(4)
+                        value: Number(durationToxicRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -930,19 +939,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(toxicReleaseMassSmall)?.toFixed(4)
+                        value: Number(toxicReleaseMassSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(toxicReleaseMassMedium)?.toFixed(4)  
+                        value: Number(toxicReleaseMassMedium)?.toFixed(6)  
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(toxicReleaseMassLarge)?.toFixed(4)
+                        value: Number(toxicReleaseMassLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(toxicReleaseMassRupture)?.toFixed(4)
+                        value: Number(toxicReleaseMassRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -954,19 +963,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(toxicConsAreqSmall)?.toFixed(4)
+                        value: Number(toxicConsAreqSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(toxicConsAreqMedium)?.toFixed(4)  
+                        value: Number(toxicConsAreqMedium)?.toFixed(6)  
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(toxicConsAreqLarge)?.toFixed(4)
+                        value: Number(toxicConsAreqLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(toxicConsAreqRupture)?.toFixed(4)
+                        value: Number(toxicConsAreqRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -978,19 +987,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(forSteamSmall)?.toFixed(4)
+                        value: Number(forSteamSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(forSteamMedium)?.toFixed(4)
+                        value: Number(forSteamMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(forSteamLarge)?.toFixed(4)
+                        value: Number(forSteamLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(forSteamRupture)?.toFixed(4)
+                        value: Number(forSteamRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
             }
@@ -1002,19 +1011,19 @@ function COFPV({toast}: any) {
                 [
                     {
                         label: "Small Release Hole Size",
-                        value: Number(forAcidCausticSmall)?.toFixed(4)
+                        value: Number(forAcidCausticSmall)?.toFixed(6)
                     },
                     {
                         label: "Medium Release Hole Size",
-                        value: Number(forAcidCausticMedium)?.toFixed(4)
+                        value: Number(forAcidCausticMedium)?.toFixed(6)
                     },
                     {
                         label: "Large Release Hole Size",
-                        value: Number(forAcidCausticLarge)?.toFixed(4)
+                        value: Number(forAcidCausticLarge)?.toFixed(6)
                     },
                     {
                         label: "Rupture Release Hole Size",
-                        value: Number(forAcidCausticRupture)?.toFixed(4)
+                        value: Number(forAcidCausticRupture)?.toFixed(6)
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ !isNaN(value) ? value : "-" } key={key}/>)
             }

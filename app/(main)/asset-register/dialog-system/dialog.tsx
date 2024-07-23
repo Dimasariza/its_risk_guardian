@@ -44,7 +44,7 @@ function EquipmentDialog() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedEquipmentType, setselectedEquipmentType] = useState(null);
   const [items, setItems] = useState<IAssetItem | any>([]);
-  const equipmentType = [{ name: 'FWKO Separator' }];
+  // const equipmentType = [{ name: 'FWKO Separator' }];
 
   const handleSelectItem = (e: any) => {
     setValue((prev) => ({ ...prev, eq_itemId: e.value.item_id }));
@@ -109,8 +109,8 @@ function EquipmentDialog() {
               System Type
             </label>
             <div className="px-1">
-              <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select System Type" />
-              {error.equipment && <Message severity="error" text={error.equipment} />}
+              {/* <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select System Type" />
+              {error.equipment && <Message severity="error" text={error.equipment} />} */}
             </div>
           </div>
 

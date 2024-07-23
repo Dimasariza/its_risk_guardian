@@ -8,8 +8,8 @@ const inputs = [
     {
       name: 'planThinning_planDate',
       type: 'calendar',
-      placeholder: 'plan Date',
-      label: 'plan Date',
+      placeholder: 'Plan Date',
+      label: 'Plan Date',
     },
     {
       name: 'planThinning_tMinInch',
