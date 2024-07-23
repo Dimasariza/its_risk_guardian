@@ -1,6 +1,6 @@
 'use client';
 
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import { RerenderMenu } from '@/redux/action/action';
 import { AssetComponentService } from '@/service/assets/component-service';
 import { AssetEquipmentService } from '@/service/assets/equipment-service';

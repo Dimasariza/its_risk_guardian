@@ -1,6 +1,6 @@
 "use client"
 
-import InputFileUpload from "@/app/(main)/uikit/input-file";
+import InputFileUpload from "@/app/(main)/uikit/input/input-file";
 import { AssetComponentService } from "@/service/assets/component-service";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";

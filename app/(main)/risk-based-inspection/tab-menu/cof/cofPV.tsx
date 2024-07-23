@@ -1,19 +1,19 @@
 import { inputs } from "./inputs";
-import RepresentativeFluidDialog, { representativeFluidNodes } from "./representativeFluidDialog";
-import InputValueOnly from "@/app/(main)/uikit/inputValueOnly";
-import PhaseOfFluid, { liquidPhase } from "./phaseOfFluidDialog";
-import LiquidInventories, { liquidInventories } from "./liquidInventoriesDialog";
-import DetectionAndIsolation, { detection, isolation } from "./detectionAndIsolation";
-import FlamableDialog, { flamableTable } from "./flamableDialog";
-import DamageDialog, { damageTable } from "./damageDialog";
-import ReleaseHoleSize from "./realeseHoleSizeDialog";
-import InputTypeText from "@/app/(main)/uikit/input-type-text";
+import RepresentativeFluidDialog, { representativeFluidNodes } from "../../../uikit/table/cof/representativeFluidDialog";
+import InputValueOnly from "@/app/(main)/uikit/input/inputValueOnly";
+import PhaseOfFluid, { liquidPhase } from "../../../uikit/table/cof/phaseOfFluidDialog";
+import LiquidInventories, { liquidInventories } from "../../../uikit/table/cof/liquidInventoriesDialog";
+import DetectionAndIsolation, { detection, isolation } from "../../../uikit/table/cof/detectionAndIsolation";
+import FlamableDialog, { flamableTable } from "../../../uikit/table/cof/flamableDialog";
+import DamageDialog, { damageTable } from "../../../uikit/table/cof/damageDialog";
+import ReleaseHoleSize from "../../../uikit/table/cof/realeseHoleSizeDialog";
+import InputTypeText from "@/app/(main)/uikit/input/input-type-text";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { calculateCOF } from "@/function/calcCOFValue";
 import { CofService } from "@/service/calculation/cofService";
-import AdjusmentToFlamable, { adjMitigation } from "./adjustmentToFlamable";
+import AdjusmentToFlamable, { adjMitigation } from "../../../uikit/table/cof/adjustmentToFlamable";
 import AmoniaChlorineDialog from "./amoniaAndChlorine";
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 import { getValue } from "@/service/calculation/pofRBIDate-service";
@@ -45,23 +45,21 @@ function COFPV({toast}: any) {
            const failureFreq = gffTableValue.find(i => i.id == failureData)
 
            setValue({
-               ...cofValue,
-               failureFreq,
-               fluidSelected: representativeFluidNodes.find((i: any) => i.id == cofValue.cof_representativeFluid),
-               impact: {
-                   cof_detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
-                   cof_isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
-               },
-               flamable: flamableTable.find((i: any) => i.id == cofValue.cof_flamableCons),
-               damage: damageTable.find((i: any) => i.id == cofValue.cof_damageCons),
-               phase: liquidPhase.find((i: any) => i.id == cofValue.cof_phaseOfFluid),
-               inventories: liquidInventories.find((i: any) => i.id == cofValue.cof_liquidInventories),
-               mitigation: adjMitigation.find((i: any) => i.id == cofValue.cof_adjToFlamable),
-               amoniaChloride: {}
+                ...cofValue,
+                failureFreq,
+                fluidSelected: representativeFluidNodes.find((i: any) => i.id == cofValue.cof_representativeFluid),
+                detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
+                isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
+                flamable: flamableTable.find((i: any) => i.id == cofValue.cof_flamableCons),
+                damage: damageTable.find((i: any) => i.id == cofValue.cof_damageCons),
+                phase: liquidPhase.find((i: any) => i.id == cofValue.cof_phaseOfFluid),
+                inventories: liquidInventories.find((i: any) => i.id == cofValue.cof_liquidInventories),
+                mitigation: adjMitigation.find((i: any) => i.id == cofValue.cof_adjToFlamable),
+                amoniaChloride: {}
            })
        })
 
-    }, [data, submit]);
+    }, [data]);
 
     useEffect(() => {
         if(Object.keys(error).length === 0 && !edit && !undoEdit) {
@@ -81,11 +79,7 @@ function COFPV({toast}: any) {
             });
         })
         } 
-    }, [edit])
-
-    const handleSubmitDialog = () => {
-        setSubmit(prev => !prev)
-    }
+    }, [edit, submit])
 
     const {
         getIdealGasHeatRatio,
@@ -218,7 +212,6 @@ function COFPV({toast}: any) {
         generalData, 
         fluidSelected: value.fluidSelected,
         cofValue: value,
-        impact: value.impact,
         componentType
     })
     
@@ -237,15 +230,15 @@ function COFPV({toast}: any) {
                 ))}
             </div>
             <div className="flex flex-wrap gap-2">
-                <RepresentativeFluidDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <PhaseOfFluid value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <ReleaseHoleSize value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <LiquidInventories value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <DetectionAndIsolation value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <AdjusmentToFlamable value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <FlamableDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <DamageDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
-                <AmoniaChlorineDialog value={value} setValue={setValue} toast={toast} handleSubmitDialog={handleSubmitDialog}/>
+                <RepresentativeFluidDialog value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <PhaseOfFluid value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <ReleaseHoleSize value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <LiquidInventories value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <DetectionAndIsolation value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <AdjusmentToFlamable value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <FlamableDialog value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <DamageDialog value={value} setValue={setValue} setSubmit={setSubmit}/>
+                <AmoniaChlorineDialog value={value} setValue={setValue} setSubmit={setSubmit}/>
             </div>
         </div>
 

@@ -10,7 +10,6 @@ function InputCalendar({ props, value, setValue, errorMessage, handleOnChange = 
       <br />
       <div className="px-1">
         <Calendar id={name} {...props} value={value[name] ?? ''} onChange={(e) => {
-          
           setValue((prev: any) => ({ ...prev, [name]: e.target.value }))
           handleOnChange(name, e)
         }} />

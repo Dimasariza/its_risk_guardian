@@ -4,12 +4,13 @@ import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { InputSwitch } from "primereact/inputswitch";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-function DamageDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
+function DamageDialog({value, setValue, setSubmit = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
     
     const footerContent = (
         <div>
@@ -18,30 +19,8 @@ function DamageDialog({value, setValue, toast, handleSubmitDialog = () => {}}: a
           severity="danger" />
           <Button label="Save" icon="pi pi-check" 
           onClick={() => {
-            if(!value?.damage) {
-                return toast.current.show({
-                    severity: 'error',
-                    summary: 'No Item Selected',
-                    detail: `Please select damage item`
-                });
-            }
             setVisible(false)
-            handleSubmitDialog()
-            CofService.editData({...value, cof_damageCons: value?.damage.id})
-            .then(res => {
-                toast.current.show({
-                    severity: 'success',
-                    summary: 'Data Updated',
-                    detail: `You update General Data`
-                });
-            })
-            .catch((e: any) => {
-                toast.current.show({
-                  severity: 'error',
-                  summary: 'Data Failed to Updated',
-                  detail: `Damage mechanism not updated`
-                });
-            })
+            setSubmit((prev: boolean) => !prev)
           }} 
           severity="success" />
         </div>
@@ -102,7 +81,7 @@ function DamageDialog({value, setValue, toast, handleSubmitDialog = () => {}}: a
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Component Damage Consequence</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Phase of Fluid" 
                 visible={visible} 
@@ -114,10 +93,14 @@ function DamageDialog({value, setValue, toast, handleSubmitDialog = () => {}}: a
                 selectionMode={"single"} 
                 selection={value?.damage} 
                 headerColumnGroup={headerGroup}
-                onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, damage: e.value}))} 
+                onSelectionChange={(e: any) => setValue((prev: any) => ({
+                        ...prev, 
+                        damage: e.value,
+                        cof_damageCons: e.value.id
+                    })
+                )} 
                 dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
-
                     <Column field="fluid"></Column>
                     <Column field="data.CAINLGA" body={(e) => bodyTemplate(e, "CAINLGA")}></Column>
                     <Column field="data.CAINLGB" body={(e) => bodyTemplate(e, "CAINLGB")}></Column>

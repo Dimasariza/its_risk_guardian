@@ -1,8 +1,8 @@
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GenericFailureFrequency from './genericFailureFreq';
-import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/input/inputValueOnly';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { Toast } from 'primereact/toast';
 import { calculateAlkaline } from '@/function/calcPlanAlkalineValue';

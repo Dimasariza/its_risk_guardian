@@ -4,12 +4,13 @@ import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
 import { DataTable, DataTableCellClickEvent } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { InputSwitch } from "primereact/inputswitch";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false)
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const headerGroup = (
         <ColumnGroup>
@@ -42,6 +43,7 @@ function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () =
           severity="danger" />
           <Button label="Save" icon="pi pi-check" 
           onClick={() => {
+            return
             if(!value?.amoniaChloride) {
                 return toast.current.show({
                     severity: 'error',
@@ -77,10 +79,9 @@ function AmoniaChlorineDialog({value, setValue, toast, handleSubmitDialog = () =
 
     return (
         <>
-        
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Amonia And Chlorine</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Amonia And Chlorine" 
                 visible={visible} 

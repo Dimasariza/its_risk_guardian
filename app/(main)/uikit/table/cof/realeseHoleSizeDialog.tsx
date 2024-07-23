@@ -5,6 +5,7 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const holeSizes = [
     {
@@ -38,9 +39,10 @@ export const holeSizes = [
 ]
 
 
-function ReleaseHoleSize({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
+function ReleaseHoleSize({value, setValue, setSubmit = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false)
     const [editRelease, setEditRelease] = useState(false)
+    const { edit } = useSelector((state: any) => state.EditReducer);
     
     const footerContent = (
         <div className="flex justify-content-between">
@@ -56,22 +58,7 @@ function ReleaseHoleSize({value, setValue, toast, handleSubmitDialog = () => {}}
                 onClick={() => {
                     setEditRelease(false)
                     setVisible(false)
-                    handleSubmitDialog()
-                    CofService.editData(value)
-                    .then(res => {
-                        toast.current.show({
-                            severity: 'success',
-                            summary: 'Data Updated',
-                            detail: `You update General Data`
-                        });
-                    })
-                    .catch((e: any) => {
-                        toast.current.show({
-                            severity: 'error',
-                            summary: 'Data Failed to Updated',
-                            detail: `Damage mechanism not updated`
-                        });
-                    })
+                    setSubmit((prev: boolean) => !prev)
                 }} 
                 severity="success" />
             </div>
@@ -89,10 +76,9 @@ function ReleaseHoleSize({value, setValue, toast, handleSubmitDialog = () => {}}
 
     return (
         <>
-        
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Release Hole Size</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible((prev: any) => ({...prev, phase: true}))} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Release Hole Size" 
                 visible={visible} 

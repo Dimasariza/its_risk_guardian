@@ -6,6 +6,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const liquidInventories = [
     {
@@ -115,8 +116,9 @@ export const liquidInventories = [
         percent: "15% liquid",
     },
 ]
-function LiquidInventories({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
+function LiquidInventories({value, setValue, setSubmit = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const footerContent = (
         <div>
@@ -125,30 +127,8 @@ function LiquidInventories({value, setValue, toast, handleSubmitDialog = () => {
           severity="danger" />
           <Button label="Save" icon="pi pi-check" 
           onClick={() => {
-            if(!value?.inventories) {
-                return toast.current.show({
-                    severity: 'error',
-                    summary: 'No Item Selected',
-                    detail: `Please select inventories item`
-                });
-            }
             setVisible(false)
-            handleSubmitDialog()
-            CofService.editData({...value, cof_liquidInventories: value?.inventories.id})
-            .then(res => {
-                toast.current.show({
-                    severity: 'success',
-                    summary: 'Data Updated',
-                    detail: `You update General Data`
-                });
-            })
-            .catch((e: any) => {
-                toast.current.show({
-                  severity: 'error',
-                  summary: 'Data Failed to Updated',
-                  detail: `Damage mechanism not updated`
-                });
-            })
+            setSubmit((prev: boolean) => !prev)
           }} 
           severity="success" />
         </div>
@@ -158,7 +138,7 @@ function LiquidInventories({value, setValue, toast, handleSubmitDialog = () => {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Liquid Inventories</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Liquid Inventories" 
                 visible={visible} 
@@ -169,7 +149,12 @@ function LiquidInventories({value, setValue, toast, handleSubmitDialog = () => {
                 <DataTable value={liquidInventories} 
                     selectionMode={"single"} 
                     selection={value?.inventories} 
-                    onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, inventories: e.value}))} 
+                    onSelectionChange={(e: any) => setValue((prev: any) => ({
+                            ...prev, 
+                            inventories: e.value,
+                            cof_liquidInventories: e.value?.id
+                        })
+                    )} 
                     dataKey="id" 
                     tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>

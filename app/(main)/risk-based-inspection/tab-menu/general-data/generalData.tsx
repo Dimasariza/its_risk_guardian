@@ -8,9 +8,9 @@ import { Toast } from 'primereact/toast';
 import { convertDateToString } from '@/function/common';
 import { calcGeneralData } from '@/function/calcGeneralData';
 import { EditData } from '@/redux/action/action';
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import validate from './validate';
-import InputCalendar from '@/app/(main)/uikit/input-calendar';
+import InputCalendar from '@/app/(main)/uikit/input/input-calendar';
 
 function GeneralData() {
   const [value, setValue] = useState<any>({});

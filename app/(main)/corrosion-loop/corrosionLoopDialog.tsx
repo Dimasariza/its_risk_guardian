@@ -1,6 +1,6 @@
 'use client';
 
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { PickList } from 'primereact/picklist';

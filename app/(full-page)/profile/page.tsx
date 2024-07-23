@@ -1,7 +1,7 @@
 'use client';
 
-import InputFileUpload from '@/app/(main)/uikit/input-file';
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputFileUpload from '@/app/(main)/uikit/input/input-file';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import AppMegaMenu from '@/layout/AppMegaMenu';
 import AppTopbar from '@/layout/AppTopbar';
 import { LayoutContext } from '@/layout/context/layoutcontext';

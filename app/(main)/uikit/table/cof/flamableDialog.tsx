@@ -6,9 +6,11 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-function FlamableDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
+function FlamableDialog({value, setValue, setSubmit = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const footerContent = (
         <div>
@@ -17,30 +19,8 @@ function FlamableDialog({value, setValue, toast, handleSubmitDialog = () => {}}:
           severity="danger" />
           <Button label="Save" icon="pi pi-check" 
           onClick={() => {
-            if(!value?.flamable) {
-                return toast.current.show({
-                    severity: 'error',
-                    summary: 'No Item Selected',
-                    detail: `Please select flamable item`
-                });
-            }
             setVisible(false)
-            handleSubmitDialog()
-            CofService.editData({...value, cof_flamableCons: value.flamable.id})
-            .then(res => {
-                toast.current.show({
-                    severity: 'success',
-                    summary: 'Data Updated',
-                    detail: `You update General Data`
-                });
-            })
-            .catch((e: any) => {
-                toast.current.show({
-                  severity: 'error',
-                  summary: 'Data Failed to Updated',
-                  detail: `Damage mechanism not updated`
-                });
-            })
+            setSubmit((prev: boolean) => !prev)
           }} 
           severity="success" />
         </div>
@@ -101,7 +81,7 @@ function FlamableDialog({value, setValue, toast, handleSubmitDialog = () => {}}:
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Component Flammable Consequence</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Component Flammable Consequence" 
                 visible={visible} 
@@ -115,7 +95,8 @@ function FlamableDialog({value, setValue, toast, handleSubmitDialog = () => {}}:
                 headerColumnGroup={headerGroup} 
                 onSelectionChange={(e: any) => setValue((prev: any) => ({
                         ...prev,
-                        flamable: e.value
+                        flamable: e.value,
+                        cof_flamableCons: e.value?.id
                     }))} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
                     <Column selectionMode="single" headerStyle={{ width: '3rem' }}></Column>
 

@@ -1,11 +1,11 @@
-import InputCalendarYear from '@/app/(main)/uikit/input-year-range';
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputCalendarYear from '@/app/(main)/uikit/input/input-year-range';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import InputYearRange from '@/app/(main)/uikit/input-year-range';
+import InputYearRange from '@/app/(main)/uikit/input/input-year-range';
 import { getExternalCorrosion, getThinning, updateExCor } from '@/service/calculation/pofRBIDate-service';
 import { inputs } from './inputs';
-import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/input/inputValueOnly';
 import OperatingTempTableRef from './operatingTempTableRef';
 import { calculateExCor } from '@/function/calcRBIExCorValue';
 import IGeneralData from '@/types/IGeneralData';

@@ -1,4 +1,4 @@
-import InputTypeText from "@/app/(main)/uikit/input-type-text";
+import InputTypeText from "@/app/(main)/uikit/input/input-type-text";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";

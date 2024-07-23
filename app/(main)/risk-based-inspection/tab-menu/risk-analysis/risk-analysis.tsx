@@ -22,13 +22,13 @@ import { calculateAlkaline as PlancalculateAlkaline } from "@/function/calcPlanA
 import { calculateCOF } from "@/function/calcCOFValue";
 import IGeneralData from "@/types/IGeneralData";
 import { CofService } from "@/service/calculation/cofService";
-import { representativeFluidNodes } from "../cof/representativeFluidDialog";
-import { detection, isolation } from "../cof/detectionAndIsolation";
-import { flamableTable } from "../cof/flamableDialog";
-import { damageTable } from "../cof/damageDialog";
-import { liquidPhase } from "../cof/phaseOfFluidDialog";
-import { liquidInventories } from "../cof/liquidInventoriesDialog";
-import { adjMitigation } from "../cof/adjustmentToFlamable";
+import { representativeFluidNodes } from "../../../uikit/table/cof/representativeFluidDialog";
+import { detection, isolation } from "../../../uikit/table/cof/detectionAndIsolation";
+import { flamableTable } from "../../../uikit/table/cof/flamableDialog";
+import { damageTable } from "../../../uikit/table/cof/damageDialog";
+import { liquidPhase } from "../../../uikit/table/cof/phaseOfFluidDialog";
+import { liquidInventories } from "../../../uikit/table/cof/liquidInventoriesDialog";
+import { adjMitigation } from "../../../uikit/table/cof/adjustmentToFlamable";
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 import { riskMatrix } from "./riskMatrix";
 import { getValue } from "@/service/calculation/pofRBIDate-service";
@@ -47,6 +47,7 @@ import { adjusmentFactor as adjFactorPOLRBI } from "../pol prd/rbi/polRBIDatePRD
 import { adjusmentFactor as adjFactorPOLPLan} from "../pol prd/plan/polPlanDatePRD";
 import { adjusmentFactor as adjFactorPOFRBI} from "../pof prd/plan/pofPlanDatePRD";
 import { adjusmentFactor as adjFactorPOFPLan} from "../pof prd/plan/pofPlanDatePRD";
+import { motion } from "framer-motion";
 
 const chartProps: any = {
   slotProps: {
@@ -216,10 +217,8 @@ function RiskAnalysis() {
       setCofValue({
           ...cofValue,
           fluidSelected: representativeFluidNodes.find((i: any) => i.id == cofValue.cof_representativeFluid),
-          impact: {
-              cof_detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
-              cof_isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
-          },
+          detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
+          isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
           flamable: flamableTable.find((i: any) => i.id == cofValue.cof_flamableCons),
           damage: damageTable.find((i: any) => i.id == cofValue.cof_damageCons),
           phase: liquidPhase.find((i: any) => i.id == cofValue.cof_phaseOfFluid),
@@ -310,10 +309,8 @@ function RiskAnalysis() {
       setCofValue({
         ...cofValue,
         fluidSelected: representativeFluidNodes.find((i: any) => i.id == cofValue.cof_representativeFluid),
-        impact: {
-            cof_detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
-            cof_isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
-        },
+        detectionSystem: detection.find((i: any) => i.id == cofValue.cof_detectionSystem),
+        isolationSystem: isolation.find((i: any) => i.id == cofValue.cof_isolationSystem),
         flamable: flamableTable.find((i: any) => i.id == cofValue.cof_flamableCons),
         damage: damageTable.find((i: any) => i.id == cofValue.cof_damageCons),
         phase: liquidPhase.find((i: any) => i.id == cofValue.cof_phaseOfFluid),
@@ -349,12 +346,13 @@ function RiskAnalysis() {
 
   const {
     pofFire: rbiPofFire,
-    pofOverFilling: rbiPofOverFilling
+    pofOverFilling: rbiPofOverFilling,
   } = calcPRDPOFRBI(generalData, pofRBIPRD)
-
+  
   const {
     pofFire: planPofFire,
-    pofOverFilling: planPofOverFilling
+    pofOverFilling: planPofOverFilling,
+    ageTimeInServiceTk: planAgeTimeInServicePRD
   } = calcPRDPOFPlan(generalData, pofPlanPRD)
 
   const {
@@ -369,7 +367,6 @@ function RiskAnalysis() {
 
   const polRBIValue = rbiFset * rbiFinalUpdateValue
   const polPlanValue = planFset * planFinalUpdateValue
-
   
   const componentType = data.menu?.comp_componentType
   const viewonlyForAll = ["Pressure Vessel"]
@@ -385,7 +382,6 @@ function RiskAnalysis() {
     generalData, 
     fluidSelected: cofValue?.fluidSelected,
     cofValue: cofValue,
-    impact: cofValue?.impact,
     componentType
   })
 
@@ -423,10 +419,13 @@ function RiskAnalysis() {
     }
   }
 
-  const RBIShellRisk: any = Number(cofValue.failureFreq?.total * RBIShellValue * cofValue.rbiValue_FMS)
-  const RBIHeadRisk: any = Number(cofValue.failureFreq?.total * RBIHeadValue * cofValue.rbiValue_FMS)
-  const PlanShellRisk: any = Number(cofValue.failureFreq?.total * PlanShellValue * cofValue.rbiValue_FMS)
-  const PlanHeadRisk: any = Number(cofValue.failureFreq?.total * PlanHeadValue * cofValue.rbiValue_FMS)
+  console.log(rbiFset * rbiFinalUpdateValue * finalConsequenceM!)
+
+  const RBIShellRisk = Number(cofValue.failureFreq?.total * RBIShellValue * cofValue.rbiValue_FMS)
+  const PlanShellRisk = Number(cofValue.failureFreq?.total * PlanShellValue * cofValue.rbiValue_FMS)
+
+  const RBIHeadRisk = Number(cofValue.failureFreq?.total * RBIHeadValue * cofValue.rbiValue_FMS)
+  const PlanHeadRisk = Number(cofValue.failureFreq?.total * PlanHeadValue * cofValue.rbiValue_FMS)
 
   const [value, setValue] = useState<any>({
     shellRangeDate: [0, 0], // change blue box relative to y axis in shell
@@ -437,21 +436,28 @@ function RiskAnalysis() {
     headXAxis: [10, 25] // change green box relative to x axis in head
   });
 
-  const shellRBIY = isNaN(Number(RBIShellRisk * finalConsequenceM!)) ? 0 : Number(RBIShellRisk * finalConsequenceM!)  
-  const shellPlanY = isNaN(Number(PlanShellRisk * finalConsequenceM!)) ? 0 : Number(PlanShellRisk * finalConsequenceM!)  
-  const headRBIY = isNaN(Number(RBIHeadRisk * finalConsequenceM!)) ? 0 : Number(RBIHeadRisk * finalConsequenceM!)  
-  const headPlanY = isNaN(Number(PlanHeadRisk * finalConsequenceM!)) ? 0 : Number(PlanHeadRisk * finalConsequenceM!) 
-  
-  const shellRBIX = isNaN(Number(RBIAgeTimeInServiceTk!)) ? 0 : Number(RBIAgeTimeInServiceTk!)
-  const shellPlanX = isNaN(Number(planAgeTimeInServiceTk!)) ? 0 : Number(planAgeTimeInServiceTk!)
+  const shellRBIY = !isNaN(Number(RBIShellRisk * finalConsequenceM!)) && Number(RBIShellRisk * finalConsequenceM!) 
+  || Number(rbiFset * rbiFinalUpdateValue * finalConsequenceM!)
+  || 0 
+  const shellPlanY = !isNaN(Number(PlanShellRisk * finalConsequenceM!)) && Number(PlanShellRisk * finalConsequenceM!) 
+  || Number(planFset * planFinalUpdateValue * finalConsequenceM!)
+  || 0 
+
+  const headRBIY = !isNaN(Number(RBIHeadRisk * finalConsequenceM!)) && Number(RBIHeadRisk * finalConsequenceM!) || 0 
+  const headPlanY = !isNaN(Number(PlanHeadRisk * finalConsequenceM!)) && Number(PlanHeadRisk * finalConsequenceM!) || 0
+
+  const shellRBIX = 0
+  const shellPlanX = !isNaN(Number(planAgeTimeInServiceTk!)) && Number(planAgeTimeInServiceTk!) 
+  || !isNaN(Number(planAgeTimeInServicePRD!)) && Number(planAgeTimeInServicePRD!) 
+  || 0
 
   useEffect(()=>{
     setValue((prev: any) => ({
       ...prev,
       shellRangeDate: [shellPlanY, shellRBIY],
       headRangeDate: [headPlanY, headRBIY],
-      shellXAxis: [shellPlanX, 0],
-      headXAxis: [shellPlanX, 0]
+      shellXAxis: [shellPlanX, shellRBIX],
+      headXAxis: [shellPlanX, shellRBIX]
     }))
 
   }, [cofValue])
@@ -484,14 +490,16 @@ function RiskAnalysis() {
                         <div className="flex justify-content-center" key={id_1}>
                           {
                             item.map(({ value, color, noBorder, row, column }: any, id_2: number) => (
-                              <div key={id_2} 
+                              <motion.div key={id_2} 
+                                whileHover={{ scale: 1.1 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 10 }}
                                 className={`flex align-items-center justify-content-center w-5rem h-5rem font-bold border-500 ${noBorder ? "border-0" : "border-1"} ${color}`} 
                                 style={{ fontSize: `${noBorder ? "1.4rem" : "3rem"}` }}
                               >
                                 { 
                                   iconPlotting(row, column, title, value)
                                 }
-                              </div>
+                              </motion.div>
                             ))
                           }
                         </div>

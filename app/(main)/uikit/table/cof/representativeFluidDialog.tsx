@@ -5,10 +5,11 @@ import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 import { useState } from "react";
 import { Button } from "primereact/button";
-import { CofService } from "@/service/calculation/cofService";
+import { useSelector } from "react-redux";
 
-function RepresentativeFluidDialog({value, setValue, toast, handleSubmitDialog = () => {}}: any) {
+function RepresentativeFluidDialog({value, setValue, setSubmit = () => {}}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const headerGroup = (
         <ColumnGroup>
@@ -44,22 +45,7 @@ function RepresentativeFluidDialog({value, setValue, toast, handleSubmitDialog =
           <Button label="Save" icon="pi pi-check" 
           onClick={() => {
             setVisible(false)
-            handleSubmitDialog()
-            CofService.editData({...value, cof_representativeFluid: value.fluidSelected.id})
-            .then(res => {
-                toast.current.show({
-                    severity: 'success',
-                    summary: 'Data Updated',
-                    detail: `You update General Data`
-                });
-            })
-            .catch((e: any) => {
-                toast.current.show({
-                  severity: 'error',
-                  summary: 'Data Failed to Updated',
-                  detail: `Damage mechanism not updated`
-                });
-            })
+            setSubmit((prev: boolean) => !prev)
           }} 
           severity="success" />
         </div>
@@ -69,7 +55,7 @@ function RepresentativeFluidDialog({value, setValue, toast, handleSubmitDialog =
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Representative Fluid</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }} 
@@ -84,7 +70,13 @@ function RepresentativeFluidDialog({value, setValue, toast, handleSubmitDialog =
                         scrollHeight="700px" 
                         headerColumnGroup={headerGroup} 
                         tableStyle={{ minWidth: '50rem' }} 
-                        onSelectionChange={(e: any) => setValue((prev: any) => ({...prev, fluidSelected: e.value}))} dataKey="id"
+                        onSelectionChange={(e: any) => setValue((prev: any) => ({
+                                ...prev, 
+                                fluidSelected: e.value,
+                                cof_representativeFluid: e.value?.id
+                            })
+                        )} 
+                        dataKey="id"
                     >
                     <Column selectionMode="single"></Column>
                     <Column field="fluid" body={(e) => e.fluid ? <>{e.fluid}</> : <div className="">---</div>}></Column>

@@ -1,10 +1,10 @@
 "use client"
 
-import InputValueOnly from "@/app/(main)/uikit/inputValueOnly";
+import InputValueOnly from "@/app/(main)/uikit/input/inputValueOnly";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useRef, useState } from "react";
-import InputTypeText from "@/app/(main)/uikit/input-type-text";
-import InputDropDown from "@/app/(main)/uikit/input-drop-down";
+import InputTypeText from "@/app/(main)/uikit/input/input-type-text";
+import InputDropDown from "@/app/(main)/uikit/input/input-drop-down";
 import inputs from "./input";
 import { useSelector } from "react-redux";
 import ServiceSeverityDialog, { severity } from "./dialog/serviceSeverity";
@@ -19,9 +19,9 @@ import { GeneralDataService } from "@/service/calculation/generalData-service";
 import { convertDateToString } from "@/function/common";
 import { calcPRDPOFRBI } from "@/function/calcPRDPOFRBI";
 import { getPOLPRDRBI, updatePOLPRDRBI } from "@/service/calculation/polPRDService";
-import InputCalendar from "@/app/(main)/uikit/input-calendar";
 import GenericFailureFrequency from "../../pof-plan-date/value/genericFailureFreq";
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
+import InputCalendar from "@/app/(main)/uikit/input/input-calendar";
 
 export const adjusmentFactor = [
     { name: 'For soft seated designs', number: 1.25, id: "adjFactor001" },

@@ -1,12 +1,12 @@
 /* eslint-disable */
 
-import InputTypeText from '@/app/(main)/uikit/input-type-text';
+import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
 import { getAlkaline, getExternalCorrosion, getThinning, updateAlkaline } from '@/service/calculation/pofRBIDate-service';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { inputs } from './inputs';
 import SuscepbilityCrackingTable from './suscepbilityCrackingTable';
-import InputValueOnly from '@/app/(main)/uikit/inputValueOnly';
+import InputValueOnly from '@/app/(main)/uikit/input/inputValueOnly';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { Checkbox } from 'primereact/checkbox';
 import BaseDamageFactorTable from './baseDamageFactor';

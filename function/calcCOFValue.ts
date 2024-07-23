@@ -6,7 +6,6 @@ interface ICofCalculation {
     generalData: IGeneralData
     fluidSelected: any
     cofValue: any,
-    impact: any
     componentType: string
 }
 
@@ -154,7 +153,7 @@ const reductionFactor = [
     },
 ]
 
-export const calculateCOF = ({generalData, fluidSelected, cofValue, impact, componentType}: ICofCalculation) => {
+export const calculateCOF = ({generalData, fluidSelected, cofValue, componentType}: ICofCalculation) => {
     if(!Object.keys(generalData).length) return {}
 
     const {
@@ -173,17 +172,10 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact, comp
     const {
         cof_massComponent,
         cof_massInventory,
-        cof_representativeFluid,
-        cof_phaseOfFluid,
         cof_releaseHoleSizeD1,
         cof_releaseHoleSizeD2,
         cof_releaseHoleSizeD3,
         cof_releaseHoleSizeD4,
-        cof_liquidInventories,
-        cof_detectionSystem,
-        cof_isolationSystem,
-        cof_flamableCons,
-        cof_damageCons,
         cof_ps,
         failureFreq
     } = cofValue || {}
@@ -251,14 +243,14 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, impact, comp
     const timeRequiredLarge = C3 / releaseRateWnLarge
     const timeRequiredRupture = C3 / releaseRateWnRupture
 
-    const {factor}: any = reductionFactor.find((i: any) => (i.detection.includes(impact?.cof_detectionSystem?.classification) 
-    && i.isolation.includes(impact?.cof_isolationSystem?.classification))) || {}
+    const {factor}: any = reductionFactor.find((i: any) => (i.detection.includes(cofValue.detectionSystem?.classification) 
+    && i.isolation.includes(cofValue.isolationSystem?.classification))) || {}
     const adjReleaseRateSmall = releaseRateWnSmall * (1 - factor!)
     const adjReleaseRateMedium = releaseRateWnMedium * (1 - factor!)
     const adjReleaseRateLarge = releaseRateWnLarge * (1 - factor!)
     const adjReleaseRateRupture = releaseRateWnRupture * (1 - factor!)
 
-    const { leakDuration } : any = totalLeakDuration?.find((i: any) => (i.detection.includes(impact?.cof_detectionSystem?.classification) && i.isolation.includes(impact?.cof_isolationSystem?.classification))) || {}
+    const { leakDuration } : any = totalLeakDuration?.find((i: any) => (i.detection.includes(cofValue.detectionSystem?.classification) && i.isolation.includes(cofValue.isolationSystem?.classification))) || {}
     const leakDurationSmall = Math.min((availableMassSmall / adjReleaseRateSmall), (60 * leakDuration?.[0]?.value))
     const leakDurationMedium = Math.min((availableMassMedium / adjReleaseRateMedium), (60 * leakDuration?.[1]?.value))
     const leakDurationLarge = Math.min((availableMassLarge / adjReleaseRateLarge), (60 * leakDuration?.[2]?.value))

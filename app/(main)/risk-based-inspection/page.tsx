@@ -6,7 +6,6 @@ import { useRef, useState } from 'react';
 import COF from './tab-menu/cof/cof';
 import RiskAnalysis from './tab-menu/risk-analysis/risk-analysis';
 import InspectionPlanning from './tab-menu/recomendation/recomendation';
-import Summary from './tab-menu/summary';
 import GeneralData from './tab-menu/general-data/generalData';
 import DamageMechanism from './tab-menu/damage-mechanism/damageMechanism';
 import POFPlanDate from './tab-menu/pof-plan-date';
@@ -90,13 +89,6 @@ function RiskBasedInspection() {
         setTabActive('recomendation');
       }
     },
-    {
-      label: 'Summary',
-      disabled: edit,
-      command: () => {
-        setTabActive('summary');
-      }
-    }
   ];
 
   const tabMenuView = () => {
@@ -121,8 +113,6 @@ function RiskBasedInspection() {
         return <InspectionPlanning />;
       case 'recomendation':
         return <Recomendation />
-      case 'summary':
-        return <Summary />;
       default:
         return <GeneralData />;
     }

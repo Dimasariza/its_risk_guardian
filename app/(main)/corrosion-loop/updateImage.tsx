@@ -1,4 +1,4 @@
-import InputFileUpload from "@/app/(main)/uikit/input-file";
+import InputFileUpload from "@/app/(main)/uikit/input/input-file";
 import { Button } from "primereact/button";
 import { confirmPopup, ConfirmPopup } from "primereact/confirmpopup";
 import { Dialog } from "primereact/dialog";

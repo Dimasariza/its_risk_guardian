@@ -1,4 +1,4 @@
-import InputTypeText from "@/app/(main)/uikit/input-type-text";
+import InputTypeText from "@/app/(main)/uikit/input/input-type-text";
 import { Checkbox } from "primereact/checkbox";
 import { Column } from "primereact/column";
 import { ColumnGroup } from "primereact/columngroup";
