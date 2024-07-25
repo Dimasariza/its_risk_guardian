@@ -6,9 +6,11 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function GenericFailureFrequency({failureFrequency, setFailureFrequency, setOnSubmit}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const headerGroup = (
         <ColumnGroup>
@@ -52,7 +54,7 @@ function GenericFailureFrequency({failureFrequency, setFailureFrequency, setOnSu
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Generic Failure Frequency</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Representative Fluid Table" visible={visible} style={{ width: '90%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }} 

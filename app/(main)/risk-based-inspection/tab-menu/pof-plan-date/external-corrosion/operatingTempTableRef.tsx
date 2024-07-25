@@ -6,9 +6,12 @@ import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
 import { temperature } from "./operatingTemperature";
+import { useSelector } from "react-redux";
 
 function OperatingTempTableRef() {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
+
     const footerContent = (
         <div className="flex gap-2 justify-content-end">
             <Button label="Cancel" icon="pi pi-times" 
@@ -37,7 +40,7 @@ function OperatingTempTableRef() {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Corrosion Rate Operatng Temperature</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Screening Question" visible={visible} style={{ width: '50%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  

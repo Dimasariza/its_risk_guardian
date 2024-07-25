@@ -73,6 +73,7 @@ export const severity = [
 
 function ServiceSeverityDialog({value, setValue, setOnSubmit}: any) {
     const [visible, setVisible] = useState(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const headerGroup = (
         <ColumnGroup>
@@ -124,7 +125,7 @@ function ServiceSeverityDialog({value, setValue, setOnSubmit}: any) {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Service Severity</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
 
             <Dialog header="Service Severity Categories" visible={visible} style={{ width: '90%' }} maximizable

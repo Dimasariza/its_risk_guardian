@@ -64,6 +64,7 @@ function CorrosionRateDialog() {
     const [actionValue, setActionValue] = useState<any>(initActionValue);
     const [visible, setVisible] = useState<boolean>(false);
     const toast = useRef<any>(null);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const screeningBodyTemplate = ({screening = []}) => {
         return screening.map(({name, value, notes}, id): any => {
@@ -189,7 +190,7 @@ function CorrosionRateDialog() {
 
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Corrosion Rate Screening Question</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Screening Question" visible={visible} style={{ width: '90%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }} 

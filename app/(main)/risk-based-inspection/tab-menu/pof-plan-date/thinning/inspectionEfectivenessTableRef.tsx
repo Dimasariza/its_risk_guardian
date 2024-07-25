@@ -5,9 +5,12 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 import { conditional, prior } from "./probabilityTable";
+import { useSelector } from "react-redux";
 
 function InspectionEffectivenessTable() {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
+
     const footerContent = (
         <div className="flex gap-2 justify-content-end">
             <Button label="Cancel" icon="pi pi-times" 
@@ -20,7 +23,7 @@ function InspectionEffectivenessTable() {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Inspection Effectiveness</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Inspection Effectiveness" visible={visible} style={{ width: '70%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  

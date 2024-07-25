@@ -110,6 +110,7 @@ export const eventFreq = [
 
 function InitiatingEventFrequencies({value, setValue, setOnSubmit, name}: any) {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
         
     const footerContent = (
         <div>
@@ -125,7 +126,7 @@ function InitiatingEventFrequencies({value, setValue, setOnSubmit, name}: any) {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Initiating Event Frequency { name?.fe == "eventFire"  ? "Fire" : "Overfilling" } </label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Initiating Event Frequency" visible={visible} style={{ width: '80%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  

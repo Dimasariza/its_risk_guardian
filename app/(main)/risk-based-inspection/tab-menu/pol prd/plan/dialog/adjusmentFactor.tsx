@@ -3,6 +3,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const adjFactorEnvirontment = [
     {
@@ -51,6 +52,7 @@ export const adjFactorEnvirontment = [
 
 function AdjusmentFactorDialog({value, setValue, setOnSubmit}: any) {
     const [visible, setVisible] = useState(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const footerContent = (
         <div>
@@ -66,7 +68,7 @@ function AdjusmentFactorDialog({value, setValue, setOnSubmit}: any) {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Environment adjustment Factors</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
 
             <Dialog header="Environment adjustment Factors" visible={visible} style={{ width: '90%' }} maximizable

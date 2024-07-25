@@ -5,9 +5,12 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function SuscepbilityCrackingTable() {
     const [visible, setVisible] = useState<boolean>(false);
+    const { edit } = useSelector((state: any) => state.EditReducer);
+
     const footerContent = (
         <div className="flex gap-2 justify-content-end">
             <Button label="Cancel" icon="pi pi-times" 
@@ -69,7 +72,7 @@ function SuscepbilityCrackingTable() {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Susceptibility to Cracking-ASCC</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
             <Dialog header="Susceptibility to Cracking-ASCC" visible={visible} style={{ width: '80%' }} maximizable
                 modal onHide={() => {if (!visible) return; setVisible(false); }}  

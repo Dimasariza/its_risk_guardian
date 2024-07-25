@@ -210,7 +210,6 @@ function COFPV({toast}: any) {
         finalConsequenceM
     } = calculateCOF({
         generalData, 
-        fluidSelected: value.fluidSelected,
         cofValue: value,
         componentType
     })

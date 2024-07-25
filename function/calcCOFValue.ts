@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 
 interface ICofCalculation {
     generalData: IGeneralData
-    fluidSelected: any
-    cofValue: any,
+    cofValue: any,  
     componentType: string
 }
 
@@ -153,21 +152,13 @@ const reductionFactor = [
     },
 ]
 
-export const calculateCOF = ({generalData, fluidSelected, cofValue, componentType}: ICofCalculation) => {
+export const calculateCOF = ({generalData, cofValue, componentType}: ICofCalculation) => {
     if(!Object.keys(generalData).length) return {}
 
     const {
         gData_operatingTemperatureC,
         gData_operatingPressureBar
     } = generalData;
-
-    const gData_operatingTempOnF = (gData_operatingTemperatureC * 9 / 5) + 32
-    const gData_operatingTempOnK = (gData_operatingTempOnF - 32) * 5 / 9 + 273.15
-
-    const { constant_a, constant_b, constant_c , constant_d, mw } = fluidSelected || {};
-    const kRatio = constant_a + (constant_b * gData_operatingTempOnK) + ((constant_c * gData_operatingTempOnK) ** 2) + ((constant_d * gData_operatingTempOnK) ** 3) 
-    
-    const constantR = 8.314
 
     const {
         cof_massComponent,
@@ -177,7 +168,8 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, componentTyp
         cof_releaseHoleSizeD3,
         cof_releaseHoleSizeD4,
         cof_ps,
-        failureFreq
+        failureFreq,
+        fluidSelected
     } = cofValue || {}
 
     const {
@@ -187,6 +179,14 @@ export const calculateCOF = ({generalData, fluidSelected, cofValue, componentTyp
         sizeRupture,
         total
     } = failureFreq || {}
+
+    const gData_operatingTempOnF = (gData_operatingTemperatureC * 9 / 5) + 32
+    const gData_operatingTempOnK = (gData_operatingTempOnF - 32) * 5 / 9 + 273.15
+
+    const { constant_a, constant_b, constant_c , constant_d, mw } = fluidSelected || {};
+    const kRatio = constant_a + (constant_b * gData_operatingTempOnK) + ((constant_c * gData_operatingTempOnK) ** 2) + ((constant_d * gData_operatingTempOnK) ** 3) 
+    
+    const constantR = 8.314
 
     const PI = 3.142
 

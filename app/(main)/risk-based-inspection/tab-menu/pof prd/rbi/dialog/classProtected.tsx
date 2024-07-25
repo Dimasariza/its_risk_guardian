@@ -7,6 +7,7 @@ import { ListBox, ListBoxChangeEvent } from "primereact/listbox";
 import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
 import { classNames } from "primereact/utils";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const protectedEquipment = [
     {
@@ -49,6 +50,7 @@ function ClassProtectedDialogs({value, setValue, setOnSubmit}: any) {
         { name: 'PV JNE MAM 106', code: 'NY' },
         { name: 'PRD XHR EXY 11', code: 'RM' },
     ];
+    const { edit } = useSelector((state: any) => state.EditReducer);
 
     const footerContent = (
         <div>
@@ -64,7 +66,7 @@ function ClassProtectedDialogs({value, setValue, setOnSubmit}: any) {
         <>
             <div className="flex align-items-center justify-content-between" style={{width: "30rem"}}>
                 <label htmlFor="">Classe For Protected Equipment</label>
-                <Button label="Show Table" size="small" className="mx-3" onClick={() => setVisible(true)} />
+                <Button label="Show Table" size="small" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
 
             <Dialog header="Classe For Protected Equipment" visible={visible} style={{ width: '80%' }} maximizable

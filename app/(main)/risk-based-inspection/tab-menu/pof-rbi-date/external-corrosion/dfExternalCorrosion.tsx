@@ -158,10 +158,6 @@ function DFExternalCorrosion() {
                 label: "Time in Service Age (Coat)",
                 value: Number(ageCoat)?.toFixed(4)
               },
-              // {
-              //   label: "Time in Service Age",
-              //   value: Number(ageTimeInServiceTk)?.toFixed(4)
-              // },
               {
                 label: "Adjusment coat",
                 value: Number(adjCoat)?.toFixed(4)

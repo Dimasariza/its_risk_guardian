@@ -419,8 +419,6 @@ function RiskAnalysis() {
     }
   }
 
-  console.log(rbiFset * rbiFinalUpdateValue * finalConsequenceM!)
-
   const RBIShellRisk = Number(cofValue.failureFreq?.total * RBIShellValue * cofValue.rbiValue_FMS)
   const PlanShellRisk = Number(cofValue.failureFreq?.total * PlanShellValue * cofValue.rbiValue_FMS)
 

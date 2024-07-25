@@ -11,9 +11,6 @@ import { GeneralDataService } from '@/service/calculation/generalData-service';
 import { Checkbox } from 'primereact/checkbox';
 import BaseDamageFactorTable from './baseDamageFactor';
 import InspectionEffectivenessTable, { inspection } from './inspectionEffectivenessTable';
-import { calculateThinning } from '@/function/calcPlanThinningValue';
-import IGeneralData from '@/types/IGeneralData';
-import IPlanThinning from '@/types/IPlanThinning';
 import { calculateAlkaline } from '@/function/calcPlanAlkalineValue';
 import { Toast } from 'primereact/toast';
 

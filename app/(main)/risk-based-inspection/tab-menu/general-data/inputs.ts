@@ -107,18 +107,6 @@ const inputsGeneralSpec = [
     //   placeholder: 'Thickness After Inspection (mm)',
     //   label: 'Thickness After Inspection (mm)',
     // },
-    // {
-    //   name: 'gData_outerDiameterMM',
-    //   type: 'text',
-    //   placeholder: 'Outer Diameter (mm)',
-    //   label: 'Outer Diameter',
-    // },
-    // {
-    //   name: 'gData_outerDiameterInch',
-    //   type: 'text',
-    //   placeholder: 'Outer Diameter (inch)',
-    //   label: 'Outer Diameter',
-    // },
     {
       name: 'gData_startingDate',
       type: 'calendar',
@@ -284,6 +272,18 @@ const inputsGeneralSpec = [
       placeholder: 'T Requirement (mm *)',
       label: 'T Requirement (mm *)',
       viewonly: ["Pressure Vessel"]
+    },
+    {
+      name: 'gData_outerDiameterMM',
+      type: 'text',
+      placeholder: 'Outer Diameter (mm)',
+      label: 'Outer Diameter',
+    },
+    {
+      name: 'gData_outerDiameterInch',
+      type: 'text',
+      placeholder: 'Outer Diameter (inch)',
+      label: 'Outer Diameter',
     },
   ];
 

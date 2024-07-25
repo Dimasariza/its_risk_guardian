@@ -3,8 +3,9 @@ import IGeneralData from "@/types/IGeneralData";
 import IRBIThinning from "@/types/IRBIThinning";
 import * as formulaJs from '@formulajs/formulajs'
 
-export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinning) => {
+export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinning, componentType: string = "Pipe") => {
     if(!Object?.keys(generalData).length || !Object?.keys(thinning).length ) return {}
+
     const {
         gData_lastInspection,
         gData_headTreqInch,
@@ -29,6 +30,7 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
         rbiThinning_nInspB,
         rbiThinning_nInspC,
         rbiThinning_nInspD,
+        rbiThinning_tMinMM
     } = thinning as IRBIThinning;
 
     const lastInspDateObj: Date | any = new Date(gData_lastInspection);
@@ -51,20 +53,23 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
     const allowableStressPsig = gData_allowableStressKpa / 6.89475729
 
     const shellRequiredWallThickness = gData_headTreqMM // change to head 
-    || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
+    || rbiThinning_tMinMM
+    // || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
     const headRequiredWallThickness = gData_headTreqMM
 
     const shellStrengthRatioPV: number  = ((Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress!) * (Math.max
     (Number(shellRequiredWallThickness), Number(shellRequiredWallThickness)) / gData_shellMinimumThicknessMM);
+    
     const shellStrengthRatio: number = Number(shellStrengthRatioPV.toFixed(3))
 
     const headStrengthRatioReal: number = ((Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress!) * (Math.max
     (Number(headRequiredWallThickness), Number(headRequiredWallThickness)) / gData_headMinimumThicknessMM);
     const headStrengthRatio: number = Number(headStrengthRatioReal.toFixed(3))
-
-    const inspEffectiveness1: number | null = prior[0].medium * (conditional[0].a ** rbiThinning_nInspA) * (conditional[0].b ** rbiThinning_nInspB) * (conditional[0].c ** rbiThinning_nInspC) * (conditional[0].d ** rbiThinning_nInspD) || null;
-    const inspEffectiveness2: number | null = prior[1].medium * (conditional[1].a ** rbiThinning_nInspA) * (conditional[1].b ** rbiThinning_nInspB) * (conditional[1].c ** rbiThinning_nInspC) * (conditional[1].d ** rbiThinning_nInspD) || null;
-    const inspEffectiveness3: number | null = prior[2].medium * (conditional[2].a ** rbiThinning_nInspA) * (conditional[2].b ** rbiThinning_nInspB) * (conditional[2].c ** rbiThinning_nInspC) * (conditional[2].d ** rbiThinning_nInspD) || null;
+    
+    const confidenceData = "Pipe" == "Pipe" ? "high" : "medium" 
+    const inspEffectiveness1: number | null = prior[0][confidenceData] * (conditional[0].a ** rbiThinning_nInspA) * (conditional[0].b ** rbiThinning_nInspB) * (conditional[0].c ** rbiThinning_nInspC) * (conditional[0].d ** rbiThinning_nInspD) || null;
+    const inspEffectiveness2: number | null = prior[1][confidenceData] * (conditional[1].a ** rbiThinning_nInspA) * (conditional[1].b ** rbiThinning_nInspB) * (conditional[1].c ** rbiThinning_nInspC) * (conditional[1].d ** rbiThinning_nInspD) || null;
+    const inspEffectiveness3: number | null = prior[2][confidenceData] * (conditional[2].a ** rbiThinning_nInspA) * (conditional[2].b ** rbiThinning_nInspB) * (conditional[2].c ** rbiThinning_nInspC) * (conditional[2].d ** rbiThinning_nInspD) || null;
 
     const postProbability1: number | null = inspEffectiveness1! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
     const postProbability2: number | null = inspEffectiveness2! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
@@ -103,6 +108,10 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IRBIThinn
     const shellBaseDF = ((postProbability1! * (formulaJs.NORM.S.DIST(-shellSectionB1!, true))) 
     + (postProbability2! * (formulaJs.NORM.S.DIST(-shellSectionB2!, true))) 
     + (postProbability3! * (formulaJs.NORM.S.DIST(-shellSectionB3!, true)))) / 0.000156;
+
+    const test = (0.907 * (formulaJs.NORM.S.DIST(-4.6476, true))
+    + 0.074 * (formulaJs.NORM.S.DIST(-4.62172, true))
+    + 0.0185 * (formulaJs.NORM.S.DIST(-4.5342, true))) / 0.000156;
 
     const headBaseDF = ((postProbability1! * (formulaJs.NORM.S.DIST(-headSectionB1!, true))) 
     + (postProbability2! * (formulaJs.NORM.S.DIST(-headSectionB2!, true))) 
