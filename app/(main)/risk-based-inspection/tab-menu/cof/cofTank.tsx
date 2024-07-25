@@ -4,8 +4,8 @@ import InputTypeText from "@/app/(main)/uikit/input/input-type-text";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { inputs } from "./inputs";
-import RepresentativeFluidDialog from "@/app/(main)/uikit/table/cof/representativeFluidDialog";
-import ReleaseHoleSize from "@/app/(main)/uikit/table/cof/realeseHoleSizeDialog";
+import RepresentativeFluidDialog from "@/app/(main)/uikit/table/cof/cof PV/representativeFluidDialog";
+import ReleaseHoleSize from "@/app/(main)/uikit/table/cof/cof PV/realeseHoleSizeDialog";
 import { calcCOFTank } from "@/function/calcCOFTank";
 import InputValueOnly from "@/app/(main)/uikit/input/inputValueOnly";
 
@@ -72,45 +72,48 @@ function COFTank() {
         </div>
 
         <div className="flex w-full flex-wrap mt-8">
-        <h5>Release hole size area based on dn</h5>
-        <div className="flex flex-wrap">
-            {
-                [
-                    {
-                        label: `Small Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"}`,
-                        value: Number(basedOnDNSmallmm)?.toFixed(6) || "_"
-                    },
-                    {
-                        label: "Small Release Hole Size (m²)",
-                        value: Number(basedOnDNSmallm)?.toFixed(6) || "-"
-                    },
-                    {
-                        label: `Medium Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"}`,
-                        value: Number(basedOnDNMediummm)?.toFixed(6) || "-"
-                    },
-                    {
-                        label: "Medium Release Hole Size (m²)",
-                        value: Number(basedOnDNMediumm)?.toFixed(6) || "-"
-                    },
-                    {
-                        label: `Large Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"} `,
-                        value: Number(basedOnDNLargemm)?.toFixed(6) || "-"
-                    },
-                    {
-                        label: "Large Release Hole Size (m²)",
-                        value: Number(basedOnDNLargem)?.toFixed(6) || "-"
-                    },
-                    {
-                        label: `Rupture Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"} `,
-                        value: Number(basedOnDNRupturemm)?.toFixed(6) || "-"
-                    },
-                    {
-                        label: "Rupture Release Hole Size (m²)",
-                        value: Number(basedOnDNRupturem)?.toFixed(6) || "-"
-                    },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
-            }
-        </div> 
+            <h5>Release hole size area based on dn</h5>
+            <div className="flex flex-wrap">
+                {
+                    [
+                        {
+                            label: `Small Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"}`,
+                            value: Number(basedOnDNSmallmm)?.toFixed(6) || "_"
+                        },
+                        {
+                            label: "Small Release Hole Size (m²)",
+                            value: Number(basedOnDNSmallm)?.toFixed(6) || "-"
+                        },
+                        {
+                            label: `Medium Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"}`,
+                            value: Number(basedOnDNMediummm)?.toFixed(6) || "-"
+                        },
+                        {
+                            label: "Medium Release Hole Size (m²)",
+                            value: Number(basedOnDNMediumm)?.toFixed(6) || "-"
+                        },
+                        {
+                            label: `Large Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"} `,
+                            value: Number(basedOnDNLargemm)?.toFixed(6) || "-"
+                        },
+                        {
+                            label: "Large Release Hole Size (m²)",
+                            value: Number(basedOnDNLargem)?.toFixed(6) || "-"
+                        },
+                        {
+                            label: `Rupture Release Hole Size ${componentType == "Pressure Relief Device" ? "(Inch)" : "(mm²)"} `,
+                            value: Number(basedOnDNRupturemm)?.toFixed(6) || "-"
+                        },
+                        {
+                            label: "Rupture Release Hole Size (m²)",
+                            value: Number(basedOnDNRupturem)?.toFixed(6) || "-"
+                        },
+                    ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+                }
+            </div> 
+
+            <h5>Release rate (Wn)</h5>
+
         </div>
         </>
     )

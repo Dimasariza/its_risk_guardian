@@ -22,13 +22,13 @@ import { calculateAlkaline as PlancalculateAlkaline } from "@/function/calcPlanA
 import { calculateCOF } from "@/function/calcCOFValue";
 import IGeneralData from "@/types/IGeneralData";
 import { CofService } from "@/service/calculation/cofService";
-import { representativeFluidNodes } from "../../../uikit/table/cof/representativeFluidDialog";
-import { detection, isolation } from "../../../uikit/table/cof/detectionAndIsolation";
-import { flamableTable } from "../../../uikit/table/cof/flamableDialog";
-import { damageTable } from "../../../uikit/table/cof/damageDialog";
-import { liquidPhase } from "../../../uikit/table/cof/phaseOfFluidDialog";
-import { liquidInventories } from "../../../uikit/table/cof/liquidInventoriesDialog";
-import { adjMitigation } from "../../../uikit/table/cof/adjustmentToFlamable";
+import { representativeFluidNodes } from "../../../uikit/table/cof/cof PV/representativeFluidDialog";
+import { detection, isolation } from "../../../uikit/table/cof/cof PV/detectionAndIsolation";
+import { flamableTable } from "../../../uikit/table/cof/cof PV/flamableDialog";
+import { damageTable } from "../../../uikit/table/cof/cof PV/damageDialog";
+import { liquidPhase } from "../../../uikit/table/cof/cof PV/phaseOfFluidDialog";
+import { liquidInventories } from "../../../uikit/table/cof/cof PV/liquidInventoriesDialog";
+import { adjMitigation } from "../../../uikit/table/cof/cof PV/adjustmentToFlamable";
 import { gffTableValue } from "@/public/tableBasedOnAPI/gffTableValue";
 import { riskMatrix } from "./riskMatrix";
 import { getValue } from "@/service/calculation/pofRBIDate-service";
@@ -380,8 +380,7 @@ function RiskAnalysis() {
     finalConsequenceM
   } = calculateCOF({
     generalData, 
-    fluidSelected: cofValue?.fluidSelected,
-    cofValue: cofValue,
+    cofValue,
     componentType
   })
 
