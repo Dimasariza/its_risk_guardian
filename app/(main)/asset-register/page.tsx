@@ -8,78 +8,85 @@ import EquipmentDialog from "./dialog-system/dialog";
 import ItemDialog from "./dialog-plant/dialog";
 import { TreeTable } from "primereact/treetable";
 import { Column } from "primereact/column";
-const nodes = [
-    {
-        key: '0',
-        data: {
-            name: 'MV Maratha',
-            location: 'Jakarta',
-            createdAt: '2024-01-01',
-            updatedAt: '2024-01-01'
-        },
-        children: [
-            {
-                key: '0-0',
-                data: {
-                    name: 'Work',
-                    location: 'Work Folder',
-                    createdAt: '2024-01-01',
-                    updatedAt: '2024-01-01'
-                },
-                children: [
-                    { 
-                        key: '0-0-0', 
-                        data: {
-                            name: 'Expenses.doc', 
-                            location: 'Expenses Document',
-                            createdAt: '2024-01-01', 
-                            updatedAt: '2024-01-01'
-                        }
-                    },
-                    { 
-                        key: '0-0-1', 
-                        data: {
-                            name: 'Resume.doc', 
-                            location: 'Resume Document', 
-                            createdAt: '2024-01-01', 
-                            updatedAt: '2024-01-01'
-                        }
-                    }
-                ]
-            },
-            {
-                key: '0-1',
-                data: {
-                    name: 'Home',
-                    location: 'Home Folder',
-                    createdAt: '2024-01-01',
-                    updatedAt: '2024-01-01'
-                },
-                children: [
-                    { 
-                        key: '0-1-0', 
-                        data: {
-                            name: 'Invoices.txt', 
-                            location: 'Invoices for this month', 
-                            createdAt: '2024-01-01', 
-                            updatedAt: '2024-01-01'
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        data: {
-            name: 'MV Bung Tomo',
-            location: 'Surabaya',
-            createdAt: '2024-01-01',
-            updatedAt: '2024-01-01'
-        },
-    }
-]
-function AssetRegister() {
+import { Children, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { AssetItemService } from "@/service/assets/item-service";
 
+// const nodes = [
+//     {
+//         key: '0',
+//         data: {
+//             name: 'MV Maratha',
+//             location: 'Jakarta',
+//             createdAt: '2024-01-01',
+//             updatedAt: '2024-01-01'
+//         },
+//         children: [
+//             {
+//                 key: '0-0',
+//                 data: {
+//                     name: 'Work',
+//                     location: 'Work Folder',
+//                     createdAt: '2024-01-01',
+//                     updatedAt: '2024-01-01'
+//                 },
+//                 children: [
+//                     { 
+//                         key: '0-0-0', 
+//                         data: {
+//                             name: 'Expenses.doc', 
+//                             location: 'Expenses Document',
+//                             createdAt: '2024-01-01', 
+//                             updatedAt: '2024-01-01'
+//                         }
+//                     },
+//                     { 
+//                         key: '0-0-1', 
+//                         data: {
+//                             name: 'Resume.doc', 
+//                             location: 'Resume Document', 
+//                             createdAt: '2024-01-01', 
+//                             updatedAt: '2024-01-01'
+//                         }
+//                     }
+//                 ]
+//             },
+//             {
+//                 key: '0-1',
+//                 data: {
+//                     name: 'Home',
+//                     location: 'Home Folder',
+//                     createdAt: '2024-01-01',
+//                     updatedAt: '2024-01-01'
+//                 },
+//                 children: [
+//                     { 
+//                         key: '0-1-0', 
+//                         data: {
+//                             name: 'Invoices.txt', 
+//                             location: 'Invoices for this month', 
+//                             createdAt: '2024-01-01', 
+//                             updatedAt: '2024-01-01'
+//                         }
+//                     }
+//                 ]
+//             }
+//         ]
+//     },
+//     {
+//         data: {
+//             name: 'MV Bung Tomo',
+//             location: 'Surabaya',
+//             createdAt: '2024-01-01',
+//             updatedAt: '2024-01-01'
+//         },
+//     }
+// ]
+
+function AssetRegister() {
+    const rerenderMenu = useSelector((state: any) => state.RerenderMenu);
+    const [nodes, setNodes] = useState([]);
+ 
     const dateTemplate = (date: Date) => {
         const dateObj = new Date(date)
         return dateObj.toDateString();
@@ -97,6 +104,45 @@ function AssetRegister() {
         )
     }
 
+    useEffect(() => {
+        AssetItemService.fetchData()
+        .then((res: any) => {
+                const reconstructData = res?.data?.map((data: any, key: number) => {
+                    return {
+                        key: data?.item_nameOfItem + key,
+                        data: {
+                            ...data,
+                            name: data?.item_nameOfItem,
+                        },
+                        children: data?.system.map((system: any, key: number) => {
+                            return {
+                                key: system?.eq_nameOfEquipment + key,
+                                data: {
+                                    ...system,
+                                    name: system?.eq_nameOfEquipment
+                                },
+                                children: system?.equipment?.map((eq: any, key: number) => {
+                                    return {
+                                        key: eq?.comp_nameOfComponent + key,
+                                        data: {
+                                            ...eq,
+                                            name: eq?.comp_nameOfComponent
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+
+                console.log(reconstructData)
+
+                setNodes(reconstructData)
+            } 
+        
+        )
+    }, [rerenderMenu])
+
     return (
         <>
             <Card title="Asset Register">
@@ -106,13 +152,12 @@ function AssetRegister() {
                     <ComponentDialog />
                 </div>
 
-                {/* <TreeTable value={nodes} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
-                    <Column field="name" header="Name" expander sortable></Column>
-                    <Column field="location" header="Location" sortable></Column>
+                <TreeTable value={nodes} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
+                    <Column field="name" header="Name" sortable></Column>
                     <Column field="createdAt" header="Created" body={({data}) => dateTemplate(data.createdAt)} sortable></Column>
                     <Column field="updatedAt" header="Last Updated" body={({data}) => dateTemplate(data.createdAt)} sortable></Column>
                     <Column field="updatedAt" header="Action" body={({data}) => actionTemplate(data)}></Column>
-                </TreeTable> */}
+                </TreeTable>
                 {/* <TabMenu model={items} />
                 {tabMenuView()} */}
             </Card>
