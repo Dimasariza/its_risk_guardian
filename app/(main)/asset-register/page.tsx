@@ -12,80 +12,91 @@ import { Children, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AssetItemService } from "@/service/assets/item-service";
 
-// const nodes = [
-//     {
-//         key: '0',
-//         data: {
-//             name: 'MV Maratha',
-//             location: 'Jakarta',
-//             createdAt: '2024-01-01',
-//             updatedAt: '2024-01-01'
-//         },
-//         children: [
-//             {
-//                 key: '0-0',
-//                 data: {
-//                     name: 'Work',
-//                     location: 'Work Folder',
-//                     createdAt: '2024-01-01',
-//                     updatedAt: '2024-01-01'
-//                 },
-//                 children: [
-//                     { 
-//                         key: '0-0-0', 
-//                         data: {
-//                             name: 'Expenses.doc', 
-//                             location: 'Expenses Document',
-//                             createdAt: '2024-01-01', 
-//                             updatedAt: '2024-01-01'
-//                         }
-//                     },
-//                     { 
-//                         key: '0-0-1', 
-//                         data: {
-//                             name: 'Resume.doc', 
-//                             location: 'Resume Document', 
-//                             createdAt: '2024-01-01', 
-//                             updatedAt: '2024-01-01'
-//                         }
-//                     }
-//                 ]
-//             },
-//             {
-//                 key: '0-1',
-//                 data: {
-//                     name: 'Home',
-//                     location: 'Home Folder',
-//                     createdAt: '2024-01-01',
-//                     updatedAt: '2024-01-01'
-//                 },
-//                 children: [
-//                     { 
-//                         key: '0-1-0', 
-//                         data: {
-//                             name: 'Invoices.txt', 
-//                             location: 'Invoices for this month', 
-//                             createdAt: '2024-01-01', 
-//                             updatedAt: '2024-01-01'
-//                         }
-//                     }
-//                 ]
-//             }
-//         ]
-//     },
-//     {
-//         data: {
-//             name: 'MV Bung Tomo',
-//             location: 'Surabaya',
-//             createdAt: '2024-01-01',
-//             updatedAt: '2024-01-01'
-//         },
-//     }
-// ]
+const treenodes = [
+    {
+        key: '0',
+        data: {
+            name: 'MV Maratha',
+            location: 'Jakarta',
+            createdAt: '2024-01-01',
+            updatedAt: '2024-01-01'
+        },
+        children: [
+            {
+                key: '0-0',
+                data: {
+                    name: 'Work',
+                    location: 'Work Folder',
+                    createdAt: '2024-01-01',
+                    updatedAt: '2024-01-01'
+                },
+                children: [
+                    { 
+                        key: '0-0-0', 
+                        data: {
+                            name: 'Expenses.doc', 
+                            location: 'Expenses Document',
+                            createdAt: '2024-01-01', 
+                            updatedAt: '2024-01-01'
+                        }
+                    },
+                    { 
+                        key: '0-0-1', 
+                        data: {
+                            name: 'Resume.doc', 
+                            location: 'Resume Document', 
+                            createdAt: '2024-01-01', 
+                            updatedAt: '2024-01-01'
+                        }
+                    }
+                ]
+            },
+            {
+                key: '0-1',
+                data: {
+                    name: 'Home',
+                    location: 'Home Folder',
+                    createdAt: '2024-01-01',
+                    updatedAt: '2024-01-01'
+                },
+                children: [
+                    { 
+                        key: '0-1-0', 
+                        data: {
+                            name: 'Invoices.txt', 
+                            location: 'Invoices for this month', 
+                            createdAt: '2024-01-01', 
+                            updatedAt: '2024-01-01'
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        data: {
+            name: 'MV Bung Tomo',
+            location: 'Surabaya',
+            createdAt: '2024-01-01',
+            updatedAt: '2024-01-01',
+        },
+        children: [
+            { 
+                key: '0-1-0', 
+                data: {
+                    name: 'Invoices.txt', 
+                    location: 'Invoices for this month', 
+                    createdAt: '2024-01-01', 
+                    updatedAt: '2024-01-01'
+                }
+            }
+        ]
+    }
+]
 
 function AssetRegister() {
     const rerenderMenu = useSelector((state: any) => state.RerenderMenu);
-    const [nodes, setNodes] = useState([]);
+    const [nodes, setNodes] = useState<any[]>([]);
  
     const dateTemplate = (date: Date) => {
         const dateObj = new Date(date)
@@ -108,6 +119,7 @@ function AssetRegister() {
         AssetItemService.fetchData()
         .then((res: any) => {
                 const reconstructData = res?.data?.map((data: any, key: number) => {
+
                     return {
                         key: data?.item_nameOfItem + key,
                         data: {
@@ -135,8 +147,6 @@ function AssetRegister() {
                     }
                 })
 
-                console.log(reconstructData)
-
                 setNodes(reconstructData)
             } 
         
@@ -153,9 +163,9 @@ function AssetRegister() {
                 </div>
 
                 <TreeTable value={nodes} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
-                    <Column field="name" header="Name" sortable></Column>
-                    <Column field="createdAt" header="Created" body={({data}) => dateTemplate(data.createdAt)} sortable></Column>
-                    <Column field="updatedAt" header="Last Updated" body={({data}) => dateTemplate(data.createdAt)} sortable></Column>
+                    <Column field="name" header="Name" expander sortable></Column>
+                    <Column field="createdAt" header="Created" body={({data}) => dateTemplate(data?.createdAt)}  sortable></Column>
+                    <Column field="updatedAt" header="Last Updated" body={({data}) => dateTemplate(data?.createdAt)} sortable></Column>
                     <Column field="updatedAt" header="Action" body={({data}) => actionTemplate(data)}></Column>
                 </TreeTable>
                 {/* <TabMenu model={items} />
