@@ -11,10 +11,8 @@ function CorrosionLoopGroup({corrosionLoop} :any) {
     }
 
     useEffect(() => {
-        console.log(corrosionLoop)
         CorrosionLoopGroupService.showData(corrosionLoop?.cl_id)
         .then(res => {
-            console.log(res)
             setData(res)
         })
     }, [corrosionLoop])

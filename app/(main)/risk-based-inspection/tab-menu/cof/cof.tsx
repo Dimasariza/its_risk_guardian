@@ -16,7 +16,7 @@ function COF() {
     <section className="grid m-2">
       <Toast ref={toast}  position="bottom-right" />
       {
-        data.menu.comp_componentType != "Tank" ? <COFPV toast={toast}/> : <COFTank />
+        data.menu.comp_componentType != "Tank" ? <COFPV toast={toast}/> : <COFTank toast={toast} />
       }
     </section>
   );
