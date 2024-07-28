@@ -16,14 +16,34 @@ const AppMenu = () => {
   const [menuItems, setMenuItems] = useState<AppMenuItem[]>([]);
   const rerenderMenu = useSelector((state: any) => state.RerenderMenu);
   const { data } = useSelector((state: any) => state.AuthReducer);
-  const dispatch = useDispatch();
   const user = data.user.user_id
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(pathname)
     // if(pathname == "/risk-based-inspection/") {
-      MenuItemService.getAllAssets(user).then((res) => {
-        setMenuItems(res);
+      MenuItemService.getRegisteredAssets({user_id: user, registered: true})
+      .then((res) => {
+        const registeredMenu = res?.data?.map((c: any) => {
+          return {
+            ...c,
+            label: c.item_nameOfItem,
+            items: c.system?.map((s: any) => {
+              return {
+                ...s,
+                label: s.eq_nameOfEquipment,
+                items: s.equipment_by_user?.map((e: any) => {
+                  return {
+                    ...e,
+                    label: e.comp_nameOfComponent
+                  }
+                })
+              }
+            })
+          }
+        })
+
+        setMenuItems([{label: "", items: [...registeredMenu]}]);
       });
     // }
 

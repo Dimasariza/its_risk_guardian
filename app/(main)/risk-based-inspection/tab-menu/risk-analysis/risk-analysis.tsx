@@ -389,6 +389,8 @@ function RiskAnalysis() {
   const planHeadPlotting =  riskPlotting(PlanHeadValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
   const planShellPlotting =  riskPlotting(PlanShellValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
 
+  console.log("Plotting", RBIHeadValue)
+
   const iconPlotting = (row: number, column: string, title: string, value: string) => {
     if(title == "Head Section Risk Diagram") {
       return [

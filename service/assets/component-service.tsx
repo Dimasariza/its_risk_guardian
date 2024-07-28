@@ -14,5 +14,13 @@ export const AssetComponentService = {
   async fetchDataByUser(user_id: any) {
     const res = await axios.post(url + "/componentByUser", {user_id});
     return await res.data;
+  },
+  async updateData(value: any) {
+    const res = await axios.put(url + "/components/" + value.comp_id, value)
+    return await res.data
+  },
+  async deleteData(id: string) {
+    const res = await axios.delete(url + "/components/" + id)
+    return await res.data 
   }
 };

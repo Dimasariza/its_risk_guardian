@@ -3,6 +3,13 @@ import axios from "axios";
 const url = process.env.DB_URL;
 
 export const MenuItemService = {
+  async getRegisteredAssets({user_id, registered = true}: any) {
+    const res = await axios.post(url + "/" + "assetRegister", {
+      user_id,
+      registered
+    })
+    return res.data
+  },
   async getAllAssets(userId: string) {
     const requests = [url + '/itemByUser', url + '/equipmentByUser', url + '/componentByUser'].map((url) => axios.post(url, {"user_id": userId}));
     const [{ data: items }, { data: equipment }, { data: component }] = await axios.all(requests).then((res) => res);

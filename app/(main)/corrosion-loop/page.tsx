@@ -13,6 +13,7 @@ import { FileUploadUploadEvent } from "primereact/fileupload";
 import CorrosionLoopDialog from "./corrosionLoopDialog";
 import { CorrosionLoopService } from "@/service/corrosionLoopService";
 import UpdateImageDialog from "./updateImage";
+import CorrosionLoopGroup from "./corrosionGroup";
 
 function CorrosionLoop() {
     const [assetDetails, setAssetDetails] = useState<any>();
@@ -55,7 +56,7 @@ function CorrosionLoop() {
     return (
         <>
             <Card title="Asset Detail">
-                <CorrosionLoopDialog assetDetails={assetDetails} />
+                <CorrosionLoopDialog assetDetails={assetDetails} corrosionLoop={corrosionLoop}/>
                 {
                     corrosionLoop?.cl_fileId 
                     ?   <div className="flex justify-content-center">
@@ -66,12 +67,16 @@ function CorrosionLoop() {
                         </div>
                     :   <InputFileUpload path_folder="file" icon="pi-file" fileType="File" doneUpload={onDoneUpload}/>
                 }
-                <DataTable value={assetDetails} tableStyle={{ minWidth: '50rem', marginTop: "2rem" }}>
-                    <Column field="comp_tagOfComponent" header="Tag"></Column>
+
+                <h5 className="m-5">All Equipment</h5>
+                <DataTable value={assetDetails} tableStyle={{ minWidth: '50rem' }}>
+                    <Column field="comp_tagOfComponent" header="Location"></Column>
                     <Column field="comp_nameOfComponent" header="Name"></Column>
                     <Column field="created_at" header="Created At" body={(e) => dateTemplate(e.created_at)}></Column>
-                    <Column field="updated_at" header="Last Updated" body={(e) => dateTemplate(e.created_at)}></Column>
+                    <Column field="updated_at" header="Last Updated" body={(e) => dateTemplate(e.updated_at)}></Column>
                 </DataTable>
+
+                <CorrosionLoopGroup corrosionLoop={corrosionLoop} />
             </Card>
         </>
     )

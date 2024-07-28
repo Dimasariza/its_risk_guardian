@@ -10,5 +10,13 @@ export const AssetItemService = {
   async fetchData() {
     const res = await axios.get(url);
     return (await res.data) as IAssetItem;
+  },
+  async updateData(value: any) {
+    const res = await axios.put(url + "/" + value.item_id, value)
+    return await res.data
+  },
+  async deleteData(id: string) {
+    const res = await axios.delete(url + "/" + id)
+    return await res.data 
   }
 };

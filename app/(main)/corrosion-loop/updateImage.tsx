@@ -4,6 +4,7 @@ import { confirmPopup, ConfirmPopup } from "primereact/confirmpopup";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { useRef, useState } from "react";
+import InputTypeText from "../uikit/input/input-type-text";
 
 function UpdateImageDialog({onDoneUpload}: any) {
     const [visible, setVisible] = useState<boolean>(false);

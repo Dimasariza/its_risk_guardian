@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import inputs from './inputs';
 import validate from './validation';
 
-function ComponentDialog() {
+function ComponentDialog({nodes, editNodes, setEditNodes, visible, setVisible} : any) {
   const emptyComponent: IAssetComponent = {
     comp_tagOfComponent: '',
     comp_nameOfComponent: '',
@@ -27,7 +27,6 @@ function ComponentDialog() {
   const [value, setValue] = useState<IAssetComponent>(emptyComponent);
   const [error, setError] = useState<IAssetComponent>(emptyComponent);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [visible, setVisible] = useState(false);
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,7 +43,7 @@ function ComponentDialog() {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState<IAssetComponent | any>([]);
-  const [selectedComponentType, setselectedComponentType] = useState(null);
+  const [selectedComponentType, setselectedComponentType] = useState<any>({});
   const componentType = [
     { name: 'Pressure Vessel' },
     { name: 'Tank' },
@@ -63,46 +62,79 @@ function ComponentDialog() {
   };
 
   useEffect(() => {
-    AssetEquipmentService.fetchData()
-      .then((res) => {
-        setItems(res.data);
-        dispatch(RerenderMenu());
+    const allSystem: any = [];
+
+    nodes.forEach((i: any) => {
+      i.data.system.forEach((e: any) => {
+        const d = ({...i.data, ...e, name: i.data.item_nameOfItem + " - " + e?.eq_nameOfEquipment})
+        allSystem.push(d)
       })
-      .catch((err) => {
-        toast.current.show({
-          severity: 'danger',
-          summary: 'Error',
-          detail: `Failed to get Data.`
-        });
-      });
+    })
+
+    const system = allSystem.find((i: any) => i.eq_id == editNodes.comp_equipmentId)
+    setItems(allSystem)
+    setValue(editNodes)
+    setSelectedItem(system)
+    setselectedComponentType(componentType.find((c: any) => c.name == editNodes.comp_componentType))
   }, [visible]);
 
   const dispatch = useDispatch();
   const { data } = useSelector((state: any) => state.AuthReducer);
 
   useEffect(() => {
-    if (Object.keys(error).length === 0 && isSubmit) {
-      AssetComponentService.postData({...value, comp_userId: data.user.user_id})
-        .then((res) => {
-          dispatch(RerenderMenu());
+    if (Object.keys(error).length !== 0 && !isSubmit) return
 
-          toast.current.show({
-            severity: 'success',
-            summary: 'Data has been added',
-            detail: `You add Component ${value.comp_nameOfComponent}`
-          });
-        })
-        .catch((err) => console.log(err));
+    if(!Object.keys(editNodes).length) {
+      AssetComponentService.postData({...value, comp_userId: data.user.user_id})
+      .then((res) => {
+        dispatch(RerenderMenu());
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data has been added',
+          detail: `You add Component ${value.comp_nameOfComponent}`
+        });
+      })
+      .catch((err) => {
+        toast.current.show({
+          severity: 'danger',
+          summary: 'Failed.',
+          detail: `Equipment failed to added`
+        });
+      });
+    }
+    else if(Object.keys(editNodes).length) {
+      AssetComponentService.updateData(value)
+      .then((res) => {
+        dispatch(RerenderMenu());
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data has been added',
+          detail: `You add Equipment ${value.nameOfItem}`
+        });
+      })
+      .catch((err) => {
+        toast.current.show({
+          severity: 'danger',
+          summary: 'Data failed to updated.',
+          detail: `Add equipment failed`
+        });
+      })
+    }
+
       setValue(emptyComponent);
       setVisible(false);
-    }
   }, [error]);
+
+  const openDialog = () => {
+    setEditNodes({})
+    setVisible((prev: any) => ({...prev, equipment: true})); 
+  }
 
   return (
     <>
       <Toast ref={toast} position="bottom-right"/>
-      <Button label="Add Equipment" onClick={() => { setVisible(true)} }/>
-      <Dialog header="Equipment" visible={visible} style={{ minWidth: '30vw' }} 
+      <Button label="Add Equipment" onClick={openDialog}/>
+      <Dialog header="Equipment" visible={visible} style={{ minWidth: '20%' }} 
         onHide={() => setVisible(false)} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">
@@ -110,7 +142,7 @@ function ComponentDialog() {
               System
             </label>
             <div className="px-1">
-              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="eq_nameOfEquipment" placeholder="Select a System" />
+              <Dropdown id="equipment" value={selectedItem} onChange={handleSelectItem} options={items} optionLabel="name" placeholder="Select a System" />
               {error.equipment && <Message severity="error" text={error.equipment} />}
             </div>
           </div>

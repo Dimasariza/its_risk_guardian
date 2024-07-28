@@ -47,8 +47,6 @@ function COFTank() {
         componentType
     })
 
-    console.log(basedOnDNSmallm)
-
     return (
         <>
         <div className="flex w-full lg:gap-5 md:gap-2 sm:gap-1 flex-column">

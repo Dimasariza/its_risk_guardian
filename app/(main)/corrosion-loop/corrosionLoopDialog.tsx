@@ -1,6 +1,7 @@
 'use client';
 
 import InputTypeText from '@/app/(main)/uikit/input/input-type-text';
+import { CorrosionLoopGroupService } from '@/service/corrosionLoopGroupService';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { PickList } from 'primereact/picklist';
@@ -8,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function CorrosionLoopDialog({assetDetails} : any) {
+function CorrosionLoopDialog({assetDetails, corrosionLoop} : any) {
     const toast = useRef<any>(null);
     const [visible, setVisible] = useState(false);
     const [value, setValue] = useState<any>({});
@@ -17,8 +18,31 @@ function CorrosionLoopDialog({assetDetails} : any) {
 
     const handleSubmit = (e: React.MouseEvent) => {
         e.preventDefault();
+        const data = target.map((i: any) => ({
+            clGroup_componentId: i.comp_id,
+            clGroup_name: value.clGroup_name,
+            clGroup_clId: corrosionLoop.cl_id
+        }))
+
+        CorrosionLoopGroupService.postData(data)
+        .then(res => {
+            toast.current.show({
+                severity: 'success',
+                summary: 'Success',
+                detail: `Add new corrosion group success`
+            });
+        })
+        .catch(err => {
+            toast.current.show({
+                severity: 'error',
+                summary: 'Failed',
+                detail: `Failed to create new corrosion Group`
+            });
+        })
+        
         setVisible(false)
-        console.log(target)
+        setSource([])
+        setTarget([])
     };
 
     const footerContent = (
@@ -75,7 +99,6 @@ function CorrosionLoopDialog({assetDetails} : any) {
                         }}   
                         type="text" 
                         value={value}
-                        handleOnChange={(e: any) => console.log(e)}
                         setValue={setValue} 
                     />
                 </div>

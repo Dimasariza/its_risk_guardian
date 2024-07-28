@@ -1,5 +1,14 @@
 const inputs: any[] = [
   {
+    name: 'item_nameOfItem',
+    type: 'text',
+    placeholder: 'Name Of Plan',
+    label: 'Name of Plan',
+    required: true,
+    autoFocus: false,
+    className: ''
+  },
+  {
     name: 'item_tagOfItem',
     type: 'text',
     placeholder: 'Plant Location',
@@ -8,15 +17,6 @@ const inputs: any[] = [
     autoFocus: true,
     className: ''
   },
-  {
-    name: 'item_nameOfItem',
-    type: 'text',
-    placeholder: 'Name Of Plan',
-    label: 'Name of Plan',
-    required: true,
-    autoFocus: false,
-    className: ''
-  }
 ];
 
 export default inputs;

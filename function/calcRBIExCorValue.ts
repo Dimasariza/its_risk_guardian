@@ -61,8 +61,6 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
     const flowStress = ((gData_yieldStrength + gData_tensileStrength) / 2) * gData_jointEfficiency * 1.1
 
     // const shellStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
-    console.log(allowableStressKpa)
-    console.log("strength",((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(tMinMM!, tMinMM!) / gData_shellMinimumThicknessMM))
     // const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
 
     const inspectionI1 = prior[0].medium * ((conditional[0].a) ** rbiThinning_nInspA) * ((conditional[0].b) ** rbiThinning_nInspB) * ((conditional[0].c) ** rbiThinning_nInspC) * ((conditional[0].d) ** rbiThinning_nInspD)

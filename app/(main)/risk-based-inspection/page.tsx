@@ -138,14 +138,13 @@ function RiskBasedInspection() {
           dispatch(edit ? EditDone(true) : EditData());
         }
       },
-      {
-        icon: 'pi pi-trash',
-        severity: 'danger',
-        tooltip: 'Delete',
-        command: () => {
-          // setDialogVisible(true);
-        }
-      }
+      // {
+      //   icon: 'pi pi-trash',
+      //   severity: 'danger',
+      //   tooltip: 'Delete',
+      //   command: () => {
+      //   }
+      // }
     ];
     return <div className='flex justify-content-between'>
       <h3 className='m-3'>{data.menu?.label ?? "No Selected Data"}</h3>

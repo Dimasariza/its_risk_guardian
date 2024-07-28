@@ -16,7 +16,7 @@ import validate from './validation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RerenderMenu } from '@/redux/action/action';
 
-function EquipmentDialog() {
+function SystemDialog({nodes, editNodes, setEditNodes, visible, setVisible} : any) {
   const emptyEquipment: IAssetEquipment = {
     eq_tagOfEquipment: '',
     eq_nameOfEquipment: ''
@@ -26,7 +26,6 @@ function EquipmentDialog() {
   const [value, setValue] = useState<IAssetEquipment>(emptyEquipment);
   const [error, setError] = useState<IAssetEquipment>(emptyEquipment);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [visible, setVisible] = useState(false);
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -36,63 +35,86 @@ function EquipmentDialog() {
 
   const footerContent = (
     <div>
-      <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} severity="danger" />
+      <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible((prev: any) => ({...prev, system: false}))} severity="danger" />
       <Button label="Save" icon="pi pi-check" onClick={handleSubmit} severity="success" />
     </div>
   );
 
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedEquipmentType, setselectedEquipmentType] = useState(null);
   const [items, setItems] = useState<IAssetItem | any>([]);
-  // const equipmentType = [{ name: 'FWKO Separator' }];
 
   const handleSelectItem = (e: any) => {
     setValue((prev) => ({ ...prev, eq_itemId: e.value.item_id }));
     setSelectedItem(e.value);
   };
 
-  const handleSelectEquipmentType = (e: any) => {
-    setValue((prev) => ({ ...prev, eq_equipmentType: e.value.name }));
-    setselectedEquipmentType(e.value);
-  };
-
   useEffect(() => {
-    AssetItemService.fetchData()
-      .then((res) => setItems(res.data))
-      .catch((err) => console.log(err));
+    const allSystem = nodes.map((i: any) => i.data)
+    const system = allSystem.find((i: any) => i.item_id == editNodes.eq_itemId)
+    setItems(allSystem)
+    setValue(editNodes)
+    setSelectedItem(system)
   }, [visible]);
 
   const dispatch = useDispatch();
   const { data } = useSelector((state: any) => state.AuthReducer);
 
   useEffect(() => {
-    if (Object.keys(error).length === 0 && isSubmit) {
+    if (Object.keys(error).length !== 0 && !isSubmit) return
+
+    if(!Object.keys(editNodes).length) {
       AssetEquipmentService.postData({...value, eq_userId: data.user.user_id})
-        .then((res) => {
-          dispatch(RerenderMenu());
-          toast.current.show({
-            severity: 'success',
-            summary: 'Data has been added',
-            detail: `You add Equipment ${value.nameOfItem}`
-          });
-        })
-        .catch((err) => {
-          toast.current.show({
-            severity: 'danger',
-            summary: 'Data failed to added.',
-            detail: `Add equipment failed`
-          });
+      .then((res) => {
+        dispatch(RerenderMenu());
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data has been added',
+          detail: `You add Equipment ${value.nameOfItem}`
         });
-      setValue(emptyEquipment);
-      setVisible(false);
+      })
+      .catch((err) => {
+        toast.current.show({
+          severity: 'danger',
+          summary: 'Data failed to added.',
+          detail: `Add equipment failed`
+        });
+      });
     }
+
+    else if(Object.keys(editNodes).length) {
+      AssetEquipmentService.updateData(value)
+      .then((res) => {
+        dispatch(RerenderMenu());
+        toast.current.show({
+          severity: 'success',
+          summary: 'Data has been added',
+          detail: `You add System ${value.nameOfItem}`
+        });
+      })
+      .catch((err) => {
+        toast.current.show({
+          severity: 'danger',
+          summary: 'Data failed to updated.',
+          detail: `Add System failed`
+        });
+      });
+    }
+
+    setValue(emptyEquipment);
+    setVisible((prev: any) => ({...prev, system: false}));
+      
   }, [error]);
+
+  const openDialog = () => {
+    setEditNodes({})
+    setVisible((prev: any) => ({...prev, system: true})); 
+  }
 
   return (
     <>
       <Toast ref={toast} position="bottom-right"/>
-      <Button label="Add System" onClick={() => { setVisible(true) }} />
-      <Dialog header="System" visible={visible} style={{ minWidth: '30vw' }} onHide={() => setVisible(false)} footer={footerContent}>
+      <Button label="Add System" onClick={openDialog} />
+      <Dialog header="System" visible={visible} style={{ minWidth: '20%' }} onHide={() => setVisible((prev: any) => ({...prev, system: false}))} footer={footerContent}>
         <section className="flex flex-column gap-2">
           <div className="flex flex-column col p-1">
             <label htmlFor="equipment" className="m-1">
@@ -109,18 +131,18 @@ function EquipmentDialog() {
               System Type
             </label>
             <div className="px-1">
-              {/* <Dropdown id="equipmentType" value={selectedEquipmentType} onChange={handleSelectEquipmentType} options={equipmentType} optionLabel="name" placeholder="Select System Type" />
-              {error.equipment && <Message severity="error" text={error.equipment} />} */}
             </div>
           </div>
 
-          {inputs.map((props: any, key: number) => (
-            <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
-          ))}
+          {
+            inputs.map((props: any, key: number) => (
+              <InputTypeText props={props} key={key} value={value} setValue={setValue} errorMessage={error[props.name]} />
+            ))
+          }
         </section>
       </Dialog>
     </>
   );
 }
 
-export default EquipmentDialog;
+export default SystemDialog;

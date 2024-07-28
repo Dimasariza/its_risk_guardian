@@ -9,5 +9,13 @@ export const AssetEquipmentService = {
   async fetchData() {
     const res = await axios.get(url);
     return await res.data;
+  },
+  async updateData(value: any) {
+    const res = await axios.put(url + "/" + value.eq_id, value) 
+    return res
+  },
+  async deleteData(id: string) {
+    const res = await axios.delete(url + "/" + id)
+    return await res.data 
   }
 };
