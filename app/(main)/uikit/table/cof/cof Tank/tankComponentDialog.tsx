@@ -68,7 +68,7 @@ function TankComponentDialog({value, options}: any) {
             <div className="flex align-items-center justify-content-between" style={{width: "25rem"}}>
                 <Button icon="pi pi-table" size="small" severity="info" className="mx-3" disabled={edit} onClick={() => setVisible(true)} />
             </div>
-            <Dialog header="Phase of Fluid" 
+            <Dialog header="" 
                 visible={visible} 
                 style={{ width: '70%' }}
                 onHide={() => {if (!visible) return; setVisible(false); }}

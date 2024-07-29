@@ -997,7 +997,7 @@ function COFPV({toast}: any) {
             }
         </div>
         
-        <h5>FOR ACIDS AND CAUSTIC</h5>
+        {/* <h5>FOR ACIDS AND CAUSTIC</h5>
         <div className="flex flex-wrap">
         {
                 [
@@ -1019,7 +1019,7 @@ function COFPV({toast}: any) {
                     },
                 ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ !isNaN(value) ? value : "-" } key={key}/>)
             }
-        </div>
+        </div> */}
         
         </>
     )

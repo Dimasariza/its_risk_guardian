@@ -217,7 +217,7 @@ const flamableTable = [
     },
     {
         id: "flamable005",
-        fluid: "C19-C12",
+        fluid: "C9-C12",
         data: {
             CAINLGA: 5.755,
             CAINLGB: 0.96,
