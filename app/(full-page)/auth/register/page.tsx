@@ -10,7 +10,7 @@ function Register() {
 
     return (
         <>
-            <div className="flex align-items-center justify-content-center">
+            {/* <div className="flex align-items-center justify-content-center">
                 <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
                     <div className="text-center mb-5">
                         <img src="/demo/images/blocks/logos/hyper.svg" alt="hyper" height={50} className="mb-3" />
@@ -52,7 +52,7 @@ function Register() {
                 <div className="col-12 md:col-6 overflow-hidden">
                     <img src="/demo/images/blocks/hero/hero-1.png" alt="hero-1" className="md:ml-auto block md:h-full" style={{ clipPath: 'polygon(8% 0, 100% 0%, 100% 100%, 0 100%)' }} />
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }
