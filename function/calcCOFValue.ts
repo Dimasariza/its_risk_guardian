@@ -152,7 +152,7 @@ const reductionFactor = [
     },
 ]
 
-export const calculateCOF = ({generalData, cofValue, componentType}: ICofCalculation) => {
+export const calculateCOF = ({generalData, cofValue, componentType = ""}: ICofCalculation) => {
     if(!Object.keys(generalData).length) return {}
 
     const {

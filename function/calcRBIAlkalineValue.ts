@@ -7,19 +7,20 @@ export const calculateAlkaline = ({
         generalData, 
         thinning, 
         exCor = null, 
-        alkaline
+        alkaline,
+        componentType = ""
     }: any) => {
 
     const { 
         shellBaseDF,
         headBaseDF,
         ageTimeInServiceTk
-    } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning)
+    } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning, componentType)
 
     const {
         rbiShellSection,
         rbiHeadSection
-    } = calculateExCor(generalData, thinning, exCor)
+    } = calculateExCor(generalData, thinning, exCor, componentType)
     
     const shellPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
     const headPWHT = alkaline.rbiAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1

@@ -28,6 +28,12 @@ const inputs = [
       className: ''
     },
     {
+      name: 'planThinning_nInspA',
+      type: 'text',
+      placeholder: 'Number of Inspection A',
+      laAel: 'Number of Inspection B',
+    },
+    {
       name: 'planThinning_nInspB',
       type: 'text',
       placeholder: 'Number of Inspection B',
@@ -37,7 +43,7 @@ const inputs = [
       name: 'planThinning_nInspC',
       type: 'text',
       placeholder: 'Number of Inspection C',
-      // label: 'Number of Inspection C',
+      label: 'Number of Inspection C',
     },
     {
       name: 'planThinning_nInspD',

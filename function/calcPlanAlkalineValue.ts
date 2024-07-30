@@ -8,18 +8,19 @@ export const calculateAlkaline = ({
         thinning, 
         exCor = null, 
         alkaline,
+        componentType = ""
     }: any) => {
 
     const { 
         shellBaseDF,
         headBaseDF,
         ageTimeInServiceTk
-    } = calculateThinning(generalData as IGeneralData, thinning as IPlanThinning)
+    } = calculateThinning(generalData as IGeneralData, thinning as IPlanThinning, componentType)
 
     const {
         planShellSection,
         planHeadSection
-    } = calculateExCor(generalData, thinning, exCor)
+    } = calculateExCor(generalData, thinning, exCor, componentType)
     
     const shellPWHT = alkaline?.planAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1
     const headPWHT = alkaline?.planAlkaline_numOfInspection * Math.max(ageTimeInServiceTk!, 1) ** 1.1

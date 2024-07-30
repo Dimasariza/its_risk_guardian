@@ -12,6 +12,7 @@ import { DataTable } from "primereact/datatable";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 import { Calendar } from "primereact/calendar";
+import { useSelector } from "react-redux";
 
 function Recomendation() {
   const [value, setValue] = useState<any>();
@@ -108,25 +109,31 @@ function Recomendation() {
     return <Calendar id="head" style={{width: 235}} />
   }
 
+  const data = useSelector((state: any) => state.Reducer);
+  const componentType = data.menu?.comp_componentType
+
   return (
     <>
       <section className="p-4">
-        <DataTable 
-          resizableColumns={true} 
-          value={nodes} 
-          headerColumnGroup={headerGroup} 
-          rowGroupMode="rowspan" 
-          groupRowsBy="dm" 
-          sortMode="single" 
-          tableStyle={{ minWidth: '20rem' }}
-        >
-          <Column field="dm" style={{ minWidth: '5rem' }} body={representativeBodyTemplate} ></Column>
-          <Column field="level" body={levelOfInsp} ></Column>
-          <Column body={inspOfEfectivess}></Column>
-          <Column field="activities"></Column>
-          <Column field="shell" body={shellBody}></Column>
-          <Column field="head" body={headBody}></Column>
-        </DataTable>
+        {
+          ["Pressure Vessel", "Tank"].includes(componentType) &&
+          <DataTable 
+            resizableColumns={true} 
+            value={nodes} 
+            headerColumnGroup={headerGroup} 
+            rowGroupMode="rowspan" 
+            groupRowsBy="dm" 
+            sortMode="single" 
+            tableStyle={{ minWidth: '20rem' }}
+          >
+            <Column field="dm" style={{ minWidth: '5rem' }} body={representativeBodyTemplate} ></Column>
+            <Column field="level" body={levelOfInsp} ></Column>
+            <Column body={inspOfEfectivess}></Column>
+            <Column field="activities"></Column>
+            <Column field="shell" body={shellBody}></Column>
+            <Column field="head" body={headBody}></Column>
+          </DataTable>
+        }
         
         <div className="flex flex-column my-3">
           <label htmlFor="">Notes</label>

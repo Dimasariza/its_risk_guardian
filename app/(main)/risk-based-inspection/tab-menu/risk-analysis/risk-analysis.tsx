@@ -48,6 +48,7 @@ import { adjusmentFactor as adjFactorPOLPLan} from "../pol prd/plan/polPlanDateP
 import { adjusmentFactor as adjFactorPOFRBI} from "../pof prd/plan/pofPlanDatePRD";
 import { adjusmentFactor as adjFactorPOFPLan} from "../pof prd/plan/pofPlanDatePRD";
 import { motion } from "framer-motion";
+import { calcCOFTank } from "@/function/calcCOFTank";
 
 const chartProps: any = {
   slotProps: {
@@ -183,7 +184,7 @@ function RiskAnalysis() {
   useEffect(() => {
     if(!componentId) return;
 
-    if(["Pressure Vessel"].includes(componentType))
+    if(["Pressure Vessel", "Tank"].includes(componentType))
     Promise.all([
       GeneralDataService.fetchData(componentId),
       getRBIThinning(componentId),
@@ -322,6 +323,8 @@ function RiskAnalysis() {
     })
   }, [data]);
 
+  const componentType = data.menu?.comp_componentType
+
   const {
     ageTimeInServiceTk: RBIAgeTimeInServiceTk,
     shellTotal: RBIShellTotal,
@@ -330,7 +333,8 @@ function RiskAnalysis() {
     generalData,
     thinning: rbiThinning,
     exCor: rbiExCor,
-    alkaline: rbiAlkaline
+    alkaline: rbiAlkaline,
+    componentType
   })
 
   const {
@@ -341,7 +345,8 @@ function RiskAnalysis() {
     generalData,
     thinning: planThinning,
     exCor: planExCor,
-    alkaline: planAlkaline
+    alkaline: planAlkaline,
+    componentType
   })
 
   const {
@@ -368,11 +373,22 @@ function RiskAnalysis() {
   const polRBIValue = rbiFset * rbiFinalUpdateValue
   const polPlanValue = planFset * planFinalUpdateValue
   
-  const componentType = data.menu?.comp_componentType
   const viewonlyForAll = ["Pressure Vessel"]
+
+  console.log(cofValue)
   
-  const RBIShellValue = ["Pressure Vessel"].includes(componentType) ? RBIShellTotal : rbiPofFire + rbiPofOverFilling + polRBIValue
-  const PlanShellValue = ["Pressure Vessel"].includes(componentType) ? PlanShellTotal : planPofFire + planPofOverFilling + polPlanValue
+  const RBIShellValue: any = () => {
+    if(["Pressure Vessel"].includes(componentType)) return RBIShellTotal
+    if(["Tank"].includes(componentType)) return cofValue.failureFreq?.total * RBIShellTotal * cofValue?.rbiValue_FMS 
+    if(["Pressure Relief Device"].includes(componentType)) return rbiPofFire + rbiPofOverFilling + polRBIValue
+  }  
+
+  const PlanShellValue: any = () => {
+    if(["Pressure Vessel"].includes(componentType)) return PlanShellTotal
+    if(["Tank"].includes(componentType)) return cofValue.failureFreq?.total * PlanShellTotal * cofValue?.rbiValue_FMS 
+    if(["Pressure Relief Device"].includes(componentType)) return planPofFire + planPofOverFilling + polPlanValue
+  }  
+  
   const RBIHeadValue = RBIHeadTotal
   const PlanHeadValue = PlanHeadTotal
   
@@ -384,12 +400,19 @@ function RiskAnalysis() {
     componentType
   })
 
-  const rbiHeadPlotting =  riskPlotting(RBIHeadValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
-  const rbiShellPlotting =  riskPlotting(RBIShellValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
-  const planHeadPlotting =  riskPlotting(PlanHeadValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
-  const planShellPlotting =  riskPlotting(PlanShellValue, finalConsequenceM!, ["Pressure Vessel"].includes(componentType))
+  const {
+    finalConsequenceM: finalConsequenceMTank
+  } = calcCOFTank({
+    generalData,
+    cofValue
+  })
 
-  console.log("Plotting", RBIHeadValue)
+  const consequenceValue = componentType == "Tank" ? finalConsequenceMTank : finalConsequenceM
+
+  const rbiHeadPlotting =  riskPlotting(RBIHeadValue, consequenceValue!, ["Pressure Vessel"].includes(componentType))
+  const rbiShellPlotting =  riskPlotting(RBIShellValue(), consequenceValue!, ["Pressure Vessel"].includes(componentType))
+  const planHeadPlotting =  riskPlotting(PlanHeadValue, consequenceValue!, ["Pressure Vessel"].includes(componentType))
+  const planShellPlotting =  riskPlotting(PlanShellValue(), consequenceValue!, ["Pressure Vessel"].includes(componentType))
 
   const iconPlotting = (row: number, column: string, title: string, value: string) => {
     if(title == "Head Section Risk Diagram") {
@@ -420,8 +443,8 @@ function RiskAnalysis() {
     }
   }
 
-  const RBIShellRisk = Number(cofValue.failureFreq?.total * RBIShellValue * cofValue.rbiValue_FMS)
-  const PlanShellRisk = Number(cofValue.failureFreq?.total * PlanShellValue * cofValue.rbiValue_FMS)
+  const RBIShellRisk = componentType == "Tank" ? RBIShellValue() : Number(cofValue.failureFreq?.total * RBIShellValue() * cofValue.rbiValue_FMS)
+  const PlanShellRisk = componentType == "Tank" ? PlanShellValue() : Number(cofValue.failureFreq?.total * PlanShellValue() * cofValue.rbiValue_FMS)
 
   const RBIHeadRisk = Number(cofValue.failureFreq?.total * RBIHeadValue * cofValue.rbiValue_FMS)
   const PlanHeadRisk = Number(cofValue.failureFreq?.total * PlanHeadValue * cofValue.rbiValue_FMS)
@@ -435,15 +458,15 @@ function RiskAnalysis() {
     headXAxis: [10, 25] // change green box relative to x axis in head
   });
 
-  const shellRBIY = !isNaN(Number(RBIShellRisk * finalConsequenceM!)) && Number(RBIShellRisk * finalConsequenceM!) 
-  || Number(rbiFset * rbiFinalUpdateValue * finalConsequenceM!)
+  const shellRBIY = !isNaN(Number(RBIShellRisk * consequenceValue!)) && Number(RBIShellRisk * consequenceValue!) 
+  || Number(rbiFset * rbiFinalUpdateValue * consequenceValue!)
   || 0 
-  const shellPlanY = !isNaN(Number(PlanShellRisk * finalConsequenceM!)) && Number(PlanShellRisk * finalConsequenceM!) 
-  || Number(planFset * planFinalUpdateValue * finalConsequenceM!)
+  const shellPlanY = !isNaN(Number(PlanShellRisk * consequenceValue!)) && Number(PlanShellRisk * consequenceValue!) 
+  || Number(planFset * planFinalUpdateValue * consequenceValue!)
   || 0 
 
-  const headRBIY = !isNaN(Number(RBIHeadRisk * finalConsequenceM!)) && Number(RBIHeadRisk * finalConsequenceM!) || 0 
-  const headPlanY = !isNaN(Number(PlanHeadRisk * finalConsequenceM!)) && Number(PlanHeadRisk * finalConsequenceM!) || 0
+  const headRBIY = !isNaN(Number(RBIHeadRisk * consequenceValue!)) && Number(RBIHeadRisk * consequenceValue!) || 0 
+  const headPlanY = !isNaN(Number(PlanHeadRisk * consequenceValue!)) && Number(PlanHeadRisk * consequenceValue!) || 0
 
   const shellRBIX = 0
   const shellPlanX = !isNaN(Number(planAgeTimeInServiceTk!)) && Number(planAgeTimeInServiceTk!) 

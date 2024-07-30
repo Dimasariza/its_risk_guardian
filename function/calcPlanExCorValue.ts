@@ -1,4 +1,4 @@
-import { temperature as temperatureInterpolation } from "@/app/(main)/risk-based-inspection/tab-menu/pof-plan-date/external-corrosion/operatingTemperature";
+import { temperaturePV, temperatureTank } from "@/app/(main)/risk-based-inspection/tab-menu/pof-plan-date/external-corrosion/operatingTemperature";
 import IGeneralData from "@/types/IGeneralData";
 import { conditional, prior } from "@/app/(main)/risk-based-inspection/tab-menu/pof-plan-date/thinning/probabilityTable";
 import ncdf from "./cumulativeDistribution";
@@ -6,8 +6,7 @@ import { calculateThinning } from "./calcPlanThinningValue";
 import IPlanThinning from "@/types/IPlanThinning";
 import IPlanExCor from "@/types/IPlanExCor";
 
-const temperatureList = temperatureInterpolation.map(i => i.operating)
-export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinning, exCor: IPlanExCor ) => {
+export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinning, exCor: IPlanExCor, componentType: string = "") => {
     if(!Object.keys(generalData).length) return {}
 
     const {
@@ -23,6 +22,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     const {
         gData_operatingTemperatureC,
+        gData_operatingTemperatureF,
         gData_headMinimumThicknessInch,
         gData_headMinimumThicknessMM,
         gData_startingDate,
@@ -41,14 +41,21 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         planThinning_nInspD,
     } = thinning
 
+  
     let baseCRb;
-    if( !temperatureList.includes(gData_operatingTemperatureC) ) {
-        baseCRb = interpolationTemperature(generalData)
+    let temperatureList; 
+    
+    if(componentType == "Pressure Vessel") {
+        temperatureList = temperaturePV.map(i => i.operating)
+        baseCRb = interpolationTemperature(gData_operatingTemperatureC, temperaturePV, temperatureList)
+    } else if (componentType == "Tank") {
+        temperatureList = temperatureTank.map(i => i.operating)
+        baseCRb = interpolationTemperature(gData_operatingTemperatureF, temperatureTank, temperatureList)
     }
 
     const finalCR = baseCRb! * (Math.max(exCor?.planExCor_equationDesign, exCor?.planExCor_interface))
 
-    const ageCoat = Math.abs(planDateObj - startingDateObj) * 3.8052E-10 || null
+    const ageCoat = Math.abs(planDateObj - startingDateObj) * 3.168E-11 || null
 
     const adjCoat = Math.min(5, ageCoat!) - Math.min(5, ageCoat! - age!)
 
@@ -56,7 +63,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     const headArt = finalCR * ageTimeInServiceTk! / gData_headMinimumThicknessMM
 
-    const flowStress = ((gData_yieldStrength + gData_tensileStrength) / 2) * gData_jointEfficiency * 1.1
+    const flowStress = ((Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2) * gData_jointEfficiency * 1.1
 
     // const shellStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
 
@@ -127,14 +134,13 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
     }
 }
 
-const interpolationTemperature = (generalData: IGeneralData) => {
-    const { gData_operatingTemperatureC } = generalData;
-    const indexInterpolation = temperatureList.findIndex(i => gData_operatingTemperatureC < i)
+const interpolationTemperature = (T: any, temperatureInterpolation: any, temperatureList: any) => {
+    const indexInterpolation = temperatureList.findIndex((i: any) => T < i)
     const x1 = temperatureInterpolation[indexInterpolation - 1].operating
     const x2 = temperatureInterpolation[indexInterpolation].operating
 
     const y1 = temperatureInterpolation[indexInterpolation - 1].arid
     const y2 = temperatureInterpolation[indexInterpolation].arid
 
-    return y1 + (((gData_operatingTemperatureC - x1) / (x2 - x1)) * (y2 - y1))
+    return y1 + (((T - x1) / (x2 - x1)) * (y2 - y1))
 }

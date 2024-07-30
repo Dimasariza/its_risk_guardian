@@ -75,6 +75,8 @@ function POFValue() {
       })
     } 
   }, [edit, onSubmit])
+  
+  const componentType = data.menu?.comp_componentType
 
   const {
     shellBaseDF,
@@ -87,10 +89,9 @@ function POFValue() {
     generalData,
     thinning,
     exCor,
-    alkaline
+    alkaline,
+    componentType
   })
-
-  const componentType = data.menu?.comp_componentType
 
   return (
     <>

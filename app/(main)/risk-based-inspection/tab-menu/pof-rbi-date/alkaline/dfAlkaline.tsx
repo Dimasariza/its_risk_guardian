@@ -75,6 +75,8 @@ function DFAlkalineCorrosion() {
     } 
   }, [edit, submit])
 
+  const componentType = data.menu?.comp_componentType
+
   const {
     ageTimeInServiceTk,
     shellPWHT,
@@ -82,10 +84,10 @@ function DFAlkalineCorrosion() {
   } = calculateAlkaline({
     generalData,
     thinning,
-    alkaline: value
+    alkaline: value,
+    componentType
   })
 
-  const componentType = data.menu?.comp_componentType
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { temperature as temperatureInterpolation } from "@/app/(main)/risk-based-inspection/tab-menu/pof-rbi-date/external-corrosion/operatingTemperature";
+import { temperaturePV, temperatureTank } from "@/app/(main)/risk-based-inspection/tab-menu/pof-rbi-date/external-corrosion/operatingTemperature";
 import IGeneralData from "@/types/IGeneralData";
 import IRBIThinning from "@/types/IRBIThinning";
 import { calculateThinning } from "./calcRBIThinningValue";
@@ -6,10 +6,9 @@ import IRBIExCor from "@/types/IRBIExCor";
 import { conditional, prior } from "@/app/(main)/risk-based-inspection/tab-menu/pof-rbi-date/thinning/probabilityTable";
 import ncdf from "./cumulativeDistribution";
 
-const temperatureList = temperatureInterpolation.map(i => i.operating)
-export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning, exCor: IRBIExCor ) => {
+export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning, exCor: IRBIExCor, componentType: string = "") => {
     if(!Object.keys(generalData).length) return {}
-
+    
     const {
         age,
         rbiDateObj,
@@ -19,34 +18,47 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
         shellStrengthRatio,
         headStrengthRatio,
         ageTimeInServiceTk,
-        tMinMM
+        tMinMM,
     } = calculateThinning(generalData, thinning)
-
+    
     const {
         gData_operatingTemperatureC,
         gData_headMinimumThicknessInch,
         gData_headMinimumThicknessMM,
         gData_startingDate,
         gData_shellMinimumThicknessMM,
+        gData_shellMinimumThicknessInch,
         gData_yieldStrength,
         gData_tensileStrength,
         gData_jointEfficiency,
         gData_shellTreqMM,
         gData_headTreqMM,
-        gData_lastInspection
+        gData_lastInspection,
+        gData_operatingTemperatureF
     } = generalData;
-
+    
     const {
         rbiThinning_nInspA,
         rbiThinning_nInspB,
         rbiThinning_nInspC,
         rbiThinning_nInspD,
+        rbiThinning_tMinInch,
+        rbiThinning_tMinMM,
     } = thinning
-
+    
     let baseCRb;
-    if( !temperatureList.includes(gData_operatingTemperatureC) ) {
-        baseCRb = interpolationTemperature(generalData)
+    let temperatureList; 
+    
+    if(componentType == "Pressure Vessel") {
+        temperatureList = temperaturePV.map(i => i.operating)
+        baseCRb = interpolationTemperature(gData_operatingTemperatureC, temperaturePV, temperatureList)
+    } else if (componentType == "Tank") {
+        temperatureList = temperatureTank.map(i => i.operating)
+        baseCRb = interpolationTemperature(gData_operatingTemperatureF, temperatureTank, temperatureList)
     }
+
+    // if( !temperatureList?.includes(gData_operatingTemperatureC) ) {
+    // }
 
     const finalCR = baseCRb! * (Math.max(exCor?.rbiExCor_equationDesign, exCor?.rbiExCor_interface))
 
@@ -58,7 +70,7 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
 
     const headArt = finalCR * ageTimeInServiceTk! / gData_headMinimumThicknessMM
 
-    const flowStress = ((gData_yieldStrength + gData_tensileStrength) / 2) * gData_jointEfficiency * 1.1
+    const flowStress = ((Number(gData_yieldStrength) + Number(gData_tensileStrength)) / 2) * gData_jointEfficiency * 1.1
 
     // const shellStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_shellTreqMM, gData_shellTreqMM) / gData_shellMinimumThicknessMM)
     // const headStrengthRatio = ((Number(allowableStressKpa)! * gData_jointEfficiency) / flowStress) * (Math.max(gData_headTreqMM, gData_headTreqMM) / gData_headMinimumThicknessMM)
@@ -94,8 +106,8 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
 
     return {
         age,
-        thicknessMM: gData_headMinimumThicknessMM,
-        thicknessInch: gData_headMinimumThicknessInch,
+        thicknessMM: componentType == "Tank" ? exCor.rbiExCor_tMinInch : gData_shellMinimumThicknessInch,
+        thicknessInch: componentType == "Tank" ? exCor.rbiExCor_tMinMM : gData_shellMinimumThicknessMM,
         baseCRb,
         finalCR,
         ageCoat,
@@ -123,14 +135,13 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
     }
 }
 
-const interpolationTemperature = (generalData: IGeneralData) => {
-    const { gData_operatingTemperatureC } = generalData;
-    const indexInterpolation = temperatureList.findIndex(i => gData_operatingTemperatureC < i)
+const interpolationTemperature = (T: any, temperatureInterpolation: any, temperatureList: any) => {
+    const indexInterpolation = temperatureList.findIndex((i: any) => T < i)
     const x1 = temperatureInterpolation[indexInterpolation - 1].operating
     const x2 = temperatureInterpolation[indexInterpolation].operating
 
     const y1 = temperatureInterpolation[indexInterpolation - 1].arid
     const y2 = temperatureInterpolation[indexInterpolation].arid
 
-    return y1 + (((gData_operatingTemperatureC - x1) / (x2 - x1)) * (y2 - y1))
+    return y1 + (((T - x1) / (x2 - x1)) * (y2 - y1))
 }

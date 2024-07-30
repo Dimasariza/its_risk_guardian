@@ -1,4 +1,4 @@
-export const temperature = [
+export const temperaturePV = [
     {
         operating: -2,
         marine: 0,
@@ -43,6 +43,58 @@ export const temperature = [
     },
     {
         operating: 121,
+        marine: 0,
+        temperate: 0,
+        arid: 0,
+        severe: 0
+    },
+]
+
+export const temperatureTank = [
+    {
+        operating: 10,
+        marine: 0,
+        temperate: 0,
+        arid: 0,
+        severe: 0
+    },
+    {
+        operating: 18,
+        marine: 1,
+        temperate: 0,
+        arid: 0,
+        severe: 3
+    },
+    {
+        operating: 43,
+        marine: 5,
+        temperate: 3,
+        arid: 1,
+        severe: 10
+    },
+    {
+        operating: 90,
+        marine: 5,
+        temperate: 3,
+        arid: 1,
+        severe: 10
+    },
+    {
+        operating: 160,
+        marine: 5,
+        temperate: 2,
+        arid: 1,
+        severe: 10
+    },
+    {
+        operating: 225,
+        marine: 1,
+        temperate: 0,
+        arid: 0,
+        severe: 2
+    },
+    {
+        operating: 250,
         marine: 0,
         temperate: 0,
         arid: 0,

@@ -70,6 +70,8 @@ function DFExternalCorrosion() {
     } 
   }, [edit])
 
+  const componentType = data.menu?.comp_componentType
+
   const {
     thicknessInch,
     thicknessMM,
@@ -98,9 +100,8 @@ function DFExternalCorrosion() {
     rbiShellSection,
     rbiHeadSection,
     ageTimeInServiceTk
-  } = calculateExCor(generalData, thinning, value);
+  } = calculateExCor(generalData, thinning, value, componentType);
 
-  const componentType = data.menu?.comp_componentType
 
   return (
     <>
@@ -125,7 +126,7 @@ function DFExternalCorrosion() {
           })}
         </div>
         <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
-          <OperatingTempTableRef />
+          <OperatingTempTableRef componentType={componentType} />
         </div>
         <div className='flex w-full flex-wrap mt-5'>
           {

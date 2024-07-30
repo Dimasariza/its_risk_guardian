@@ -70,6 +70,8 @@ function DFExternalCorrosion() {
     } 
   }, [edit])
 
+  const componentType = data.menu?.comp_componentType
+
   const {
     thicknessInch,
     thicknessMM,
@@ -98,9 +100,7 @@ function DFExternalCorrosion() {
     headPlanBeta3,
     planShellSection,
     planHeadSection
-  } = calculateExCor(generalData, thinning, value);
-
-  const componentType = data.menu?.comp_componentType
+  } = calculateExCor(generalData, thinning, value, componentType);
 
   return (
     <>
@@ -125,7 +125,7 @@ function DFExternalCorrosion() {
           })}
         </div>
         <div className='flex w-full flex-wrap flex-column gap-2 mt-5'>
-          <OperatingTempTableRef />
+          <OperatingTempTableRef componentType={componentType}/>
         </div>
         <div className='flex w-full flex-wrap mt-5'>
         {
@@ -167,11 +167,11 @@ function DFExternalCorrosion() {
                 value: Number(adjCoat)?.toFixed(4)
               },
               {
-                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Art RBI Date`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Art Plan Date`,
                 value: Number(shellArt)?.toFixed(4)
               },
               {
-                label: "Head Art RBI Date",
+                label: "Head Art Plan Date",
                 value: Number(headArt)?.toFixed(4),
                 viewonly: ["Pipe", "Tank"]
               },
@@ -213,29 +213,29 @@ function DFExternalCorrosion() {
                 value: Number(posteriorP3)?.toFixed(4)
               },
               {
-                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} RBI Date β1`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Plan Date β1`,
                 value: Number(shellPlanBeta1)?.toFixed(4)
               },
               {
-                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} RBI Date β2`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Plan Date β2`,
                 value: Number(shellPlanBeta2)?.toFixed(4)
               },
               {
-                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} RBI Date β3`,
+                label: `${["Pipe", "Tank"].includes(componentType) ? "" : "Shell"} Plan Date β3`,
                 value: Number(shellPlanBeta3)?.toFixed(4)
               },
               {
-                label: "Head RBI Date β1",
+                label: "Head Plan Date β1",
                 value: Number(headPlanBeta1)?.toFixed(4),
                 viewonly: ["Pipe", "Tank"]
               },
               {
-                label: "Head RBI Date β2",
+                label: "Head Plan Date β2",
                 value: Number(headPlanBeta2)?.toFixed(4),
                 viewonly: ["Pipe", "Tank"]
               },
               {
-                label: "Head RBI Date β3",
+                label: "Head Plan Date β3",
                 value: Number(headPlanBeta3)?.toFixed(4),
                 viewonly: ["Pipe", "Tank"]
               },

@@ -10,7 +10,6 @@ import InputValueOnly from '@/app/(main)/uikit/input/inputValueOnly';
 import InspectionEffectivenessTable from './inspectionEfectivenessTableRef';
 import { GeneralDataService } from '@/service/calculation/generalData-service';
 import IGeneralData from '@/types/IGeneralData';
-import IRBIThinning from '@/types/IRBIThinning';
 import { Toast } from 'primereact/toast';
 import { convertDateToString } from '@/function/common';
 import { getThinning, updateThinning } from '@/service/calculation/pofPlanDate-service';
@@ -19,7 +18,7 @@ import IPlanThinning from '@/types/IPlanThinning';
 import InputCalendar from '@/app/(main)/uikit/input/input-calendar';
 
 function DFThinning() {
-  const [thinning, setThinning] = useState<IRBIThinning | any>({});
+  const [thinning, setThinning] = useState<any>({});
   const [generalData, setGeneralData] = useState<IGeneralData | any>({});
   const [error, setError] = useState<any>({});
 
@@ -76,6 +75,8 @@ function DFThinning() {
     } 
   }, [edit])
 
+  const componentType = data.menu?.comp_componentType
+
   const {
     lastInspection,
     age,
@@ -101,9 +102,7 @@ function DFThinning() {
     shellBaseDF,
     headBaseDF,
     ageTimeInServiceTk
-  } = calculateThinning(generalData as IGeneralData, thinning as IPlanThinning)
-
-  const componentType = data.menu?.comp_componentType
+  } = calculateThinning(generalData as IGeneralData, thinning as IPlanThinning, componentType)
 
   return (
     <section className=" p-3">

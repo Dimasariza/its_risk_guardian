@@ -5,10 +5,10 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Row } from "primereact/row";
 import { useState } from "react";
-import { temperature } from "./operatingTemperature";
+import { temperaturePV, temperatureTank } from "./operatingTemperature";
 import { useSelector } from "react-redux";
 
-function OperatingTempTableRef() {
+function OperatingTempTableRef({componentType} : any) {
     const [visible, setVisible] = useState<boolean>(false);
     const { edit } = useSelector((state: any) => state.EditReducer);
 
@@ -23,7 +23,7 @@ function OperatingTempTableRef() {
     const headerGroup = (
         <ColumnGroup>
             <Row>
-                <Column header="" rowSpan={2} style={{ width: '3rem' }}/>
+                {/* <Column header="" rowSpan={2} style={{ width: '3rem' }}/> */}
                 <Column header="Operating Temperature (°C)" rowSpan={2} style={{width: "10rem"}}/>
                 <Column header="Corrosion Rate as a Function of Driver (1) (mpy)" colSpan={4} />
             </Row>
@@ -48,12 +48,12 @@ function OperatingTempTableRef() {
                 >
                 <div>
                 <DataTable 
-                    value={temperature.map((i: any, no: number) => ({...i, no: no + 1 + "."}))} 
+                    value={componentType == "Pressure Vessel" ? temperaturePV : temperatureTank} 
                     scrollable 
                     tableStyle={{ minWidth:  '50rem' }} 
                     headerColumnGroup={headerGroup}
                 >
-                    <Column field="no" header="No"></Column>
+                    {/* <Column field="no" header="No"></Column> */}
                     <Column field="operating" ></Column>
                     <Column field="marine" ></Column>
                     <Column field="temperate" ></Column>

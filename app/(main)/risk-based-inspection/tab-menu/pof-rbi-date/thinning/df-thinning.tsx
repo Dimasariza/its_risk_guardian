@@ -75,6 +75,8 @@ function DFThinning() {
     } 
   }, [edit])
 
+  const componentType = data.menu?.comp_componentType
+
   const {
     lastInspection,
     age,
@@ -100,9 +102,7 @@ function DFThinning() {
     shellBaseDF,
     headBaseDF,
     ageTimeInServiceTk
-  } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning)
-
-  const componentType = data.menu?.comp_componentType
+  } = calculateThinning(generalData as IGeneralData, thinning as IRBIThinning, componentType)
 
   return (
     <section className=" p-3">

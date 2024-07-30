@@ -3,7 +3,7 @@ import IGeneralData from "@/types/IGeneralData";
 import IPlanThinning from "@/types/IPlanThinning";
 import * as formulaJs from '@formulajs/formulajs'
 
-export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThinning) => {
+export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThinning, componentType: string = "") => {
     if(!Object?.keys(generalData).length || !Object?.keys(thinning).length ) return {}
     const {
         gData_lastInspection,
@@ -29,6 +29,7 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         planThinning_nInspB,
         planThinning_nInspC,
         planThinning_nInspD,
+        planThinning_tMinMM
     } = thinning as IPlanThinning;
 
     const lastInspDateObj: Date | any = new Date(gData_lastInspection);
@@ -51,20 +52,23 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
     const allowableStressPsig = gData_allowableStressKpa / 6.89475729
     
     const shellRequiredWallThickness = gData_headTreqMM // change to head 
-    || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
+    || planThinning_tMinMM
+    // || (gData_designPressurePsi * gData_outerDiameterMM * elipticalhead) / ((2 * allowableStressPsig * gData_jointEfficiency) - (0.2 * gData_designPressurePsi))
     const headRequiredWallThickness = gData_headTreqMM
 
     const shellStrengthRatioPV: number  = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
     (Number(shellRequiredWallThickness), Number(shellRequiredWallThickness)) / gData_shellMinimumThicknessMM;
+
     const shellStrengthRatio: number = Number(shellStrengthRatioPV.toFixed(3))
 
     const headStrengthRatioPV: number = (Number(allowableStressKpa) * Number(gData_jointEfficiency)) / flowStress! * Math.max
     (Number(headRequiredWallThickness), Number(headRequiredWallThickness)) / gData_headMinimumThicknessMM;
     const headStrengthRatio: number = Number(headStrengthRatioPV.toFixed(3))
 
-    const inspEffectiveness1: number | null = prior[0].medium * (conditional[0].a ** planThinning_nInspA) * (conditional[0].b ** planThinning_nInspB) * (conditional[0].c ** planThinning_nInspC) * (conditional[0].d ** planThinning_nInspD) || null;
-    const inspEffectiveness2: number | null = prior[1].medium * (conditional[1].a ** planThinning_nInspA) * (conditional[1].b ** planThinning_nInspB) * (conditional[1].c ** planThinning_nInspC) * (conditional[1].d ** planThinning_nInspD) || null;
-    const inspEffectiveness3: number | null = prior[2].medium * (conditional[2].a ** planThinning_nInspA) * (conditional[2].b ** planThinning_nInspB) * (conditional[2].c ** planThinning_nInspC) * (conditional[2].d ** planThinning_nInspD) || null;
+    const confidenceData = componentType == "Tank" ? "high" : "medium"
+    const inspEffectiveness1: number | null = prior[0][confidenceData] * (conditional[0].a ** planThinning_nInspA) * (conditional[0].b ** planThinning_nInspB) * (conditional[0].c ** planThinning_nInspC) * (conditional[0].d ** planThinning_nInspD) || null;
+    const inspEffectiveness2: number | null = prior[1][confidenceData] * (conditional[1].a ** planThinning_nInspA) * (conditional[1].b ** planThinning_nInspB) * (conditional[1].c ** planThinning_nInspC) * (conditional[1].d ** planThinning_nInspD) || null;
+    const inspEffectiveness3: number | null = prior[2][confidenceData] * (conditional[2].a ** planThinning_nInspA) * (conditional[2].b ** planThinning_nInspB) * (conditional[2].c ** planThinning_nInspC) * (conditional[2].d ** planThinning_nInspD) || null;
 
     const postProbability1: number | null = inspEffectiveness1! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
     const postProbability2: number | null = inspEffectiveness2! / (inspEffectiveness1! + inspEffectiveness2! + inspEffectiveness3!) || null;
