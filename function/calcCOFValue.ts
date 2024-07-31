@@ -199,6 +199,7 @@ export const calculateCOF = ({generalData, cofValue, componentType = ""}: ICofCa
     const basedOnDNRupturemm = ((PI * cof_releaseHoleSizeD4 ** 2)) / 4
     const basedOnDNRupturem = basedOnDNRupturemm / 1000
 
+    const C1 = 31623
     const C2 = 1
     const C3 = 4536 // kg
     const C4 = 2.205 // 1/kg
@@ -210,21 +211,37 @@ export const calculateCOF = ({generalData, cofValue, componentType = ""}: ICofCa
     const Ps = cof_ps ? cof_ps * 6.895 : gData_operatingPressureBar * 14.5037738 * 6.895
     const idealGasHeatRatio = 1.19953997
     const universalGasConstant = 8.314
+    const liquidDensity = 775.019
+    const Patm = 101.28755
+    const correctionFactor = 1
 
-    const releaseRateWnSmall = ((Cd / C2) * basedOnDNSmallm * Ps) 
+    const releaseRateWnSmall = componentType == "Pipe" 
+    ? Cd * correctionFactor * liquidDensity * (basedOnDNSmallmm / C1) * ((2 * Gc * (Ps - Patm)) / liquidDensity) ** 0.5
+    : ((Cd / C2) * basedOnDNSmallm * Ps) 
     * (((Number(idealGasHeatRatio) * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
     * (2 / (Number(idealGasHeatRatio) + 1)) ** ((Number(idealGasHeatRatio) + 1) / (Number(idealGasHeatRatio) - 1))) ** 0.5
-    const releaseRateWnMedium = ((Cd / C2) * basedOnDNMediumm * Ps) 
-    * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
-    * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
-    const releaseRateWnLarge = ((Cd / C2) * basedOnDNLargem * Ps) 
-    * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
-    * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
-    const releaseRateWnRupture = ((Cd / C2) * basedOnDNRupturem * Ps) 
+    
+    const releaseRateWnMedium = componentType == "Pipe" 
+    ? Cd * correctionFactor * liquidDensity * (basedOnDNMediummm / C1) * ((2 * Gc * (Ps - Patm)) / liquidDensity) ** 0.5 
+    : ((Cd / C2) * basedOnDNMediumm * Ps) 
     * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
     
-    const wMax = ((Cd / C2) * 0.03244 * Ps)
+    const releaseRateWnLarge = componentType == "Pipe" 
+    ? Cd * correctionFactor * liquidDensity * (basedOnDNLargemm / C1) * ((2 * Gc * (Ps - Patm)) / liquidDensity) ** 0.5 
+    : ((Cd / C2) * basedOnDNLargem * Ps) 
+    * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
+    * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
+    
+    const releaseRateWnRupture = componentType == "Pipe" 
+    ? Cd * correctionFactor * liquidDensity * (basedOnDNRupturemm / C1) * ((2 * Gc * (Ps - Patm)) / liquidDensity) ** 0.5 
+    : ((Cd / C2) * basedOnDNRupturem * Ps) 
+    * (((idealGasHeatRatio * mw! * Gc) / (universalGasConstant * gData_operatingTempOnK)) 
+    * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
+    
+    const wMax = componentType == "Pipe" 
+    ? Cd * correctionFactor * liquidDensity * (basedOnDNRupturemm / C1) * ((2 * Gc * (Ps - Patm)) / liquidDensity) ** 0.5 
+    : ((Cd / C2) * 0.03244 * Ps)
     * (((idealGasHeatRatio * mw * Gc) / (universalGasConstant * gData_operatingTempOnK))
     * (2 / (idealGasHeatRatio + 1)) ** ((idealGasHeatRatio + 1) / (idealGasHeatRatio - 1))) ** 0.5
     
@@ -269,63 +286,168 @@ export const calculateCOF = ({generalData, cofValue, componentType = ""}: ICofCa
     const { 
         CAINLGA: d_CAINLGA, 
         CAINLGB: d_CAINLGB, 
+        CAINLLA: d_CAINLLA, 
+        CAINLLB: d_CAINLLB, 
         CAILGA: d_CAILGA, 
         CAILGB: d_CAILGB, 
+        CAILLA: d_CAILLA, 
+        CAILLB: d_CAILLB, 
         IAINLGA: d_IAINLGA, 
         IAINLGB: d_IAINLGB, 
+        IAINLLA: d_IAINLLA, 
+        IAINLLB: d_IAINLLB, 
         IAILGA: d_IAILGA, 
-        IAILGB: d_IAILGB 
+        IAILGB: d_IAILGB,
+        IAILLA: d_IAILLA, 
+        IAILLB: d_IAILLB, 
     } = cofValue?.damage?.data || {}
-    const CAAINL_C_Small = d_CAINLGA * ((adjReleaseRateSmall ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAINL_C_Medium = d_CAINLGA * ((adjReleaseRateMedium ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAINL_C_Large = d_CAINLGA * ((adjReleaseRateLarge ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAINL_C_Rupture = d_CAINLGA * ((adjReleaseRateRupture ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAINL_C_Small = componentType == "Pipe"
+    ? d_CAINLLA * ((adjReleaseRateSmall ** d_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAINLGA * ((adjReleaseRateSmall ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAINL_C_Medium = componentType == "Pipe"
+    ? d_CAINLLA * ((adjReleaseRateMedium ** d_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAINLGA * ((adjReleaseRateMedium ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAINL_C_Large = componentType == "Pipe"
+    ? d_CAINLLA * ((adjReleaseRateLarge ** d_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAINLGA * ((adjReleaseRateLarge ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAINL_C_Rupture = componentType == "Pipe"
+    ? d_CAINLLA * ((adjReleaseRateRupture ** d_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAINLGA * ((adjReleaseRateRupture ** d_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
     
-    const CAAIL_C_Small = d_CAILGA * ((adjReleaseRateSmall ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAIL_C_Medium = d_CAILGA * ((adjReleaseRateMedium ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAIL_C_Large = d_CAILGA * ((adjReleaseRateLarge ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAIL_C_Rupture = d_CAILGA * ((adjReleaseRateRupture ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAIL_C_Small = componentType == "Pipe"
+    ? d_CAILLA * ((adjReleaseRateSmall ** d_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAILGA * ((adjReleaseRateSmall ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
 
-    const IAAINL_C_Small = (d_IAINLGA * releaseMassSmall ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
-    const IAAINL_C_Medium = (d_IAINLGA * releaseMassMedium ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
-    const IAAINL_C_Large = (d_IAINLGA * releaseMassLarge ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
-    const IAAINL_C_Rupture = (d_IAINLGA * releaseMassRupture ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    const CAAIL_C_Medium = componentType == "Pipe"
+    ? d_CAILLA * ((adjReleaseRateMedium ** d_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAILGA * ((adjReleaseRateMedium ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
 
-    const IAAIL_C_Small = (d_IAILGA * releaseMassSmall ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
-    const IAAIL_C_Medium = (d_IAILGA * releaseMassMedium ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
-    const IAAIL_C_Large = (d_IAILGA * releaseMassLarge ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
-    const IAAIL_C_Rupture = (d_IAILGA * releaseMassRupture ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    const CAAIL_C_Large = componentType == "Pipe"
+    ? d_CAILLA * ((adjReleaseRateLarge ** d_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAILGA * ((adjReleaseRateLarge ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAIL_C_Rupture = componentType == "Pipe"
+    ? d_CAILLA * ((adjReleaseRateRupture ** d_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : d_CAILGA * ((adjReleaseRateRupture ** d_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const IAAINL_C_Small = componentType == "Pipe"
+    ? (d_IAINLLA * releaseMassSmall ** d_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    : (d_IAINLGA * releaseMassSmall ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    
+    const IAAINL_C_Medium = componentType == "Pipe"
+    ? (d_IAINLLA * releaseMassMedium ** d_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    : (d_IAINLGA * releaseMassMedium ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+
+    const IAAINL_C_Large = componentType == "Pipe"
+    ? (d_IAINLLA * releaseMassLarge ** d_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    : (d_IAINLGA * releaseMassLarge ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+
+    const IAAINL_C_Rupture = componentType == "Pipe"
+    ? (d_IAINLLA * releaseMassRupture ** d_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    : (d_IAINLGA * releaseMassRupture ** d_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+
+    const IAAIL_C_Small = componentType == "Pipe"
+    ? (d_IAILLA * releaseMassSmall ** d_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    : (d_IAILGA * releaseMassSmall ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+
+    const IAAIL_C_Medium = componentType == "Pipe"
+    ? (d_IAILLA * releaseMassMedium ** d_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    : (d_IAILGA * releaseMassMedium ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+
+    const IAAIL_C_Large = componentType == "Pipe"
+    ? (d_IAILLA * releaseMassLarge ** d_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    : (d_IAILGA * releaseMassLarge ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+
+    const IAAIL_C_Rupture = componentType == "Pipe"
+    ? (d_IAILLA * releaseMassRupture ** d_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    : (d_IAILGA * releaseMassRupture ** d_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
 
     const { 
         CAINLGA: f_CAINLGA, 
         CAINLGB: f_CAINLGB, 
+        CAINLLA: f_CAINLLA, 
+        CAINLLB: f_CAINLLB, 
         CAILGA: f_CAILGA, 
-        CAILGB: f_CAILGB, 
+        CAILGB: f_CAILGB,
+        CAILLA: f_CAILLA, 
+        CAILLB: f_CAILLB, 
         IAINLGA: f_IAINLGA, 
-        IAINLGB: f_IAINLGB, 
+        IAINLGB: f_IAINLGB,
+        IAINLLA: f_IAINLLA, 
+        IAINLLB: f_IAINLLB, 
         IAILGA: f_IAILGA, 
-        IAILGB: f_IAILGB 
+        IAILGB: f_IAILGB,
+        IAILLA: f_IAILLA, 
+        IAILLB: f_IAILLB, 
     } = cofValue?.flamable?.data || {}
 
-    const CAAINL_P_Small = f_CAINLGA * ((adjReleaseRateSmall ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAINL_P_Medium = f_CAINLGA * ((adjReleaseRateMedium ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAINL_P_Large = f_CAINLGA * ((adjReleaseRateLarge ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAINL_P_Rupture = f_CAINLGA * ((adjReleaseRateRupture ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
-    
-    const CAAIL_P_Small = f_CAILGA * ((adjReleaseRateSmall ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAIL_P_Medium = f_CAILGA * ((adjReleaseRateMedium ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAIL_P_Large = f_CAILGA * ((adjReleaseRateLarge ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
-    const CAAIL_P_Rupture = f_CAILGA * ((adjReleaseRateRupture ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+    const CAAINL_P_Small = componentType == "Pipe"
+    ? f_CAINLLA * ((adjReleaseRateSmall ** f_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAINLGA * ((adjReleaseRateSmall ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
 
-    const IAAINL_P_Small = (f_IAINLGA * releaseMassSmall ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
-    const IAAINL_P_Medium = (f_IAINLGA * releaseMassMedium ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
-    const IAAINL_P_Large = (f_IAINLGA * releaseMassLarge ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
-    const IAAINL_P_Rupture = (f_IAINLGA * releaseMassRupture ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    const CAAINL_P_Medium = componentType == "Pipe"
+    ? f_CAINLLA * ((adjReleaseRateMedium ** f_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAINLGA * ((adjReleaseRateMedium ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
 
-    const IAAIL_P_Small = (f_IAILGA * releaseMassSmall ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
-    const IAAIL_P_Medium = (f_IAILGA * releaseMassMedium ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
-    const IAAIL_P_Large = (f_IAILGA * releaseMassLarge ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
-    const IAAIL_P_Rupture = (f_IAILGA * releaseMassRupture ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    const CAAINL_P_Large = componentType == "Pipe"
+    ? f_CAINLLA * ((adjReleaseRateLarge ** f_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAINLGA * ((adjReleaseRateLarge ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAINL_P_Rupture = componentType == "Pipe"
+    ? f_CAINLLA * ((adjReleaseRateRupture ** f_CAINLLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAINLGA * ((adjReleaseRateRupture ** f_CAINLGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAIL_P_Small = componentType == "Pipe"
+    ? f_CAILLA * ((adjReleaseRateSmall ** f_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAILGA * ((adjReleaseRateSmall ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAIL_P_Medium = componentType == "Pipe"
+    ? f_CAILLA * ((adjReleaseRateMedium ** f_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAILGA * ((adjReleaseRateMedium ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAIL_P_Large = componentType == "Pipe"
+    ? f_CAILLA * ((adjReleaseRateLarge ** f_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAILGA * ((adjReleaseRateLarge ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const CAAIL_P_Rupture = componentType == "Pipe"
+    ? f_CAILLA * ((adjReleaseRateRupture ** f_CAILLB) * (1 - cofValue?.mitigation?.factorLimit))
+    : f_CAILGA * ((adjReleaseRateRupture ** f_CAILGB) * (1 - cofValue?.mitigation?.factorLimit))
+
+    const IAAINL_P_Small = componentType == "Pipe"
+    ? (f_IAINLLA * releaseMassSmall ** f_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    : (f_IAINLGA * releaseMassSmall ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+
+    const IAAINL_P_Medium = componentType == "Pipe"
+    ? (f_IAINLLA * releaseMassMedium ** f_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    : (f_IAINLGA * releaseMassMedium ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+
+    const IAAINL_P_Large = componentType == "Pipe"
+    ? (f_IAINLLA * releaseMassLarge ** f_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    : (f_IAINLGA * releaseMassLarge ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+
+    const IAAINL_P_Rupture = componentType == "Pipe"
+    ? (f_IAINLLA * releaseMassRupture ** f_IAINLLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    : (f_IAINLGA * releaseMassRupture ** f_IAINLGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+
+    const IAAIL_P_Small = componentType == "Pipe"
+    ? (f_IAILLA * releaseMassSmall ** f_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+    : (f_IAILGA * releaseMassSmall ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencySmall))
+
+    const IAAIL_P_Medium = componentType == "Pipe"
+    ? (f_IAILLA * releaseMassMedium ** f_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+    : (f_IAILGA * releaseMassMedium ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyMedium))
+
+    const IAAIL_P_Large = componentType == "Pipe"
+    ? (f_IAILLA * releaseMassLarge ** f_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+    : (f_IAILGA * releaseMassLarge ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyLarge))
+
+    const IAAIL_P_Rupture = componentType == "Pipe"
+    ? (f_IAILLA * releaseMassRupture ** f_IAILLB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
+    : (f_IAILGA * releaseMassRupture ** f_IAILGB * ((1 - cofValue?.mitigation?.factorLimit) / energyEfficiencyRupture))
 
     const factICSmall = Math.min((adjReleaseRateSmall / C5), 1)
     const factICMedium = Math.min((adjReleaseRateMedium / C5), 1)

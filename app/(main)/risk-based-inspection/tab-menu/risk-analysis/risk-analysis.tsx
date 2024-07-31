@@ -184,7 +184,7 @@ function RiskAnalysis() {
   useEffect(() => {
     if(!componentId) return;
 
-    if(["Pressure Vessel", "Tank"].includes(componentType))
+    if(["Pressure Vessel", "Tank", "Pipe"].includes(componentType))
     Promise.all([
       GeneralDataService.fetchData(componentId),
       getRBIThinning(componentId),
@@ -375,16 +375,14 @@ function RiskAnalysis() {
   
   const viewonlyForAll = ["Pressure Vessel"]
 
-  console.log(cofValue)
-  
   const RBIShellValue: any = () => {
-    if(["Pressure Vessel"].includes(componentType)) return RBIShellTotal
+    if(["Pressure Vessel", "Pipe"].includes(componentType)) return RBIShellTotal
     if(["Tank"].includes(componentType)) return cofValue.failureFreq?.total * RBIShellTotal * cofValue?.rbiValue_FMS 
     if(["Pressure Relief Device"].includes(componentType)) return rbiPofFire + rbiPofOverFilling + polRBIValue
   }  
 
   const PlanShellValue: any = () => {
-    if(["Pressure Vessel"].includes(componentType)) return PlanShellTotal
+    if(["Pressure Vessel", "Pipe"].includes(componentType)) return PlanShellTotal
     if(["Tank"].includes(componentType)) return cofValue.failureFreq?.total * PlanShellTotal * cofValue?.rbiValue_FMS 
     if(["Pressure Relief Device"].includes(componentType)) return planPofFire + planPofOverFilling + polPlanValue
   }  

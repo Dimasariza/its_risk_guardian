@@ -276,7 +276,7 @@ const damageTable = [
             IAINLGA: 0.061,
             IAINLGB: 0.91,
             IAINLLA: 0.021,
-            IAINLLB: 0.006,
+            IAINLLB: 0.91,
             IAILGA: 3.052,
             IAILGB: 0.91,
             IAILLA: 1.068,

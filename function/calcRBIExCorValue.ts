@@ -49,10 +49,10 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IRBIThinning
     let baseCRb;
     let temperatureList; 
     
-    if(componentType == "Pressure Vessel") {
+    if(["Pressure Vessel", "Pipe"].includes(componentType)) {
         temperatureList = temperaturePV.map(i => i.operating)
         baseCRb = interpolationTemperature(gData_operatingTemperatureC, temperaturePV, temperatureList)
-    } else if (componentType == "Tank") {
+    } else if (["Tank"].includes(componentType)) {
         temperatureList = temperatureTank.map(i => i.operating)
         baseCRb = interpolationTemperature(gData_operatingTemperatureF, temperatureTank, temperatureList)
     }

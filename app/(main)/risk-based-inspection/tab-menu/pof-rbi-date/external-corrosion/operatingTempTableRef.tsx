@@ -48,7 +48,7 @@ function OperatingTempTableRef({componentType} : any) {
                 >
                 <div>
                 <DataTable 
-                    value={componentType == "Pressure Vessel" ? temperaturePV : temperatureTank} 
+                    value={["Pressure Vessel", "Pipe"].includes(componentType) ? temperaturePV : temperatureTank} 
                     scrollable 
                     tableStyle={{ minWidth:  '50rem' }} 
                     headerColumnGroup={headerGroup}

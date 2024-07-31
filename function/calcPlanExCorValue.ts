@@ -27,11 +27,12 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
         gData_headMinimumThicknessMM,
         gData_startingDate,
         gData_shellMinimumThicknessMM,
+        gData_shellMinimumThicknessInch,
         gData_yieldStrength,
         gData_tensileStrength,
         gData_jointEfficiency,
         gData_shellTreqMM,
-        gData_headTreqMM
+        gData_headTreqMM,
     } = generalData;
 
     const {
@@ -45,10 +46,10 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
     let baseCRb;
     let temperatureList; 
     
-    if(componentType == "Pressure Vessel") {
+    if(["Pressure Vessel", "Pipe"].includes(componentType)) {
         temperatureList = temperaturePV.map(i => i.operating)
         baseCRb = interpolationTemperature(gData_operatingTemperatureC, temperaturePV, temperatureList)
-    } else if (componentType == "Tank") {
+    } else if (["Tank"].includes(componentType)) {
         temperatureList = temperatureTank.map(i => i.operating)
         baseCRb = interpolationTemperature(gData_operatingTemperatureF, temperatureTank, temperatureList)
     }
@@ -105,8 +106,8 @@ export const calculateExCor = (generalData: IGeneralData, thinning: IPlanThinnin
 
     return {
         age,
-        thicknessMM: gData_headMinimumThicknessMM,
-        thicknessInch: gData_headMinimumThicknessInch,
+        thicknessMM: componentType == "Tank" ? exCor.planExCor_tMinMM : gData_shellMinimumThicknessMM,
+        thicknessInch: componentType == "Tank" ? exCor.planExCor_tMinInch : gData_shellMinimumThicknessInch,
         baseCRb,
         finalCR,
         ageCoat,

@@ -29,7 +29,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         planThinning_nInspB,
         planThinning_nInspC,
         planThinning_nInspD,
-        planThinning_tMinMM
+        planThinning_tMinMM,
+        planThinning_tMinInch
     } = thinning as IPlanThinning;
 
     const lastInspDateObj: Date | any = new Date(gData_lastInspection);
@@ -117,8 +118,8 @@ export const calculateThinning = (generalData: IGeneralData, thinning: IPlanThin
         lastInspDateObj,
         planDateObj,
         age,
-        tMinInch: gData_shellMinimumThicknessInch,
-        tMinMM: gData_shellMinimumThicknessMM,
+        tMinInch: ["Tank", "Pipe"].includes(componentType) ? planThinning_tMinInch : gData_shellMinimumThicknessInch,
+        tMinMM: ["Tank", "Pipe"].includes(componentType) ? planThinning_tMinMM : gData_shellMinimumThicknessInch,
         shellArt,
         headArt,
         flowStress,
