@@ -877,125 +877,130 @@ function COFPV({toast}: any) {
             }
         </div> */}
 
-        <h5>Effective duration of the toxic release</h5>
-        <div className="flex flex-wrap">
         {
-                [
-                    {
-                        label: "Small Release Hole Size",
-                        value: Number(durationToxicSmall)?.toFixed(6)
-                    },
-                    {
-                        label: "Medium Release Hole Size",
-                        value: Number(durationToxicMedium)?.toFixed(6)  
-                    },
-                    {
-                        label: "Large Release Hole Size",
-                        value: Number(durationToxicLarge)?.toFixed(6)
-                    },
-                    {
-                        label: "Rupture Release Hole Size",
-                        value: Number(durationToxicRupture)?.toFixed(6)
-                    },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
-            }
-        </div>
+            componentType != "Pipe" &&
+            <div className="mt-4">
+                <h5>Effective duration of the toxic release</h5>
+                <div className="flex flex-wrap">
+                {
+                        [
+                            {
+                                label: "Small Release Hole Size",
+                                value: Number(durationToxicSmall)?.toFixed(6)
+                            },
+                            {
+                                label: "Medium Release Hole Size",
+                                value: Number(durationToxicMedium)?.toFixed(6)  
+                            },
+                            {
+                                label: "Large Release Hole Size",
+                                value: Number(durationToxicLarge)?.toFixed(6)
+                            },
+                            {
+                                label: "Rupture Release Hole Size",
+                                value: Number(durationToxicRupture)?.toFixed(6)
+                            },
+                        ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+                    }
+                </div>
 
-        <h5>Toxic release Raste</h5>
-        <div className="flex flex-wrap">
-        {
-                [
-                    {
-                        label: "Small Release Hole Size",
-                        value: Number(toxicReleaseRateSmall)?.toFixed(5)
-                    },
-                    {
-                        label: "Medium Release Hole Size",
-                        value: Number(toxicReleaseRateMedium)?.toFixed(5)  
-                    },
-                    {
-                        label: "Large Release Hole Size",
-                        value: Number(toxicReleaseRateLarge)?.toFixed(5)
-                    },
-                    {
-                        label: "Rupture Release Hole Size",
-                        value: Number(toxicReleaseRateRupture)?.toFixed(5)
-                    },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
-            }
-        </div>
+                <h5>Toxic release Raste</h5>
+                <div className="flex flex-wrap">
+                {
+                        [
+                            {
+                                label: "Small Release Hole Size",
+                                value: Number(toxicReleaseRateSmall)?.toFixed(5)
+                            },
+                            {
+                                label: "Medium Release Hole Size",
+                                value: Number(toxicReleaseRateMedium)?.toFixed(5)  
+                            },
+                            {
+                                label: "Large Release Hole Size",
+                                value: Number(toxicReleaseRateLarge)?.toFixed(5)
+                            },
+                            {
+                                label: "Rupture Release Hole Size",
+                                value: Number(toxicReleaseRateRupture)?.toFixed(5)
+                            },
+                        ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+                    }
+                </div>
 
-        <h5>Toxic release Mass</h5>
-        <div className="flex flex-wrap">
-        {
-                [
-                    {
-                        label: "Small Release Hole Size",
-                        value: Number(toxicReleaseMassSmall)?.toFixed(6)
-                    },
-                    {
-                        label: "Medium Release Hole Size",
-                        value: Number(toxicReleaseMassMedium)?.toFixed(6)  
-                    },
-                    {
-                        label: "Large Release Hole Size",
-                        value: Number(toxicReleaseMassLarge)?.toFixed(6)
-                    },
-                    {
-                        label: "Rupture Release Hole Size",
-                        value: Number(toxicReleaseMassRupture)?.toFixed(6)
-                    },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
-            }
-        </div>        
-        
-        <h5>Toxic consequence area</h5>
-        <div className="flex flex-wrap">
-        {
-                [
-                    {
-                        label: "Small Release Hole Size",
-                        value: Number(toxicConsAreqSmall)?.toFixed(6)
-                    },
-                    {
-                        label: "Medium Release Hole Size",
-                        value: Number(toxicConsAreqMedium)?.toFixed(6)  
-                    },
-                    {
-                        label: "Large Release Hole Size",
-                        value: Number(toxicConsAreqLarge)?.toFixed(6)
-                    },
-                    {
-                        label: "Rupture Release Hole Size",
-                        value: Number(toxicConsAreqRupture)?.toFixed(6)
-                    },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
-            }
-        </div>
-        
-        <h5>FOR STEAM</h5>
-        <div className="flex flex-wrap">
-        {
-                [
-                    {
-                        label: "Small Release Hole Size",
-                        value: Number(forSteamSmall)?.toFixed(6)
-                    },
-                    {
-                        label: "Medium Release Hole Size",
-                        value: Number(forSteamMedium)?.toFixed(6)
-                    },
-                    {
-                        label: "Large Release Hole Size",
-                        value: Number(forSteamLarge)?.toFixed(6)
-                    },
-                    {
-                        label: "Rupture Release Hole Size",
-                        value: Number(forSteamRupture)?.toFixed(6)
-                    },
-                ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
-            }
-        </div>
+                <h5>Toxic release Mass</h5>
+                <div className="flex flex-wrap">
+                {
+                        [
+                            {
+                                label: "Small Release Hole Size",
+                                value: Number(toxicReleaseMassSmall)?.toFixed(6)
+                            },
+                            {
+                                label: "Medium Release Hole Size",
+                                value: Number(toxicReleaseMassMedium)?.toFixed(6)  
+                            },
+                            {
+                                label: "Large Release Hole Size",
+                                value: Number(toxicReleaseMassLarge)?.toFixed(6)
+                            },
+                            {
+                                label: "Rupture Release Hole Size",
+                                value: Number(toxicReleaseMassRupture)?.toFixed(6)
+                            },
+                        ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+                    }
+                </div>        
+                
+                <h5>Toxic consequence area</h5>
+                <div className="flex flex-wrap">
+                {
+                        [
+                            {
+                                label: "Small Release Hole Size",
+                                value: Number(toxicConsAreqSmall)?.toFixed(6)
+                            },
+                            {
+                                label: "Medium Release Hole Size",
+                                value: Number(toxicConsAreqMedium)?.toFixed(6)  
+                            },
+                            {
+                                label: "Large Release Hole Size",
+                                value: Number(toxicConsAreqLarge)?.toFixed(6)
+                            },
+                            {
+                                label: "Rupture Release Hole Size",
+                                value: Number(toxicConsAreqRupture)?.toFixed(6)
+                            },
+                        ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+                    }
+                </div>
+                
+                <h5>FOR STEAM</h5>
+                <div className="flex flex-wrap">
+                {
+                        [
+                            {
+                                label: "Small Release Hole Size",
+                                value: Number(forSteamSmall)?.toFixed(6)
+                            },
+                            {
+                                label: "Medium Release Hole Size",
+                                value: Number(forSteamMedium)?.toFixed(6)
+                            },
+                            {
+                                label: "Large Release Hole Size",
+                                value: Number(forSteamLarge)?.toFixed(6)
+                            },
+                            {
+                                label: "Rupture Release Hole Size",
+                                value: Number(forSteamRupture)?.toFixed(6)
+                            },
+                        ].map(({label, value}: any, key) => <InputValueOnly label={label} value={ value && !isNaN(value) ? value : "-" } key={key}/>)
+                    }
+                </div>
+            </div>
+        }
         
         {/* <h5>FOR ACIDS AND CAUSTIC</h5>
         <div className="flex flex-wrap">

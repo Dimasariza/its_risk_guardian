@@ -5,7 +5,7 @@
 import { Column } from "primereact/column";
 import { InputTextarea } from "primereact/inputtextarea";
 import { useEffect, useState } from "react";
-import recomendationTable from "./tableRecomendation";
+import { recomendationPV, recomendationTank } from "./tableRecomendation";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { DataTable } from "primereact/datatable";
@@ -18,22 +18,28 @@ function Recomendation() {
   const [value, setValue] = useState<any>();
   const [nodes, setNodes] = useState<any>([]);
 
+  const data = useSelector((state: any) => state.Reducer);
+  const componentType = data.menu?.comp_componentType
+
   useEffect(() => { 
     const nodesArr: any = []
-    recomendationTable.forEach((item: any, keyOne: number) => {
+    const recomendation = componentType == "Tank" ? recomendationTank : recomendationPV
+    console.log(recomendation)
+
+    recomendation?.forEach((item: any, keyOne: number) => {
       if(!item?.level) return
-        item?.level.map((e: any, keyTwo: number) => {
-          const tableNodes = {
-            id: `${keyOne}${keyTwo}`,
-            dm: item.damageFactor,
-            level: e.name,
-            inspOfEfectivess: e.category,
-            activities: e.category[keyTwo].nonIntrusive,
-            disabled: keyTwo != 0,
-            activitiesSelected: 0
-          }
-          nodesArr.push(tableNodes) 
-        })
+      item?.level.map((e: any, keyTwo: number) => {
+        const tableNodes = {
+          id: `${keyOne}${keyTwo}`,
+          dm: item.damageFactor,
+          level: e.name,
+          inspOfEfectivess: e.category,
+          activities: e.category[keyTwo].nonIntrusive,
+          disabled: keyTwo != 0,
+          activitiesSelected: 0
+        }
+        nodesArr.push(tableNodes) 
+      })
     })
     setNodes(nodesArr)    
   }, [])
@@ -43,7 +49,7 @@ function Recomendation() {
         <Row>
           <Column header="Damage Factor" headerStyle={{ width: '5rem' }} rowSpan={2} />
           <Column header="Level of Inspection" rowSpan={2} />
-          <Column header="Inspection Effectiveness" rowSpan={2} />
+          <Column header="Inspection Category" rowSpan={2} />
           <Column header="Inspection Activities" rowSpan={2}/>
           <Column header="Inspection Date" colSpan={2}/>
         </Row>
@@ -108,9 +114,6 @@ function Recomendation() {
   const headBody = () => {
     return <Calendar id="head" style={{width: 235}} />
   }
-
-  const data = useSelector((state: any) => state.Reducer);
-  const componentType = data.menu?.comp_componentType
 
   return (
     <>

@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const recomendationTable: any = [
+const recomendationPV: any = [
     {
         id: 1,
         damageFactor: "Thinning",
@@ -880,4 +880,319 @@ const recomendationTable: any = [
     },
 ]
 
-export default recomendationTable;
+const recomendationTank = [
+    {
+        id: "recomendationTank001",
+        damageFactor: "AST Shell Course Internal Corrosion",
+        level: [
+            {
+                name: "Table 2.C.5.1",
+                category: [
+                    { 
+                        value: "A",
+                        effectiveness: "Highly Effective", 
+                        nonIntrusive: [
+                            <div> Both Inspections Shall be done: </div>,
+                            <ul>
+                                <li>Intrusive inpsection - good visual inspection with pit depth gage measurements at suspect locations.</li>
+                                <li>UT scanning follow up on suspcet location and as general confirmation of wall thickness</li>
+                            </ul>
+                        ]   
+                    },
+                    { 
+                        value: "B",
+                        effectiveness: "Usually Effective", 
+                        nonIntrusive: [
+                            <div> Both Inspections Shall be done: </div>,
+                            <ul>
+                                <li>External spot UT scanning based on visual information from previous internal inspection of this AST or similar service ASTs</li>
+                                <li>Internal video survery with external UT follow-up</li>
+                            </ul>
+                        ]   
+                    },
+                    { 
+                        value: "C",
+                        effectiveness: "Fairly Effective", 
+                        nonIntrusive: [
+                            <div>External sopt UT scanning based at suspect locations without benefit of any internal inspection information on AST  type or service</div>,
+                        ]   
+                    },
+                    { 
+                        value: "D",
+                        effectiveness: "Poorly Effective", 
+                        nonIntrusive: [
+                            <div>External sopt UT based at suspect locations without benefit of any internal inspection information on AST  type or service</div>,
+                        ]   
+                    },
+                    { 
+                        value: "E",
+                        effectiveness: "Ineffective", 
+                        nonIntrusive: [
+                            <div>Ineffective inspection techniques/plan was utilized.</div>,
+                        ]   
+                    },
+                ]
+            },
+            {
+                name: "Table 2.C.5.2",
+                category: [
+                    { 
+                        value: "A",
+                        effectiveness: "Highly Effective", 
+                        nonIntrusive: [
+                            <div> Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 95% external visual inspection prior to removal of insulation</li>
+                                <li>Remove &gt; 90% of insulation at suspect locations,</li>
+                                <b>OR</b>
+                                <br />
+                                <span>&gt; 90% of pulse eddy current inspection.</span>
+                                <li>Visual inspection of the exposed surface area with follow-up by UT or pit gauge as required</li>
+                            </ul>,
+                            <div> Non-Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 95% visual inspection of the exposed surfave area</li>
+                                <b>AND</b>
+                                <br />
+                                <li>Follow up by UT or pit gauge as required.</li>
+                            </ul>,
+                        ]   
+                    },
+                    { 
+                        value: "B",
+                        effectiveness: "Usually Effective", 
+                        nonIntrusive: [
+                            <div> Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 95% external visual inspection prior to removal of insulation</li>
+                                <li>Remove &gt; 50% of insulation at suspect locations,</li>
+                                <b>OR</b>
+                                <br />
+                                <span>&gt; 50% of pulse eddy current inspection.</span>
+                                <li>Visual inspection of the exposed surface area with follow-up by UT or pit gauge as required</li>
+                            </ul>,
+                            <div> Non-Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 50% visual inspection of the exposed surfave area</li>
+                                <b>AND</b>
+                                <br />
+                                <li>Follow up by UT or pit gauge as required.</li>
+                            </ul>,
+                        ]   
+                    },
+                    { 
+                        value: "C",
+                        effectiveness: "Fairly Effective", 
+                        nonIntrusive: [
+                            <div> Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 95% external visual inspection prior to removal of insulation</li>
+                                <li>Remove &gt; 30% of insulation at suspect locations,</li>
+                                <b>OR</b>
+                                <br />
+                                <span>&gt; 30% of pulse eddy current inspection.</span>
+                                <li>Visual inspection of the exposed surface area with follow-up by UT or pit gauge as required</li>
+                            </ul>,
+                            <div> Non-Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 25% visual inspection of the exposed surfave area</li>
+                                <b>AND</b>
+                                <br />
+                                <li>Follow up by UT or pit gauge as required.</li>
+                            </ul>,
+                        ]   
+                    },
+                    { 
+                        value: "D",
+                        effectiveness: "Poorly Effective", 
+                        nonIntrusive: [
+                            <div> Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 95% external visual inspection prior to removal of insulation</li>
+                                <li>Remove &gt; 10% of insulation at suspect locations,</li>
+                                <b>OR</b>
+                                <br />
+                                <span>&gt; 10% of pulse eddy current inspection.</span>
+                                <li>Visual inspection of the exposed surface area with follow-up by UT or pit gauge as required</li>
+                            </ul>,
+                            <div> Non-Insulated Tank Inspection Example </div>,
+                            <ul>
+                                <li>&gt; 10% visual inspection of the exposed surfave area</li>
+                                <b>AND</b>
+                                <br />
+                                <li>Follow up by UT or pit gauge as required.</li>
+                            </ul>,
+                        ]  
+                    },
+                    { 
+                        value: "E",
+                        effectiveness: "Ineffective", 
+                        nonIntrusive: [
+                            <div> Insulated Tank Inspection Example </div>,
+                            <br />,
+                            <div>Ineffective inspection techniques/plan was utilized.</div>,
+                            <div> Non-Insulated Tank Inspection Example </div>,
+                            <br />,
+                            <div>Ineffective inspection techniques/plan was utilized.</div>,
+                        ]   
+                    },
+                ]
+            },
+            {
+                name: "Table 2.C.5.3",
+                category: [
+                    { 
+                        value: "A",
+                        effectiveness: "Highly Effective", 
+                        nonIntrusive: [
+                            <div> Soil Side </div>,
+                            <ul>
+                                <span>Floor scan &gt; 90%</span>
+                                <br />
+                                <b>AND</b>
+                                <br />
+                                <span>UT follow-up</span>
+                                <br />
+                                <span><u>Note</u></span>
+                                <li>Include welds if warranted from the results on the plate scanning</li>
+                                <li>Hand scan of the critical zone</li>
+                            </ul>,
+                            <div> Product side </div>,
+                            <br />,
+                            <div> Bare Plate: </div>,
+                            <ul>
+                                <li>Commercial blast</li>
+                                <li>Effective supplementary light</li>
+                                <li>Visual 100% (API 653)</li>
+                                <li>Pit depth gauge</li>
+                                <li>100% vacuum box testing of suspect welded joints</li>
+                            </ul>,
+                            <br />,
+                            <div> Coating or Liner: </div>,
+                            <ul>
+                                <li>Sponge test 100%</li>
+                                <li>Adhesion test</li>
+                                <li>Scrape test</li>
+                            </ul>,
+                        ]   
+                    },
+                    { 
+                        value: "B",
+                        effectiveness: "Usually Effective", 
+                        nonIntrusive: [
+                            <div> Soil Side </div>,
+                            <ul>
+                                <span>Floor scan &gt; 50%</span>
+                                <br />
+                                <b>AND</b>
+                                <br />
+                                <span>UT follow-up</span>
+                                <br />
+                                <b>OR</b>
+                                <span>EVA or other statistical method with Floor scan follow-up (if warranted by the result)</span>
+                            </ul>,
+                            <div> Product side </div>,
+                            <br />,
+                            <div> Bare Plate: </div>,
+                            <ul>
+                                <li>Brush blast</li>
+                                <li>Effective supplementary light</li>
+                                <li>Visual 100% (API 653)</li>
+                                <li>Pit depth gauge</li>
+                            </ul>,
+                            <br />,
+                            <div> Coating or Liner: </div>,
+                            <ul>
+                                <li>Sponge test &gt;75%</li>
+                                <li>Adhesion test</li>
+                                <li>Scrape test</li>
+                            </ul>,
+                        ]   
+                    },
+                    { 
+                        value: "C",
+                        effectiveness: "Fairly Effective", 
+                        nonIntrusive: [
+                            <div> Soil Side </div>,
+                            <ul>
+                                <span>Floor scan 5-10+ % plates</span>
+                                <br />
+                                <b>AND</b>
+                                <br />
+                                <span>Supplement with scanning near shell</span>
+                                <b>AND</b>
+                                <br />
+                                <span>UT follow-up</span>
+                                <br />
+                                <b>OR</b>
+                                <span>Use a 'Scan circle-and-X' pattern (progressively increase if damage found during sacnning)</span>
+                                <br />
+                                <span>Other Testing:</span>
+                                <ul>
+                                    <li>Helium/Argon test</li>
+                                    <li>Hammer Test</li>
+                                    <li>Cut Coupons</li>
+                                </ul>
+                            </ul>,
+                            <div> Product side </div>,
+                            <br />,
+                            <div> Bare Plate: </div>,
+                            <ul>
+                                <li>Broom swept</li>
+                                <li>Effective supplementary light</li>
+                                <li>Visual 100%</li>
+                                <li>Pit depth gauge</li>
+                            </ul>,
+                            <br />,
+                            <div> Coating or Liner: </div>,
+                            <ul>
+                                <li>Sponge test 50 - 75%</li>
+                                <li>Adhesion test</li>
+                                <li>Scrape test</li>
+                            </ul>,
+                        ]    
+                    },
+                    { 
+                        value: "D",
+                        effectiveness: "Poorly Effective", 
+                        nonIntrusive: [
+                            <div> Soil Side </div>,
+                            <span>Possible Testing:</span>,
+                            <ul>
+                                <li>Spot UT</li>
+                                <li>Flood Test</li>
+                            </ul>,
+                            <div> Product side </div>,
+                            <br />,
+                            <div> Bare Plate: </div>,
+                            <ul>
+                                <li>Broom swept</li>
+                                <li>No Effective supplementary light</li>
+                                <li>Visual &gt;50%</li>
+                            </ul>,
+                            <br />,
+                            <div> Coating or Liner: </div>,
+                            <ul>
+                                <li>Sponge test &lt;50%</li>
+                            </ul>,
+                        ]   
+                    },
+                    { 
+                        value: "E",
+                        effectiveness: "Ineffective", 
+                        nonIntrusive: [
+                            <div> Soil Side </div>,
+                            <br />,
+                            <div>Ineffective inspection techniques/plan was utilized.</div>,
+                            <div> Product Side </div>,
+                            <br />,
+                            <div>Ineffective inspection techniques/plan was utilized.</div>,
+                        ]   
+                    },
+                ]
+            },
+        ]
+    },
+]
+
+export { recomendationPV, recomendationTank };
